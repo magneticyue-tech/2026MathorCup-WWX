@@ -1,0 +1,6 @@
+{
+    "python.defaultInterpreterPath": "E:\\anaconda3\\envs\\mathorcup\\python.exe",
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "files.encoding": "utf8"
+}
