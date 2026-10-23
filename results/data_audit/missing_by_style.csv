@@ -1,0 +1,199 @@
+﻿field,style,samples,missing,rate
+X2.3.butanedione,Low/No alcohol,8,1,0.125
+X2.3.butanedione,Fruitbeer,8,1,0.125
+X2.3.butanedione,Dubbel,10,0,0.0
+X2.3.butanedione,Pils/Lager,11,2,0.18181818181818182
+X2.3.butanedione,Flanders old brown,5,0,0.0
+X2.3.butanedione,Kriek,10,0,0.0
+X2.3.butanedione,Blond,31,0,0.0
+X2.3.butanedione,Wheat,12,1,0.08333333333333333
+X2.3.butanedione,Stout/Porter,13,0,0.0
+X2.3.butanedione,Amber,12,0,0.0
+X2.3.butanedione,Brett/cofermented,6,0,0.0
+X2.3.butanedione,Lambic,11,0,0.0
+X2.3.butanedione,Tripel,28,1,0.03571428571428571
+X2.3.butanedione,Saison,10,0,0.0
+X2.3.butanedione,Scotch,5,0,0.0
+X2.3.butanedione,West Flanders ale,7,2,0.2857142857142857
+X2.3.butanedione,Hoppy,17,0,0.0
+X2.3.butanedione,Faro,3,0,0.0
+X2.3.butanedione,Strong ale,18,0,0.0
+X2.3.butanedione,Brown,12,1,0.08333333333333333
+X2.3.butanedione,Christmas,9,0,0.0
+X2.3.butanedione,Brut,4,0,0.0
+X3.methylbutanal,Low/No alcohol,8,1,0.125
+X3.methylbutanal,Fruitbeer,8,0,0.0
+X3.methylbutanal,Dubbel,10,0,0.0
+X3.methylbutanal,Pils/Lager,11,1,0.09090909090909091
+X3.methylbutanal,Flanders old brown,5,1,0.2
+X3.methylbutanal,Kriek,10,0,0.0
+X3.methylbutanal,Blond,31,0,0.0
+X3.methylbutanal,Wheat,12,1,0.08333333333333333
+X3.methylbutanal,Stout/Porter,13,0,0.0
+X3.methylbutanal,Amber,12,0,0.0
+X3.methylbutanal,Brett/cofermented,6,0,0.0
+X3.methylbutanal,Lambic,11,0,0.0
+X3.methylbutanal,Tripel,28,1,0.03571428571428571
+X3.methylbutanal,Saison,10,0,0.0
+X3.methylbutanal,Scotch,5,0,0.0
+X3.methylbutanal,West Flanders ale,7,0,0.0
+X3.methylbutanal,Hoppy,17,0,0.0
+X3.methylbutanal,Faro,3,0,0.0
+X3.methylbutanal,Strong ale,18,1,0.05555555555555555
+X3.methylbutanal,Brown,12,1,0.08333333333333333
+X3.methylbutanal,Christmas,9,0,0.0
+X3.methylbutanal,Brut,4,0,0.0
+ethyl.isobutyrate,Low/No alcohol,8,0,0.0
+ethyl.isobutyrate,Fruitbeer,8,1,0.125
+ethyl.isobutyrate,Dubbel,10,0,0.0
+ethyl.isobutyrate,Pils/Lager,11,0,0.0
+ethyl.isobutyrate,Flanders old brown,5,0,0.0
+ethyl.isobutyrate,Kriek,10,0,0.0
+ethyl.isobutyrate,Blond,31,0,0.0
+ethyl.isobutyrate,Wheat,12,0,0.0
+ethyl.isobutyrate,Stout/Porter,13,0,0.0
+ethyl.isobutyrate,Amber,12,0,0.0
+ethyl.isobutyrate,Brett/cofermented,6,0,0.0
+ethyl.isobutyrate,Lambic,11,0,0.0
+ethyl.isobutyrate,Tripel,28,0,0.0
+ethyl.isobutyrate,Saison,10,0,0.0
+ethyl.isobutyrate,Scotch,5,0,0.0
+ethyl.isobutyrate,West Flanders ale,7,0,0.0
+ethyl.isobutyrate,Hoppy,17,0,0.0
+ethyl.isobutyrate,Faro,3,0,0.0
+ethyl.isobutyrate,Strong ale,18,0,0.0
+ethyl.isobutyrate,Brown,12,0,0.0
+ethyl.isobutyrate,Christmas,9,0,0.0
+ethyl.isobutyrate,Brut,4,0,0.0
+methylpyrazine,Low/No alcohol,8,0,0.0
+methylpyrazine,Fruitbeer,8,0,0.0
+methylpyrazine,Dubbel,10,0,0.0
+methylpyrazine,Pils/Lager,11,1,0.09090909090909091
+methylpyrazine,Flanders old brown,5,0,0.0
+methylpyrazine,Kriek,10,0,0.0
+methylpyrazine,Blond,31,3,0.0967741935483871
+methylpyrazine,Wheat,12,1,0.08333333333333333
+methylpyrazine,Stout/Porter,13,0,0.0
+methylpyrazine,Amber,12,0,0.0
+methylpyrazine,Brett/cofermented,6,0,0.0
+methylpyrazine,Lambic,11,0,0.0
+methylpyrazine,Tripel,28,2,0.07142857142857142
+methylpyrazine,Saison,10,1,0.1
+methylpyrazine,Scotch,5,0,0.0
+methylpyrazine,West Flanders ale,7,1,0.14285714285714285
+methylpyrazine,Hoppy,17,2,0.11764705882352941
+methylpyrazine,Faro,3,0,0.0
+methylpyrazine,Strong ale,18,1,0.05555555555555555
+methylpyrazine,Brown,12,0,0.0
+methylpyrazine,Christmas,9,0,0.0
+methylpyrazine,Brut,4,0,0.0
+furfural,Low/No alcohol,8,0,0.0
+furfural,Fruitbeer,8,0,0.0
+furfural,Dubbel,10,0,0.0
+furfural,Pils/Lager,11,0,0.0
+furfural,Flanders old brown,5,0,0.0
+furfural,Kriek,10,0,0.0
+furfural,Blond,31,0,0.0
+furfural,Wheat,12,0,0.0
+furfural,Stout/Porter,13,0,0.0
+furfural,Amber,12,0,0.0
+furfural,Brett/cofermented,6,0,0.0
+furfural,Lambic,11,0,0.0
+furfural,Tripel,28,0,0.0
+furfural,Saison,10,1,0.1
+furfural,Scotch,5,0,0.0
+furfural,West Flanders ale,7,0,0.0
+furfural,Hoppy,17,0,0.0
+furfural,Faro,3,0,0.0
+furfural,Strong ale,18,0,0.0
+furfural,Brown,12,0,0.0
+furfural,Christmas,9,0,0.0
+furfural,Brut,4,0,0.0
+amyl.acetate,Low/No alcohol,8,0,0.0
+amyl.acetate,Fruitbeer,8,2,0.25
+amyl.acetate,Dubbel,10,4,0.4
+amyl.acetate,Pils/Lager,11,0,0.0
+amyl.acetate,Flanders old brown,5,0,0.0
+amyl.acetate,Kriek,10,3,0.3
+amyl.acetate,Blond,31,6,0.1935483870967742
+amyl.acetate,Wheat,12,1,0.08333333333333333
+amyl.acetate,Stout/Porter,13,1,0.07692307692307693
+amyl.acetate,Amber,12,1,0.08333333333333333
+amyl.acetate,Brett/cofermented,6,0,0.0
+amyl.acetate,Lambic,11,2,0.18181818181818182
+amyl.acetate,Tripel,28,3,0.10714285714285714
+amyl.acetate,Saison,10,2,0.2
+amyl.acetate,Scotch,5,0,0.0
+amyl.acetate,West Flanders ale,7,0,0.0
+amyl.acetate,Hoppy,17,0,0.0
+amyl.acetate,Faro,3,0,0.0
+amyl.acetate,Strong ale,18,1,0.05555555555555555
+amyl.acetate,Brown,12,0,0.0
+amyl.acetate,Christmas,9,1,0.1111111111111111
+amyl.acetate,Brut,4,0,0.0
+phenylacetaldehyde,Low/No alcohol,8,0,0.0
+phenylacetaldehyde,Fruitbeer,8,0,0.0
+phenylacetaldehyde,Dubbel,10,0,0.0
+phenylacetaldehyde,Pils/Lager,11,0,0.0
+phenylacetaldehyde,Flanders old brown,5,0,0.0
+phenylacetaldehyde,Kriek,10,1,0.1
+phenylacetaldehyde,Blond,31,0,0.0
+phenylacetaldehyde,Wheat,12,0,0.0
+phenylacetaldehyde,Stout/Porter,13,0,0.0
+phenylacetaldehyde,Amber,12,0,0.0
+phenylacetaldehyde,Brett/cofermented,6,0,0.0
+phenylacetaldehyde,Lambic,11,0,0.0
+phenylacetaldehyde,Tripel,28,0,0.0
+phenylacetaldehyde,Saison,10,0,0.0
+phenylacetaldehyde,Scotch,5,0,0.0
+phenylacetaldehyde,West Flanders ale,7,0,0.0
+phenylacetaldehyde,Hoppy,17,0,0.0
+phenylacetaldehyde,Faro,3,0,0.0
+phenylacetaldehyde,Strong ale,18,0,0.0
+phenylacetaldehyde,Brown,12,0,0.0
+phenylacetaldehyde,Christmas,9,0,0.0
+phenylacetaldehyde,Brut,4,0,0.0
+ethyl.nicotinate,Low/No alcohol,8,1,0.125
+ethyl.nicotinate,Fruitbeer,8,0,0.0
+ethyl.nicotinate,Dubbel,10,0,0.0
+ethyl.nicotinate,Pils/Lager,11,0,0.0
+ethyl.nicotinate,Flanders old brown,5,0,0.0
+ethyl.nicotinate,Kriek,10,0,0.0
+ethyl.nicotinate,Blond,31,0,0.0
+ethyl.nicotinate,Wheat,12,0,0.0
+ethyl.nicotinate,Stout/Porter,13,0,0.0
+ethyl.nicotinate,Amber,12,0,0.0
+ethyl.nicotinate,Brett/cofermented,6,0,0.0
+ethyl.nicotinate,Lambic,11,0,0.0
+ethyl.nicotinate,Tripel,28,0,0.0
+ethyl.nicotinate,Saison,10,1,0.1
+ethyl.nicotinate,Scotch,5,0,0.0
+ethyl.nicotinate,West Flanders ale,7,0,0.0
+ethyl.nicotinate,Hoppy,17,0,0.0
+ethyl.nicotinate,Faro,3,0,0.0
+ethyl.nicotinate,Strong ale,18,0,0.0
+ethyl.nicotinate,Brown,12,0,0.0
+ethyl.nicotinate,Christmas,9,0,0.0
+ethyl.nicotinate,Brut,4,0,0.0
+aroma_hops_sum,Low/No alcohol,8,0,0.0
+aroma_hops_sum,Fruitbeer,8,0,0.0
+aroma_hops_sum,Dubbel,10,0,0.0
+aroma_hops_sum,Pils/Lager,11,0,0.0
+aroma_hops_sum,Flanders old brown,5,0,0.0
+aroma_hops_sum,Kriek,10,0,0.0
+aroma_hops_sum,Blond,31,2,0.06451612903225806
+aroma_hops_sum,Wheat,12,2,0.16666666666666666
+aroma_hops_sum,Stout/Porter,13,0,0.0
+aroma_hops_sum,Amber,12,1,0.08333333333333333
+aroma_hops_sum,Brett/cofermented,6,0,0.0
+aroma_hops_sum,Lambic,11,0,0.0
+aroma_hops_sum,Tripel,28,0,0.0
+aroma_hops_sum,Saison,10,1,0.1
+aroma_hops_sum,Scotch,5,0,0.0
+aroma_hops_sum,West Flanders ale,7,0,0.0
+aroma_hops_sum,Hoppy,17,6,0.35294117647058826
+aroma_hops_sum,Faro,3,1,0.3333333333333333
+aroma_hops_sum,Strong ale,18,0,0.0
+aroma_hops_sum,Brown,12,0,0.0
+aroma_hops_sum,Christmas,9,0,0.0
+aroma_hops_sum,Brut,4,0,0.0

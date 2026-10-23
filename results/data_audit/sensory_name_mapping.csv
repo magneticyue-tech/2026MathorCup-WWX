@@ -1,0 +1,52 @@
+﻿csv4_field,csv5_label,dataset,Category_Paper,Category,CleanName_Paper,CleanName_PaperLong,CleanName_PanelFeedback,DataType
+A_malt_all,Malt aroma - overall,Trained panel,Aroma,Malt,Malt - overall,Malt aroma,Malt aroma - overall,numeric
+A_malt_grain,Malt aroma - grain,Trained panel,Aroma,Malt,Malt - grain,Malt aroma - grain,Malt aroma - grain,categorical
+A_malt_bread,Malt aroma - bread,Trained panel,Aroma,Malt,Malt - bread,Malt aroma - bread,Malt aroma - bread,categorical
+A_malt_cara,Malt aroma - caramel,Trained panel,Aroma,Malt,Malt - caramel,Malt aroma - caramel,Malt aroma - caramel,categorical
+A_malt_burn,Malt aroma - smoked,Trained panel,Aroma,Malt,Malt - smoked,Malt aroma - smoked,Malt aroma - smoked,categorical
+A_hops_all,Hops aroma - overall,Trained panel,Aroma,Hops,Hops - overall,Hops aroma,Hops aroma - overall,numeric
+A_hops_citrus,Hops aroma - citrus,Trained panel,Aroma,Hops,Hops - citrus,Hops aroma - citrus,Hops aroma - citrus,categorical
+A_hops_tropical,Hops aroma - tropical fruit,Trained panel,Aroma,Hops,Hops - tropical fruit,Hops aroma - tropical fruit,Hops aroma - tropical fruit,categorical
+A_hops_noble,Hops aroma - grassy,Trained panel,Aroma,Hops,Hops - grassy,Hops aroma - grassy,Hops aroma - grassy,categorical
+A_hops_woody,Hops aroma - woody,Trained panel,Aroma,Hops,Hops - woody,Hops aroma - woody,Hops aroma - woody,categorical
+A_esters_all,Esters aroma - overall,Trained panel,Aroma,Yeast,Esters - overall,Esters aroma,Esters aroma - overall,numeric
+A_esters_ethac,Esters aroma - nail polish,Trained panel,Aroma,Yeast,Esters - nail polish,Esters aroma - nail polish,Esters aroma - nail polish,categorical
+A_esters_isoaa,Esters aroma - banana,Trained panel,Aroma,Yeast,Esters - banana,Esters aroma - banana,Esters aroma - banana,categorical
+A_esters_flower,Esters aroma - floral,Trained panel,Aroma,Yeast,Esters - floral,Esters aroma - floral,Esters aroma - floral,categorical
+A_esters_fruity,Esters aroma - fruity,Trained panel,Aroma,Yeast,Esters - fruity,Esters aroma - fruity,Esters aroma - fruity,categorical
+F_malt_all,Malt taste - overall,Trained panel,Taste,Malt,Malt - overall,Malt taste,Malt taste - overall,numeric
+F_malt_grain,Malt taste - grain,Trained panel,Taste,Malt,Malt - grain,Malt taste - grain,Malt taste - grain,categorical
+F_malt_bread,Malt taste - bread,Trained panel,Taste,Malt,Malt - bread,Malt taste - bread,Malt taste - bread,categorical
+F_malt_cara,Malt taste - caramel,Trained panel,Taste,Malt,Malt - caramel,Malt taste - caramel,Malt taste - caramel,categorical
+F_malt_burn,Malt taste - smoked,Trained panel,Taste,Malt,Malt - smoked,Malt taste - smoked,Malt taste - smoked,categorical
+F_hops_all,Hops taste - overall,Trained panel,Taste,Hops,Hops - overall,Hops taste,Hops taste - overall,numeric
+F_hops_citrus,Hops taste - citrus,Trained panel,Taste,Hops,Hops - citrus,Hops taste - citrus,Hops taste - citrus,categorical
+F_hops_tropical,Hops taste - tropical fruit,Trained panel,Taste,Hops,Hops - tropical fruit,Hops taste - tropical fruit,Hops taste - tropical fruit,categorical
+F_hops_noble,Hops taste - grassy,Trained panel,Taste,Hops,Hops - grassy,Hops taste - grassy,Hops taste - grassy,categorical
+F_hops_woody,Hops taste - woody,Trained panel,Taste,Hops,Hops - woody,Hops taste - woody,Hops taste - woody,categorical
+F_esters_all,Esters taste - overall,Trained panel,Taste,Yeast,Esters - overall,Esters taste,Esters taste - overall,numeric
+F_esters_ethac,Esters taste - nail polish,Trained panel,Taste,Yeast,Esters - nail polish,Esters taste - nail polish,Esters taste - nail polish,categorical
+F_esters_isoaa,Esters taste - banana,Trained panel,Taste,Yeast,Esters - banana,Esters taste - banana,Esters taste - banana,categorical
+F_esters_flower,Esters taste - floral,Trained panel,Taste,Yeast,Esters - floral,Esters taste - floral,Esters taste - floral,categorical
+F_esters_fruity,Esters taste - fruity,Trained panel,Taste,Yeast,Esters - fruity,Esters taste - fruity,Esters taste - fruity,categorical
+acidity,Acidity,Trained panel,Taste,Others,Acidity,Acidity,Acidity,numeric
+bitternes,Bitterness,Trained panel,Taste,Others,Bitterness,Bitterness,Bitterness,numeric
+sweetness,Sweetness,Trained panel,Taste,Others,Sweetness,Sweetness,Sweetness,numeric
+X4vg,4-vinyl guaiacol,Trained panel,Taste,Others,4-vinyl guaiacol,4-vinyl guaiacol,4-vinyl guaiacol,numeric
+diacetyl,Diacetyl,Trained panel,Taste,Others,Diacetyl,Diacetyl,Diacetyl,numeric
+dms,Dimethyl sulfide,Trained panel,Taste,Others,Dimethyl sulfide,Dimethyl sulfide,Dimethyl sulfide,numeric
+metallic,Metallic,Trained panel,Taste,Others,Metallic,Metallic,Metallic,numeric
+stale_hops,Stale hops,Trained panel,Taste,Others,Stale hops,Stale hops,Stale hops,numeric
+t2n,Trans-2-nonenal,Trained panel,Taste,Others,Trans-2-nonenal,Aging aroma - cardboard,Trans-2-nonenal,numeric
+orange,Orange,Trained panel,Taste,Others,Orange,Hops taste - citrus,Orange,numeric
+coriander,Coriander,Trained panel,Taste,Others,Coriander,Coriander,Coriander,numeric
+clove,Clove,Trained panel,Taste,Others,Clove,Clove,Clove,numeric
+lactic,Lactic acid,Trained panel,Taste,Wild flora,Lactic acid,Lactic acid,Lactic acid,numeric
+acetic,Acetic acid,Trained panel,Taste,Wild flora,Acetic acid,Acetic acid,Acetic acid,numeric
+barnyard,Barnyard,Trained panel,Taste,Wild flora,Barnyard,Barnyard,Barnyard,numeric
+alcohol,Alcohol,Trained panel,Palate,Yeast,Alcohol,Alcohol,Alcohol,numeric
+co2,Carbonation,Trained panel,Palate,Yeast,Carbonation,Carbonation,Carbonation,numeric
+aftertaste,Aftertaste,Trained panel,Palate,NA,Aftertaste,Aftertaste,Aftertaste,numeric
+body,Body,Trained panel,Palate,NA,Body,Body fullness,Body,numeric
+overall,Overall appreciation(Trained panel),Trained panel,Overall,NA,Overall appreciation,Overall appreciation,"Overall appreciation_x000D_
+(Trained panel)",numeric

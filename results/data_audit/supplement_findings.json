@@ -1,0 +1,92 @@
+{
+  "forum_metadata": {
+    "ratebeer_rows": 51,
+    "unique_R_names": 50,
+    "fields_in_7_with_mapping": 44,
+    "metadata_fields_not_in_7": [
+      "appearance_5",
+      "aroma_10",
+      "ave_score_5",
+      "overall_20",
+      "palate_5",
+      "taste_10"
+    ],
+    "fields_in_7_without_mapping": 142,
+    "duplicate_R_names": [
+      "aroma_citrus"
+    ]
+  },
+  "calibrated_discordances": {
+    "cells": 80,
+    "fields": 32,
+    "beers": 24,
+    "by_field": {
+      "E.caryophyllene": 1,
+      "X.E..2.nonenal": 2,
+      "X.E..beta.damascenone": 1,
+      "X.E..beta.ocimene": 6,
+      "X.E.E..2.4.decadienal": 1,
+      "X1.alpha.terpineol": 2,
+      "X2.3.butanedione": 3,
+      "X2.ethyl.3.methylpyrazine": 2,
+      "X2.methyltetrahydrofuran.3.one": 1,
+      "X3.methylbutanal": 1,
+      "X3Z.hexenol": 4,
+      "X5.methylfurfural": 2,
+      "Z.nerolidol": 2,
+      "alpha.humulene": 1,
+      "amyl.acetate": 1,
+      "benzaldehyde": 1,
+      "benzyl.alcohol": 2,
+      "citronellol": 2,
+      "ethyl.butyrate": 3,
+      "ethyl.isobutyrate": 5,
+      "ethyl.nicotinate": 4,
+      "ethyl.pentanoate": 4,
+      "eugenol": 1,
+      "furfural": 3,
+      "gamma.nonalactone": 2,
+      "geraniol": 3,
+      "hexyl.acetate": 4,
+      "linalool": 3,
+      "methylpyrazine": 5,
+      "n.hexanol": 6,
+      "phenylacetaldehyde": 1,
+      "styrene": 1
+    }
+  },
+  "negative_calibrated": [
+    {
+      "beer": 116,
+      "field": "unfermentables",
+      "calibrated_value": -16.755
+    },
+    {
+      "beer": 134,
+      "field": "betaglucan.mg.L.",
+      "calibrated_value": -2.0
+    },
+    {
+      "beer": 18,
+      "field": "betaglucan.mg.L.",
+      "calibrated_value": -2.0
+    }
+  ],
+  "common_signal_floor": 0.015211829884302173,
+  "original_brief_sha256": {
+    "2026年MathorCup大数据挑战赛-赛道A初赛.docx": "116c69b7f4097b7d2bbbb2a450eea6c15db4865c1bcd327b26ffa39ce1e25851"
+  },
+  "draft_sha256": "7e602218de0a139432f07071bce49e9d8b3b96f4946cef3a9c3eba607091db05",
+  "workbook_id_checks": {
+    "Calibrated chemical dataset": {
+      "unique_beer": 250,
+      "unique_beer_id": 250,
+      "matches_csv1": 250
+    },
+    "Beer Prices": {
+      "unique_beer": 250,
+      "unique_beer_id": 250,
+      "matches_csv1": 250
+    }
+  }
+}
