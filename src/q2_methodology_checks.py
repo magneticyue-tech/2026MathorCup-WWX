@@ -57,8 +57,13 @@ PANEL = components(tie_pair_counts(y[SENS]), 3, len(y))       # 推断品评团�
 PANEL_IDX = [np.where(PANEL == g)[0] for g in np.unique(PANEL)]
 
 
+def na_mean(df):
+    """问题 1 主设定：化学 NA 按列均值填充（memory/na-below-detection.md）。预检查在全部 250 款上取均值。"""
+    return df.fillna(df.mean())
+
+
 def na_lowest(df):
-    """问题 1 主设定：单化合物 NA 排在最低（并列）。"""
+    """敏感性对照：单化合物 NA 排在最低（并列）。"""
     return df.fillna(-np.inf)
 
 
@@ -118,7 +123,7 @@ def panel_bootstrap(rng):
     return np.concatenate([PANEL_IDX[p] for p in pick])
 
 
-XC = na_lowest(X[CAND]).values
+XC = na_mean(X[CAND]).values
 RX, RY = zrank(XC), zrank(y[SENS].values)
 RHO = RX.T @ RY / len(y)                                       # 225 × 50 Spearman
 MOD = modules(R2.loc[CAND, CAND].abs().values)
@@ -229,11 +234,12 @@ others = {"不加图约束的边际": raw,
           "图约束边际": MARG,
           "ElasticNet": {k: top3_graph(np.abs(ElasticNetCV(l1_ratio=.5, cv=gkf, alphas=30, max_iter=5000)
                                               .fit(RX, RY[:, k]).coef_) + 1e-9 * np.abs(RHO[:, k]), MOD) for k in KD},
-          "风格内前向": {k: top3_forward(RXs, RYs[:, k], MOD) for k in KD}}
+          "风格内前向": {k: top3_forward(RXs, RYs[:, k], MOD) for k in KD},
+          "敏感性：NA 最低位编码": {k: top3_forward(zrank(na_lowest(X[CAND]).values), RY[:, k], MOD) for k in KD}}
 if os.environ.get("RUN_GBM") == "1":
     from sklearn.ensemble import HistGradientBoostingRegressor
     from sklearn.inspection import permutation_importance
-    Xg = X[CAND].fillna(0).values                      # 问题 1 主设定：单化合物 NA 编码为 0（低于全部观测值）
+    Xg = XC                                            # 与主方法相同的列均值填充（问题 1 主设定）
     splits = list(StratifiedGroupKFold(5, shuffle=True, random_state=SEED).split(Xg, STYLE, PANEL))
     gbm = {}
     for k in KD:
@@ -285,7 +291,7 @@ for p in "AF":
         f"{p}_hops_all": [("linalool", "D", 1), ("geraniol", "D", 1), ("alpha.humulene", "D", 1), ("E.caryophyllene", "D", 1)]
                          + ([("bitterness", "M", 1)] if p == "F" else []),
         f"{p}_hops_citrus": [("linalool", "D", 1), ("geraniol", "D", 1), ("citronellol", "D", 1), ("limonene", "D", 1), ("nerol", "D", 1)],
-        f"{p}_hops_tropical": [("geraniol", "D", 1), ("linalool", "D", 1), ("methyl.geranate", "D", 1), ("ethyl_2.methyl_butyrate", "D", 1)],
+        f"{p}_hops_tropical": [("geraniol", "D", 1), ("linalool", "D", 1), ("ethyl_2.methyl_butyrate", "D", 1)],
         f"{p}_hops_noble": [("alpha.humulene", "D", 1), ("E.caryophyllene", "D", 1), ("humulene.epoxide.II", "D", 1),
                             ("caryophyllene.oxide", "D", 1), ("X.E..beta.farnesene", "D", 1), ("linalool", "D", 1)],
         f"{p}_hops_woody": [("alpha.humulene", "D", 1), ("E.caryophyllene", "D", 1), ("humulene.epoxide.II", "D", 1),
