@@ -2,5 +2,7 @@
     "python.defaultInterpreterPath": "E:\\anaconda3\\envs\\mathorcup\\python.exe",
     "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.autoClean.run": "onBuilt",
-    "files.encoding": "utf8"
+    "files.encoding": "utf8",
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda"
 }
