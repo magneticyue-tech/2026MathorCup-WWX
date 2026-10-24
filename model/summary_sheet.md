@@ -1,17 +1,15 @@
-# Summary sheet
+# 摘要页
 
-Draft of the one-page summary. Judged heavily; keep it current as results
-change. State the problem, approach, key results (with numbers), and
-conclusions. No filler intensifiers; every performance claim cites a number.
+一页纸摘要的草稿。此项评分权重很高；结果变化时须同步更新。写明问题、方法、关键结果（含具体数字）与结论。不要使用空泛的强调词；每一项性能结论都要引用具体数字。
 
-## Problem restatement
-_(1-2 sentences)_
+## 问题重述
+_（1-2 句）_
 
-## Approach
-_(models used and why)_
+## 方法
+_（所用模型及选择理由）_
 
-## Key results
-_(quantified; cite figures/tables)_
+## 关键结果
+_（量化呈现；引用图/表）_
 
-## Conclusions
-_(what the results imply for the problem)_
+## 结论
+_（结果对该问题意味着什么）_

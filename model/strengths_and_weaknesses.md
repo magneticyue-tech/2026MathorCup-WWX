@@ -1,13 +1,12 @@
-# Strengths and weaknesses
+# 优势与不足
 
-Evaluation section, labeled as judgment (separate from measured results). Each
-point is specific and, where possible, tied to evidence.
+评估部分，标记为判断（与实测结果分开）。每一点都要具体，并在可能的情况下与证据挂钩。
 
-## Strengths
+## 优势
 - 
 
-## Weaknesses
+## 不足
 - 
 
-## Possible improvements
-- 
+## 可能的改进
+-

@@ -1,181 +1,96 @@
-# Collaboration standards
+# 协作规范
 
-Single source of truth for all agents (Claude Code, Codex, Workbuddy) and every
-team member.
-Agent config files are thin adapters that point here; do not duplicate these
-rules into an agent file, update this document instead.
+本文件是所有 agent（Claude Code、Codex、Workbuddy）及每位团队成员的唯一权威来源。
+Agent 配置文件只是指向本文件的轻量适配层；不要把这些规则复制进 agent 文件，应更新本文档。
 
-## Team roles and ownership
-- Modeling — assumptions, derivations, model selection, and review of result
-  interpretation. Owns `model/`, except `result_interpretation.md`.
-- Coding — implementation, solver runs, figures, tables. Owns `code/`.
-- Writing — paper draft, typesetting, and interpretation of results. Owns
-  `paper/` and `model/result_interpretation.md`.
+## 团队角色与职责归属
+- Modeling——负责假设、推导、模型选择，以及评审结果解读。负责 `model/`，但 `result_interpretation.md` 除外。
+- Coding——负责实现、求解器运行、图和表。负责 `code/`。
+- Writing——负责论文草稿、排版和结果解读。负责 `paper/` 与 `model/result_interpretation.md`。
 
-Each team owns its directory; cross-team requests go through the review module.
+每个团队负责自己的目录；跨团队请求通过评审模块流转。
 
-## Model directory documents
-`model/` holds two kinds of document, both owned by modeling.
+## model 目录中的文档
+`model/` 存有两类文档，均由 Modeling 负责。
 
-Per-problem methodology documents, one per problem, named `q<N>_methodology.md`
-(`q1_methodology.md`, `q2_methodology.md`, ...), created from
-`model/_METHODOLOGY_TEMPLATE.md`. Each states the complete model and method for
-every sub-part of that problem (Q<N>.1, Q<N>.2, ...): notation and units, and
-the equations/estimators for each sub-part with why they were chosen. Methods
-only: code-related requirements (output files, figures) belong in the coding
-work order, and interpretation of results in `result_interpretation.md`.
+按问题编排的方法论文档，每个问题一份，命名为 `q<N>_methodology.md`
+（`q1_methodology.md`、`q2_methodology.md`、……），由
+`model/_METHODOLOGY_TEMPLATE.md` 创建。每份文档说明该问题每个子部分（Q<N>.1、Q<N>.2、……）的完整模型与方法：符号与单位，以及各子部分的方程/估计量及其选择理由。只写方法：与代码相关的要求（输出文件、图）属于 Coding 工作单，结果解读属于 `result_interpretation.md`。
 
-Living documents, maintained continuously: `q<N>_methodology.md`, `assumptions.md`,
-`summary_sheet.md`, `sensitivity_analysis.md`, `result_interpretation.md`,
-`strengths_and_weaknesses.md`. The paper's matching sections are generated from
-these. Keep measured results, interpretation, and evaluation
-(strengths/weaknesses) separate.
+持续维护的活文档：`q<N>_methodology.md`、`assumptions.md`、
+`summary_sheet.md`、`sensitivity_analysis.md`、`result_interpretation.md`、
+`strengths_and_weaknesses.md`。论文中对应的章节由这些文档生成。将实测结果、结果解读和评价（优势/不足）分开。
 
-Assumptions are split by scope. `assumptions.md` records only global
-assumptions — those conditioning the data, scope, or environment of the whole
-problem (e.g. one-population sampling, SI units, still-air flight); it generates
-the paper's Assumptions section and holds the shared notation table.
-Method-local assumptions — functional-form, estimator, or scope choices tied to
-one method or equation (e.g. exponential decay of a state, a particular
-imputation scheme, no outlier removal) — are stated inside the relevant
-`q<N>_methodology.md` at the point of use, worded explicitly as assumptions so
-`sensitivity_analysis.md` and `strengths_and_weaknesses.md` can cite them; they
-are not listed in `assumptions.md`. Reference every assumption by content, not
-by serial number. Classify by content — global if it conditions the whole
-problem, method-local if it attaches to a single method — not by anticipating
-what a grader expects to see.
+假设按作用范围拆分。`assumptions.md` 只记录全局假设——即约束整个问题的数据、范围或环境的假设（例如单种群抽样、SI 单位、静风飞行）；它生成论文的 Assumptions 章节，并保存共享符号表。方法局部假设——与某一方法或方程绑定的函数形式、估计量或范围选择（例如状态的指数衰减、特定插补方案、不剔除异常值）——在相关的 `q<N>_methodology.md` 中使用处说明，并明确表述为假设，以便 `sensitivity_analysis.md` 和 `strengths_and_weaknesses.md` 引用；这些假设不列入 `assumptions.md`。引用每条假设时按内容，不按编号。按内容分类：若某假设约束整个问题，则为全局假设；若只附属于单一方法，则为方法局部假设；不要按预判评分人希望看到什么来分类。
 
-## Artifact status markers
-Work runs in parallel and returns to earlier stages, so any document may be read
-while parts of it are unfinished or known-wrong. Mark those parts in place rather
-than leaving the reader to infer completeness from silence.
+## 产物状态标记
+工作并行推进，并会回退到较早阶段，因此任何文档都可能在部分内容尚未完成或已知有误时被阅读。应在原处标记这些部分，而不是让读者从无标记处推断完整性。
 
-- `[PLACEHOLDER]` — nothing written here yet, and what belongs here is known.
-  Use for a `.tex` section awaiting a first draft, a table row whose value has
-  not been produced, a methodology sub-part not yet specified.
-- `[PENDING]` — content exists but is superseded or unverified, and a specific
-  action will replace it. Use for a `.tex` passage that needs rewriting after a
-  model change, code that needs modification, a result awaiting a re-run.
-example:
+- `[PLACEHOLDER]`——此处尚未写入内容，但应写什么已知。用于等待初稿的 `.tex` 章节、尚未产出数值的表格行、尚未明确的方法论子部分。
+- `[PENDING]`——内容已存在，但已被取代或尚未验证，并且有具体动作会替换它。用于模型变更后需要重写的 `.tex` 段落、需要修改的代码、等待重新运行的结果。
+
+示例：
 <!-- [PLACEHOLDER] | Await: <what‑to‑produce> -->
 <!-- [PENDING] | Await: <trigger‑action> -->
-Every marker names what it is waiting on: the `review/` thread, work-order task,
-script, or decision that will clear it. A bare marker states that something is
-missing without telling the reader who clears it or when.
 
-A downstream team may write against a marked artifact. Doing so is a choice, not
-a violation: carry the marker forward into what you produce, and ensure users
-are aware of and review the marker if you intend to clear it. Do not silently
-treat marked content as final.
+每个标记都要写明它在等待什么：`review/` 线程、工作单任务、脚本或将其清除的决定。裸标记只说明有内容缺失，却不告诉读者由谁清除、何时清除。
 
-## Cross-team synchronization (read before acting)
-Model files and solver results change often, and acting on a stale copy wastes
-work.
-Before starting a task, and again before writing anything downstream:
-- Modeling and Writing: re-read the `model/` living docs (`assumptions.md`,
-  `summary_sheet.md`, `sensitivity_analysis.md`, `result_interpretation.md`,
-  `strengths_and_weaknesses.md`) and the latest solver outputs in `figures/`
-  and `code/data/processed/`.
-- Coding: re-read `model/q<N>_methodology.md` before a solver run so the
-  implementation matches current model.
-- All agents: check `git log` / `git diff` for recent changes to `model/` and
-  `figures/`, and scan `review/` for open threads addressed to your team.
+下游团队可以依据已标记的产物写作。这样做是一种选择，不是违规：把标记带入你产出的内容；如果你打算清除标记，要确保使用者知晓并复核该标记。不要默默把已标记内容当作最终内容。
 
-Codex and Workbuddy in particular do not receive automatic file-change
-notifications. At the start of every task, before relying on any cached context,
-they must re-read:
-- the repository commit log (`git log`, and `git diff` for the relevant range);
-- the updated `model/` living documents;
-- the updated solver output files under `figures/`;
-- the updated derived data under `code/data/processed/`.
+## 跨团队同步（行动前阅读）
+模型文件和求解器结果经常变化，基于过期副本行动会浪费工作。
+开始任务前，以及再次向下游写入任何内容前：
+- Modeling 和 Writing：重新阅读 `model/` 的活文档（`assumptions.md`、
+  `summary_sheet.md`、`sensitivity_analysis.md`、`result_interpretation.md`、
+  `strengths_and_weaknesses.md`），以及 `figures/` 和 `code/data/processed/` 中最新的求解器输出。
+- Coding：在运行求解器前重新阅读 `model/q<N>_methodology.md`，使实现与当前模型一致。
+- 所有 agent：检查 `git log` / `git diff` 中 `model/` 和 `figures/` 的近期变更，并扫描 `review/` 中发给本团队的未关闭线程。
 
-## Interpreting solver results
-Coding produces the numbers and flags anomalies via the review module —
-divergence, instability, runtime, or an implementation that contradicts the
-methodology document.
+Codex 和 Workbuddy 尤其不会收到文件变更自动通知。每个任务开始时，在依赖任何缓存上下文之前，它们必须重读：
+- 仓库提交日志（`git log`，以及相关范围的 `git diff`）；
+- 更新后的 `model/` 活文档；
+- `figures/` 下更新后的求解器输出文件；
+- `code/data/processed/` 下更新后的派生数据。
 
-Writing owns `result_interpretation.md` and fills it in before drafting the
-corresponding paper section: the measured value in one column, what it means in
-the next. Modeling reviews the interpretation column and raises a review thread
-when a reading is wrong or a result is implausible, and carries the confirmed
-readings into `sensitivity_analysis.md` and `strengths_and_weaknesses.md`.
+## 解读求解器结果
+Coding 产出数值，并通过评审模块标记异常——发散、不稳定、运行时长，或与方法论文档相矛盾的实现。
 
-Writing is the team that must state what a result means in order to draft, so
-interpretation is recorded where it is produced instead of being requested from
-modeling first. Modeling holds the correctness check because it owns the methods
-and the two documents that cite the readings.
+Writing 负责 `result_interpretation.md`，并在起草对应论文章节前填写：一列是实测值，下一列是它的含义。Modeling 评审解读列，当读数错误或结果不合理时发起评审线程，并将确认后的读数带入 `sensitivity_analysis.md` 和 `strengths_and_weaknesses.md`。
 
-## Task-scoped rules (Claude Code skills)
-Three task-scoped rule sets live as Claude Code skills under
-`.claude/skills/`, which hold their authoritative text. Codex and Workbuddy
-read the `SKILL.md` files and mirror them into their own adapters.
-- Review module — `.claude/skills/review-thread/SKILL.md`: how cross-team
-  communication works in `review/` (one file per thread, lifecycle
-  `open -> ack -> resolved`, promote durable lessons to `memory/`), and the
-  required fields of a coding work order.
-- Coding standards — `.claude/skills/coding-pipeline/SKILL.md`: `src/` vs
-  `scripts/` split, the solve -> `.npz` -> plot pipeline, seeding, figure
-  naming, `data/raw/` read-only.
-- LaTeX conventions — `.claude/skills/latex-paper/SKILL.md`: one sentence per
-  line in `.tex`, build artifacts git-ignored.
-- Translate docs — `.claude/skills/translate-docs/SKILL.md`: regenerating the
-  Chinese reader-facing copy of a `model/` document after its English source is
-  finished or changed (naming, full vs update mode, what is never translated).
+Writing 是起草前必须说明结果含义的团队，因此解读记录在产生它的地方，而不是先向 Modeling 索取。Modeling 负责正确性检查，因为它拥有方法，以及两份引用这些读数的文档。
 
-## Document language
-Reasoning-dense authoritative documents are written in English; the reader-
-facing Chinese copies are derived from them.
+## 任务范围内的规则（Claude Code skills）
+三套任务范围内的规则以 Claude Code skills 的形式位于
+`.claude/skills/` 下，权威文本保存在那里。Codex 和 Workbuddy
+读取这些 `SKILL.md` 文件，并将其镜像到各自的适配层。
+- 评审模块——`.claude/skills/review-thread/SKILL.md`：`review/` 中跨团队沟通如何运作（每个线程一个文件，生命周期
+  `open -> ack -> resolved`，将持久有效的经验沉淀到 `memory/`），以及 Coding 工作单的必填字段。
+- 编码规范——`.claude/skills/coding-pipeline/SKILL.md`：`src/` 与
+  `scripts/` 的分工，solve -> `.npz` -> plot 流程，随机种子设置，图命名，`data/raw/` 只读。
+- LaTeX 约定——`.claude/skills/latex-paper/SKILL.md`：`.tex` 中每行一句，构建产物由 git 忽略。
 
-- `model/` modeling and analysis documents are authoritative in English. Claude
-  reasons over the English version, and no Chinese copy is fed back into its
-  reasoning context. Keeping the reasoning context English-only is the reason
-  the copies exist separately: a copy may read as translationese without
-  degrading the model, because the model never reads it back.
-- Each English `model/` document has a Chinese copy beside it named
-  `<english-stem>_<中文名>.md`, regenerated from the English by a relay model
-  (qwen/glm) through the `translate-docs` skill, not hand-translated or edited
-  in place. `_METHODOLOGY_TEMPLATE.md` is a scaffold and is never translated.
-- Skills under `.claude/skills/` and code comments stay in English.
-- The paper's language is unchanged by this split; `paper/` is out of scope
-  here.
+## 文档语言
+仓库的工作语言为简体中文。
 
-## Output specifications
-Applies to all prose every agent produces — paper text, review threads, commit
-messages, and status reports to the team.
+- `model/`、`review/`、`memory/`、协作规则与技能说明均以中文撰写，中文版本即权威版本，不再维护英文原稿或派生副本。
+- 文件名、路径、代码标识符、YAML 键名与枚举取值、状态标记 `[PLACEHOLDER]`/`[PENDING]` 保持英文。
+- 代码注释保持英文。
+- 论文语言不受此规定影响；`paper/` 不在本节范围内。
 
-Content constraints:
-- Every performance claim cites a figure, table, or number.
-- Separate objective statement from evaluation: results state what was measured;
-  strengths/weaknesses (and any judgment) are labeled as such.
-- No filler intensifiers (significantly, remarkably, notably) unless backed by a
-  number.
-- No negation-then-affirmation for rhetorical effect ("not merely X, but Y";
-  "far from being X, it is Y").
-- Work content into the sentence rather than parking it in parentheses: if the
-  material belongs in the argument, it belongs in the clause. Reserve
-  parentheses for what reads as genuinely secondary — a unit, a symbol
-  definition, a source or seed, a cross-reference. Every parenthetical carries
-  content of that kind; an aside that addresses the grader or restates the
-  prompt's requirement carries none: "(no additional assumptions required)",
-  "(detailed elaboration)", "(as required)", "(meeting the requirement)". State
-  the substance directly; if no assumption is needed, add none.
-- Justify every choice by its effect on the model, the data, or the result:
-  what it assumes, what it buys, what it costs. "A grader would expect this
-  here" and "listing an extra assumption is nearly free" are not reasons — they
-  argue from anticipated reception rather than from the substance, and they
-  produce content that survives review without earning its place.
+## 输出规范
+适用于所有 agent 产出的全部文字内容——论文正文、评审线程、提交信息和给团队的状态报告。
 
-Reporting tone:
-- Name what was created or changed with a plain noun phrase. Drop selling-point
-  parentheticals and readability-tailored elaboration from summaries.
-  Rejected: "model/: four continuously-maintained docs (kept in sync all along,
-  not written at project close)". Preferred: "the new model/ directory".
-- State outcomes plainly: if something failed or was skipped, say so; do not
-  soften or oversell. Prefer honest correction over agreement.
-- Discuss the model and method directly, and state file changes as plain facts
-  at the point they happen. Reserve process narration for what changes the
-  reader's next action: a blocker, a decision needed, a deviation from what was
-  asked. Sentences whose whole content is the state of your own work —
-  "no files written yet; this is the detail-check you asked for", "just to
-  confirm before I start", "as you can see" — report on the reporting.
-- Do not open a reply with flattery of the request or of the user.
+内容约束：
+- 每项性能结论都要引用图、表或数字。
+- 将客观陈述与评价分开：结果说明测量了什么；优势/不足（以及任何判断）要按其性质标注。
+- 不使用填充性强调词（“显著”“惊人地”“尤其”），除非有数字支撑。
+- 不为修辞效果使用先否定后肯定的句式（“不仅仅是 X，而是 Y”；“远非 X，实为 Y”）。
+- 将内容融入句子，而不是塞进括号：如果材料属于论证，就应放进分句。括号只保留给确实次要的内容——单位、符号定义、来源或随机种子、交叉引用。每个括号都应承载这类内容；面向评分人或复述题目要求的插入语不承载任何此类内容：“（无需额外假设）”、“（详细展开）”、“（按要求）”、“（满足要求）”。直接陈述实质内容；如果不需要假设，就不要添加。
+- 每个选择都要根据其对模型、数据或结果的影响来论证：它假设了什么、换来了什么、代价是什么。“评分人会希望这里这样写”和“多列一条假设几乎不花成本”不是理由——它们从预期接受度而非实质内容出发论证，会产生通过评审却没有存在价值的内容。
+
+报告语气：
+- 用朴素的名词短语说明创建或更改了什么。删去摘要中的卖点式括号和为可读性而做的铺陈。
+  不推荐：“model/：四份持续维护的文档（全程同步，而非项目收尾时才写）”。推荐：“新建的 model/ 目录”。
+- 平实陈述结果：如果某事失败或被跳过，就说明；不要弱化或夸大。宁可诚实纠正，也不要附和。
+- 直接讨论模型和方法，并在文件变更发生时将其作为平实事实说明。过程叙述只保留给会改变读者下一步行动的内容：阻塞项、需要做出的决定、偏离要求之处。整句都在讲自己工作状态的句子——“还没有写文件；这就是你要的细节检查”、“只是开始前确认一下”、“如你所见”——只是在报告“报告”本身。
+- 回复开头不要奉承请求或用户。

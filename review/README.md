@@ -1,20 +1,13 @@
-# Review module
+# 评审模块
 
-Cross-team communication for this repo. One markdown file per thread, named
-`YYYY-MM-DD-short-slug.md`, created from `review/_TEMPLATE.md`.
+本仓库的跨团队沟通机制。每个线程一个 markdown 文件，命名为 `YYYY-MM-DD-short-slug.md`，由 `review/_TEMPLATE.md` 创建。
 
-## How it works
-- File a thread when one team needs another to act or decide (e.g. Coding
-  reports a solver anomaly to Modeling).
-- Set `from`, `to`, `severity`, and `refs` in the frontmatter so the right team
-  can find it and open the referenced artifacts.
-- Lifecycle: `open` -> `ack` (recipient has seen it) -> `resolved`.
-- All agents scan `review/` for open threads addressed to their team at the
-  start of a session (see `COLLABORATION.md`).
-- Always communicate with user before filing anything. 
+## 工作方式
+- 当一个团队需要另一个团队行动或决策时，提交一个线程（例如 Coding 向 Modeling 报告求解器异常）。
+- 在 frontmatter 中设置 `from`、`to`、`severity` 和 `refs`，以便对应的团队能找到它并打开所引用的产物。
+- 生命周期：`open` -> `ack`（接收方已看到）-> `resolved`。
+- 所有 agent 在会话开始时扫描 `review/`，查找发给本团队的 open 线程（见 `COLLABORATION.md`）。
+- 提交任何内容前，务必先与用户沟通。
 
-## Promotion to memory
-When a resolved thread carries a lesson that should outlive it (a new
-constraint, a convention), create a `memory/` file for it and link that file
-from the thread's Resolution section. Threads are conversation; `memory/` is
-the durable record.
+## 沉淀为记忆
+当已解决的线程承载了应当长期保留的经验教训（新的约束、约定）时，为其创建一个 `memory/` 文件，并在该线程的 Resolution 部分链接该文件。线程是对话；`memory/` 才是持久记录。

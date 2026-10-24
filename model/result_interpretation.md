@@ -1,26 +1,16 @@
-# Result interpretation
+# 结果解读
 
-What the solver outputs mean and whether they are plausible. Writing owns this
-document and fills it in before drafting the corresponding paper section;
-modeling reviews the interpretation column and raises a `review/` thread when a
-reading is wrong or a result is implausible (see `COLLABORATION.md`).
+求解器输出的含义以及这些输出是否合理。写作方负责本文档，并在起草相应论文章节之前填写完成；建模方审阅解读列，当某条解读有误或某个结果不合理时，发起一个 `review/` 线程（见 `COLLABORATION.md`）。
 
-Keep the measured value separate from its interpretation: the value column is
-objective, the interpretation column is a reading of it, and the review column
-records modeling's check. The paper fuses the two, so this file is the only place
-they stay separable — `sensitivity_analysis.md` and `strengths_and_weaknesses.md`
-cite it rather than the paper text.
+将测量值与其解读分开：值列是客观的，解读列是对该值的解读，审阅列记录建模方的检查。论文会将二者融合，因此本文件是它们保持可分离的唯一场所——`sensitivity_analysis.md` 和 `strengths_and_weaknesses.md` 引用本文件，而非引用论文正文。
 
-| Result (value + source) | Interpretation | Modeling review | Status |
+| 结果（值 + 来源） | 解读 | 建模审阅 | 状态 |
 |-------------------------|----------------|-----------------|--------|
 |                         |                |                 |        |
 
-## Notes
-- "Result" cites the figure/table or `code/data/processed/` file and the seed.
-- "Interpretation" states meaning and implications for
-  `sensitivity_analysis.md` and `strengths_and_weaknesses.md`.
-- "Modeling review": `ok`, or a link to the `review/` thread that flags it.
-- Report effects as numbers or figure references, not adjectives.
-- Mark an unwritten interpretation `[PLACEHOLDER]` and one awaiting a re-run
-  `[PENDING]`, each naming what clears it. A row whose value is delivered but
-  uninterpreted stays visible that way instead of reading as final.
+## 说明
+- “结果”引用图/表或 `code/data/processed/` 文件以及随机种子。
+- “解读”说明其含义，以及对 `sensitivity_analysis.md` 和 `strengths_and_weaknesses.md` 的影响。
+- “建模审阅”：`ok`，或指向标记该问题的 `review/` 线程的链接。
+- 报告效应时使用数字或图表引用，不要使用形容词。
+- 将尚未撰写的解读标记为 `[PLACEHOLDER]`，将等待重新运行的解读标记为 `[PENDING]`，并分别注明清除标记的条件。值已交付但尚未解读的行应保持这种可见状态，而不是被当作最终结论。

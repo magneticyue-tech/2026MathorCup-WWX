@@ -1,48 +1,26 @@
 ---
 name: review-thread
-description: How cross-team communication works in this repo via the review/ module, including the required fields of a coding work order. Invoke when opening, acknowledging, resolving, or referencing a review thread — flagging a solver anomaly, raising an implausible-result question, handing a methodology document to the coding team, or promoting a resolved lesson to memory/.
+description: 本仓库如何通过 review/ 模块进行跨团队沟通，包括编码工作单的必填字段。在打开、确认、解决或引用评审线程时调用——标记求解器异常、提出结果不可信的问题、将方法论文档交给编码团队，或将已解决的教训提升到 memory/。
 ---
 
-# Review module
+# Review 模块
 
-> Adapter mirror of `.claude/skills/review-thread/SKILL.md` (authoritative
-> source). Keep this file in sync with the source — change a rule there first,
-> then mirror it here. `COLLABORATION.md` and `CLAUDE.md` point to the same
-> source. Do not edit the rule text directly in this adapter.
+> `.claude/skills/review-thread/SKILL.md`（权威来源）的适配器镜像。保持此文件与源文件同步——先在源文件中修改规则，再在此处镜像。`COLLABORATION.md` 和 `CLAUDE.md` 指向同一来源。不要直接在此适配器中编辑规则文本。
 
-- Cross-team communication lives in `review/`, one markdown file per thread
-  (`review/_TEMPLATE.md`), lifecycle `open -> ack -> resolved`.
-- Set `from`, `to`, `severity`, and `refs` in the frontmatter so the recipient
-  team can find the thread and open the referenced artifacts.
-- When a resolved thread carries a durable lesson, promote it to a `memory/`
-  file and close the thread with a `[[link]]` to it.
+- 跨团队沟通位于 `review/`，每个评审线程一个 Markdown 文件（`review/_TEMPLATE.md`），生命周期为 `open -> ack -> resolved`。
+- 在 frontmatter 中设置 `from`、`to`、`severity` 和 `refs`，以便接收团队能够找到该线程并打开所引用的产物。
+- 当已解决的线程带有可长期保留的教训时，将其提升为 `memory/` 文件，并用指向该文件的 `[[link]]` 关闭线程。
 
-Who raises what (recommended assignment; see `COLLABORATION.md`):
-- Coding produces the numbers and flags anomalies here — divergence,
-  instability, runtime — and raises a thread when implementation contradicts the
-  methodology document.
-- Writing interprets results in `model/result_interpretation.md` and raises a
-  thread when a model or result reads as implausible or inconsistent with the
-  paper's claims.
-- Modeling reviews that interpretation and raises a thread when a reading is
-  wrong, then carries confirmed readings into `sensitivity_analysis.md` and
-  `strengths_and_weaknesses.md`.
+谁提出什么（建议分工；见 `COLLABORATION.md`）：
+- 编码团队产出数值，并在此标记异常——发散、不稳定、运行时间——当实现与方法论文档相矛盾时发起线程。
+- 写作团队在 `model/result_interpretation.md` 中解读结果，当模型或结果看起来不可信，或与论文主张不一致时发起线程。
+- 建模团队审阅该解读，当某项解读有误时发起线程，然后将确认后的解读写入 `sensitivity_analysis.md` 和 `strengths_and_weaknesses.md`。
 
-## Coding work order
+## 编码工作单
 
-A work order is a `review/` thread from modeling to coding that translates a
-methodology document into implementation tasks. It states the code structure,
-not just the math:
+工作单是建模团队发给编码团队的一个 `review/` 线程，用于将方法论文档转化为实现任务。它要说明代码结构，而不只是数学内容：
 
-- The files to add or change and where each belongs — `code/src/` for imported
-  logic, `code/scripts/` for run-time entry points, per the `coding-pipeline`
-  skill.
-- For each file, the functions/classes to implement: name, signature (arguments
-  and return), and what each computes. Reference the methodology section that
-  specifies the equation or method.
-- The output artifacts each script writes (`.npz`/CSV under
-  `code/data/processed/`, figures under `figures/`) and the figure/script name
-  pairing.
-- Acceptance criteria: `black` and `ruff` pass, seeds recorded, figures
-  regenerate from processed data without re-solving, plus any per-task numerical
-  or sign checks.
+- 要新增或修改的文件及其各自所属位置——按照 `coding-pipeline` 技能，`code/src/` 用于可导入的逻辑，`code/scripts/` 用于运行时入口。
+- 对每个文件，说明要实现的功能/类：名称、签名（参数与返回值）以及各自计算什么。引用规定方程或方法的方法论章节。
+- 每个脚本写出的输出产物（`code/data/processed/` 下的 `.npz`/CSV，`figures/` 下的图），以及图与脚本的命名对应关系。
+- 验收标准：`black` 和 `ruff` 通过，记录种子，图能从处理后数据重新生成而无需重新求解，以及任何任务级数值或符号检查。

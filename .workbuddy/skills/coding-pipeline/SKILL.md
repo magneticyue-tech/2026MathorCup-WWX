@@ -1,43 +1,26 @@
 ---
 name: coding-pipeline
-description: Standards for writing solver/model code, solve drivers, plotting scripts, and figures/tables in this repo. Invoke when adding or editing anything under code/ — src/ modules, scripts/ entry points, .npz outputs, or figures. Covers the src-vs-scripts split, the solve→npz→plot pipeline, seeding, and figure naming.
+description: 本仓库中求解器/模型代码、求解驱动脚本、绘图脚本以及图表/表格的编写规范。在新增或编辑 `code/` 下的任何内容时调用——包括 `src/` 模块、`scripts/` 入口、`.npz` 输出或图表。涵盖 `src` 与 `scripts` 的划分、solve→npz→plot 流水线、随机种子设置以及图表命名。
 ---
 
-# Coding pipeline standards
+# 编码流水线规范
 
-> Adapter mirror of `.claude/skills/coding-pipeline/SKILL.md` (authoritative
-> source). Keep this file in sync with the source — change a rule there first,
-> then mirror it here. `COLLABORATION.md` and `CLAUDE.md` point to the same
-> source. Do not edit the rule text directly in this adapter.
+> `.claude/skills/coding-pipeline/SKILL.md` 的适配镜像（权威来源）。保持本文件与
+> 源文件同步——先在那里改动规则，再镜像到此处。`COLLABORATION.md` 和 `CLAUDE.md` 指向同一
+> 来源。不要直接在此适配文件中编辑规则文本。
 
-Authoritative source for the `code/` directory.
+`code/` 目录的权威来源。
 
-- Python 3.11. Formatter `black`, linter `ruff`; run both before committing.
-- Every random process fixes its seed and records the value in the script.
-- `src/` vs `scripts/` is decided by import-time vs run-time, not by whether
-  code is "reusable":
-  - `code/src/` holds code you `import` — solver/model logic as functions and
-    classes, with no `__main__`, no file writes, and no plotting at import.
-  - `code/scripts/` holds entry points you run directly (one per problem or
-    figure). A script imports from `src/`, runs the solve, and/or plots. A
-    per-problem `main()` belongs here, not in `src/`.
-- Within `scripts/`, keep the solve driver separate from the plotting script so
-  figures regenerate without re-solving: a solve script writes the `.npz`, a
-  plotting script reads it. A single script does not both solve and plot.
-- Save solver results as `.npz` files under `code/data/processed/`. Plotting
-  scripts load those `.npz` files instead of re-running the solver. The pipeline
-  is solver core (`src/`) -> solve script (`scripts/`) -> `.npz`
-  (`data/processed/`) -> plotting script (`scripts/`) -> figure (`figures/`).
-- Every figure/table is produced by a script in `code/scripts/`, committed with
-  its output in `figures/`; script name matches the artifact, e.g.
-  `scripts/fig_03_sensitivity.py` -> `figures/fig_03_sensitivity.pdf`.
-- `data/raw/` is read-only; processing writes to `data/processed/`.
+- Python 3.11。格式化工具 `black`，检查工具 `ruff`；提交前两者都要运行。
+- 每个随机过程都固定其随机种子，并在脚本中记录该值。
+- `src/` 与 `scripts/` 的划分依据是导入时与运行时，而不是代码是否“可复用”：
+  - `code/src/` 存放供 `import` 的代码——以函数和类形式组织的求解器/模型逻辑，导入时不得有 `__main__`、不得写文件、不得绘图。
+  - `code/scripts/` 存放可直接运行的入口（每个问题或每张图一个）。脚本从 `src/` 导入，执行求解和/或绘图。针对单个问题的 `main()` 属于这里，不属于 `src/`。
+- 在 `scripts/` 内，求解驱动脚本与绘图脚本要分开，使图表无需重新求解即可重生成：求解脚本写出 `.npz`，绘图脚本读取它。单个脚本不得同时求解和绘图。
+- 求解器结果以 `.npz` 文件形式保存在 `code/data/processed/` 下。绘图脚本加载这些 `.npz` 文件，而不是重新运行求解器。流水线为：求解器核心（`src/`）-> 求解脚本（`scripts/`）-> `.npz`（`data/processed/`）-> 绘图脚本（`scripts/`）-> 图表（`figures/`）。
+- 每张图/每个表都由 `code/scripts/` 中的脚本生成，并与输出一并提交到 `figures/`；脚本名与产物名一致，例如 `scripts/fig_03_sensitivity.py` -> `figures/fig_03_sensitivity.pdf`。
+- `data/raw/` 为只读；处理结果写入 `data/processed/`。
 
-## Workbuddy execution note
+## Workbuddy 执行说明
 
-The project targets Python 3.11 syntax and features. Run `code/scripts/` entry
-points with the managed Python runtime (see the session's available runtimes),
-not a bare `python`. Install `black`, `ruff`, and any solver dependencies into
-the isolated venv under the managed runtime directory — never globally and never
-into the system interpreter. The managed 3.13 runtime runs 3.11-compatible code;
-do not introduce 3.12+ only syntax into `code/`.
+本项目面向 Python 3.11 语法与特性。请使用受管 Python 运行时（参见当前会话可用的运行时）运行 `code/scripts/` 入口，而不要使用裸 `python`。将 `black`、`ruff` 及任何求解器依赖安装到受管运行时目录下的隔离 venv 中——绝不全局安装，也绝不安装到系统解释器。受管的 3.13 运行时可以运行 3.11 兼容的代码；不要将 3.12+ 独有的语法引入 `code/`。

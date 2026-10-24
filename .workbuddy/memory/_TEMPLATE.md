@@ -1,14 +1,14 @@
 ---
 name: <short-kebab-case-slug>
-description: <one-line summary used to judge relevance during recall>
+description: <一句话摘要，用于在召回时判断相关性>
 metadata:
   type: decision | constraint | reference | convention
 ---
 
-<The fact, stated factually. For a decision, follow with:>
+<客观陈述该事实。若为决策，则其后补充：>
 
-**Why:** <the reason the choice was made>
+**Why:** <做出该选择的原因>
 
-**How to apply:** <what to do differently because of it>
+**How to apply:** <因此应当如何调整做法>
 
-<Link related memories with [[their-name-slug]].>
+<用 [[their-name-slug]] 链接相关的记忆。>
