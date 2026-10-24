@@ -1,13 +1,11 @@
 # 协作规范
 
-本文件是所有 agent 协作规范。
-
 ## 团队角色与职责归属
 - Modeling——负责假设、推导、模型选择，以及评审结果解读。负责 `model/`。
 - Coding——负责实现、求解器运行、图和表。负责 `code/`。
 - Writing——负责论文草稿、排版和结果解读。负责 `paper/` 与 `model/result_interpretation.md`。
 
-## model 目录中的文档
+## model/
 
 按问题编排的方法论文档，每个问题一份，命名为 `q<N>_methodology.md`
 （`q1_methodology.md`、`q2_methodology.md`、……），由
