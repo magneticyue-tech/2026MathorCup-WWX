@@ -1,0 +1,361 @@
+# 问题 2 方法论（model/q2_methodology.md）的预检查代码，共 6 个检查，各服务一个或几个设计决策。
+# 在项目根目录（或其任一子目录）运行：python src/q2_methodology_checks.py，约 3 分钟。
+# 检查 4 的 GBM 对照约需 10 分钟，默认不运行；设环境变量 RUN_GBM=1 时运行。
+# 只读 data/raw 与 results/data_audit，不写任何文件。各段以 "# %%" 分隔，可在 VS Code / Jupyter 中逐段运行。
+
+# %% 公共部分
+import os
+import warnings
+from pathlib import Path
+import numpy as np
+import pandas as pd
+from scipy.stats import rankdata
+from scipy.sparse import coo_matrix
+from scipy.sparse.csgraph import connected_components
+from scipy.cluster.hierarchy import linkage, fcluster
+from scipy.spatial.distance import squareform
+
+pd.set_option("display.width", 200)
+ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "data" / "raw" / "4.csv").exists())
+RAW, AUDIT = ROOT / "data" / "raw", ROOT / "results" / "data_audit"
+X = pd.read_csv(RAW / "1.csv")           # 化学数据
+y = pd.read_csv(RAW / "4.csv")           # 品评小组结果（标准化空间）
+CHEM, SENS = list(X.columns[3:]), list(y.columns[3:])
+R2 = pd.read_csv(RAW / "2.csv", index_col=0)
+R2.index, R2.columns = CHEM, CHEM        # 列序与附件 1 一致（审计已逐系数复算）
+DIC = pd.read_csv(AUDIT / "chemical_dictionary.csv").set_index("csv1_field")
+assert len(CHEM) == 231 and len(SENS) == 50 and (X.beer.values == y.beer.values).all()
+
+COMPOSITE = ["esters_sum", "aroma_hops_sum", "acids_sum", "sulfur_sum", "kcalperc"]
+INTERNAL_STD = DIC.index[DIC.origin_paper == "Internal standard solution"].tolist()
+CAND = [c for c in CHEM if c not in COMPOSITE + INTERNAL_STD]
+DIMS = [s for s in SENS if s != "barnyard"]     # barnyard 不做归因（memory/barnyard-stale-hops-duplicate.md）
+STYLE = y.tasting_category_fine.values
+TAU = 0.6
+SEED = 0
+
+
+def tie_pair_counts(z):
+    """与 q1_methodology_checks.py 检查 3 相同：每对啤酒在多少维上 z 精确并列。"""
+    cnt = {}
+    for c in z.columns:
+        for idx in pd.Series(np.arange(len(z))).groupby(z[c].round(9).values).groups.values():
+            idx = sorted(idx)
+            for a in range(len(idx)):
+                for b in range(a + 1, len(idx)):
+                    cnt[(idx[a], idx[b])] = cnt.get((idx[a], idx[b]), 0) + 1
+    return cnt
+
+
+def components(cnt, k, n):
+    e = [p for p, v in cnt.items() if v >= k]
+    A = coo_matrix((np.ones(len(e)), ([i for i, _ in e], [j for _, j in e])), shape=(n, n))
+    return connected_components(A, directed=False)[1]
+
+
+PANEL = components(tie_pair_counts(y[SENS]), 3, len(y))       # 推断品评团，k=3，单例自成一团
+PANEL_IDX = [np.where(PANEL == g)[0] for g in np.unique(PANEL)]
+
+
+def na_lowest(df):
+    """问题 1 主设定：单化合物 NA 排在最低（并列）。"""
+    return df.fillna(-np.inf)
+
+
+def zrank(M):
+    """逐列平均秩后标准化；两列标准化秩的均值内积即 Spearman 系数。"""
+    R = np.column_stack([rankdata(M[:, j]) for j in range(M.shape[1])])
+    R = R - R.mean(0)
+    s = R.std(0)
+    s[s == 0] = 1
+    return R / s
+
+
+def modules(rabs, tau=TAU):
+    """|ρ| 加权图上的平均连接聚类：两组之间平均 |ρ| ≥ τ 才合并。"""
+    D = np.clip(1 - rabs, 0, None)
+    np.fill_diagonal(D, 0)
+    return fcluster(linkage(squareform((D + D.T) / 2, checks=False), "average"), 1 - tau, "distance")
+
+
+def top3_graph(score, mod, k=3):
+    """按得分降序取前 k 个，每个模块至多一个。"""
+    sel, used = [], set()
+    for j in np.argsort(-score):
+        if mod[j] not in used:
+            sel.append(j)
+            used.add(mod[j])
+            if len(sel) == k:
+                break
+    return sel
+
+
+def top3_forward(RX, ry, mod, k=3):
+    """图约束前向选择：每步取与残差秩相关最大的化合物，再把已选化合物从秩中线性剔除。"""
+    sel, used, r, RXr = [], set(), ry.copy(), RX.copy()
+    for _ in range(k):
+        sc = np.abs(RXr.T @ r) / (np.sqrt((RXr ** 2).sum(0) * (r ** 2).sum()) + 1e-12)
+        sc[[mod[j] in used for j in range(len(sc))]] = -1
+        j = int(np.argmax(sc))
+        sel.append(j)
+        used.add(mod[j])
+        Q = np.column_stack([np.ones(len(r))] + [RX[:, s] for s in sel])
+        P = Q @ np.linalg.pinv(Q)
+        r, RXr = ry - P @ ry, RX - P @ RX
+    return sel
+
+
+def jac(a, b):
+    a, b = set(a), set(b)
+    return len(a & b) / len(a | b)
+
+
+def panel_bootstrap(rng):
+    """品评团簇 bootstrap：有放回抽品评团，返回啤酒下标。"""
+    pick = rng.integers(0, len(PANEL_IDX), len(PANEL_IDX))
+    return np.concatenate([PANEL_IDX[p] for p in pick])
+
+
+XC = na_lowest(X[CAND]).values
+RX, RY = zrank(XC), zrank(y[SENS].values)
+RHO = RX.T @ RY / len(y)                                       # 225 × 50 Spearman
+MOD = modules(R2.loc[CAND, CAND].abs().values)
+KD = [SENS.index(s) for s in DIMS]
+MAIN = {k: top3_graph(np.abs(RHO[:, k]), MOD) for k in KD}
+print(f"候选 {len(CAND)} 个（231 − 综合指标 {len(COMPOSITE)} − 内标 {INTERNAL_STD}）；归因维度 {len(DIMS)} 个；"
+      f"推断品评团 {len(PANEL_IDX)} 个（含单例）")
+
+
+# %% 检查 1
+# 检查 1 | 服务决策 D1（候选集合）与 D2（共表达图的阈值与模块）
+from sklearn.metrics import adjusted_rand_score
+
+err = np.abs(X[CHEM].corr(method="spearman").values - R2.values).max()
+print(f"附件 2 与附件 1 逐对 Spearman 的最大差: {err:.1e}（bootstrap 可在重抽样本上重建该图）")
+
+print("\n综合指标与其最相关单列:")
+for c in COMPOSITE:
+    r = R2[c].drop(COMPOSITE).abs()
+    print(f"  {c:15s} → {r.idxmax():20s} |ρ| = {r.max():.2f}")
+print(f"内标: {INTERNAL_STD}，附件 8 来源 = {DIC.loc[INTERNAL_STD[0], 'origin_paper']}，"
+      f"附件 1 最小值 {X[INTERNAL_STD[0]].min():.2f}（无底值）")
+
+A = R2.loc[CAND, CAND].abs().values
+iu = np.triu_indices(len(CAND), 1)
+q = np.quantile(A[iu], [.5, .9, .99])
+neg = (R2.loc[CAND, CAND].values[iu] < 0) & (A[iu] >= .5)
+print(f"\n候选间 |ρ|: 中位 {q[0]:.2f}，90% 分位 {q[1]:.2f}，99% 分位 {q[2]:.2f}；|ρ|≥0.5 的边中负相关 {neg.sum()} / {(A[iu] >= .5).sum()}")
+
+origin = DIC.loc[CAND, "origin_paper"].fillna("NA").values
+rng = np.random.default_rng(SEED)
+boots = [panel_bootstrap(rng) for _ in range(100)]
+boot_R = [X[CAND].iloc[ii].corr(method="spearman").abs().fillna(0).values for ii in boots]
+for tau in (.5, .6, .7):
+    m = modules(A, tau)
+    s = pd.Series(m).value_counts()
+    multi = s[s > 1].index
+    purity = np.mean([pd.Series(origin[m == g]).value_counts(normalize=True).iloc[0] for g in multi])
+    ari = [adjusted_rand_score(m, modules(Rb, tau)) for Rb in boot_R]
+    print(f"τ={tau}: 边 {int((A[iu] >= tau).sum())} 条；模块 {len(s)} 个，其中多成员 {len(multi)} 个覆盖 {s[multi].sum()} 个化合物，"
+          f"最大 {s.max()}；多成员模块来源纯度 {purity:.2f}；bootstrap ARI 中位 {np.median(ari):.2f} "
+          f"[{np.quantile(ari, .05):.2f}, {np.quantile(ari, .95):.2f}]")
+cc = connected_components(A >= TAU, directed=False)[1]
+print(f"对照：τ={TAU} 的连通分量最大 {pd.Series(cc).value_counts().max()} 个化合物（链式连接），因此模块不用连通分量")
+M = pd.Series(MOD, index=CAND)
+for c in ["ethanol..v.v.", "isopentyl_acetate", "ethyl_octanoate", "color.EBC.", "linalool"]:
+    print(f"  {c} 所在模块: {[x for x in M[M == M[c]].index]}")
+
+
+# %% 检查 2
+# 检查 2 | 服务决策 D3（关联度量）与 D4（显著性门槛）
+rng = np.random.default_rng(SEED)
+null = np.array([np.abs(RX.T @ RY[rng.permutation(len(y))] / len(y)).max(0) for _ in range(1000)])
+q95 = np.quantile(null, .95, axis=0)
+mx = np.abs(RHO).max(0)
+print(f"每维 max|ρ| 的置换 95% 分位: 中位 {np.median(q95):.3f}；Top-1 超过该门槛的维度 {int((mx[KD] > q95[KD]).sum())} / {len(KD)}")
+print("未超过的维度:", [SENS[k] for k in KD if mx[k] <= q95[k]])
+pos3 = np.array([[abs(RHO[j, k]) > q95[k] for j in MAIN[k]] for k in KD])
+print(f"主方法 Top-3 中超过门槛的个数（按位置）: {pos3.sum(0).tolist()} / {len(KD)}")
+
+raw = {k: list(np.argsort(-np.abs(RHO[:, k]))[:3]) for k in KD}
+dup = [SENS[k] for k in KD if len(set(MOD[raw[k]])) < 3]
+print(f"\n不加图约束的边际 Top-3 中有 ≥2 个同模块化合物的维度: {len(dup)} / {len(KD)}")
+print("  例:", {SENS[k]: [CAND[j] for j in raw[k]] for k in [SENS.index(s) for s in dup[:3]]})
+
+
+# %% 检查 3
+# 检查 3 | 服务决策 D5（边际选择还是前向选择）与 D2（τ 对稳定性的影响）
+for tau in (.5, .6, .7):
+    m0 = modules(A, tau)
+    full = {"边际": {k: top3_graph(np.abs(RHO[:, k]), m0) for k in KD},
+            "前向": {k: top3_forward(RX, RY[:, k], m0) for k in KD}}
+    stat = {r: [np.zeros((len(KD), 3)), np.zeros((len(KD), 3)), []] for r in full}
+    for ii, Rb in zip(boots, boot_R):
+        mb = modules(Rb, tau)
+        RXb, RYb = zrank(XC[ii]), zrank(y[SENS].values[ii])
+        Cb = RXb.T @ RYb / len(ii)
+        for i, k in enumerate(KD):
+            for rule, sel in [("边际", top3_graph(np.abs(Cb[:, k]), mb)), ("前向", top3_forward(RXb, RYb[:, k], mb))]:
+                f = full[rule][k]
+                stat[rule][0][i] += [j in sel for j in f]
+                stat[rule][1][i] += [m0[j] in set(m0[sel]) for j in f]
+                stat[rule][2].append(jac(sel, f))
+    for rule, (pc, pm, jj) in stat.items():
+        pc, pm = pc / len(boots), pm / len(boots)
+        print(f"τ={tau} {rule}: 化合物入选频率（按位置）{pc.mean(0).round(2).tolist()}，模块 {pm.mean(0).round(2).tolist()}；"
+              f"bootstrap 与全样本 Top-3 的 Jaccard 均值 {np.mean(jj):.3f}；Top-1 频率 ≥0.6 的维度 {int((pc[:, 0] >= .6).sum())}")
+        if tau == TAU and rule == "边际":
+            PI_MAIN = pc
+
+
+# %% 检查 4
+# 检查 4 | 服务决策 D6（对照方法与方法间 Jaccard）
+from sklearn.linear_model import ElasticNetCV
+from sklearn.model_selection import GroupKFold, StratifiedGroupKFold
+
+warnings.filterwarnings("ignore")
+D = pd.get_dummies(STYLE).values.astype(float)
+P = D @ np.linalg.pinv(D)
+RXs, RYs = RX - P @ RX, RY - P @ RY
+RHO_S = (RXs / RXs.std(0).clip(1e-9)).T @ (RYs / RYs.std(0)) / len(y)   # 风格内（剔除风格均值后的秩相关）
+
+gkf = list(GroupKFold(5).split(RX, groups=PANEL))
+others = {"不加图约束的边际": raw,
+          "前向": {k: top3_forward(RX, RY[:, k], MOD) for k in KD},
+          "ElasticNet": {k: top3_graph(np.abs(ElasticNetCV(l1_ratio=.5, cv=gkf, alphas=30, max_iter=5000)
+                                              .fit(RX, RY[:, k]).coef_) + 1e-9 * np.abs(RHO[:, k]), MOD) for k in KD},
+          "风格内边际": {k: top3_graph(np.abs(RHO_S[:, k]), MOD) for k in KD}}
+if os.environ.get("RUN_GBM") == "1":
+    from sklearn.ensemble import HistGradientBoostingRegressor
+    from sklearn.inspection import permutation_importance
+    Xg = X[CAND].fillna(0).values                      # 问题 1 主设定：单化合物 NA 编码为 0（低于全部观测值）
+    splits = list(StratifiedGroupKFold(5, shuffle=True, random_state=SEED).split(Xg, STYLE, PANEL))
+    gbm = {}
+    for k in KD:
+        imp = np.zeros(len(CAND))
+        for tr, te in splits:
+            mdl = HistGradientBoostingRegressor(max_depth=3, min_samples_leaf=20, learning_rate=.05, max_iter=200,
+                                                random_state=SEED).fit(Xg[tr], y[SENS[k]].values[tr])
+            imp += permutation_importance(mdl, Xg[te], y[SENS[k]].values[te], n_repeats=3,
+                                          random_state=SEED, n_jobs=-1).importances_mean
+        gbm[k] = top3_graph(imp, MOD)
+    others["GBM 置换重要度"] = gbm
+
+rng = np.random.default_rng(SEED)
+rand_j = np.mean([jac(rng.choice(len(CAND), 3, replace=False), rng.choice(len(CAND), 3, replace=False))
+                  for _ in range(20000)])
+print(f"随机 3 元集合之间的 Jaccard 期望: {rand_j:.3f}")
+for name, o in others.items():
+    print(f"主方法 vs {name}: 化合物 Jaccard {np.mean([jac(MAIN[k], o[k]) for k in KD]):.3f}，"
+          f"模块 Jaccard {np.mean([jac(MOD[MAIN[k]], MOD[o[k]]) for k in KD]):.3f}，Top-1 相同 {np.mean([MAIN[k][0] == o[k][0] for k in KD]):.2f}")
+print(f"前向 vs ElasticNet: {np.mean([jac(others['前向'][k], others['ElasticNet'][k]) for k in KD]):.3f}")
+
+
+# %% 检查 5
+# 检查 5 | 服务决策 D7（风格内保持作为合理性证据）
+eta = pd.Series([1 - ((RY[:, k] - pd.Series(RY[:, k]).groupby(STYLE).transform("mean")) ** 2).sum() / len(y)
+                 for k in range(len(SENS))], index=SENS)
+print(f"风格解释的感官秩方差 η²: 中位 {eta[DIMS].median():.2f}，范围 {eta[DIMS].min():.2f}–{eta[DIMS].max():.2f}")
+rows = [(SENS[k], p + 1, CAND[j], RHO[j, k], RHO_S[j, k]) for k in KD for p, j in enumerate(MAIN[k])]
+W = pd.DataFrame(rows, columns=["维度", "位置", "化合物", "ρ", "ρ_风格内"])
+W["比值"] = W["ρ_风格内"] / W["ρ"]
+print(f"主方法 Top-3 共 {len(W)} 项：风格内同号 {np.mean(np.sign(W['ρ']) == np.sign(W['ρ_风格内'])):.2f}，"
+      f"风格内/合并 比值中位 {W['比值'].median():.2f}；风格内 |ρ| < 0.1 的 {int((W['ρ_风格内'].abs() < .1).sum())} 项:")
+print(W[W["ρ_风格内"].abs() < .1].round(2).to_string(index=False))
+
+
+# %% 检查 6
+# 检查 6 | 服务决策 D8（化学合理性的量化）——预期表与 model/q2_methodology.md §6.1 一致
+# 记法：(化合物, 类型, 预期符号)。D = 化合物本身具有该感官特征；M = 前体、理化指标或已知感知相互作用。
+EXPECT = {}
+for p in "AF":
+    EXPECT.update({
+        f"{p}_malt_all": [("color.EBC.", "M", 1)],
+        f"{p}_malt_grain": [("X3.methylbutanal", "D", 1)],
+        f"{p}_malt_bread": [("X3.methylbutanal", "D", 1), ("X2.acetylpyrrole", "D", 1), ("isomaltol", "D", 1)],
+        f"{p}_malt_cara": [("color.EBC.", "M", 1), ("isomaltol", "D", 1), ("furfural", "D", 1),
+                           ("X5.methylfurfural", "D", 1), ("hydroxy.methyl.furfural", "D", 1), ("X2.acetylfuran", "D", 1)],
+        f"{p}_malt_burn": [("color.EBC.", "M", 1), ("methylpyrazine", "D", 1), ("X2.6.dimethyl.pyrazine", "D", 1),
+                           ("X2.ethyl.3.methylpyrazine", "D", 1), ("X2.furanmethanol", "D", 1)],
+        f"{p}_hops_all": [("linalool", "D", 1), ("geraniol", "D", 1), ("alpha.humulene", "D", 1), ("E.caryophyllene", "D", 1)]
+                         + ([("bitterness", "M", 1)] if p == "F" else []),
+        f"{p}_hops_citrus": [("linalool", "D", 1), ("geraniol", "D", 1), ("citronellol", "D", 1), ("limonene", "D", 1), ("nerol", "D", 1)],
+        f"{p}_hops_tropical": [("geraniol", "D", 1), ("linalool", "D", 1), ("methyl.geranate", "D", 1), ("ethyl_2.methyl_butyrate", "D", 1)],
+        f"{p}_hops_noble": [("alpha.humulene", "D", 1), ("E.caryophyllene", "D", 1), ("humulene.epoxide.II", "D", 1),
+                            ("caryophyllene.oxide", "D", 1), ("X.E..beta.farnesene", "D", 1), ("linalool", "D", 1)],
+        f"{p}_hops_woody": [("alpha.humulene", "D", 1), ("E.caryophyllene", "D", 1), ("humulene.epoxide.II", "D", 1),
+                            ("caryophyllene.oxide", "D", 1), ("germacrene.D", "D", 1), ("alpha.calacorene", "D", 1),
+                            ("cadalene", "D", 1), ("tau.cadinol", "D", 1)],
+        f"{p}_esters_all": [("isopentyl_acetate", "D", 1), ("ethyl_acetate", "D", 1), ("ethyl_hexanoate", "D", 1),
+                            ("ethyl_octanoate", "D", 1), ("phenethyl_acetate", "D", 1), ("isobutyl_acetate", "D", 1)],
+        f"{p}_esters_fruity": [("ethyl_hexanoate", "D", 1), ("ethyl_octanoate", "D", 1), ("ethyl.butyrate", "D", 1),
+                               ("ethyl_decanoate", "D", 1), ("isopentyl_acetate", "D", 1)],
+        f"{p}_esters_flower": [("phenethyl_acetate", "D", 1), ("phenethyl_alcohol", "D", 1), ("geraniol", "D", 1), ("linalool", "D", 1)],
+        f"{p}_esters_isoaa": [("isopentyl_acetate", "D", 1), ("isoamyl_alcohol", "M", 1)],
+        f"{p}_esters_ethac": [("ethyl_acetate", "D", 1), ("ethanol..v.v.", "M", 1), ("acetic_acid.g.L.", "M", 1)],
+    })
+EXPECT.update({
+    "dms": [("DMS", "D", 1)], "metallic": [("iron", "D", 1)], "X4vg": [("X4VG", "D", 1)],
+    "t2n": [("X.E..2.nonenal", "D", 1), ("X.E.E..2.4.decadienal", "D", 1)], "diacetyl": [("X2.3.butanedione", "D", 1)],
+    "stale_hops": [("humulene.epoxide.II", "D", 1), ("caryophyllene.oxide", "D", 1)],
+    "orange": [("limonene", "D", 1), ("valencene", "D", 1), ("linalool", "D", 1)],
+    "coriander": [("linalool", "D", 1), ("camphor", "D", 1), ("geraniol", "D", 1)],
+    "clove": [("eugenol", "D", 1), ("X4VG", "D", 1), ("E.methyl.isoeugenol", "D", 1), ("E.caryophyllene", "D", 1)],
+    "lactic": [("lactic_acid.mg.L.", "D", 1), ("ethyl.lactate", "M", 1), ("pH", "M", -1)],
+    "acetic": [("acetic_acid.g.L.", "D", 1), ("ethyl_acetate", "M", 1), ("pH", "M", -1)],
+    "body": [("ethanol..v.v.", "M", 1), ("glycerol", "M", 1), ("GFS", "M", 1), ("unfermentables", "M", 1),
+             ("protein.g.L.", "M", 1), ("betaglucan.mg.L.", "M", 1)],
+    "alcohol": [("ethanol..v.v.", "D", 1), ("isoamyl_alcohol", "D", 1), ("isobutanol", "D", 1), ("X1.propanol", "D", 1),
+                ("X2.methyl.1.butanol", "D", 1)],
+    "bitternes": [("bitterness", "D", 1)], "sweetness": [("GFS", "D", 1), ("unfermentables", "M", 1), ("glycerol", "M", 1)],
+    "co2": [("CO2.PSI.", "D", 1)], "acidity": [("pH", "D", -1), ("lactic_acid.mg.L.", "D", 1), ("acetic_acid.g.L.", "D", 1)],
+})
+assert all(c in CAND for v in EXPECT.values() for c, _, _ in v)
+KE = [SENS.index(s) for s in EXPECT]                      # 47 维；aftertaste、overall 无先验化合物
+CI = {c: i for i, c in enumerate(CAND)}
+
+
+def hits(sets, keys=KE, dims_of=None):
+    """严格命中：Top-3 含预期化合物且符号一致；模块命中：Top-3 含预期化合物的同模块化合物。"""
+    strict, module = [], []
+    for k, kk in zip(keys, dims_of or keys):
+        exp = EXPECT[SENS[kk]]
+        strict.append(any(CI[c] in sets[k] and np.sign(RHO[CI[c], kk]) == s for c, _, s in exp))
+        module.append(any(MOD[CI[c]] in set(MOD[sets[k]]) for c, _, _ in exp))
+    return np.mean(strict), np.mean(module)
+
+
+best_rank = pd.Series({SENS[k]: min(int((np.abs(RHO[:, k]) > abs(RHO[CI[c], k])).sum()) + 1 for c, _, _ in EXPECT[SENS[k]])
+                       for k in KE})
+print(f"每维最佳预期化合物在 225 个候选中的边际排名: 中位 {best_rank.median():.0f}；排第 1 的 {int((best_rank == 1).sum())} 维，"
+      f"前 3 的 {int((best_rank <= 3).sum())} 维，> 20 的 {int((best_rank > 20).sum())} 维: {best_rank[best_rank > 20].to_dict()}")
+
+rng = np.random.default_rng(SEED)
+s0, m0 = hits(MAIN)
+perm = np.array([hits(MAIN, KE, list(rng.permutation(KE))) for _ in range(5000)])
+print(f"\n主方法命中率: 严格 {s0:.2f}，模块 {m0:.2f}；维度标签置换零分布均值 严格 {perm[:, 0].mean():.2f}，模块 {perm[:, 1].mean():.2f}；"
+      f"单侧 p 严格 {(perm[:, 0] >= s0).mean():.4f}，模块 {(perm[:, 1] >= m0).mean():.4f}")
+for name, o in others.items():
+    s, m = hits(o)
+    print(f"  {name}: 严格 {s:.2f}，模块 {m:.2f}")
+
+FAMILY = {"malt": "Malt", "hops": "Hops", "esters": "Yeast"}
+fam = {s: FAMILY[s.split("_")[1]] for s in DIMS if s[:2] in ("A_", "F_")}
+fam.update({"orange": "Spices", "coriander": "Spices", "clove": "Spices", "lactic": "Wild flora", "acetic": "Wild flora"})
+print("\n来源富集（主方法 Top-3 中与维度族来源一致的比例 / 候选集中该来源的基础比例）:")
+for o in ["Malt", "Hops", "Yeast", "Spices", "Wild flora"]:
+    ks = [SENS.index(s) for s, v in fam.items() if v == o]
+    share = np.mean([DIC.loc[CAND[j], "origin_paper"] == o for k in ks for j in MAIN[k]])
+    base = np.mean(DIC.loc[CAND, "origin_paper"] == o)
+    print(f"  {o:10s}: {len(ks):2d} 维，{share:.2f} / {base:.2f}")
+
+thr = DIC.loc[CAND][DIC.loc[CAND, "threshold_mean"].notna()]
+in_top = sorted({CAND[j] for k in KD for j in MAIN[k]} & set(thr.index))
+print(f"\n主方法 Top-3 中有阈值的化合物 {len(in_top)} 个，OAV≥1 的啤酒比例:")
+for c in in_top:
+    r = thr.loc[c]
+    conc = 10 ** X[c] if str(r.transform_interpretation).startswith("log10") else X[c]
+    print(f"  {c:20s} {(conc / r.threshold_mean >= 1).mean():.2f}")
+
+breadth = pd.Series([CAND[j] for k in KD for j in MAIN[k]]).value_counts()
+print(f"\n在 ≥5 个维度的 Top-3 中出现的化合物: {breadth[breadth >= 5].to_dict()}")
