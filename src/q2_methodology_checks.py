@@ -1,7 +1,7 @@
-# 问题 2 方法论（model/q2_methodology.md）的预检查代码，共 6 个检查，各服务一个或几个设计决策。
-# 在项目根目录（或其任一子目录）运行：python src/q2_methodology_checks.py，约 3 分钟。
+# 问题 2 方法论（model/q2_methodology.md）的预检查代码，共 8 个检查，各服务一个或几个设计决策。
+# 在项目根目录（或其任一子目录）运行：python src/q2_methodology_checks.py，约 4 分钟。
 # 检查 4 的 GBM 对照约需 10 分钟，默认不运行；设环境变量 RUN_GBM=1 时运行。
-# 只读 data/raw 与 results/data_audit，不写任何文件。各段以 "# %%" 分隔，可在 VS Code / Jupyter 中逐段运行。
+# 只读 data/raw、results/data_audit 与（检查 8）论文 Zenodo 补充工作簿，不写任何文件。各段以 "# %%" 分隔，可在 VS Code / Jupyter 中逐段运行。
 
 # %% 公共部分
 import os
@@ -90,19 +90,21 @@ def top3_graph(score, mod, k=3):
     return sel
 
 
-def top3_forward(RX, ry, mod, k=3):
-    """图约束前向选择：每步取与残差秩相关最大的化合物，再把已选化合物从秩中线性剔除。"""
-    sel, used, r, RXr = [], set(), ry.copy(), RX.copy()
+def top3_forward(RX, ry, mod, k=3, return_score=False):
+    """图约束前向选择：每步取与残差秩相关（偏 Spearman）最大的化合物，再把已选化合物从秩中线性剔除。"""
+    sel, used, score, r, RXr = [], set(), [], ry.copy(), RX.copy()
     for _ in range(k):
-        sc = np.abs(RXr.T @ r) / (np.sqrt((RXr ** 2).sum(0) * (r ** 2).sum()) + 1e-12)
-        sc[[mod[j] in used for j in range(len(sc))]] = -1
-        j = int(np.argmax(sc))
+        sc = (RXr.T @ r) / (np.sqrt((RXr ** 2).sum(0) * (r ** 2).sum()) + 1e-12)
+        a = np.abs(sc)
+        a[[mod[j] in used for j in range(len(a))]] = -1
+        j = int(np.argmax(a))
         sel.append(j)
         used.add(mod[j])
+        score.append(sc[j])
         Q = np.column_stack([np.ones(len(r))] + [RX[:, s] for s in sel])
         P = Q @ np.linalg.pinv(Q)
         r, RXr = ry - P @ ry, RX - P @ RX
-    return sel
+    return (sel, score) if return_score else sel
 
 
 def jac(a, b):
@@ -121,7 +123,9 @@ RX, RY = zrank(XC), zrank(y[SENS].values)
 RHO = RX.T @ RY / len(y)                                       # 225 × 50 Spearman
 MOD = modules(R2.loc[CAND, CAND].abs().values)
 KD = [SENS.index(s) for s in DIMS]
-MAIN = {k: top3_graph(np.abs(RHO[:, k]), MOD) for k in KD}
+FWD = {k: top3_forward(RX, RY[:, k], MOD, return_score=True) for k in KD}
+MAIN = {k: FWD[k][0] for k in KD}                              # 主方法：图约束前向选择
+MARG = {k: top3_graph(np.abs(RHO[:, k]), MOD) for k in KD}     # 对照：图约束边际选择
 print(f"候选 {len(CAND)} 个（231 − 综合指标 {len(COMPOSITE)} − 内标 {INTERNAL_STD}）；归因维度 {len(DIMS)} 个；"
       f"推断品评团 {len(PANEL_IDX)} 个（含单例）")
 
@@ -174,8 +178,8 @@ q95 = np.quantile(null, .95, axis=0)
 mx = np.abs(RHO).max(0)
 print(f"每维 max|ρ| 的置换 95% 分位: 中位 {np.median(q95):.3f}；Top-1 超过该门槛的维度 {int((mx[KD] > q95[KD]).sum())} / {len(KD)}")
 print("未超过的维度:", [SENS[k] for k in KD if mx[k] <= q95[k]])
-pos3 = np.array([[abs(RHO[j, k]) > q95[k] for j in MAIN[k]] for k in KD])
-print(f"主方法 Top-3 中超过门槛的个数（按位置）: {pos3.sum(0).tolist()} / {len(KD)}")
+pos3 = np.array([[abs(s) > q95[k] for s in FWD[k][1]] for k in KD])
+print(f"主方法 Top-3 的选择得分（第 1 位为 ρ，第 2、3 位为偏 ρ）超过该门槛的个数（按位置）: {pos3.sum(0).tolist()} / {len(KD)}")
 
 raw = {k: list(np.argsort(-np.abs(RHO[:, k]))[:3]) for k in KD}
 dup = [SENS[k] for k in KD if len(set(MOD[raw[k]])) < 3]
@@ -204,8 +208,9 @@ for tau in (.5, .6, .7):
         pc, pm = pc / len(boots), pm / len(boots)
         print(f"τ={tau} {rule}: 化合物入选频率（按位置）{pc.mean(0).round(2).tolist()}，模块 {pm.mean(0).round(2).tolist()}；"
               f"bootstrap 与全样本 Top-3 的 Jaccard 均值 {np.mean(jj):.3f}；Top-1 频率 ≥0.6 的维度 {int((pc[:, 0] >= .6).sum())}")
-        if tau == TAU and rule == "边际":
-            PI_MAIN = pc
+        if tau == TAU and rule == "前向":
+            band = pd.cut(pc.ravel(), [-.01, 1 / 3, .6, 1.01], labels=["<1/3", "1/3–0.6", "≥0.6"]).value_counts()
+            print(f"  主方法 147 项的化合物入选频率分档: {band.to_dict()}")
 
 
 # %% 检查 4
@@ -221,10 +226,10 @@ RHO_S = (RXs / RXs.std(0).clip(1e-9)).T @ (RYs / RYs.std(0)) / len(y)   # 风格
 
 gkf = list(GroupKFold(5).split(RX, groups=PANEL))
 others = {"不加图约束的边际": raw,
-          "前向": {k: top3_forward(RX, RY[:, k], MOD) for k in KD},
+          "图约束边际": MARG,
           "ElasticNet": {k: top3_graph(np.abs(ElasticNetCV(l1_ratio=.5, cv=gkf, alphas=30, max_iter=5000)
                                               .fit(RX, RY[:, k]).coef_) + 1e-9 * np.abs(RHO[:, k]), MOD) for k in KD},
-          "风格内边际": {k: top3_graph(np.abs(RHO_S[:, k]), MOD) for k in KD}}
+          "风格内前向": {k: top3_forward(RXs, RYs[:, k], MOD) for k in KD}}
 if os.environ.get("RUN_GBM") == "1":
     from sklearn.ensemble import HistGradientBoostingRegressor
     from sklearn.inspection import permutation_importance
@@ -248,7 +253,7 @@ print(f"随机 3 元集合之间的 Jaccard 期望: {rand_j:.3f}")
 for name, o in others.items():
     print(f"主方法 vs {name}: 化合物 Jaccard {np.mean([jac(MAIN[k], o[k]) for k in KD]):.3f}，"
           f"模块 Jaccard {np.mean([jac(MOD[MAIN[k]], MOD[o[k]]) for k in KD]):.3f}，Top-1 相同 {np.mean([MAIN[k][0] == o[k][0] for k in KD]):.2f}")
-print(f"前向 vs ElasticNet: {np.mean([jac(others['前向'][k], others['ElasticNet'][k]) for k in KD]):.3f}")
+print(f"图约束边际 vs ElasticNet: {np.mean([jac(MARG[k], others['ElasticNet'][k]) for k in KD]):.3f}")
 
 
 # %% 检查 5
@@ -359,3 +364,54 @@ for c in in_top:
 
 breadth = pd.Series([CAND[j] for k in KD for j in MAIN[k]]).value_counts()
 print(f"\n在 ≥5 个维度的 Top-3 中出现的化合物: {breadth[breadth >= 5].to_dict()}")
+
+
+# %% 检查 7
+# 检查 7 | 服务决策 D5（边际选择还是前向选择）——模拟还原：在真实化学矩阵上植入 3 个已知关键化合物，看哪种规则能找回
+pan = np.unique(PANEL, return_inverse=True)[1]
+for wname, w in [("1, 0.75, 0.5", np.array([1, .75, .5])), ("1, 1, 1", np.array([1., 1, 1]))]:
+    rng = np.random.default_rng(SEED)
+    for target in (.2, .3, .45):
+        rec = {"图约束边际": np.zeros(3), "图约束前向": np.zeros(3)}
+        n_rep = 200
+        for _ in range(n_rep):
+            while True:                                      # 3 个植入化合物来自不同模块
+                js = rng.choice(len(CAND), 3, replace=False)
+                if len(set(MOD[js])) == 3:
+                    break
+            S = RX[:, js] @ w
+            S = (S - S.mean()) / S.std()
+            a = min(.99, target / np.corrcoef(S, RX[:, js[0]])[0, 1])   # 使第 1 个植入化合物的 ρ ≈ target
+            e = rng.normal(0, 1, len(y)) + rng.normal(0, .15, pan.max() + 1)[pan]   # 含品评团偏移
+            e = (e - e.mean()) / e.std()
+            ry = zrank((a * S + np.sqrt(1 - a ** 2) * e)[:, None])[:, 0]
+            rec["图约束边际"] += [j in top3_graph(np.abs(RX.T @ ry / len(y)), MOD) for j in js]
+            rec["图约束前向"] += [j in top3_forward(RX, ry, MOD) for j in js]
+        print(f"权重 {wname}，第 1 个植入化合物 ρ≈{target}: " +
+              "；".join(f"{r} 找回率 {np.round(v / n_rep, 2).tolist()}" for r, v in rec.items()))
+
+
+# %% 检查 8
+# 检查 8 | 服务决策 D9（外部因果核验）——Zenodo 加标实验，仅报告；需要 ZENODO_XLSX（见 q1_supplement_checks.py）
+ZEN = Path(os.environ.get("ZENODO_XLSX", Path(os.environ.get("TEMP", ".")) / "zenodo_10653704" / "Supplemental Files and Figure source files.xlsx"))
+if not ZEN.exists():
+    print(f"跳过：找不到 Zenodo 工作簿 {ZEN}")
+else:
+    ATT = ["Malt", "Sweetness", "Hops", "Bitterness", "Esters", "Fullness (body)", "Alcohol (warming)", "Overall appreciation"]
+    V = pd.concat([pd.read_excel(ZEN, sheet_name=f"Validation Results {k}") for k in (1, 2, 3)], ignore_index=True)
+    V["date"] = pd.to_datetime(V.Time).dt.date
+    V = V.drop_duplicates(subset=["date", "Name", "Beer"] + ATT)        # Taster 25 在 07-13 重复提交一次
+    det = pd.read_excel(ZEN, sheet_name="Validation Details")
+    det = det[det.SetName.notna()].copy()
+    det["date"] = pd.to_datetime(det.Date).dt.date
+    V = V.merge(det[["date", "Code", "BeerStyle", "SampleName", "SetName"]], left_on=["date", "Beer"],
+                right_on=["date", "Code"], how="left")
+    assert V.SampleName.notna().all()
+    wide = V.pivot_table(index=["date", "Name", "BeerStyle", "SetName"], columns=V.SampleName.str.strip(), values=ATT)
+    out = {}
+    for key, g in wide.groupby(level=["BeerStyle", "SetName"]):
+        d = pd.DataFrame({a: g[(a, "Spiked")] - g[(a, "Control")] for a in ATT}).dropna()
+        out[f"{key[0]} | {key[1]} | n={len(d)}"] = (d.mean() / (d.std(ddof=1) / np.sqrt(len(d)))).round(1).astype(str) \
+            .radd(d.mean().round(2).astype(str) + " (t=").add(")")
+    print("加标杯 − 对照杯 的同人配对差，0–6 分（t 值）:")
+    print(pd.DataFrame(out).to_string())
