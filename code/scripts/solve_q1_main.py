@@ -31,8 +31,8 @@ def main():
     X_proc = pd.concat([X_proc, missing_inds], axis=1) # 拼上缺失指示器
     
     # 划分外层 CV (队长要求的 5 次重复)
-    splits = outer_splits(panels, data.style, n_splits=5, n_repeats=1, seed=SEED)
-    outer_folds = splits[0]
+     # 改成 5 次重复，并且不再只取第 0 次
+    splits = outer_splits(panels, data.style, n_splits=5, n_repeats=5, seed=SEED)
   
     # 定义内层划分的 lambda 函数
     inner_splits_func = lambda train_idx: inner_splits(train_idx, panels, data.style, SEED)
@@ -58,11 +58,20 @@ def main():
             use_hurdle = True
             print(f"  -> 发现维度 {dim} 零膨胀严重，启用 Hurdle 模型！")
         
-        pred = nested_cv_predict(
-            X_proc, data.Z, panels, outer_folds, inner_splits_func, 
-            dim=dim, use_hurdle=use_hurdle, at_zero=at_zero_col, z0_tilde=z0_tilde # <-- 这里传一维的 at_zero_col
-        )
-        oof_results[dim] = pred
+        # 跑 5 次重复，存进列表
+        preds_list = []
+        for run in range(5):
+            print(f"    -> 维度 {dim} | 正在跑第 {run+1}/5 次交叉验证...")
+            outer_folds = splits[run]
+            
+            pred_run = nested_cv_predict(
+                X_proc, data.Z, panels, outer_folds, inner_splits_func, 
+                dim=dim, use_hurdle=use_hurdle, at_zero=at_zero_col, z0_tilde=z0_tilde
+            )
+            preds_list.append(pred_run)
+            
+        # 5 次结果取平均
+        oof_results[dim] = np.mean(preds_list, axis=0)
 
     # 保存结果
     save_path = PROCESSED_DIR / "q1_main_oof_demo.npz"
