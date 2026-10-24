@@ -8,7 +8,7 @@
 | Q1 无锚定尺度 | C-mid | C-quantile | <!-- [PENDING] \| Await: Q1 formal run --> 等级分布与变化等级占比 | <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |
 | Q1 零值脆弱维度（sweetness、A_hops_all、bitternes、F_malt_grain） | m 模型 | C-mid | <!-- [PENDING] \| Await: Q1 formal run --> | <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |
 | Q1 零值可疑维度（F_hops_noble、A_malt_bread、F_malt_bread、acidity、F_malt_grain、F_hops_tropical、lactic） | m 模型 | C-mid | <!-- [PENDING] \| Await: Q1 formal run --> | <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |
-| Q1 化学 NA 编码（缺失性压力测试） | 删失：0 + 指示变量 | 均值插补；原生 NaN；额外遮蔽 5% 和 10% 的测试折单元格，MCAR 和最低 30% MNAR | <!-- [PENDING] \| Await: Q1 formal run --> 42 维平均 Spearman 降幅；若删失编码在 MNAR 下优于均值插补，且在 MCAR 下损失 ≤ 0.01，则保留删失编码 | <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |
+| Q1 化学 NA 编码（“NA 为低于检出限”的解读） | 单化合物 NA 编码为 0 + 指示变量；`aroma_hops_sum` 保留 NaN | 仅 amyl.acetate 改为原生 NaN；全部单化合物 NA 改为原生 NaN；列均值插补；额外遮蔽 5% 和 10% 的测试折单元格，MCAR 和最低 30% MNAR | 预运行，相关化合物代理秩：4 列共 30 个 NA 为 0.17–0.30，接近观测最低 20% 的 0.28–0.31；amyl.acetate 27 个 NA 为 0.41；`aroma_hops_sum` 为 0.82。模型输出 <!-- [PENDING] \| Await: Q1 formal run --> 各对照臂相对主设定的 42 维平均 Spearman 差及 95% CI；全部 ≤ 0.01 则记为不依赖该解读，否则报告两套评分及变化超过 0.5 分的维度。主设定不按结果切换 | `src/q1_methodology_checks.py` 检查 2 -> <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |
 | Q1 barnyard | 纳入 | 排除 | <!-- [PENDING] \| Await: Q1 formal run --> 42 维平均指标 | <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |
 | Q1 `_sum` 列 | 保留 | 删除 4 列 | <!-- [PENDING] \| Await: Q1 formal run --> Spearman 变化 | <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |
 | Q1 附件 1 与附件 8 的取值 | 附件 1 | 来自附件 8 的 24 款啤酒的 80 个单元格 | <!-- [PENDING] \| Await: Q1 formal run --> Spearman 变化 | <!-- [PLACEHOLDER] \| Await: Q1 coding work order --> |

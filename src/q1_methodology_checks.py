@@ -65,6 +65,22 @@ for c in na.index:
 print("\n若按论文做均值填补，'未检出'的啤酒会被放到这些位置:")
 print(pd.DataFrame(rows).round(3).to_string(index=False))
 
+# NA-as-below-detection proxy test: if NA means "below detection", NA beers should rank low on
+# the 5 compounds most correlated with the column (sign-adjusted percentile ranks, averaged).
+print(f"\n附件8 中附件1 有值而附件8 为 NA 的格: {int((~cmp.csv1_missing).sum())}（附件8 区分 0 与 NA）")
+R = X[CHEM].rank(pct=True)
+rows = []
+for c in na.index:
+    m = X[c].isna()
+    r = X[CHEM].drop(columns=c).corrwith(X[c], method="spearman").dropna()
+    top = r.abs().sort_values(ascending=False).index[:5]
+    proxy = sum((R[t] if r[t] > 0 else 1 - R[t]) for t in top) / 5
+    low = (X[c].rank(pct=True) <= 0.2) & ~m
+    rows.append({"字段": c, "NA数": int(m.sum()), "观测最小值": f"{X[c].min():.2g}",
+                 "代理秩_NA": proxy[m].mean(), "代理秩_观测最低20%": proxy[low].mean(), "代理秩_全部观测": proxy[~m].mean()})
+print("相关化合物代理秩（低于检出限时，NA 应接近'观测最低20%'一列）:")
+print(pd.DataFrame(rows).round(2).to_string(index=False))
+
 FLOOR = -1.81781854
 at_floor = X[CHEM].round(8).eq(FLOOR)
 frac = at_floor.mean()

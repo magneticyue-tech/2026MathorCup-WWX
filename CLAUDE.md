@@ -1,6 +1,6 @@
 # 项目：数学建模
 
-`COLLABORATION.md` 是所有智能体共享的唯一权威来源；以下各节与其保持一致，使规则能自动加载到 Claude Code 的上下文中。修改 COLLABORATION.md 中的共享规则后，应同步镜像到此处，以保持两者一致。会话开始时还应阅读 `memory/MEMORY.md`。
+`COLLABORATION.md` 是所有智能体共享的唯一权威来源；修改 COLLABORATION.md 中的共享规则后，应同步镜像到此处。会话开始时还应阅读 `memory/MEMORY.md`。
 
 ## Claude Code 专属说明
 - 仓库中的 `memory/` 是持久、与具体智能体无关的记录（每个文件一条事实，索引位于 `memory/MEMORY.md`，模板位于 `_TEMPLATE.md`）。应优先使用它，而非 Claude 本地记忆，以便 Codex 和 Workbuddy 看到相同的事实。

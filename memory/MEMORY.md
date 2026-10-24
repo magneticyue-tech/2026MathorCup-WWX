@@ -11,4 +11,11 @@ frontmatter（见 `_TEMPLATE.md`）。本索引列出所有记忆文件，每条
 - `reference` — 外部资源（链接、工单、数据集来源）
 
 ## 索引
-（暂无）
+- [数据来源：Zenodo 10653704](data-provenance-zenodo.md) — 附件 1–8 即原论文数据，导出后未改动
+- [样本量 250](sample-size-250.md) — 题面“226 种啤酒”是对 226 个化学参数的误读
+- [附件 4 为标准化面板均值](attachment4-standardized-panel.md) — 无法还原原始 0–6 分
+- [NA 按低于检出限编码](na-below-detection.md) — 主设定按最低值处理；解读只得到部分支持，作为敏感性实验
+- [信号列下限是截断值](signal-floor-truncation.md) — −1.81781854 只按最低排名使用
+- [barnyard 疑似 stale_hops 副本](barnyard-stale-hops-duplicate.md) — 预测但标记，不用于归因
+- [附件 1 与附件 8 冲突以附件 1 为准](attachment1-vs-8-conflict.md) — 附件 8 用于敏感性运行
+- [不使用外部数据](no-external-data.md) — Zenodo 只用于核验
