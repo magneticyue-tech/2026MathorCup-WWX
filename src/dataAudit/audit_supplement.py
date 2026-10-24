@@ -6,8 +6,8 @@ from pathlib import Path
 import numpy as np
 import openpyxl
 import pandas as pd
-from audit_data import save_json, write_csv, read_csv_raw
-from audit_deep import numeric, sheet_frame
+from dataAudit.audit_data import save_json, write_csv, read_csv_raw
+from dataAudit.audit_deep import numeric, sheet_frame
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/'results'/'data_audit'; RAW=ROOT/'data'/'raw'

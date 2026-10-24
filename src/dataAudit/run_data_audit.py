@@ -7,10 +7,10 @@ from pathlib import Path
 import contextlib
 import sys
 
-import audit_data
-import audit_deep
-import audit_supplement
-import build_audit_report
+import dataAudit.audit_data as audit_data
+import dataAudit.audit_deep as audit_deep
+import dataAudit.audit_supplement as audit_supplement
+import dataAudit.build_audit_report as build_audit_report
 
 
 def main():
