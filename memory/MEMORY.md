@@ -19,3 +19,5 @@ frontmatter（见 `_TEMPLATE.md`）。本索引列出所有记忆文件，每条
 - [barnyard 疑似 stale_hops 副本](barnyard-stale-hops-duplicate.md) — 预测但标记，不用于归因
 - [附件 1 与附件 8 冲突以附件 1 为准](attachment1-vs-8-conflict.md) — 附件 8 用于敏感性运行
 - [不使用外部数据](no-external-data.md) — Zenodo 只用于核验
+- [3-methyl-2-butenal 是内标](internal-standard-3-methyl-2-butenal.md) — 附件 8 标为 Internal standard solution，不作为归因候选
+- [综合指标近似单一成分](composite-columns-near-duplicates.md) — 5 个综合指标各近似一个成分，不作为归因候选
