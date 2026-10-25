@@ -14,7 +14,7 @@
 - `memory/` — 分段式项目记忆；见 `memory/MEMORY.md`
 
 ## 代码
-Python 3.11。提交前用 `black` 格式化，用 `ruff` 做 lint。
+Python 3.11。
 每个图/表都由 `code/scripts/` 中的脚本生成，并与其输出一起提交到 `figures/`。
 
 ## 论文
