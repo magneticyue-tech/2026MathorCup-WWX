@@ -22,6 +22,18 @@
 | Q2 bootstrap 中的图 | 每次在重抽样本上重建 | 固定为附件 2 | <!-- [PENDING] \| Await: Q2 formal run --> 入选频率按位置的变化 | <!-- [PLACEHOLDER] \| Await: Q2 coding work order --> |
 | Q2 bootstrap 单位 | 品评团簇（63 个团） | 单款啤酒 | <!-- [PENDING] \| Await: Q2 formal run --> 入选频率按位置的变化 | <!-- [PLACEHOLDER] \| Await: Q2 coding work order --> |
 | Q2 感官目标 | 附件 4 的 $z$ | 39 个有锚维度改用减去本团零点的参考评分 | <!-- [PENDING] \| Await: Q2 formal run --> Top-3 Jaccard | <!-- [PLACEHOLDER] \| Await: Q2 coding work order --> |
+| Q3 风格内协方差 | 因子 + 模块块，$k=15$，$\kappa=2$ | 纯因子；Ledoit–Wolf | 预运行留出条件对数似然 −240.7 / −244.9 / −267.1 nat/款（κ=2）；生成样本模块内 ρ 0.680 / 0.633（真实 0.724）。<!-- [PENDING] \| Await: Q3 formal run --> §6.2 各指标变化 | `experimentalCode/q3_methodology_checks.py` 检查 2、3 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 因子数 $k$、收缩 $\kappa$ | 留出似然最优 | 相邻网格点 | 预运行：κ=5 比 κ=2 低 0.1 nat；$k=10$、20 分别低 0.8、2.0 nat。<!-- [PENDING] \| Await: Q3 formal run --> | `experimentalCode/q3_methodology_checks.py` 检查 2 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 风格方差 | 共享 $\Sigma_W$ | 风格专属对角缩放 | 预运行风格离散比：Brut 1.73，其余 0.72–1.34。<!-- [PENDING] \| Await: Q3 formal run --> | `experimentalCode/q3_methodology_checks.py` 检查 3 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 并列块的潜变量 | 截断正态条件期望 | 平均秩的正态得分 | <!-- [PENDING] \| Await: Q3 formal run --> 下限比例误差、模块内 ρ | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 化学 NA | 列均值填充 | 单化合物最低位编码 | <!-- [PENDING] \| Await: Q3 formal run --> 生成指标；双乙酰 NA 的 2 款 Pils/Lager 的迁移上界 | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 附件 1 与附件 8 的取值 | 附件 1 | 来自附件 8 的 24 款啤酒的 80 个单元格 | <!-- [PENDING] \| Await: Q3 formal run --> | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 综合指标 | 潜空间岭回归派生 | 问题 1 删除 `_sum` 列的对照模型 | 预运行派生 5 折 $R^2$ 0.78–0.94。<!-- [PENDING] \| Await: Q3 formal run --> 画像与 $\alpha^*$ 变化 | `experimentalCode/q3_methodology_checks.py` 检查 4 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 内标 | 训练中位数 | 从经验分布独立抽取 | <!-- [PENDING] \| Await: Q3 formal run --> 画像变化 | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 缺陷阈值口径 | 附件 8 均值 | 附件 8 中位 | 预运行全体超阈比例：双乙酰 0.45 → 0.69，DMS 0.67 → 0.62。<!-- [PENDING] \| Await: Q3 formal run --> $\alpha^*$、约束起作用比例 | `experimentalCode/q3_methodology_checks.py` 检查 5 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 化学层规则 | $x'\le\max(x,\theta)$ | $x'\le x$ | <!-- [PENDING] \| Await: Q3 formal run --> $\alpha^*$、目标风格概率 | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 感官层规则 | 预测等级不升高 | 连续等级不升高；不设感官层 | 预运行 Pils/Lager → Tripel：$\alpha^*$ 中位 0.70 / 0 / 1（不设感官层时为投影终点）。<!-- [PENDING] \| Await: Q3 formal run --> | `experimentalCode/q3_methodology_checks.py` 检查 7 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 问题 1 映射 | 选定映射 | 另一种映射 | <!-- [PENDING] \| Await: Q3 formal run --> 画像等级分布、$\alpha^*$ | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
 
 ## 说明
 - 注明任何随机运行所用的种子。
