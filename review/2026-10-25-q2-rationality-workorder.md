@@ -6,11 +6,11 @@ status: open
 severity: major
 refs:
   - model/q2_methodology.md
-  - src/q2_methodology_checks.py
+  - experimentalCode/q2_methodology_checks.py
   - code/src/q2/rationality.py
   - code/src/q2/pipeline_final.py
   - code/src/q2/config.py
-  - results/data_audit/chemical_dictionary.csv
+  - experimentalCode/results/data_audit/chemical_dictionary.csv
 ---
 
 ## 问题
@@ -22,16 +22,20 @@ refs:
 
 ## 背景 / 复现
 
+### 前置：路径
+2026-10-25 文件整理（`cdafbb0`）后，原始附件在 `code/data/raw/`，Q2 输出在 `code/data/processed/q2/`。
+`code/src/q2/config.py` 仍指向根目录的 `data/raw` 与 `data/processed/q2`，两处已不存在；先改 `DATA_RAW`、`Q2_DIR`，再做下列修改。
+
 ### 已由 Modeling 完成
-- `src/q2_methodology_checks.py` 检查 6 已删除 `EXPECT`、`hits()`、`best_rank`、维度标签置换和来源富集，只保留 OAV 与“进入 ≥5 个维度 Top-3”两段输出。
+- `experimentalCode/q2_methodology_checks.py` 检查 6 已删除 `EXPECT`、`hits()`、`best_rank`、维度标签置换和来源富集，只保留 OAV 与“进入 ≥5 个维度 Top-3”两段输出。
 
 ### 修改 `code/src/q2/rationality.py`
 删除 `EXPECTED_TABLE`、严格/模块命中、最佳预期排名和 X 类名单。
 删除 `config.py` 中的 `NO_PRIOR_DIMS`（只服务于命中率）。
 新增以下函数，`run_rationality()` 依次调用并写出结果：
 
-- `attachment8_labels(compounds: list[str]) -> pd.DataFrame`：从 `results/data_audit/chemical_dictionary.csv` 按 `csv1_field` 取 `origin_paper`、`off_flavors`、`aging`、`chemical_name`，原样返回，空值保留为空，不改写、不合并（§6.1）。
-- `oav_share(compounds: list[str], X_raw: pd.DataFrame) -> pd.Series`：OAV≥1 的啤酒比例（§6.3）。阈值用 `threshold_mean`；`transform_interpretation` 以 `log10` 开头的列先取 $10^x$，其余按线性处理；无阈值返回 NaN。口径与 `src/q2_methodology_checks.py` 检查 6 一致。
+- `attachment8_labels(compounds: list[str]) -> pd.DataFrame`：从 `experimentalCode/results/data_audit/chemical_dictionary.csv` 按 `csv1_field` 取 `origin_paper`、`off_flavors`、`aging`、`chemical_name`，原样返回，空值保留为空，不改写、不合并（§6.1）。
+- `oav_share(compounds: list[str], X_raw: pd.DataFrame) -> pd.Series`：OAV≥1 的啤酒比例（§6.3）。阈值用 `threshold_mean`；`transform_interpretation` 以 `log10` 开头的列先取 $10^x$，其余按线性处理；无阈值返回 NaN。口径与 `experimentalCode/q2_methodology_checks.py` 检查 6 一致。
 - `breadth(top3: pd.DataFrame) -> pd.Series`：每个化合物进入多少个维度的 Top-3，barnyard 不计。
 - `covariation_flag(top3: pd.DataFrame, oav: pd.Series, n_dims: pd.Series) -> pd.DataFrame`：§6.2 的三项判据各一列（`flag_style_ci0`、`flag_breadth5`、`flag_oav_lt1`）及其“或” `covariation`。风格内 $r^{(s)}$ 的 95% CI 取 §4.6 的输出；若现有流程尚未产出该 CI，在本线程报告，暂填 NaN，不自行定义。
 
@@ -42,7 +46,7 @@ barnyard 行不再映射到 stale_hops 的任何判定，只保留“同 stale_h
 改为直接使用 `rationality.py` 输出中的 `oav_ge_1_ratio`，删除本函数的阈值读取与变换判断。
 
 ### 输出产物
-- `data/processed/q2/final_top3_with_rationality.csv`（路径沿用 `config.Q2_DIR`），每个维度 3 行，列为：`dimension`、`rank`、`compound`、`chemical_name`、`module_id`、`sign`（入选符号）、`origin_paper`、`off_flavors`、`aging`、`threshold_mean`、`oav_ge_1_ratio`、`n_dims_top3`、`flag_style_ci0`、`flag_breadth5`、`flag_oav_lt1`、`covariation`、`interpretation`。
+- `code/data/processed/q2/final_top3_with_rationality.csv`（`config.Q2_DIR`），每个维度 3 行，列为：`dimension`、`rank`、`compound`、`chemical_name`、`module_id`、`sign`（入选符号）、`origin_paper`、`off_flavors`、`aging`、`threshold_mean`、`oav_ge_1_ratio`、`n_dims_top3`、`flag_style_ci0`、`flag_breadth5`、`flag_oav_lt1`、`covariation`、`interpretation`。
 - `interpretation` 列留空，由 Modeling 按 §6.4 填写；代码不生成任何解释文本或类别。
 - 主方法与 M3 Top-1 不同的维度，M3 的 Top-1 另写一行，增加 `method` 列区分 `main` / `M3`（§5.3）。
 - 维度等级 A/B/C 按新的 §4.5 计算，写入 `grade` 列。
