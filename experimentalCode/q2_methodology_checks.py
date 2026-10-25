@@ -1,7 +1,7 @@
 # 问题 2 方法论（model/q2_methodology.md）的预检查代码，共 8 个检查，各服务一个或几个设计决策。
-# 在项目根目录（或其任一子目录）运行：python src/q2_methodology_checks.py，约 4 分钟。
+# 在项目根目录（或其任一子目录）运行：python experimentalCode/q2_methodology_checks.py，约 4 分钟。
 # 检查 4 的 GBM 对照约需 10 分钟，默认不运行；设环境变量 RUN_GBM=1 时运行。
-# 只读 data/raw、results/data_audit 与（检查 8）论文 Zenodo 补充工作簿，不写任何文件。各段以 "# %%" 分隔，可在 VS Code / Jupyter 中逐段运行。
+# 只读 code/data/raw、experimentalCode/results/data_audit 与（检查 8）论文 Zenodo 补充工作簿，不写任何文件。各段以 "# %%" 分隔，可在 VS Code / Jupyter 中逐段运行。
 
 # %% 公共部分
 import os
@@ -16,8 +16,8 @@ from scipy.cluster.hierarchy import linkage, fcluster
 from scipy.spatial.distance import squareform
 
 pd.set_option("display.width", 200)
-ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "data" / "raw" / "4.csv").exists())
-RAW, AUDIT = ROOT / "data" / "raw", ROOT / "results" / "data_audit"
+ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "code" / "data" / "raw" / "4.csv").exists())
+RAW, AUDIT = ROOT / "code" / "data" / "raw", ROOT / "experimentalCode" / "results" / "data_audit"
 X = pd.read_csv(RAW / "1.csv")           # 化学数据
 y = pd.read_csv(RAW / "4.csv")           # 品评小组结果（标准化空间）
 CHEM, SENS = list(X.columns[3:]), list(y.columns[3:])

@@ -1,6 +1,6 @@
-# 问题 1 方法论（notebooks/q1_methodology.md）第 3 节"六个决策检查"的代码，由原 q1_methodology.ipynb 的 6 个代码单元原样拆出。
-# 在项目根目录（或其任一子目录）运行：python src/q1_methodology_checks.py，约 5 秒。
-# 只读 data/raw 与 results/data_audit，不写任何文件。各段以 "# %%" 分隔，可在 VS Code / Jupyter 中逐段运行。
+# 问题 1 方法论（model/q1_methodology.md）第 3 节"六个决策检查"的代码，由原 q1_methodology.ipynb 的 6 个代码单元原样拆出。
+# 在项目根目录（或其任一子目录）运行：python experimentalCode/q1_methodology_checks.py，约 5 秒。
+# 只读 code/data/raw 与 experimentalCode/results/data_audit，不写任何文件。各段以 "# %%" 分隔，可在 VS Code / Jupyter 中逐段运行。
 
 # %% 检查 1
 # 检查 1 | 服务决策 D1（输出哪些维度）与 D2（barnyard 怎么处理）
@@ -12,8 +12,8 @@ from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 
 pd.set_option("display.width", 160)
-ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "data" / "raw" / "4.csv").exists())
-RAW, AUDIT = ROOT / "data" / "raw", ROOT / "results" / "data_audit"
+ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "code" / "data" / "raw" / "4.csv").exists())
+RAW, AUDIT = ROOT / "code" / "data" / "raw", ROOT / "experimentalCode" / "results" / "data_audit"
 y = pd.read_csv(RAW / "4.csv")           # 品评小组结果（标准化空间）
 X = pd.read_csv(RAW / "1.csv")           # 化学数据
 SENS = list(y.columns[3:])

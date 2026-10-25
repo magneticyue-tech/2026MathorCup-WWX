@@ -19,9 +19,9 @@ import pandas as pd
 from dataAudit.audit_data import read_csv_raw, save_json, write_csv, scalar, MISSING
 
 sys.stdout.reconfigure(encoding="utf-8")
-ROOT = Path(__file__).resolve().parents[1]
-RAW = ROOT / "data" / "raw"
-OUT = ROOT / "results" / "data_audit"
+ROOT = Path(__file__).resolve().parents[2]
+RAW = ROOT / "code" / "data" / "raw"
+OUT = ROOT / "experimentalCode" / "results" / "data_audit"
 
 
 def sheet_frame(wb, name):

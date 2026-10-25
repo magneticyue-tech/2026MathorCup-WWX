@@ -2,7 +2,7 @@
 
 No raw file is modified. Numeric parsing is used only for diagnostics;
 all original CSV strings and XLSX coordinates remain available as evidence.
-Usage: python src/audit_data.py [--root PATH]
+Usage: python experimentalCode/dataAudit/audit_data.py [--root PATH]
 Dependencies: Python 3.11+, numpy, pandas, openpyxl.
 """
 from __future__ import annotations
@@ -136,9 +136,9 @@ def xlsx_audit(path, out):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
     args = parser.parse_args(); root = args.root.resolve()
-    rawdir = root / "data" / "raw"; out = root / "results" / "data_audit"; out.mkdir(parents=True, exist_ok=True)
+    rawdir = root / "code" / "data" / "raw"; out = root / "experimentalCode" / "results" / "data_audit"; out.mkdir(parents=True, exist_ok=True)
     manifest = [{"file": p.name, "bytes": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
                 for p in sorted(rawdir.iterdir()) if p.is_file() and p.name != '.gitkeep']
     save_json(out / "raw_manifest.json", manifest)

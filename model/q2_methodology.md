@@ -1,6 +1,6 @@
 # 问题 2 — 化合物共表达图与感官维度的关键化合物
 
-文中“检查 N”指 `src/q2_methodology_checks.py` 的检查 N；数字均为该脚本在种子 0 下的输出，bootstrap 为 100 次的预运行，正式运行为 1,000 次。问题 1 的结论按节号引用 `q1_methodology.md`。
+文中“检查 N”指 `experimentalCode/q2_methodology_checks.py` 的检查 N；数字均为该脚本在种子 0 下的输出，bootstrap 为 100 次的预运行，正式运行为 1,000 次。问题 1 的结论按节号引用 `q1_methodology.md`。
 
 ## 1. 数据与符号
 
