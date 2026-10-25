@@ -1,3 +1,4 @@
+# 覆盖 solve_q1_main.py
 import sys
 import time
 import json
@@ -27,7 +28,6 @@ def main():
     splits = outer_splits(panels, data.style, n_splits=5, n_repeats=5, seed=SEED)
     inner_splits_func = lambda train_idx: inner_splits(train_idx, panels, data.style, SEED)
     
-    # 定义 6 个维度组
     DIM_GROUPS = {
         "Aroma": [c for c in data.dims if c.startswith("A_")],
         "Flavour": [c for c in data.dims if c.startswith("F_")],
@@ -37,48 +37,54 @@ def main():
         "Basic": ["body", "alcohol", "bitternes", "sweetness", "co2", "acidity", "aftertaste", "overall"]
     }
     
-    oof_results = {}
-    chosen_params_all = {}
+    oof_z_all = np.zeros((5, 250, 50)) # 5次重复，250款酒，50个维度
+    fold_id = np.zeros((5, 250), dtype=int)
     
+    chosen_params_all = {}
     start_time = time.time()
     
+    # 预先填入 fold_id
+    for run in range(5):
+        for fold_idx, (_, test_idx) in enumerate(splits[run]):
+            fold_id[run, test_idx] = fold_idx
+    
     for group_name, dims in DIM_GROUPS.items():
-        print(f"\n>>> 正在处理维度组: {group_name} (包含 {len(dims)} 个维度) <<<")
-        
-        # 1. 该组只搜一次参数 (用第一个维度代表)
-        print(f"  -> 正在为该组进行网格搜索...")
+        print(f"\n>>> 正在处理维度组: {group_name} <<<")
         best_params, best_use_mono = find_best_params_for_group(
             X_proc, data.Z, panels, splits[0], inner_splits_func, dims
         )
-        print(f"  -> 组最优参数选定: {best_params}, 单调约束: {best_use_mono}")
         
-        # 2. 把参数应用到该组的所有维度
         for dim in dims:
             print(f"    正在跑维度: {dim} ...")
+            dim_idx = data.dims.index(dim)
             preds_list = []
-            
             for run in range(5):
-                outer_folds = splits[run]
                 pred_run = run_outer_cv(
-                    X_proc, data.Z, panels, outer_folds, dim, best_params, best_use_mono
+                    X_proc, data.Z, panels, splits[run], dim, best_params, best_use_mono
                 )
                 preds_list.append(pred_run)
+                oof_z_all[run, :, dim_idx] = pred_run # 存入逐次矩阵
                 
-            oof_results[dim] = np.mean(preds_list, axis=0)
+            # 5次平均作为最终的zhat
+            oof_z_all_mean = np.mean(preds_list, axis=0)
+            # 将其存在一个单独变量里，最后保存
+            if 'final_zhat' not in locals():
+                final_zhat = np.zeros((250, 50))
+            final_zhat[:, dim_idx] = oof_z_all_mean
             chosen_params_all[dim] = best_params
             
-    save_path = PROCESSED_DIR / "q1_main_oof.npz"
-    meta_info = {"python": sys.version, "sklearn": sklearn.__version__}
-    
+    save_path = PROCESSED_DIR / "q1_main_oof_v2.npz"
     np.savez_compressed(
         save_path, 
-        **oof_results, 
+        zhat=final_zhat,
+        oof_z=oof_z_all,
+        fold_id=fold_id,
         chosen_params=json.dumps(chosen_params_all),
+        dims=np.array(data.dims),
         seed=SEED, 
-        meta=json.dumps(meta_info)
+        meta=json.dumps({"python": sys.version, "sklearn": sklearn.__version__})
     )
-    
-    print(f"\n✅ T2 极速版运行完毕！耗时: {time.time() - start_time:.1f} 秒")
+    print(f"\n✅ 契约版 T2 运行完毕！耗时: {time.time() - start_time:.1f} 秒")
 
 if __name__ == "__main__":
     main()

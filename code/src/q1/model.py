@@ -44,6 +44,7 @@ class HurdleRegressor(BaseEstimator, RegressorMixin):
 
 # 🚨 新增：专门用于在组内搜索一次最优参数
 # 🚨 修改：真正实现“按该组的平均内层 CV Spearman 选择”
+# 在 model.py 中替换
 def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func, group_dims):
     best_score = -np.inf
     best_params = PARAM_GRID[0]
@@ -53,19 +54,14 @@ def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func
     inner_folds = inner_splits_func(train_idx_0)
     feature_names = X_proc.columns.tolist()
     
-    # 提前把 numpy 数组切好，极大提升循环速度
     X_train_np = X_proc.iloc[train_idx_0].values
     Z_train_np = Z.iloc[train_idx_0].values
     panels_train = panels[train_idx_0]
-    
-    # 获取该组所有维度在 Z 中的列索引
     dim_indices = [Z.columns.get_loc(d) for d in group_dims]
     
     for params in PARAM_GRID:
         for use_mono in [True, False]:
             group_inner_scores = []
-            
-            # 遍历内层 4 折
             for in_train_idx, in_val_idx in inner_folds:
                 X_in_train = X_train_np[in_train_idx]
                 X_in_val = X_train_np[in_val_idx]
@@ -74,7 +70,6 @@ def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func
                 panels_inner = panels_train[in_train_idx]
                 zeros_inner = panel_zeros(Z_in_train_df, panels_inner)
                 
-                # 🚨 这里：遍历该组的所有维度，算真正的组内平均
                 for dim, z_idx in zip(group_dims, dim_indices):
                     y_in_train = Z_train_np[in_train_idx, z_idx]
                     y_in_val = Z_train_np[in_val_idx, z_idx]
@@ -97,7 +92,6 @@ def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func
                     rho, _ = spearmanr(pred, y_in_val)
                     group_inner_scores.append(rho if not np.isnan(rho) else 0)
             
-            # 取该组所有维度、所有折的平均分
             mean_rho = np.mean(group_inner_scores)
             if mean_rho > best_score:
                 best_score = mean_rho
@@ -105,7 +99,7 @@ def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func
                 best_use_mono = use_mono
                 
     return best_params, best_use_mono
-# 🚨 修改：直接用传进来的最优参数跑外层，不再自己搜参
+
 def run_outer_cv(X_proc, Z, panels, outer_folds, dim, best_params, best_use_mono):
     y = Z[dim].values
     feature_names = X_proc.columns.tolist()
