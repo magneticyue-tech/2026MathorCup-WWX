@@ -6,21 +6,19 @@ from scipy.stats import spearmanr
 from .features import monotone_cst
 from .panels import panel_zeros
 
-# 24 种参数网格保持不变
-# 补全队长要求的参数网格，去除 max_iter 的冗余循环（默认 100 次已足够收敛）
+# 8 种极速网格
 PARAM_GRID = []
 for depth in [2, 3]:
     for leaf in [10, 20]:
         for l2 in [0, 1]:
             PARAM_GRID.append({
-                "max_depth": depth, 
-                "min_samples_leaf": leaf, 
-                "learning_rate": 0.05, 
-                "max_iter": 100,  # 锁定 100，避免无意义的三倍训练时间
-                "l2_regularization": l2
+                "max_depth": depth, "min_samples_leaf": leaf, 
+                "learning_rate": 0.05, "max_iter": 100, "l2_regularization": l2
             })
+
 HURDLE_DIMS = ["acetic", "coriander", "lactic", "clove", "orange", "barnyard", 
                "A_malt_burn", "stale_hops", "F_esters_flower", "F_hops_tropical"]
+
 class HurdleRegressor(BaseEstimator, RegressorMixin):
     def __init__(self, base_params=None):
         self.base_params = base_params or {}
@@ -42,9 +40,6 @@ class HurdleRegressor(BaseEstimator, RegressorMixin):
         mu_pos = self.reg.predict(X) if self.reg is not None else np.zeros(len(X))
         return pi * mu_pos + (1 - pi) * self.z0_tilde
 
-# 🚨 新增：专门用于在组内搜索一次最优参数
-# 🚨 修改：真正实现“按该组的平均内层 CV Spearman 选择”
-# 在 model.py 中替换
 def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func, group_dims):
     best_score = -np.inf
     best_params = PARAM_GRID[0]
@@ -100,11 +95,12 @@ def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func
                 
     return best_params, best_use_mono
 
-def run_outer_cv(X_proc, Z, panels, outer_folds, dim, best_params, best_use_mono):
+def run_outer_cv(X_proc, Z, panels, outer_folds, inner_splits_func, dim, best_params, best_use_mono):
     y = Z[dim].values
     feature_names = X_proc.columns.tolist()
     use_hurdle = dim in HURDLE_DIMS
     oof_pred = np.zeros(len(y))
+    inner_oof_pred = np.full(len(y), np.nan) # 新增：存内层折外预测
     
     for fold_idx, (train_idx, test_idx) in enumerate(outer_folds):
         X_train, X_test = X_proc.iloc[train_idx], X_proc.iloc[test_idx]
@@ -133,4 +129,28 @@ def run_outer_cv(X_proc, Z, panels, outer_folds, dim, best_params, best_use_mono
             model.fit(X_train, y_train)
             oof_pred[test_idx] = model.predict(X_test)
             
-    return oof_pred
+        # === 新增：生成内层折外预测 ===
+        inner_folds = inner_splits_func(train_idx)
+        for in_train_idx, in_val_idx in inner_folds:
+            real_in_train = train_idx[in_train_idx]
+            real_in_val = train_idx[in_val_idx]
+            
+            X_in_train, X_in_val = X_proc.iloc[real_in_train], X_proc.iloc[real_in_val]
+            y_in_train = y[real_in_train]
+            
+            Z_in_train = Z.iloc[real_in_train]
+            panels_in = panels[real_in_train]
+            zeros_in = panel_zeros(Z_in_train, panels_in)
+            z0_in = np.median(zeros_in.iloc[:, dim_idx].dropna().values) if zeros_in.shape[1] > dim_idx else np.nan
+            
+            if use_hurdle and not np.isnan(z0_in):
+                m_in = HurdleRegressor(base_params=best_params)
+                at_z_in = np.isclose(y_in_train, z0_in, atol=1e-5)
+                m_in.fit(X_in_train, y_in_train, at_z_in, z0_in)
+                inner_oof_pred[real_in_val] = m_in.predict(X_in_val)
+            else:
+                m_in = HistGradientBoostingRegressor(**best_params, random_state=0, monotonic_cst=mono_cst)
+                m_in.fit(X_in_train, y_in_train)
+                inner_oof_pred[real_in_val] = m_in.predict(X_in_val)
+                
+    return oof_pred, inner_oof_pred

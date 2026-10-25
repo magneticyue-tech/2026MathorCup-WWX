@@ -1,4 +1,3 @@
-# 覆盖 solve_q1_main.py
 import sys
 import time
 import json
@@ -37,13 +36,16 @@ def main():
         "Basic": ["body", "alcohol", "bitternes", "sweetness", "co2", "acidity", "aftertaste", "overall"]
     }
     
-    oof_z_all = np.zeros((5, 250, 50)) # 5次重复，250款酒，50个维度
+    # 初始化存储矩阵
+    oof_z_all = np.zeros((5, 250, 50))
+    inner_z_all = np.full((5, 250, 50), np.nan) # 存储内层预测
     fold_id = np.zeros((5, 250), dtype=int)
-    
+    final_zhat = np.zeros((250, 50))
     chosen_params_all = {}
+    
     start_time = time.time()
     
-    # 预先填入 fold_id
+    # 填入 fold_id
     for run in range(5):
         for fold_idx, (_, test_idx) in enumerate(splits[run]):
             fold_id[run, test_idx] = fold_idx
@@ -58,19 +60,18 @@ def main():
             print(f"    正在跑维度: {dim} ...")
             dim_idx = data.dims.index(dim)
             preds_list = []
+            
             for run in range(5):
-                pred_run = run_outer_cv(
-                    X_proc, data.Z, panels, splits[run], dim, best_params, best_use_mono
+                # 注意：这里接收两个返回值
+                pred_run, inner_run = run_outer_cv(
+                    X_proc, data.Z, panels, splits[run], inner_splits_func, dim, best_params, best_use_mono
                 )
                 preds_list.append(pred_run)
-                oof_z_all[run, :, dim_idx] = pred_run # 存入逐次矩阵
+                oof_z_all[run, :, dim_idx] = pred_run 
+                inner_z_all[run, :, dim_idx] = inner_run # 存入内层预测
                 
-            # 5次平均作为最终的zhat
-            oof_z_all_mean = np.mean(preds_list, axis=0)
-            # 将其存在一个单独变量里，最后保存
-            if 'final_zhat' not in locals():
-                final_zhat = np.zeros((250, 50))
-            final_zhat[:, dim_idx] = oof_z_all_mean
+            # 5次平均作为最终 zhat
+            final_zhat[:, dim_idx] = np.mean(preds_list, axis=0)
             chosen_params_all[dim] = best_params
             
     save_path = PROCESSED_DIR / "q1_main_oof_v2.npz"
@@ -78,6 +79,7 @@ def main():
         save_path, 
         zhat=final_zhat,
         oof_z=oof_z_all,
+        inner_z=inner_z_all, # 终于存进去了！
         fold_id=fold_id,
         chosen_params=json.dumps(chosen_params_all),
         dims=np.array(data.dims),
