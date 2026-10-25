@@ -29,47 +29,39 @@ def load_q1(raw_dir=RAW_DIR) -> Q1Data:
     )
 
 class ChemNAEncoder:
-    """
-    基于方法论 2.1 和 7.1 的缺失值编码器。
-    """
     def __init__(self, scheme: str = "main"):
         self.scheme = scheme
-        self.col_means = None
+        self.col_means_main = None # 新增：保存训练折的均值
         
     def fit(self, X_train: pd.DataFrame):
-        if self.scheme == "col_mean":
+        # 找出包含缺失值的单化合物列
+        na_cols = X_train.columns[X_train.isna().any()].tolist()
+        self.single_comp_cols = [c for c in na_cols if not c.endswith("_sum")]
+        
+        if self.scheme == "main":
+            # 方法论要求：只用训练折的非缺失观测计算列均值
+            self.col_means_main = X_train[self.single_comp_cols].mean()
+        elif self.scheme == "col_mean":
             self.col_means = X_train.mean()
         return self
 
     def transform(self, X: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
         X_out = X.copy()
         
-        # 找出包含缺失值的单化合物列（排除 _sum 列）
-        na_cols = X_out.columns[X_out.isna().any()].tolist()
-        single_comp_cols = [c for c in na_cols if not c.endswith("_sum")]
-        
-        # 按方法论 2.1：为 8 个受影响的列构建缺失指示变量
+        # 构建缺失指示变量
         missing_indicators = pd.DataFrame(index=X_out.index)
-        for c in single_comp_cols:
+        for c in self.single_comp_cols:
             missing_indicators[f"{c}_missing"] = X_out[c].isna().astype(int)
 
         if self.scheme == "main":
-            # 主设定：单化合物 NA 填 0，_sum 保留 NaN
-            X_out[single_comp_cols] = X_out[single_comp_cols].fillna(0)
-            
+            # 修复：使用训练折均值填充
+            X_out[self.single_comp_cols] = X_out[self.single_comp_cols].fillna(self.col_means_main)
         elif self.scheme == "amyl_nan":
-            # 敏感性实验：amyl.acetate 保留 NaN
-            fill_cols = [c for c in single_comp_cols if c != "amyl.acetate"]
-            X_out[fill_cols] = X_out[fill_cols].fillna(0)
-            
+            fill_cols = [c for c in self.single_comp_cols if c != "amyl.acetate"]
+            X_out[fill_cols] = X_out[fill_cols].fillna(self.col_means_main[fill_cols])
         elif self.scheme == "all_nan":
-            # 敏感性实验：全部单化合物保留 NaN
             pass 
-            
         elif self.scheme == "col_mean":
-            # 敏感性实验：均值填补
-            if self.col_means is None:
-                raise ValueError("必须先调用 fit() 计算均值！")
             X_out = X_out.fillna(self.col_means)
             
         return X_out, missing_indicators
