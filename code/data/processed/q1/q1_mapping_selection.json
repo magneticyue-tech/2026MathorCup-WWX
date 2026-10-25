@@ -1,0 +1,11 @@
+{
+    "winning_method": "QWK_optimized",
+    "baseline_linear_qwk": 0.2809,
+    "optimized_qwk": 0.308,
+    "reason": "QWK切点优化高于直接线性映射",
+    "seed": 0,
+    "env": {
+        "python": "3.10.22 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:15:38) [MSC v.1942 64 bit (AMD64)]",
+        "sklearn": "1.7.2"
+    }
+}
