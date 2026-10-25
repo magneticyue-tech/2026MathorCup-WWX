@@ -1,6 +1,5 @@
 # Data (大文件不入库)
 data/raw/*
-data/processed/*
 !data/**/.gitkeep
 
 # Python
