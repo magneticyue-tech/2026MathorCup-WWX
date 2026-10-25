@@ -1,0 +1,26 @@
+{
+  "multi_groups": 41,
+  "single_groups": 22,
+  "dimensions": 50,
+  "known_group_dimension_zeros": 607,
+  "missing_multi_group_dimension_zeros": 1443,
+  "covered_beer_dimension_scores": 3878,
+  "all_beer_dimension_scores": 12500,
+  "dimensions_without_any_zero": [
+    "A_malt_all",
+    "A_malt_grain",
+    "A_esters_all",
+    "F_hops_all",
+    "F_esters_all",
+    "alcohol",
+    "aftertaste",
+    "body",
+    "co2",
+    "overall"
+  ],
+  "excluded_suspect_zero": "F_malt_all",
+  "winners_by_mean_qwk": {
+    "existing_beers": "qwk_optimized",
+    "new_beer": "qwk_optimized"
+  }
+}
