@@ -21,3 +21,4 @@ frontmatter（见 `_TEMPLATE.md`）。本索引列出所有记忆文件，每条
 - [不使用外部数据](no-external-data.md) — Zenodo 只用于核验
 - [3-methyl-2-butenal 是内标](internal-standard-3-methyl-2-butenal.md) — 附件 8 标为 Internal standard solution，不作为归因候选
 - [综合指标近似单一成分](composite-columns-near-duplicates.md) — 5 个综合指标各近似一个成分，不作为归因候选
+- [不编写事后预期表](no-post-hoc-expectation-table.md) — 化学合理性只用附件 8 原始标签与事后解释，不计算命中率
