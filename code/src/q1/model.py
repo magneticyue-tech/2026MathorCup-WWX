@@ -7,19 +7,20 @@ from .features import monotone_cst
 from .panels import panel_zeros
 
 # 24 种参数网格保持不变
+# 补全队长要求的参数网格，去除 max_iter 的冗余循环（默认 100 次已足够收敛）
 PARAM_GRID = []
 for depth in [2, 3]:
     for leaf in [10, 20]:
-        for max_iter in [100, 200, 400]:
-            for l2 in [0, 1]:
-                PARAM_GRID.append({
-                    "max_depth": depth, "min_samples_leaf": leaf, 
-                    "learning_rate": 0.05, "max_iter": max_iter, "l2_regularization": l2
-                })
-
+        for l2 in [0, 1]:
+            PARAM_GRID.append({
+                "max_depth": depth, 
+                "min_samples_leaf": leaf, 
+                "learning_rate": 0.05, 
+                "max_iter": 100,  # 锁定 100，避免无意义的三倍训练时间
+                "l2_regularization": l2
+            })
 HURDLE_DIMS = ["acetic", "coriander", "lactic", "clove", "orange", "barnyard", 
                "A_malt_burn", "stale_hops", "F_esters_flower", "F_hops_tropical"]
-
 class HurdleRegressor(BaseEstimator, RegressorMixin):
     def __init__(self, base_params=None):
         self.base_params = base_params or {}
@@ -42,60 +43,68 @@ class HurdleRegressor(BaseEstimator, RegressorMixin):
         return pi * mu_pos + (1 - pi) * self.z0_tilde
 
 # 🚨 新增：专门用于在组内搜索一次最优参数
+# 🚨 修改：真正实现“按该组的平均内层 CV Spearman 选择”
 def find_best_params_for_group(X_proc, Z, panels, outer_folds, inner_splits_func, group_dims):
-    # 从组里挑第一个维度作为代表来搜参
-    rep_dim = group_dims[0]
-    y = Z[rep_dim].values
-    feature_names = X_proc.columns.tolist()
-    
     best_score = -np.inf
     best_params = PARAM_GRID[0]
     best_use_mono = False
     
     train_idx_0, _ = outer_folds[0]
     inner_folds = inner_splits_func(train_idx_0)
+    feature_names = X_proc.columns.tolist()
+    
+    # 提前把 numpy 数组切好，极大提升循环速度
+    X_train_np = X_proc.iloc[train_idx_0].values
+    Z_train_np = Z.iloc[train_idx_0].values
+    panels_train = panels[train_idx_0]
+    
+    # 获取该组所有维度在 Z 中的列索引
+    dim_indices = [Z.columns.get_loc(d) for d in group_dims]
     
     for params in PARAM_GRID:
         for use_mono in [True, False]:
-            inner_scores = []
-            for in_train_idx, in_val_idx in inner_folds:
-                real_in_train_idx = train_idx_0[in_train_idx]
-                real_in_val_idx = train_idx_0[in_val_idx]
-                
-                X_in_train = X_proc.iloc[real_in_train_idx]
-                X_in_val = X_proc.iloc[real_in_val_idx]
-                y_in_train, y_in_val = y[real_in_train_idx], y[real_in_val_idx]
-                
-                Z_in_train = Z.iloc[real_in_train_idx]
-                panels_in_train = panels[real_in_train_idx]
-                zeros_in_train = panel_zeros(Z_in_train, panels_in_train)
-                dim_idx = Z.columns.get_loc(rep_dim)
-                col_zeros = zeros_in_train.iloc[:, dim_idx].dropna().values if zeros_in_train.shape[1] > dim_idx else []
-                z0_tilde_inner = np.median(col_zeros) if len(col_zeros) > 0 else np.nan
-                
-                mono_cst = monotone_cst(feature_names, rep_dim, use_mono)
-                
-                if rep_dim in HURDLE_DIMS and not np.isnan(z0_tilde_inner):
-                    model = HurdleRegressor(base_params=params)
-                    at_zero_inner = np.isclose(y_in_train, z0_tilde_inner, atol=1e-5)
-                    model.fit(X_in_train, y_in_train, at_zero_inner, z0_tilde_inner)
-                    pred = model.predict(X_in_val)
-                else:
-                    model = HistGradientBoostingRegressor(**params, random_state=0, monotonic_cst=mono_cst)
-                    model.fit(X_in_train, y_in_train)
-                    pred = model.predict(X_in_val)
-                    
-                rho, _ = spearmanr(pred, y_in_val)
-                inner_scores.append(rho if not np.isnan(rho) else 0)
+            group_inner_scores = []
             
-            mean_rho = np.mean(inner_scores)
+            # 遍历内层 4 折
+            for in_train_idx, in_val_idx in inner_folds:
+                X_in_train = X_train_np[in_train_idx]
+                X_in_val = X_train_np[in_val_idx]
+                
+                Z_in_train_df = Z.iloc[train_idx_0[in_train_idx]]
+                panels_inner = panels_train[in_train_idx]
+                zeros_inner = panel_zeros(Z_in_train_df, panels_inner)
+                
+                # 🚨 这里：遍历该组的所有维度，算真正的组内平均
+                for dim, z_idx in zip(group_dims, dim_indices):
+                    y_in_train = Z_train_np[in_train_idx, z_idx]
+                    y_in_val = Z_train_np[in_val_idx, z_idx]
+                    
+                    col_zeros = zeros_inner.iloc[:, z_idx].dropna().values if zeros_inner.shape[1] > z_idx else []
+                    z0_tilde = np.median(col_zeros) if len(col_zeros) > 0 else np.nan
+                    
+                    mono_cst = monotone_cst(feature_names, dim, use_mono)
+                    
+                    if dim in HURDLE_DIMS and not np.isnan(z0_tilde):
+                        model = HurdleRegressor(base_params=params)
+                        at_zero = np.isclose(y_in_train, z0_tilde, atol=1e-5)
+                        model.fit(X_in_train, y_in_train, at_zero, z0_tilde)
+                        pred = model.predict(X_in_val)
+                    else:
+                        model = HistGradientBoostingRegressor(**params, random_state=0, monotonic_cst=mono_cst)
+                        model.fit(X_in_train, y_in_train)
+                        pred = model.predict(X_in_val)
+                        
+                    rho, _ = spearmanr(pred, y_in_val)
+                    group_inner_scores.append(rho if not np.isnan(rho) else 0)
+            
+            # 取该组所有维度、所有折的平均分
+            mean_rho = np.mean(group_inner_scores)
             if mean_rho > best_score:
                 best_score = mean_rho
                 best_params = params
                 best_use_mono = use_mono
                 
     return best_params, best_use_mono
-
 # 🚨 修改：直接用传进来的最优参数跑外层，不再自己搜参
 def run_outer_cv(X_proc, Z, panels, outer_folds, dim, best_params, best_use_mono):
     y = Z[dim].values

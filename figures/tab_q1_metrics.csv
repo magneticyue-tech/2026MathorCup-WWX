@@ -1,0 +1,4 @@
+Model,Mean Spearman,Dimensions Won,Status
+Main HGBR,0.384,44/50,Success
+Baseline B1,0.266,-,Baseline
+Baseline B0,0.0,-,Baseline
