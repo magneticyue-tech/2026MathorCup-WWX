@@ -1,0 +1,4 @@
+method,qwk,mae,within_1,n_grades,dominant_share,changed_from_anchored,train_qwk_optimized
+anchored,0.30553,0.42792,0.96344,2.82,0.7504,0.0,
+distribution_matching,0.37024,0.51232,0.92954,4.944,0.5933,0.24253,
+qwk_optimized,0.36144,0.54242,0.91829,4.624,0.60758,0.29768,0.44703
