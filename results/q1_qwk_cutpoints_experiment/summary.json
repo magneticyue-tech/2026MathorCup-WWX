@@ -1,0 +1,27 @@
+{
+  "dimensions_improved": 40,
+  "dimensions_worsened": 10,
+  "dimensions_unchanged": 0,
+  "mean_delta_qwk": 0.05591104580096485,
+  "median_delta_qwk": 0.039802989804262334,
+  "largest_gains": {
+    "coriander": 0.2721,
+    "clove": 0.2253,
+    "F_esters_ethac": 0.1875,
+    "A_esters_fruity": 0.1657,
+    "F_esters_isoaa": 0.1639,
+    "dms": 0.1627,
+    "A_esters_isoaa": 0.1548,
+    "F_malt_cara": 0.1514
+  },
+  "largest_losses": {
+    "F_malt_burn": -0.091,
+    "F_esters_fruity": -0.0735,
+    "barnyard": -0.0445,
+    "F_malt_grain": -0.0243,
+    "A_malt_bread": -0.0194,
+    "orange": -0.012,
+    "A_hops_citrus": -0.0111,
+    "lactic": -0.0105
+  }
+}

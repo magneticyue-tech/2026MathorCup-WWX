@@ -1,6 +1,4 @@
 import numpy as np
-import pandas as pd
-
 # 方法论 4.2 节：无锚维度名单
 NO_ANCHOR_COLS = [
     "A_malt_all", "A_malt_grain", "A_esters_all", "F_hops_all", 
@@ -8,10 +6,18 @@ NO_ANCHOR_COLS = [
     "F_malt_all"
 ]
 
-def to_score(z_pred: np.ndarray, dim: str, m: float, z0_tilde: float, M: float) -> np.ndarray:
+def to_score(
+    z_pred: np.ndarray,
+    dim: str,
+    m: float,
+    z0_tilde: float,
+    M: float,
+    zero: np.ndarray | float | None = None,
+) -> np.ndarray:
     """
     T3: 将 z 值转换为 0-6 分。
     有锚维度使用 m 模型，无锚维度使用 C-mid。
+    zero 是逐啤酒的本组本维零点；缺失时回退到训练集零点中位数。
     """
     if dim in NO_ANCHOR_COLS or np.isnan(z0_tilde):
         # 无锚：C-mid 约定
@@ -19,7 +25,8 @@ def to_score(z_pred: np.ndarray, dim: str, m: float, z0_tilde: float, M: float) 
     else:
         # 有锚：m 模型
         r = -z0_tilde
-        score = m * (r / (1 + r**2)) * (z_pred - z0_tilde)
+        origin = z0_tilde if zero is None else np.where(np.isfinite(zero), zero, z0_tilde)
+        score = m * (r / (1 + r**2)) * (z_pred - origin)
         
     # 截断在 0 到 6 之间
     return np.clip(score, 0, 6)
