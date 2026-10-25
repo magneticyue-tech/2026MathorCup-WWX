@@ -186,7 +186,7 @@ $q_d$ 为维度 $d$ 上 $\max_{j}\lvert r_{jd}\rvert$ 的置换零分布 95% 分
 
 **维度等级。**
 
-- A：Top-1 显著，$\pi^{c}\ge0.6$，且 Top-1 不是共变标记（§6.2）。
+- A：Top-1 显著，且 $\pi^{c}\ge0.6$。
 - B：Top-1 显著，但不满足 A。
 - C：Top-1 不显著，记为“未找到可靠的关键化合物”，Top-3 仍列出供参考。
 
@@ -256,77 +256,32 @@ M0 中有 22/49 个维度的前 3 含 ≥2 个同模块化合物（检查 2）�
 
 ## 6. Q2.4 — 化学合理性
 
-### 6.1 预期表
+本节不编写“维度 → 预期化合物”表，也不计算命中率。预期表若写于看到结果之后，再用它评价结果就没有检验力。化学合理性分两步：先逐项报告可从附件直接读出的证据（§6.1–6.3），再在结果产生后为每个 Top-3 项撰写化学解释（§6.4）。解释是对结果的解读，不是对结果的检验。独立于这 250 款啤酒的核验只有 Zenodo 加标实验（§6.5）。
 
-下表列出每个维度在化学上预期的化合物。D 表示化合物本身具有该感官特征；M 表示前体、理化指标或已知的感知相互作用。除标注“−”的 pH 外，预期符号均为正。表中字段名为附件 1 列名。
+### 6.1 附件 8 的原始标签
 
-| 维度 | 预期化合物 |
-|---|---|
-| A/F_malt_all | M：`color.EBC.` |
-| A/F_malt_grain | D：`X3.methylbutanal` |
-| A/F_malt_bread | D：`X3.methylbutanal`、`X2.acetylpyrrole`、`isomaltol` |
-| A/F_malt_cara | M：`color.EBC.`；D：`isomaltol`、`furfural`、`X5.methylfurfural`、`hydroxy.methyl.furfural`、`X2.acetylfuran` |
-| A/F_malt_burn | M：`color.EBC.`；D：`methylpyrazine`、`X2.6.dimethyl.pyrazine`、`X2.ethyl.3.methylpyrazine`、`X2.furanmethanol` |
-| A/F_hops_all | D：`linalool`、`geraniol`、`alpha.humulene`、`E.caryophyllene`；F_hops_all 另加 M：`bitterness` |
-| A/F_hops_citrus | D：`linalool`、`geraniol`、`citronellol`、`limonene`、`nerol` |
-| A/F_hops_tropical | D：`geraniol`、`linalool`、`ethyl_2.methyl_butyrate` |
-| A/F_hops_noble | D：`alpha.humulene`、`E.caryophyllene`、`humulene.epoxide.II`、`caryophyllene.oxide`、`X.E..beta.farnesene`、`linalool` |
-| A/F_hops_woody | D：`alpha.humulene`、`E.caryophyllene`、`humulene.epoxide.II`、`caryophyllene.oxide`、`germacrene.D`、`alpha.calacorene`、`cadalene`、`tau.cadinol` |
-| A/F_esters_all | D：`isopentyl_acetate`、`ethyl_acetate`、`ethyl_hexanoate`、`ethyl_octanoate`、`phenethyl_acetate`、`isobutyl_acetate` |
-| A/F_esters_fruity | D：`ethyl_hexanoate`、`ethyl_octanoate`、`ethyl.butyrate`、`ethyl_decanoate`、`isopentyl_acetate` |
-| A/F_esters_flower | D：`phenethyl_acetate`、`phenethyl_alcohol`、`geraniol`、`linalool` |
-| A/F_esters_isoaa | D：`isopentyl_acetate`；M：`isoamyl_alcohol` |
-| A/F_esters_ethac | D：`ethyl_acetate`；M：`ethanol..v.v.`、`acetic_acid.g.L.` |
-| dms | D：`DMS` |
-| metallic | D：`iron` |
-| X4vg | D：`X4VG` |
-| t2n | D：`X.E..2.nonenal`、`X.E.E..2.4.decadienal` |
-| diacetyl | D：`X2.3.butanedione` |
-| stale_hops | D：`humulene.epoxide.II`、`caryophyllene.oxide` |
-| orange | D：`limonene`、`valencene`、`linalool` |
-| coriander | D：`linalool`、`camphor`、`geraniol` |
-| clove | D：`eugenol`、`X4VG`、`E.methyl.isoeugenol`、`E.caryophyllene` |
-| lactic | D：`lactic_acid.mg.L.`；M：`ethyl.lactate`、`pH`（−） |
-| acetic | D：`acetic_acid.g.L.`；M：`ethyl_acetate`、`pH`（−） |
-| body | M：`ethanol..v.v.`、`glycerol`、`GFS`、`unfermentables`、`protein.g.L.`、`betaglucan.mg.L.` |
-| alcohol | D：`ethanol..v.v.`、`isoamyl_alcohol`、`isobutanol`、`X1.propanol`、`X2.methyl.1.butanol` |
-| bitternes | D：`bitterness` |
-| sweetness | D：`GFS`；M：`unfermentables`、`glycerol` |
-| co2 | D：`CO2.PSI.` |
-| acidity | D：`pH`（−）、`lactic_acid.mg.L.`、`acetic_acid.g.L.` |
+对每个 Top-3 化合物，原样报告附件 8 *Sensory thresholds* 的以下字段，不改写、不合并，也不另设类别：
 
-aftertaste、overall 没有先验化合物；barnyard 不归因。共 47 个维度进入命中率计算。
+- `origin_paper`：Yeast、Hops、Spices、Malt、Others、Wild flora 或空缺。Others 不等同于非酿造来源；来源为 Others 的化合物，在 §6.4 的解释中说明其可能来源。
+- `off_flavors`：缺陷描述。只有 acetaldehyde、DES、DMS、H₂S、MeSH、SO₂、diacetyl 7 个化合物有此字段。
+- `aging`：老化时浓度上升（increase）或下降（decrease），24 个化合物有此字段。
+- 阈值：用于 §6.3 的 OAV。
 
-**披露：** 该表在检查 2 的边际排名输出之后写成。表中化合物均来自酿造化学的常规认识，没有因结果删去任何化合物；7 个维度的最佳预期化合物在 225 个候选中排在第 20 位之后（§6.2），说明该表未按结果裁剪。初稿中的 methyl geranate（hop tropical）可能受到预览结果影响，已删除。
+字段为空不等于该化合物没有对应性质（审计报告对阈值、老化、缺陷字段的说明）。`X2.ethylhexylsalicylate` 的附件 1 列名为 salicylate，附件 8 化学名为 2-ethylhexyl acrylate（审计 §7），报告时两者并列。
 
-### 6.2 量化检验
+### 6.2 共变标记
 
-- **命中率。** 严格命中：$T_d$ 含 $E_d$ 中的化合物，且符号与预期一致。模块命中：$T_d$ 含 $E_d$ 中某化合物的同模块成员。零分布：在 47 个维度之间置换维度标签 5,000 次，即把某维度的 Top-3 与另一个维度的预期表比较。这一零分布已计入 ethanol、color 等化合物同时出现在许多维度的预期表与 Top-3 中这一情况。
-- **最佳预期化合物排名。** 对每个维度，取 $E_d$ 中边际 $\lvert r\rvert$ 最大者在 225 个候选中的排名。它不依赖选择规则。
-- **来源富集。** 按维度族比较 Top-3 中来源与维度族一致的比例和该来源在候选集中的基础比例：malt 维度对 Malt，hops 维度对 Hops，esters 维度对 Yeast，香料维度对 Spices，lactic、acetic 对 Wild flora。
+满足以下任一条件的 Top-3 项标为共变标记。三项判据都只用数据：
 
-预运行（检查 6）：
+- 风格内 $r^{(s)}$ 的 95% CI 含 0（§4.6）；
+- 进入 ≥5 个维度的 Top-3（通用强度轴）；
+- 有阈值，且在全部 250 款啤酒中 OAV<1（§6.3）。
 
-- 最佳预期化合物排名的中位数为第 3；排第 1 的 15 维，前 3 的 24 维，第 20 位之后的 7 维（§6.6）。
-- 主方法严格命中率 0.47，模块命中率 0.57。维度标签置换零分布的均值为 0.10 和 0.17，5,000 次置换中没有一次达到观测值（单侧 $p<2\times10^{-4}$）。
-- 对照方法的严格 / 模块命中率：M0 0.51 / 0.55，M1 0.53 / 0.60，M2 0.51 / 0.64，M3 0.49 / 0.55，风格内 0.40 / 0.49。主方法的严格命中率低于 M1 0.06，即 47 维中少 3 维。命中率不是选择主方法的依据（§4.3），差异如实报告。
-- 来源富集（Top-3 中来源一致的比例 / 候选集中的基础比例）：malt 维度 Malt 0.33 / 0.09，hops 维度 Hops 0.47 / 0.34，esters 维度 Yeast 0.43 / 0.35，香料维度 Spices 0.11 / 0.10，lactic 与 acetic 的 Wild flora 0.17 / 0.03。malt 和酸啤维度有明显富集；hops 与 esters 维度只略高于基础比例，因为这些维度的 Top-3 中多次出现发酵强度轴上的化合物（ethanol、ethyl octanoate）；香料维度没有富集。
+共变标记不等于错误，只作为 §6.4 解释的输入。它提示该化合物可能标记一条工艺或风格轴，例如发酵强度，而该轴上真正起作用的可能是它的同模块化合物或相关者，或者未被测量。进入多个维度本身不排除直接作用，例如 IBU 入选 bitternes，解释时逐项说明。
 
-### 6.3 逐项分类
+预运行中进入 ≥5 个维度 Top-3 的化合物（检查 6）：color 8、ethyl octanoate 7、beta-phellandrene 6、ethanol 6、protein 6、n-hexanol 5、IBU 5。
 
-每个 Top-3 项按以下顺序归入一类：
-
-1. **X（非酿造来源）：** 化合物属于 BHT（`butylated.hydroxytoluene`）、2-ethylhexyl acrylate（`X2.ethylhexylsalicylate`，审计 §7 记录了名称冲突）、isopropyl laurate / tetradecanoate / hexadecanoate。它们是合成抗氧化剂、聚合物单体或化妆品酯，可能来自包装或实验室。2-ethyl-1-hexanol 来源存疑，但附件 8 标为 Yeast，不列入。
-2. **D（直接）：** 化合物属于 $E_d$ 的 D 类，或是其同模块成员；符号与预期一致（同模块成员的预期符号乘以 $\operatorname{sign}\rho_{je}$）。
-3. **M（机理）：** 同上，对应 $E_d$ 的 M 类。
-4. **S（共变标记）：** 不属于以上各类，且满足以下任一条件：风格内 $r^{(s)}$ 的 95% CI 含 0；进入 ≥5 个维度的 Top-3（通用强度轴）；有阈值且在全部 250 款啤酒中 OAV<1。
-5. **U（未解释）：** 其余。预期化合物以相反符号入选时也归入 U，并单独列出。
-
-S 类不等于错误。它说明该化合物标记的是一条工艺或风格轴，例如发酵强度，而该轴上真正起作用的化合物可能是它的相关者，或者未被测量。U 类是新的假设来源，不作为结论。
-
-预运行中进入 ≥5 个维度 Top-3 的化合物（检查 6）：color 8、ethyl octanoate 7、beta-phellandrene 6、ethanol 6、protein 6、n-hexanol 5、IBU 5。color、ethanol、IBU 多数出现在预期表内的维度，按 D/M 归类；ethyl octanoate 与 beta-phellandrene 出现在预期之外的维度时按 S 归类。
-
-### 6.4 阈值证据
+### 6.3 阈值证据
 
 对 Top-3 中有阈值的化合物，报告 OAV（浓度/阈值）≥1 的啤酒比例。阈值取附件 8 的均值口径。37 个 log10 列先取 $10^x$；33 个线性列假定附件 1 的单位与阈值单位相同，与问题 1 检查 6 相同。
 
@@ -335,7 +290,24 @@ S 类不等于错误。它说明该化合物标记的是一条工艺或风格轴
 预运行（检查 6）：主 Top-3 中有阈值的化合物共 26 个。
 
 - 在大多数啤酒中超过阈值：ethanol 0.98、linalool 0.98、citronellol 0.92、IBU 0.86、isoamyl acetate 0.84、geraniol 0.76、DMS 0.67、ethyl acetate 0.66、acetic acid 0.62。
-- 在全部啤酒中均未超过阈值：acetaldehyde、ethyl decanoate、furfural、isobutanol、phenethyl acetate。这些化合物入选时，单独作为气味来源的解释不成立；亚阈值酯类的加和效应是已知现象，因此对 D/M 类只标注、不降级，对其余项按 §6.3 归入 S。
+- 在全部啤酒中均未超过阈值：acetaldehyde、ethyl decanoate、furfural、isobutanol、phenethyl acetate。这些化合物入选时按 §6.2 标为共变标记，单独作为气味来源的解释不成立。亚阈值酯类的加和效应是已知现象，在 §6.4 的解释中讨论。
+
+### 6.4 逐项化学解释
+
+在 Top-3、§6.1–6.3 的证据和 §5 的稳定性结果全部产生之后撰写。每个 Top-3 项写一到两句，说明属于以下哪种情况：
+
+- 化合物本身具有该感官特征；
+- 化合物是前体或理化指标，或通过已知的感知相互作用影响该维度；
+- 化合物标记一条工艺或风格轴，真正起作用的可能是同模块化合物或未测化合物；
+- 无法解释。
+
+撰写规则：
+
+- 解释须与入选符号一致。化合物以与其已知作用相反的符号入选时，写明并记为无法解释。
+- 论文中的机理陈述注明出处。
+- 无法解释的项作为新的假设来源报告，不作为结论。
+- 主方法与 M3 的 Top-1 不同的维度，两者都写解释（§5.3）。
+- 解释不改变 Top-3、维度等级或主方法。
 
 ### 6.5 外部因果核验：Zenodo 加标实验
 
@@ -361,15 +333,12 @@ Zenodo *Validation Results 1–3* 记录了同一批品评员对对照杯和加�
 
 限制：混合物有 6–7 种化合物，不能归因到单一化合物；只有 2 款底酒，品评员 13–20 人；实验情境为 2020 年的双杯比较。该检查仅用于报告，不修改 Top-3（`memory/no-external-data.md`）。
 
-### 6.6 已知未命中
+### 6.6 未找到可靠关键化合物的维度
 
-预运行中，最佳预期化合物排在第 20 位之后的有 7 个维度（检查 6）：A_malt_grain（3-methylbutanal 第 37）、F_malt_grain（第 48）、A_esters_fruity（第 52）、F_esters_flower（第 35）、stale_hops（第 35）、dms（DMS 第 89）、diacetyl（diacetyl 第 85）。t2n 的 Top-1 不显著。diacetyl 化合物（`X2.3.butanedione`）进入的是 F_malt_grain 的 Top-3，而不是 diacetyl 维度的。
+C 级维度（§4.5），以及 Top-3 全部标为共变标记或无法解释的维度，单独列出。预运行中 C 级为 A_esters_flower 与 t2n。这些维度如实报告，不通过修改方法消除。候选原因在正式运行中检验，不预设成立：
 
-这些未命中如实报告，不通过修改预期表或方法消除。候选解释在正式运行中检验，不预设成立：
-
-- **零膨胀稀释。** 问题 1 检查 4 显示 10 个维度至少有 30% 的啤酒处于品评团零点。若问题出在零膨胀，只在高于本团零点的啤酒上计算预期化合物的 $r$，关联应增强。使用问题 1 的 `at_zero` 掩码。
-- **阈值以下。** DMS 在 67% 的啤酒中超过阈值，diacetyl 在 45% 的啤酒中超过阈值（问题 1 检查 6），因此“浓度低于阈值所以闻不到”不能解释这两个维度。
-- **未测化合物。** stale_hops 的典型来源（如异戊酸）和 t2n 的低浓度醛类可能不在附件 1 中或低于检出限。这一解释无法用附件检验，只作为讨论。
+- **零膨胀稀释。** 问题 1 检查 4 显示 10 个维度至少有 30% 的啤酒处于品评团零点。只在高于本团零点的啤酒上重算这些维度的 Top-1 关联；若零膨胀是原因，关联应增强。使用问题 1 的 `at_zero` 掩码。
+- **未测化合物。** 起作用的化合物可能不在附件 1 中或低于检出限。这一原因无法用附件检验，只作为讨论。
 
 ## 7. 验证
 
@@ -402,7 +371,7 @@ Zenodo *Validation Results 1–3* 记录了同一批品评员对对照杯和加�
 
 | 风险 | 防护 |
 |---|---|
-| 先按结果编写化学预期，再用它评价结果 | 不编写预期表，不计算命中率；化学解释在结果之后撰写并标为事后解读，不改变 Top-3、维度等级或主方法（§6.4）；维度等级只用数据判据（§4.5、§6.2） |
+| 先按结果编写化学预期，再用它评价结果 | 不编写预期表，不计算命中率；化学解释在结果之后撰写并标为事后解读，不改变 Top-3、维度等级或主方法（§6.4）；维度等级只用显著性与入选频率（§4.5） |
 | 附件 8 的 SHAP、MDI | 不读取 |
 | 附件 6 | 只作复算 |
 | GBM 重要度偏向训练集上过拟合的特征 | 在外层测试折上计算 |
