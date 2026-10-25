@@ -7,14 +7,19 @@ from .features import monotone_cst
 from .panels import panel_zeros
 
 # 8 种极速网格
+# 补全队长要求的 24 种参数网格
 PARAM_GRID = []
 for depth in [2, 3]:
     for leaf in [10, 20]:
-        for l2 in [0, 1]:
-            PARAM_GRID.append({
-                "max_depth": depth, "min_samples_leaf": leaf, 
-                "learning_rate": 0.05, "max_iter": 100, "l2_regularization": l2
-            })
+        for max_iter in [100, 200, 400]: # 🚨 核心修改：恢复三档迭代次数
+            for l2 in [0, 1]:
+                PARAM_GRID.append({
+                    "max_depth": depth, 
+                    "min_samples_leaf": leaf, 
+                    "learning_rate": 0.05, 
+                    "max_iter": max_iter, 
+                    "l2_regularization": l2
+                })
 
 HURDLE_DIMS = ["acetic", "coriander", "lactic", "clove", "orange", "barnyard", 
                "A_malt_burn", "stale_hops", "F_esters_flower", "F_hops_tropical"]
