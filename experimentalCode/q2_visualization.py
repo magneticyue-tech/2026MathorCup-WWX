@@ -9,16 +9,16 @@ import os
 mpl.rcParams['axes.unicode_minus'] = False
 
 print("正在读取数据...")
-# 路径修正：直接在当前目录下找 data
-df_chem = pd.read_csv('data/raw/1.csv')
-df_sens = pd.read_csv('data/raw/7.csv')
+# 在项目根目录运行：python experimentalCode/q2_visualization.py
+df_chem = pd.read_csv('code/data/raw/1.csv')
+df_sens = pd.read_csv('code/data/raw/7.csv')
 
 # 合并数据
 df = pd.merge(df_chem, df_sens, on='beer', suffixes=('_chem', '_sens'))
 print(f"数据读取成功，共 {len(df)} 行")
 
 # 确保保存图片的文件夹存在
-os.makedirs('results/figures', exist_ok=True)
+os.makedirs('experimentalCode/results/figures', exist_ok=True)
 
 # ================= 画图 1：相关性热图 =================
 chem_cols = ['ethyl_acetate', 'ethyl_decanoate', 'linalool', 'ethanol..v.v.', 'bitterness', 'lactic_acid.mg.L.']
@@ -32,8 +32,8 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(corr_matrix, annot=True, cmap='RdBu_r', vmin=-1, vmax=1, fmt='.2f', linewidths=.5)
 plt.title('Correlation between Chemical Parameters and Sensory Descriptors', fontsize=14)
 plt.tight_layout()
-plt.savefig('results/figures/fig1_heatmap.png', dpi=300) # 路径修正
-print("图1生成完毕：results/figures/fig1_heatmap.png")
+plt.savefig('experimentalCode/results/figures/fig1_heatmap.png', dpi=300) # 路径修正
+print("图1生成完毕：experimentalCode/results/figures/fig1_heatmap.png")
 plt.close()
 
 # ================= 画图 2：酒精在不同啤酒风格中的箱型图 =================
@@ -42,8 +42,8 @@ sns.boxplot(x='tasting_category_fine_chem', y='ethanol..v.v.', data=df, palette=
 plt.xticks(rotation=45, ha='right')
 plt.title('Distribution of Ethanol across Different Beer Styles', fontsize=14)
 plt.tight_layout()
-plt.savefig('results/figures/fig2_boxplot_styles.png', dpi=300)
-print("图2生成完毕：results/figures/fig2_boxplot_styles.png")
+plt.savefig('experimentalCode/results/figures/fig2_boxplot_styles.png', dpi=300)
+print("图2生成完毕：experimentalCode/results/figures/fig2_boxplot_styles.png")
 plt.close()
 
 # ================= 画图 3：风味雷达图 =================
@@ -70,8 +70,8 @@ plt.xticks(angles[:-1], valid_radar, color='grey', size=12)
 plt.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1))
 plt.title('Sensory Profile (Flavor Fingerprint)', size=15, y=1.1)
 plt.tight_layout()
-plt.savefig('results/figures/fig3_radar_chart.png', dpi=300)
-print("图3生成完毕：results/figures/fig3_radar_chart.png")
+plt.savefig('experimentalCode/results/figures/fig3_radar_chart.png', dpi=300)
+print("图3生成完毕：experimentalCode/results/figures/fig3_radar_chart.png")
 plt.close()
 
-print("全部画图任务完成！图片已保存在 results/figures 文件夹中。")
+print("全部画图任务完成！图片已保存在 experimentalCode/results/figures 文件夹中。")

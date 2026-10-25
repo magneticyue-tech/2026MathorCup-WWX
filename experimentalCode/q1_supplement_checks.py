@@ -1,8 +1,8 @@
-# 问题1方法论补充（notebooks/q1_methodology_supplement.md）的复现脚本。
-# 在项目根目录运行：python src/q1_supplement_checks.py
-# 只读取 data/raw、notebooks/q1_methodology.ipynb 与论文 Zenodo 补充工作簿，不写任何文件。
+# 问题1方法论补充（原 notebooks/q1_methodology_supplement.md，已删除，见 git 历史 cdafbb0^）的复现脚本。
+# 在项目根目录运行：python experimentalCode/q1_supplement_checks.py
+# 只读取 code/data/raw、experimentalCode/results/data_audit、experimentalCode/q1_methodology_checks.py 与论文 Zenodo 补充工作簿，不写任何文件。
 # Zenodo 工作簿路径用环境变量 ZENODO_XLSX 指定；项目根目录可用 Q1_ROOT 指定（默认当前目录）。
-import contextlib, io, json, os
+import contextlib, io, os
 from math import comb
 from pathlib import Path
 
@@ -11,19 +11,18 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 ROOT = Path(os.environ.get("Q1_ROOT", "."))
-RAW = ROOT / "data" / "raw"
+RAW = ROOT / "code" / "data" / "raw"
 ZEN = Path(os.environ.get("ZENODO_XLSX", Path(os.environ.get("TEMP", ".")) / "zenodo_10653704" / "Supplemental Files and Figure source files.xlsx"))
 if not ZEN.exists():
     raise SystemExit(f"找不到 Zenodo 工作簿 {ZEN}。从 https://doi.org/10.5281/zenodo.10653704 下载"
                      " 'Supplemental Files and Figure source files.xlsx'（md5 52645e38d90aafda272532e19e2fea1c），再设置 ZENODO_XLSX。")
 
-# 复用方法论 notebook 的代码单元 1–4（场次推断、场次零点、m 模型），不重写一份
-nb = json.load(open(ROOT / "notebooks" / "q1_methodology.ipynb", encoding="utf-8"))
+# 复用 q1_methodology_checks.py 的检查 1–4（场次推断、场次零点、m 模型），不重写一份
+src = (ROOT / "experimentalCode" / "q1_methodology_checks.py").read_text(encoding="utf-8")
 g = {}
 cwd = os.getcwd(); os.chdir(ROOT)
 with contextlib.redirect_stdout(io.StringIO()):
-    for c in [c for c in nb["cells"] if c["cell_type"] == "code"][:4]:
-        exec("".join(c["source"]), g)
+    exec("# %%" + "\n# %%".join(src.split("\n# %%")[1:5]), g)
 os.chdir(cwd)
 y, SESSION, SIZE, Z0, to_raw, ANCH, M_MAX, CORE42 = (g[k] for k in "y SESSION SIZE Z0 to_raw ANCH M_MAX CORE42".split())
 SENS = list(y.columns[3:])

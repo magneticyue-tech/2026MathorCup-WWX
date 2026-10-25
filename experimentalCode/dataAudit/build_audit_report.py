@@ -3,8 +3,8 @@ from pathlib import Path
 import json
 import pandas as pd
 
-ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'results'/'data_audit'
+ROOT=Path(__file__).resolve().parents[2]
+OUT=ROOT/'experimentalCode'/'results'/'data_audit'
 
 
 def table(headers, rows):
@@ -30,7 +30,7 @@ def main():
 
 ## 1 证据范围与判定方式
 
-核对材料包括项目根目录的原始赛题DOCX、《赛题与草稿.txt》、data/raw/数据说明.txt以及附件1至8。原始赛题本身也含有样本数量、工作表数量和量纲表述不一致之处，因此“赛题写明”与“数据已验证”分别记录。
+核对材料包括项目根目录的原始赛题DOCX、《赛题与草稿.txt》、code/data/raw/数据说明.txt以及附件1至8。原始赛题本身也含有样本数量、工作表数量和量纲表述不一致之处，因此“赛题写明”与“数据已验证”分别记录。
 
 “已确认”指可以由附件结构、原始单元格或明确说明直接验证；“有依据的推断”指存在一致模式但缺少生成过程；“待核实”指存在冲突或证据不足；“现有数据无法识别”指需要缺失的参数或来源资料。数值复现只验证当前附件的对应关系，不等于验证化学鉴定或测量准确性。
 
@@ -134,7 +134,7 @@ Beer Prices的7个价格字段按销售渠道和地区命名。附件未明确�
 以下例子直接否定“所列理化参数均保留原始尺度”的说明。
 ''')
     ex=[]
-    one=pd.read_csv(ROOT/'data/raw/1.csv')
+    one=pd.read_csv(ROOT/'code/data/raw/1.csv')
     refs={'ethanol..v.v.':0.07,'color.EBC.':5.95,'bitterness':3.495,'pH':4.215}
     for c,v in refs.items():ex.append([c,'beer 10',str(one.iloc[0][c]),str(v)])
     ex.append(['CO2.PSI.','beer 86',str(one.iloc[1]['CO2.PSI.']),'3.1'])
@@ -250,13 +250,10 @@ DMS和4VG属于已验证的log10组，Diacetyl和trans-2-nonenal处在线性参�
 ''')
     add('''## 10 可复现性与证据附件
 
-在项目根目录依次运行以下脚本。审计只依赖numpy、pandas和openpyxl；原始数据保持在data/raw，所有诊断输出写到results/data_audit，不写data/processed。PDF排版另依赖reportlab与可用中文字体，不影响数据审计复现。
+在项目根目录依次运行以下脚本。审计只依赖numpy、pandas和openpyxl；原始数据保持在code/data/raw，所有诊断输出写到experimentalCode/results/data_audit，不写code/data/processed。PDF排版另依赖reportlab与可用中文字体，不影响数据审计复现。
 
 ```
-python src/audit_data.py
-python src/audit_deep.py
-python src/audit_supplement.py
-python src/build_audit_report.py
+python experimentalCode/dataAudit/run_data_audit.py
 ```
 
 audit_data.py记录结构、原始标记、列统计、逐行缺失、工作表单元格与哈希；audit_deep.py验证样本候选关系、尺度、底值、全部相关系数与跨表差异；audit_supplement.py生成带语义的字段字典、元数据覆盖检查和极值定位；build_audit_report.py整理本报告。关键定量结果由脚本输出，来源解释和建议在报告中单独标示。
