@@ -49,7 +49,7 @@ def fast_panel_zeros(Z_arr, panels, decimals=9):
     return pd.DataFrame(out, index=unique_panels)
 
 def main():
-    print("正在执行 T3/T4: 终极完美版 (动态两法选型)...")
+    print("正在执行 T3/T4: 绝对最终完美版 (包含全部两法/I1/I0指标与频数)...")
     data = load_q1()
     main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
     oof_z = main_data['oof_z']
@@ -82,14 +82,12 @@ def main():
                 fold_records = []
                 for fold_idx, (train_idx, test_idx) in enumerate(splits[run]):
                     
-                    # 1. 外层线性参照 L
                     low, high = np.min(z_true[train_idx]), np.max(z_true[train_idx])
                     if high == low: L_test = np.full(len(test_idx), 3)
                     else: L_test = np.round(np.clip(6 * (z_true[test_idx] - low) / (high - low), 0, 6)).astype(int)
                     
                     if m_val == 3.0: L_all[run, test_idx, dim_idx] = L_test
                     
-                    # 2. 外层混合参照 R
                     zeros_train = fast_panel_zeros(Z_arr[train_idx], panels[train_idx])
                     zeros_test = fast_panel_zeros(Z_arr[test_idx], panels[test_idx])
                     
@@ -118,11 +116,9 @@ def main():
                         A_all[run, test_idx, dim_idx] = np.where(I_test, A_test, np.nan)
                         R_all[run, test_idx, dim_idx] = R_test
                     
-                    # 3. 预测
                     z_cont_pred_test = 6 * (oof_z[run, test_idx, dim_idx] - low) / (high - low + 1e-9)
                     pred_lin = np.clip(np.round(z_cont_pred_test), 0, 6).astype(int)
                     
-                    # 4. 内层切点校准集
                     valid_inner = ~np.isnan(inner_z[run, :, dim_idx])
                     inner_idx = np.where(valid_inner)[0]
                     
@@ -166,64 +162,70 @@ def main():
                     I_mask_all = np.concatenate([r["I_mask"] for r in fold_records])
                     L_all_flat = np.concatenate([r["L_test"] for r in fold_records])
                     
+                    # 🚨 严格拆分 I=1 和 I=0 的掩码
+                    mask_i1 = I_mask_all
+                    mask_i0 = ~I_mask_all
+                    
+                    # 全体指标
                     qwk_all = cohen_kappa_score(R_true_all, pred_qwk_all, weights="quadratic", labels=range(7))
                     mae_all = mean_absolute_error(R_true_all, pred_qwk_all)
                     acc_all = (np.abs(R_true_all - pred_qwk_all) <= 1).mean()
                     
+                    # 两法对比指标
                     lin_qwk = cohen_kappa_score(R_true_all, pred_lin_all, weights="quadratic", labels=range(7))
                     lin_mae = mean_absolute_error(R_true_all, pred_lin_all)
                     lin_acc = (np.abs(R_true_all - pred_lin_all) <= 1).mean()
                     
-                    # 小子集无定义处理：记录数量和 MAE
-                    if I_mask_all.sum() > 1:
-                        qwk_i1 = cohen_kappa_score(R_true_all[I_mask_all], pred_qwk_all[I_mask_all], weights="quadratic", labels=range(7))
-                        mae_i1 = mean_absolute_error(R_true_all[I_mask_all], pred_qwk_all[I_mask_all])
-                    else:
-                        qwk_i1, mae_i1 = np.nan, np.nan
-                        
-                    if (~I_mask_all).sum() > 1:
-                        qwk_i0 = cohen_kappa_score(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all], weights="quadratic", labels=range(7))
-                        mae_i0 = mean_absolute_error(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all])
-                    else:
-                        qwk_i0, mae_i0 = np.nan, np.nan
+                    # 🚨 I=1 指标（补全 Acc1 和 频数）
+                    qwk_i1 = cohen_kappa_score(R_true_all[mask_i1], pred_qwk_all[mask_i1], weights="quadratic", labels=range(7)) if mask_i1.sum() > 1 else np.nan
+                    mae_i1 = mean_absolute_error(R_true_all[mask_i1], pred_qwk_all[mask_i1]) if mask_i1.sum() > 0 else np.nan
+                    acc_i1 = (np.abs(R_true_all[mask_i1] - pred_qwk_all[mask_i1]) <= 1).mean() if mask_i1.sum() > 0 else np.nan
+                    freq_i1 = np.bincount(pred_qwk_all[mask_i1], minlength=7) if mask_i1.sum() > 0 else np.zeros(7)
                     
-                    diff_al = np.abs(R_true_all[I_mask_all] - L_all_flat[I_mask_all]).mean() if I_mask_all.sum() > 0 else np.nan
+                    # 🚨 I=0 指标（补全 Acc1 和 频数）
+                    qwk_i0 = cohen_kappa_score(R_true_all[mask_i0], pred_qwk_all[mask_i0], weights="quadratic", labels=range(7)) if mask_i0.sum() > 1 else np.nan
+                    mae_i0 = mean_absolute_error(R_true_all[mask_i0], pred_qwk_all[mask_i0]) if mask_i0.sum() > 0 else np.nan
+                    acc_i0 = (np.abs(R_true_all[mask_i0] - pred_qwk_all[mask_i0]) <= 1).mean() if mask_i0.sum() > 0 else np.nan
+                    freq_i0 = np.bincount(pred_qwk_all[mask_i0], minlength=7) if mask_i0.sum() > 0 else np.zeros(7)
+                    
+                    diff_al = np.abs(R_true_all[mask_i1] - L_all_flat[mask_i1]).mean() if mask_i1.sum() > 0 else np.nan
                     freq = np.bincount(pred_qwk_all, minlength=7)
                     
                     run_metrics.append({
                         "QWK_all": qwk_all, "MAE_all": mae_all, "Acc1_all": acc_all,
                         "Lin_QWK_all": lin_qwk, "Lin_MAE_all": lin_mae, "Lin_Acc1_all": lin_acc,
-                        "QWK_I1": qwk_i1, "MAE_I1": mae_i1, "QWK_I0": qwk_i0, "MAE_I0": mae_i0,
+                        "QWK_I1": qwk_i1, "MAE_I1": mae_i1, "Acc1_I1": acc_i1, "freq_I1": freq_i1,
+                        "QWK_I0": qwk_i0, "MAE_I0": mae_i0, "Acc1_I0": acc_i0, "freq_I0": freq_i0,
                         "Diff_A_L_I1": diff_al, "freq": freq
                     })
             
             if run_metrics:
-                keys_to_avg = ["QWK_all", "MAE_all", "Acc1_all", "Lin_QWK_all", "Lin_MAE_all", "Lin_Acc1_all", "QWK_I1", "MAE_I1", "QWK_I0", "MAE_I0", "Diff_A_L_I1"]
+                keys_to_avg = ["QWK_all", "MAE_all", "Acc1_all", "Lin_QWK_all", "Lin_MAE_all", "Lin_Acc1_all", "QWK_I1", "MAE_I1", "Acc1_I1", "QWK_I0", "MAE_I0", "Acc1_I0", "Diff_A_L_I1"]
                 avg_metric = {k: np.nanmean([r[k] for r in run_metrics]) for k in keys_to_avg}
                 avg_freq = np.mean([r["freq"] for r in run_metrics], axis=0)
+                avg_freq_i1 = np.mean([r["freq_I1"] for r in run_metrics], axis=0)
+                avg_freq_i0 = np.mean([r["freq_I0"] for r in run_metrics], axis=0)
             else:
-                avg_metric = {k: np.nan for k in ["QWK_all", "MAE_all", "Acc1_all", "Lin_QWK_all", "Lin_MAE_all", "Lin_Acc1_all", "QWK_I1", "MAE_I1", "QWK_I0", "MAE_I0", "Diff_A_L_I1"]}
-                avg_freq = np.zeros(7)
+                avg_metric = {k: np.nan for k in ["QWK_all", "MAE_all", "Acc1_all", "Lin_QWK_all", "Lin_MAE_all", "Lin_Acc1_all", "QWK_I1", "MAE_I1", "Acc1_I1", "QWK_I0", "MAE_I0", "Acc1_I0", "Diff_A_L_I1"]}
+                avg_freq, avg_freq_i1, avg_freq_i0 = np.zeros(7), np.zeros(7), np.zeros(7)
                 
             metric_row = {"dim": dim, "m_val": m_name}
             metric_row.update(avg_metric)
+            
+            # 导出所有的频数
             for k in range(7):
-                metric_row[f"freq_k{k}"] = avg_freq[k]
+                metric_row[f"freq_all_k{k}"] = avg_freq[k]
+                metric_row[f"freq_I1_k{k}"] = avg_freq_i1[k]
+                metric_row[f"freq_I0_k{k}"] = avg_freq_i0[k]
+                
             detailed_metrics.append(metric_row)
 
-    # ==========================================
-    # 🚨 核心修复：严格执行“两法选型”，大者胜出，平局选线性
-    # ==========================================
+    # 🚨 两法动态选型
     df_metrics = pd.DataFrame(detailed_metrics)
     m3_df = df_metrics[df_metrics['m_val'] == '3.0']
-    
     mean_qwk_opt = m3_df['QWK_all'].mean()
     mean_qwk_lin = m3_df['Lin_QWK_all'].mean()
-    
-    if mean_qwk_opt > mean_qwk_lin:
-        winning_method = "QWK_optimized"
-    else:
-        winning_method = "Direct_Linear"
+    winning_method = "QWK_optimized" if mean_qwk_opt > mean_qwk_lin else "Direct_Linear"
 
     final_scores_dict = {}
     for dim_idx, dim in enumerate(data.dims):
@@ -241,9 +243,7 @@ def main():
             final_scores_dict[dim] = np.clip(np.round(z_cont_final), 0, 6).astype(int)
             selection_params[dim] = {"method": "Linear", "low": float(low), "high": float(high)}
 
-    # ==========================
-    # 保存产物与日志
-    # ==========================
+    # 保存产物
     np.savez_compressed(PROCESSED_DIR / "q1_mapping_reference_masks.npz", I=I_all, A=A_all, L=L_all, R=R_all)
     df_metrics.to_csv(PROCESSED_DIR / "q1_mapping_metrics.csv", index=False)
     

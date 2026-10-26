@@ -6,4 +6,4 @@ Actual I=1 Coverage: 19160 / 62500 (30.7%)
 Mean QWK (Optimized): 0.3158
 Mean QWK (Direct Linear): 0.2995
 Winning Method: QWK_optimized
-Excluded Dims (Undefined): {'3.0': ['clove', 'coriander', 'lactic', 'acetic'], '2.5': ['clove', 'coriander', 'lactic', 'acetic'], 'cap': ['coriander', 'lactic', 'acetic']}
+Excluded Dims (Undefined): {'3.0': ['clove', 'acetic', 'coriander', 'lactic'], '2.5': ['clove', 'acetic', 'coriander', 'lactic'], 'cap': ['acetic', 'coriander', 'lactic']}
