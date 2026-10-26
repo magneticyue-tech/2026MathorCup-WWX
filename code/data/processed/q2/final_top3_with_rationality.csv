@@ -1,151 +1,178 @@
-dimension,rank,compound,module_id,pi_c,stability,category,strict_hit,module_hit,exp_D,exp_M
-A_malt_all,1,color.EBC.,150,1.0,稳定,M,True,False,,color.EBC.
-A_malt_all,2,X4.ethyl.phenol,116,0.14,不稳定,U,False,False,,color.EBC.
-A_malt_all,3,beta.phellandrene,47,0.23,不稳定,S,False,False,,color.EBC.
-A_malt_grain,1,terpinen.4.ol,44,0.31,不稳定,U,False,False,X3.methylbutanal,
-A_malt_grain,2,X2.acetylfuran,152,0.09,不稳定,U,False,False,X3.methylbutanal,
-A_malt_grain,3,X.E..beta.ionone,75,0.05,不稳定,U,False,False,X3.methylbutanal,
-A_malt_bread,1,color.EBC.,150,0.65,稳定,S,False,False,"X3.methylbutanal,X2.acetylpyrrole,isomaltol",
-A_malt_bread,2,X4.ethyl.guaiacol,116,0.2,不稳定,U,False,False,"X3.methylbutanal,X2.acetylpyrrole,isomaltol",
-A_malt_bread,3,ethyl.tiglate,87,0.15,不稳定,U,False,False,"X3.methylbutanal,X2.acetylpyrrole,isomaltol",
-A_malt_cara,1,color.EBC.,150,1.0,稳定,M,True,False,"isomaltol,furfural,X5.methylfurfural,hydroxy.methyl.furfural,X2.acetylfuran",color.EBC.
-A_malt_cara,2,X2.ethyl.1.hexanol,90,0.48,中等,U,False,False,"isomaltol,furfural,X5.methylfurfural,hydroxy.methyl.furfural,X2.acetylfuran",color.EBC.
-A_malt_cara,3,GFS,146,0.4,中等,U,False,False,"isomaltol,furfural,X5.methylfurfural,hydroxy.methyl.furfural,X2.acetylfuran",color.EBC.
-A_malt_burn,1,color.EBC.,150,0.74,稳定,M,True,False,"methylpyrazine,X2.6.dimethyl.pyrazine,X2.ethyl.3.methylpyrazine,X2.furanmethanol",color.EBC.
-A_malt_burn,2,DES,36,0.16,不稳定,U,False,False,"methylpyrazine,X2.6.dimethyl.pyrazine,X2.ethyl.3.methylpyrazine,X2.furanmethanol",color.EBC.
-A_malt_burn,3,isopropyl.hexadecanoate,13,0.01,不稳定,X,False,False,"methylpyrazine,X2.6.dimethyl.pyrazine,X2.ethyl.3.methylpyrazine,X2.furanmethanol",color.EBC.
-A_hops_all,1,ethyl_octanoate,63,0.64,稳定,S,False,False,"linalool,geraniol,alpha.humulene,E.caryophyllene",
-A_hops_all,2,iron,122,0.29,不稳定,U,False,False,"linalool,geraniol,alpha.humulene,E.caryophyllene",
-A_hops_all,3,linalool,43,0.39,中等,D,True,False,"linalool,geraniol,alpha.humulene,E.caryophyllene",
-A_hops_citrus,1,citronellol,43,0.42,中等,D,True,False,"linalool,geraniol,citronellol,limonene,nerol",
-A_hops_citrus,2,CO2.PSI.,38,0.44,中等,U,False,False,"linalool,geraniol,citronellol,limonene,nerol",
-A_hops_citrus,3,X6.methyl.5.hepten.2.one,68,0.29,不稳定,U,False,False,"linalool,geraniol,citronellol,limonene,nerol",
-A_hops_tropical,1,DMS,37,0.58,中等,U,False,False,"geraniol,linalool,ethyl_2.methyl_butyrate",
-A_hops_tropical,2,X.E..beta.ocimene,4,0.22,不稳定,U,False,False,"geraniol,linalool,ethyl_2.methyl_butyrate",
-A_hops_tropical,3,ethyl_isovalerate,114,0.08,不稳定,D,False,True,"geraniol,linalool,ethyl_2.methyl_butyrate",
-A_hops_noble,1,ethyl_octanoate,63,0.71,稳定,S,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,X.E..beta.farnesene,linalool",
-A_hops_noble,2,iron,122,0.35,中等,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,X.E..beta.farnesene,linalool",
-A_hops_noble,3,X.E..2.nonenal,60,0.22,不稳定,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,X.E..beta.farnesene,linalool",
-A_hops_woody,1,trans.dihydro.alpha.terpinyl.acetate,65,0.13,不稳定,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,germacrene.D,alpha.calacorene,cadalene,tau.cadinol",
-A_hops_woody,2,X2Z.6Z.farnesol,104,0.15,不稳定,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,germacrene.D,alpha.calacorene,cadalene,tau.cadinol",
-A_hops_woody,3,car.3.en.2.one,105,0.25,不稳定,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,germacrene.D,alpha.calacorene,cadalene,tau.cadinol",
-A_esters_all,1,n.hexanol,29,0.58,中等,D,False,True,"isopentyl_acetate,ethyl_acetate,ethyl_hexanoate,ethyl_octanoate,phenethyl_acetate,isobutyl_acetate",
-A_esters_all,2,lactic_acid.mg.L.,115,0.47,中等,U,False,False,"isopentyl_acetate,ethyl_acetate,ethyl_hexanoate,ethyl_octanoate,phenethyl_acetate,isobutyl_acetate",
-A_esters_all,3,acetaldehyde,32,0.4,中等,D,False,True,"isopentyl_acetate,ethyl_acetate,ethyl_hexanoate,ethyl_octanoate,phenethyl_acetate,isobutyl_acetate",
-A_esters_ethac,1,ethyl_acetate,32,0.43,中等,D,True,False,ethyl_acetate,"ethanol..v.v.,acetic_acid.g.L."
-A_esters_ethac,2,X2.methyl.1.butanol,25,0.15,不稳定,U,False,False,ethyl_acetate,"ethanol..v.v.,acetic_acid.g.L."
-A_esters_ethac,3,X2.3.dihydro.farnesol,18,0.09,不稳定,U,False,False,ethyl_acetate,"ethanol..v.v.,acetic_acid.g.L."
-A_esters_isoaa,1,n.hexanol,29,0.84,稳定,D,False,True,isopentyl_acetate,isoamyl_alcohol
-A_esters_isoaa,2,tau.cadinol,12,0.43,中等,U,False,False,isopentyl_acetate,isoamyl_alcohol
-A_esters_isoaa,3,ethyl_decanoate,63,0.1,不稳定,U,False,False,isopentyl_acetate,isoamyl_alcohol
-A_esters_flower,1,beta.phellandrene,47,0.22,不稳定,S,False,False,"phenethyl_acetate,phenethyl_alcohol,geraniol,linalool",
-A_esters_flower,2,n.hexanol,29,0.06,不稳定,S,False,False,"phenethyl_acetate,phenethyl_alcohol,geraniol,linalool",
-A_esters_flower,3,acetic_acid.g.L.,124,0.07,不稳定,U,False,False,"phenethyl_acetate,phenethyl_alcohol,geraniol,linalool",
-A_esters_fruity,1,beta.phellandrene,47,0.4,中等,S,False,False,"ethyl_hexanoate,ethyl_octanoate,ethyl.butyrate,ethyl_decanoate,isopentyl_acetate",
-A_esters_fruity,2,X1.10.di.epi.cubenol,72,0.16,不稳定,U,False,False,"ethyl_hexanoate,ethyl_octanoate,ethyl.butyrate,ethyl_decanoate,isopentyl_acetate",
-A_esters_fruity,3,neryl.formate,116,0.1,不稳定,U,False,False,"ethyl_hexanoate,ethyl_octanoate,ethyl.butyrate,ethyl_decanoate,isopentyl_acetate",
-F_malt_all,1,ethanol..v.v.,32,0.56,中等,S,False,False,,color.EBC.
-F_malt_all,2,color.EBC.,150,0.74,稳定,M,True,False,,color.EBC.
-F_malt_all,3,pH,125,0.55,中等,U,False,False,,color.EBC.
-F_malt_grain,1,isoborneol,44,0.22,不稳定,U,False,False,X3.methylbutanal,
-F_malt_grain,2,X2.3.butanedione,138,0.16,不稳定,U,False,False,X3.methylbutanal,
-F_malt_grain,3,propyl.acetate,24,0.11,不稳定,U,False,False,X3.methylbutanal,
-F_malt_bread,1,acetaldehyde,32,0.29,不稳定,U,False,False,"X3.methylbutanal,X2.acetylpyrrole,isomaltol",
-F_malt_bread,2,X2.acetylpyrrole,152,0.24,不稳定,D,True,False,"X3.methylbutanal,X2.acetylpyrrole,isomaltol",
-F_malt_bread,3,neryl.formate,116,0.17,不稳定,U,False,False,"X3.methylbutanal,X2.acetylpyrrole,isomaltol",
-F_malt_cara,1,color.EBC.,150,0.99,稳定,M,True,False,"isomaltol,furfural,X5.methylfurfural,hydroxy.methyl.furfural,X2.acetylfuran",color.EBC.
-F_malt_cara,2,acetaldehyde,32,0.49,中等,U,False,False,"isomaltol,furfural,X5.methylfurfural,hydroxy.methyl.furfural,X2.acetylfuran",color.EBC.
-F_malt_cara,3,ethyl_isovalerate,114,0.3,不稳定,U,False,False,"isomaltol,furfural,X5.methylfurfural,hydroxy.methyl.furfural,X2.acetylfuran",color.EBC.
-F_malt_burn,1,ethanol..v.v.,32,0.61,稳定,S,False,False,"methylpyrazine,X2.6.dimethyl.pyrazine,X2.ethyl.3.methylpyrazine,X2.furanmethanol",color.EBC.
-F_malt_burn,2,pH,125,0.57,中等,U,False,False,"methylpyrazine,X2.6.dimethyl.pyrazine,X2.ethyl.3.methylpyrazine,X2.furanmethanol",color.EBC.
-F_malt_burn,3,color.EBC.,150,0.52,中等,M,True,False,"methylpyrazine,X2.6.dimethyl.pyrazine,X2.ethyl.3.methylpyrazine,X2.furanmethanol",color.EBC.
-F_hops_all,1,bitterness,123,0.82,稳定,M,True,False,"linalool,geraniol,alpha.humulene,E.caryophyllene",bitterness
-F_hops_all,2,ethyl_octanoate,63,0.53,中等,S,False,False,"linalool,geraniol,alpha.humulene,E.caryophyllene",bitterness
-F_hops_all,3,linalool,43,0.29,不稳定,D,True,False,"linalool,geraniol,alpha.humulene,E.caryophyllene",bitterness
-F_hops_citrus,1,protein.g.L.,150,0.22,不稳定,S,False,False,"linalool,geraniol,citronellol,limonene,nerol",
-F_hops_citrus,2,nerol.oxide,64,0.22,不稳定,U,False,False,"linalool,geraniol,citronellol,limonene,nerol",
-F_hops_citrus,3,alpha.terpinyl.isobutanoate,100,0.1,不稳定,U,False,False,"linalool,geraniol,citronellol,limonene,nerol",
-F_hops_tropical,1,geraniol,46,0.34,中等,D,True,False,"geraniol,linalool,ethyl_2.methyl_butyrate",
-F_hops_tropical,2,DMS,37,0.35,中等,U,False,False,"geraniol,linalool,ethyl_2.methyl_butyrate",
-F_hops_tropical,3,hexyl.acetate,127,0.32,不稳定,U,False,False,"geraniol,linalool,ethyl_2.methyl_butyrate",
-F_hops_noble,1,bitterness,123,0.79,稳定,S,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,X.E..beta.farnesene,linalool",
-F_hops_noble,2,ethyl_octanoate,63,0.79,稳定,S,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,X.E..beta.farnesene,linalool",
-F_hops_noble,3,phenethyl_alcohol,159,0.26,不稳定,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,X.E..beta.farnesene,linalool",
-F_hops_woody,1,bitterness,123,0.46,中等,S,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,germacrene.D,alpha.calacorene,cadalene,tau.cadinol",
-F_hops_woody,2,ethyl.hexadecanoate,65,0.2,不稳定,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,germacrene.D,alpha.calacorene,cadalene,tau.cadinol",
-F_hops_woody,3,isobutanol,31,0.25,不稳定,U,False,False,"alpha.humulene,E.caryophyllene,humulene.epoxide.II,caryophyllene.oxide,germacrene.D,alpha.calacorene,cadalene,tau.cadinol",
-F_esters_all,1,protein.g.L.,150,0.81,稳定,S,False,False,"isopentyl_acetate,ethyl_acetate,ethyl_hexanoate,ethyl_octanoate,phenethyl_acetate,isobutyl_acetate",
-F_esters_all,2,n.hexanol,29,0.35,中等,D,False,True,"isopentyl_acetate,ethyl_acetate,ethyl_hexanoate,ethyl_octanoate,phenethyl_acetate,isobutyl_acetate",
-F_esters_all,3,pH,125,0.24,不稳定,U,False,False,"isopentyl_acetate,ethyl_acetate,ethyl_hexanoate,ethyl_octanoate,phenethyl_acetate,isobutyl_acetate",
-F_esters_ethac,1,ethyl_acetate,32,0.77,稳定,D,True,False,ethyl_acetate,"ethanol..v.v.,acetic_acid.g.L."
-F_esters_ethac,2,E.nerolidol,18,0.16,不稳定,U,False,False,ethyl_acetate,"ethanol..v.v.,acetic_acid.g.L."
-F_esters_ethac,3,glycerol,31,0.18,不稳定,U,False,False,ethyl_acetate,"ethanol..v.v.,acetic_acid.g.L."
-F_esters_isoaa,1,n.hexanol,29,0.48,中等,D,False,True,isopentyl_acetate,isoamyl_alcohol
-F_esters_isoaa,2,protein.g.L.,150,0.45,中等,S,False,False,isopentyl_acetate,isoamyl_alcohol
-F_esters_isoaa,3,tau.cadinol,12,0.12,不稳定,U,False,False,isopentyl_acetate,isoamyl_alcohol
-F_esters_flower,1,beta.phellandrene,47,0.47,中等,S,False,False,"phenethyl_acetate,phenethyl_alcohol,geraniol,linalool",
-F_esters_flower,2,isopentyl.butanoate,69,0.42,中等,U,False,False,"phenethyl_acetate,phenethyl_alcohol,geraniol,linalool",
-F_esters_flower,3,X.E..dihydro.apofarnesal,113,0.26,不稳定,U,False,False,"phenethyl_acetate,phenethyl_alcohol,geraniol,linalool",
-F_esters_fruity,1,DES,36,0.48,中等,U,False,False,"ethyl_hexanoate,ethyl_octanoate,ethyl.butyrate,ethyl_decanoate,isopentyl_acetate",
-F_esters_fruity,2,protein.g.L.,150,0.57,中等,S,False,False,"ethyl_hexanoate,ethyl_octanoate,ethyl.butyrate,ethyl_decanoate,isopentyl_acetate",
-F_esters_fruity,3,beta.phellandrene,47,0.45,中等,S,False,False,"ethyl_hexanoate,ethyl_octanoate,ethyl.butyrate,ethyl_decanoate,isopentyl_acetate",
-acidity,1,pH,125,0.86,稳定,D,True,False,"pH,lactic_acid.mg.L.,acetic_acid.g.L.",
-acidity,2,isopentyl_acetate,29,0.2,不稳定,U,False,False,"pH,lactic_acid.mg.L.,acetic_acid.g.L.",
-acidity,3,eugenol,134,0.06,不稳定,U,False,False,"pH,lactic_acid.mg.L.,acetic_acid.g.L.",
-bitternes,1,bitterness,123,1.0,稳定,D,True,False,bitterness,
-bitternes,2,ethyl_octanoate,63,0.8,稳定,S,False,False,bitterness,
-bitternes,3,CO2.PSI.,38,0.2,不稳定,U,False,False,bitterness,
-sweetness,1,ethyl_decanoate,63,0.53,中等,U,False,False,GFS,"unfermentables,glycerol"
-sweetness,2,protein.g.L.,150,0.61,稳定,S,False,False,GFS,"unfermentables,glycerol"
-sweetness,3,unfermentables,39,0.25,不稳定,M,True,False,GFS,"unfermentables,glycerol"
-X4vg,1,X4VG,148,0.9,稳定,D,True,False,X4VG,
-X4vg,2,neryl.formate,116,0.44,中等,U,False,False,X4VG,
-X4vg,3,betaglucan.mg.L.,40,0.21,不稳定,U,False,False,X4VG,
-diacetyl,1,eugenol,134,0.65,稳定,U,False,False,X2.3.butanedione,
-diacetyl,2,furfural,145,0.27,不稳定,U,False,False,X2.3.butanedione,
-diacetyl,3,phenethyl_acetate,30,0.06,不稳定,U,False,False,X2.3.butanedione,
-dms,1,protein.g.L.,150,0.83,稳定,S,False,False,DMS,
-dms,2,terpinen.4.ol,44,0.27,不稳定,U,False,False,DMS,
-dms,3,unfermentables,39,0.23,不稳定,U,False,False,DMS,
-metallic,1,iron,122,0.51,中等,D,True,False,iron,
-metallic,2,neryl.formate,116,0.08,不稳定,U,False,False,iron,
-metallic,3,GFS,146,0.06,不稳定,U,False,False,iron,
-stale_hops,1,X2.undecanol,73,0.38,中等,D,False,True,"humulene.epoxide.II,caryophyllene.oxide",
-stale_hops,2,linalool.isovalerate,57,0.2,不稳定,U,False,False,"humulene.epoxide.II,caryophyllene.oxide",
-stale_hops,3,X3.methylthio.propanol,82,0.1,不稳定,U,False,False,"humulene.epoxide.II,caryophyllene.oxide",
-t2n,1,beta.phellandrene,47,0.23,不稳定,S,False,False,"X.E..2.nonenal,X.E.E..2.4.decadienal",
-t2n,2,glycerol,31,0.08,不稳定,U,False,False,"X.E..2.nonenal,X.E.E..2.4.decadienal",
-t2n,3,vinyl.caprylate,147,0.18,不稳定,U,False,False,"X.E..2.nonenal,X.E.E..2.4.decadienal",
-orange,1,camphor,45,0.75,稳定,U,False,False,"limonene,valencene,linalool",
-orange,2,ethanol..v.v.,32,0.55,中等,S,False,False,"limonene,valencene,linalool",
-orange,3,ethyl.furoate,151,0.07,不稳定,U,False,False,"limonene,valencene,linalool",
-coriander,1,X2.methyl.benzofuran,49,0.09,不稳定,U,False,False,"linalool,camphor,geraniol",
-coriander,2,cis.beta.terpineol,7,0.27,不稳定,U,False,False,"linalool,camphor,geraniol",
-coriander,3,hexyl.acetate,127,0.2,不稳定,U,False,False,"linalool,camphor,geraniol",
-clove,1,limonene,50,0.82,稳定,U,False,False,"eugenol,X4VG,E.methyl.isoeugenol,E.caryophyllene",
-clove,2,X2.ethyl.1.hexanol,90,0.16,不稳定,U,False,False,"eugenol,X4VG,E.methyl.isoeugenol,E.caryophyllene",
-clove,3,X2.acetylfuran,152,0.12,不稳定,U,False,False,"eugenol,X4VG,E.methyl.isoeugenol,E.caryophyllene",
-lactic,1,lactic_acid.mg.L.,115,0.45,中等,D,True,False,lactic_acid.mg.L.,"ethyl.lactate,pH"
-lactic,2,isopentyl_acetate,29,0.57,中等,U,False,False,lactic_acid.mg.L.,"ethyl.lactate,pH"
-lactic,3,phenethyl_alcohol,159,0.15,不稳定,U,False,False,lactic_acid.mg.L.,"ethyl.lactate,pH"
-acetic,1,prenyl.isobutyrate,119,0.29,不稳定,U,False,False,acetic_acid.g.L.,"ethyl_acetate,pH"
-acetic,2,ethyl_2.methyl_butyrate,114,0.39,中等,U,False,False,acetic_acid.g.L.,"ethyl_acetate,pH"
-acetic,3,DES,36,0.33,不稳定,U,False,False,acetic_acid.g.L.,"ethyl_acetate,pH"
-barnyard,1,X2.undecanol,73,0.3,不稳定,D,False,True,"humulene.epoxide.II,caryophyllene.oxide",
-barnyard,2,gamma.eudesmol,143,0.26,不稳定,U,False,False,"humulene.epoxide.II,caryophyllene.oxide",
-barnyard,3,heptyl.acetate,20,0.11,不稳定,U,False,False,"humulene.epoxide.II,caryophyllene.oxide",
-alcohol,1,ethanol..v.v.,32,1.0,稳定,D,True,False,"ethanol..v.v.,isoamyl_alcohol,isobutanol,X1.propanol,X2.methyl.1.butanol",
-alcohol,2,CO2.PSI.,38,0.81,稳定,U,False,False,"ethanol..v.v.,isoamyl_alcohol,isobutanol,X1.propanol,X2.methyl.1.butanol",
-alcohol,3,bitterness,123,0.14,不稳定,S,False,False,"ethanol..v.v.,isoamyl_alcohol,isobutanol,X1.propanol,X2.methyl.1.butanol",
-aftertaste,1,ethanol..v.v.,32,0.55,中等,S,False,False,,
-aftertaste,2,X.E..2.nonenal,60,0.53,中等,U,False,False,,
-aftertaste,3,phenethyl_acetate,30,0.31,不稳定,U,False,False,,
-body,1,ethanol..v.v.,32,1.0,稳定,M,True,False,,"ethanol..v.v.,glycerol,GFS,unfermentables,protein.g.L.,betaglucan.mg.L."
-body,2,color.EBC.,150,0.78,稳定,M,False,True,,"ethanol..v.v.,glycerol,GFS,unfermentables,protein.g.L.,betaglucan.mg.L."
-body,3,propylene.glycol,157,0.16,不稳定,U,False,False,,"ethanol..v.v.,glycerol,GFS,unfermentables,protein.g.L.,betaglucan.mg.L."
-co2,1,ethyl_octanoate,63,0.87,稳定,S,False,False,CO2.PSI.,
-co2,2,CO2.PSI.,38,0.92,稳定,D,True,False,CO2.PSI.,
-co2,3,X3.methyl.2.hexanol,93,0.18,不稳定,U,False,False,CO2.PSI.,
-overall,1,ethyl_acetate,32,0.48,中等,U,False,False,,
-overall,2,X2.3.dihydro.farnesol,18,0.11,不稳定,U,False,False,,
-overall,3,X6.methyl.5.hepten.2.one,68,0.05,不稳定,U,False,False,,
+dimension,rank,in_M0,in_M1,in_M2,in_M3,compound,chemical_name,module_id,sign,origin_paper,off_flavors,aging,threshold_mean,oav_ge_1_ratio,n_dims_top3,flag_style_ci0,flag_breadth5,flag_oav_lt1,covariation,interpretation,method,grade
+A_esters_all,1,True,True,True,False,n.hexanol,N-hexanol,29,+,Yeast,,,,,5.0,,True,False,True,,main,B
+A_esters_all,2,False,False,False,False,lactic_acid.mg.L.,Lactic acid,115,+,Wild flora,,,416.6666667,0.172,2.0,,False,True,True,,main,B
+A_esters_all,3,True,True,True,False,acetaldehyde,Acetaldehyde,32,+,Yeast,"pungent, rotten-apples, green apple",increase,50.0,0.0,3.0,,False,True,True,,main,B
+A_esters_ethac,1,False,False,False,True,phenethyl_alcohol,Phenethyl alcohol,159,,Yeast,,,35.01,0.024,2.0,,False,True,True,,M3,B
+A_esters_ethac,1,True,True,True,False,ethyl_acetate,Ethyl acetate,32,+,Yeast,,decrease,24.0,0.656,3.0,,False,True,True,,main,B
+A_esters_ethac,2,False,False,False,False,X2.methyl.1.butanol,2-methyl-1-butanol,25,+,Yeast,,,,,1.0,,False,False,False,,main,B
+A_esters_ethac,3,False,False,False,False,X2.3.dihydro.farnesol,"2,3-dihydro-farnesol",18,+,Hops,,,,,2.0,,False,False,False,,main,B
+A_esters_flower,1,False,False,False,True,n.hexanol,N-hexanol,29,,Yeast,,,,,5.0,,True,False,True,,M3,C
+A_esters_flower,1,True,True,False,False,beta.phellandrene,Beta-phellandrene,47,+,Hops,,,,,6.0,,True,False,True,,main,C
+A_esters_flower,2,False,False,False,True,n.hexanol,N-hexanol,29,+,Yeast,,,,,5.0,,True,False,True,,main,C
+A_esters_flower,3,False,False,False,False,acetic_acid.g.L.,Acetic acid,124,+,Wild flora,,,0.14025,0.616,1.0,,False,True,True,,main,C
+A_esters_fruity,1,True,True,True,False,beta.phellandrene,Beta-phellandrene,47,+,Hops,,,,,6.0,,True,False,True,,main,B
+A_esters_fruity,2,False,False,True,False,X1.10.di.epi.cubenol,Epicubenol,72,-,Hops,,,,,1.0,,False,False,False,,main,B
+A_esters_fruity,3,False,False,False,False,neryl.formate,Neryl formate,116,+,Hops,,,,,4.0,,False,False,False,,main,B
+A_esters_isoaa,1,True,True,True,False,n.hexanol,N-hexanol,29,+,Yeast,,,,,5.0,,True,False,True,,main,A
+A_esters_isoaa,2,False,True,True,False,tau.cadinol,Tau-cadinol,12,-,Hops,,,,,2.0,,False,False,False,,main,A
+A_esters_isoaa,3,False,False,False,False,ethyl_decanoate,Ethyl decanoate,63,-,Yeast,,decrease,1.035,0.0,2.0,,False,True,True,,main,A
+A_hops_all,1,True,True,True,False,ethyl_octanoate,Ethyl octanoate,63,+,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,main,B
+A_hops_all,2,False,False,True,False,iron,Iron,122,-,Others,,,0.1,0.476,3.0,,False,True,True,,main,B
+A_hops_all,3,False,True,True,False,linalool,Linalool,43,+,Hops,,decrease,0.027285,0.984,2.0,,False,True,True,,main,B
+A_hops_citrus,1,True,True,True,True,CO2.PSI.,Carbon dioxide,38,,Others,,,,,4.0,,False,False,False,,M3,B
+A_hops_citrus,1,True,True,True,False,citronellol,Citronellol,43,+,Hops,,,0.0245,0.924,1.0,,False,True,True,,main,B
+A_hops_citrus,2,True,True,True,True,CO2.PSI.,Carbon dioxide,38,+,Others,,,,,4.0,,False,False,False,,main,B
+A_hops_citrus,3,False,False,True,False,X6.methyl.5.hepten.2.one,Methyl heptenone,68,+,Yeast,,,,,2.0,,False,False,False,,main,B
+A_hops_noble,1,True,True,True,False,ethyl_octanoate,Ethyl octanoate,63,+,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,main,A
+A_hops_noble,2,False,False,True,False,iron,Iron,122,-,Others,,,0.1,0.476,3.0,,False,True,True,,main,A
+A_hops_noble,3,True,True,False,False,X.E..2.nonenal,E-2-nonenal,60,+,Others,,increase,,,2.0,,False,False,False,,main,A
+A_hops_tropical,1,False,False,False,True,n.hexanol,N-hexanol,29,,Yeast,,,,,5.0,,True,False,True,,M3,B
+A_hops_tropical,1,True,True,True,False,DMS,Dimethyl sulfide,37,+,Malt,"cooked vegetables, onion, garlic, corn, black currant, sulfidic, cabbage, tinned tomato, baked beans",increase,17.25,0.672,2.0,,False,True,True,,main,B
+A_hops_tropical,2,False,False,False,False,X.E..beta.ocimene,E-Î²-ocimene,4,+,Hops,,,,,1.0,,False,False,False,,main,B
+A_hops_tropical,3,False,False,False,False,ethyl_isovalerate,Ethyl 3-methylbutyrate,114,-,Others,,increase,0.1,0.008,2.0,,False,True,True,,main,B
+A_hops_woody,1,False,False,False,True,phenethyl_alcohol,Phenethyl alcohol,159,,Yeast,,,35.01,0.024,2.0,,False,True,True,,M3,B
+A_hops_woody,1,True,True,False,False,trans.dihydro.alpha.terpinyl.acetate,Trans-dihydro-Î±-terpinyl acetate,65,+,Hops,,,,,1.0,,False,False,False,,main,B
+A_hops_woody,2,False,False,True,False,X2Z.6Z.farnesol,"Z,Z-farnesol",104,+,Hops,,,,,1.0,,False,False,False,,main,B
+A_hops_woody,3,False,False,True,False,car.3.en.2.one,Car-3-en-2-one,105,-,Hops,,,,,1.0,,False,False,False,,main,B
+A_malt_all,1,True,True,True,False,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,A
+A_malt_all,2,False,False,False,False,X4.ethyl.phenol,4-ethyl-phenol,116,-,Wild flora,,,,,1.0,,False,False,False,,main,A
+A_malt_all,3,False,False,True,False,beta.phellandrene,Beta-phellandrene,47,-,Hops,,,,,6.0,,True,False,True,,main,A
+A_malt_bread,1,False,False,True,True,X2.acetylpyrrole,2-acetylpyrrole,152,,Malt,,,,,1.0,,False,False,False,,M3,A
+A_malt_bread,1,True,True,False,False,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,A
+A_malt_bread,2,False,False,False,False,X4.ethyl.guaiacol,4-ethyl-guaiacol,116,-,Wild flora,,,,,1.0,,False,False,False,,main,A
+A_malt_bread,3,False,False,True,False,ethyl.tiglate,Ethyl tiglate,87,+,Yeast,,,,,1.0,,False,False,False,,main,A
+A_malt_burn,1,False,False,False,True,X.E..beta.damascenone,E-Î²-damascenone,129,,Hops,,increase,,,0.0,,False,False,False,,M3,A
+A_malt_burn,1,True,True,True,False,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,A
+A_malt_burn,2,False,False,True,False,DES,Diethyl sulfide,36,+,Yeast,rotting vegetables,,1.2,0.184,3.0,,False,True,True,,main,A
+A_malt_burn,3,False,False,False,False,isopropyl.hexadecanoate,Isopropyl hexadecanoate,13,-,Yeast,,,,,1.0,,False,False,False,,main,A
+A_malt_cara,1,True,True,True,False,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,A
+A_malt_cara,2,False,True,True,False,X2.ethyl.1.hexanol,2-ethyl-1-hexanol,90,-,Yeast,,,,,2.0,,False,False,False,,main,A
+A_malt_cara,3,False,False,True,False,GFS,Sugars,146,+,Malt,,,2.9,0.18,2.0,,False,True,True,,main,A
+A_malt_grain,1,False,False,False,True,phenethyl_alcohol,Phenethyl alcohol,159,,Yeast,,,35.01,0.024,2.0,,False,True,True,,M3,B
+A_malt_grain,1,True,True,True,False,terpinen.4.ol,Terpinen-4-ol,44,-,Spices,,,,,2.0,,False,False,False,,main,B
+A_malt_grain,2,False,False,False,False,X2.acetylfuran,2-acetylfuran,152,+,Malt,,,,,2.0,,False,False,False,,main,B
+A_malt_grain,3,False,False,False,False,X.E..beta.ionone,E-Î²-ionone,75,-,Hops,,,,,1.0,,False,False,False,,main,B
+F_esters_all,1,True,True,True,False,protein.g.L.,Protein,150,+,Others,,,1.023933,0.996,6.0,,True,True,True,,main,A
+F_esters_all,2,False,False,True,False,n.hexanol,N-hexanol,29,+,Yeast,,,,,5.0,,True,False,True,,main,A
+F_esters_all,3,False,False,False,False,pH,pH,125,-,Others,,,,,4.0,,False,False,False,,main,A
+F_esters_ethac,1,True,True,True,False,ethyl_acetate,Ethyl acetate,32,+,Yeast,,decrease,24.0,0.656,3.0,,False,True,True,,main,A
+F_esters_ethac,2,False,False,False,False,E.nerolidol,E-nerolidol,18,+,Hops,,,,,1.0,,False,False,False,,main,A
+F_esters_ethac,3,True,False,False,False,glycerol,Glycerol,31,+,Yeast,,,4.433333333,0.028,2.0,,False,True,True,,main,A
+F_esters_flower,1,False,False,False,True,phenylacetaldehyde,Phenylacetaldehyde,3,,Others,,increase,,,0.0,,False,False,False,,M3,B
+F_esters_flower,1,True,True,True,False,beta.phellandrene,Beta-phellandrene,47,+,Hops,,,,,6.0,,True,False,True,,main,B
+F_esters_flower,2,True,True,True,False,isopentyl.butanoate,Isopentyl butanoate,69,-,Yeast,,,,,1.0,,False,False,False,,main,B
+F_esters_flower,3,False,True,True,False,X.E..dihydro.apofarnesal,E-dihydro-apofarnesal,113,-,Hops,,,,,1.0,,False,False,False,,main,B
+F_esters_fruity,1,True,True,True,False,DES,Diethyl sulfide,36,-,Yeast,rotting vegetables,,1.2,0.184,3.0,,False,True,True,,main,B
+F_esters_fruity,2,True,True,True,False,protein.g.L.,Protein,150,+,Others,,,1.023933,0.996,6.0,,True,True,True,,main,B
+F_esters_fruity,3,False,False,True,False,beta.phellandrene,Beta-phellandrene,47,+,Hops,,,,,6.0,,True,False,True,,main,B
+F_esters_isoaa,1,False,False,False,True,lactic_acid.mg.L.,Lactic acid,115,,Wild flora,,,416.6666667,0.172,2.0,,False,True,True,,M3,B
+F_esters_isoaa,1,True,True,True,False,n.hexanol,N-hexanol,29,+,Yeast,,,,,5.0,,True,False,True,,main,B
+F_esters_isoaa,2,True,True,True,False,protein.g.L.,Protein,150,+,Others,,,1.023933,0.996,6.0,,True,True,True,,main,B
+F_esters_isoaa,3,False,False,True,False,tau.cadinol,Tau-cadinol,12,-,Hops,,,,,2.0,,False,False,False,,main,B
+F_hops_all,1,True,True,False,True,ethyl_octanoate,Ethyl octanoate,63,,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,M3,A
+F_hops_all,1,True,True,True,False,bitterness,Iso-alpha acids,123,+,Hops,,,5.0,0.864,5.0,,True,True,True,,main,A
+F_hops_all,2,True,True,False,True,ethyl_octanoate,Ethyl octanoate,63,+,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,main,A
+F_hops_all,3,False,False,False,False,linalool,Linalool,43,+,Hops,,decrease,0.027285,0.984,2.0,,False,True,True,,main,A
+F_hops_citrus,1,True,True,True,False,protein.g.L.,Protein,150,-,Others,,,1.023933,0.996,6.0,,True,True,True,,main,B
+F_hops_citrus,2,False,False,False,False,nerol.oxide,Nerol oxide,64,+,Hops,,,,,1.0,,False,False,False,,main,B
+F_hops_citrus,3,False,False,True,False,alpha.terpinyl.isobutanoate,Î±-terpinyl isobutanoate,100,-,Hops,,,,,1.0,,False,False,False,,main,B
+F_hops_noble,1,True,True,True,True,ethyl_octanoate,Ethyl octanoate,63,,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,M3,A
+F_hops_noble,1,True,True,True,False,bitterness,Iso-alpha acids,123,+,Hops,,,5.0,0.864,5.0,,True,True,True,,main,A
+F_hops_noble,2,True,True,True,True,ethyl_octanoate,Ethyl octanoate,63,+,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,main,A
+F_hops_noble,3,False,False,False,False,phenethyl_alcohol,Phenethyl alcohol,159,+,Yeast,,,35.01,0.024,2.0,,False,True,True,,main,A
+F_hops_tropical,1,False,False,False,True,n.hexanol,N-hexanol,29,,Yeast,,,,,5.0,,True,False,True,,M3,B
+F_hops_tropical,1,True,True,False,False,geraniol,Geraniol,46,+,Hops,,decrease,0.0315,0.76,1.0,,False,True,True,,main,B
+F_hops_tropical,2,True,True,True,False,DMS,Dimethyl sulfide,37,+,Malt,"cooked vegetables, onion, garlic, corn, black currant, sulfidic, cabbage, tinned tomato, baked beans",increase,17.25,0.672,2.0,,False,True,True,,main,B
+F_hops_tropical,3,True,True,True,False,hexyl.acetate,Hexyl acetate,127,+,Yeast,,,,,2.0,,False,False,False,,main,B
+F_hops_woody,1,False,False,False,True,ethyl.hexadecanoate,Ethyl hexadecanoate,65,,Yeast,,,,,1.0,,False,False,False,,M3,B
+F_hops_woody,1,True,True,True,False,bitterness,Iso-alpha acids,123,+,Hops,,,5.0,0.864,5.0,,True,True,True,,main,B
+F_hops_woody,2,False,False,False,True,ethyl.hexadecanoate,Ethyl hexadecanoate,65,+,Yeast,,,,,1.0,,False,False,False,,main,B
+F_hops_woody,3,False,False,True,False,isobutanol,Isobutanol,31,+,Yeast,,increase,80.0,0.0,1.0,,False,True,True,,main,B
+F_malt_all,1,True,True,True,True,color.EBC.,Color,150,,Malt,,,,,8.0,,True,False,True,,M3,B
+F_malt_all,1,True,True,True,False,ethanol..v.v.,Ethanol,32,+,Yeast,,,1.757256,0.976,6.0,,True,True,True,,main,B
+F_malt_all,2,True,True,True,True,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,B
+F_malt_all,3,False,False,True,False,pH,pH,125,+,Others,,,,,4.0,,False,False,False,,main,B
+F_malt_bread,1,False,False,True,True,X2.acetylpyrrole,2-acetylpyrrole,152,,Malt,,,,,1.0,,False,False,False,,M3,B
+F_malt_bread,1,True,True,False,False,acetaldehyde,Acetaldehyde,32,+,Yeast,"pungent, rotten-apples, green apple",increase,50.0,0.0,3.0,,False,True,True,,main,B
+F_malt_bread,2,False,False,True,True,X2.acetylpyrrole,2-acetylpyrrole,152,+,Malt,,,,,1.0,,False,False,False,,main,B
+F_malt_bread,3,False,False,False,False,neryl.formate,Neryl formate,116,-,Hops,,,,,4.0,,False,False,False,,main,B
+F_malt_burn,1,False,False,False,True,protein.g.L.,Protein,150,,Others,,,1.023933,0.996,6.0,,True,True,True,,M3,B
+F_malt_burn,1,True,True,True,False,ethanol..v.v.,Ethanol,32,+,Yeast,,,1.757256,0.976,6.0,,True,True,True,,main,B
+F_malt_burn,2,True,True,False,False,pH,pH,125,+,Others,,,,,4.0,,False,False,False,,main,B
+F_malt_burn,3,False,False,True,False,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,B
+F_malt_cara,1,True,True,True,False,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,A
+F_malt_cara,2,True,True,True,False,acetaldehyde,Acetaldehyde,32,+,Yeast,"pungent, rotten-apples, green apple",increase,50.0,0.0,3.0,,False,True,True,,main,A
+F_malt_cara,3,False,False,False,False,ethyl_isovalerate,Ethyl 3-methylbutyrate,114,-,Others,,increase,0.1,0.008,2.0,,False,True,True,,main,A
+F_malt_grain,1,True,True,False,False,isoborneol,Isoborneol,44,-,Others,,,,,1.0,,False,False,False,,main,B
+F_malt_grain,2,False,False,True,False,X2.3.butanedione,Diacetyl,138,-,Yeast,"butterscotch, popcorn, oily, milky",increase,,,1.0,,False,False,False,,main,B
+F_malt_grain,3,False,False,False,False,propyl.acetate,N-propyl acetate,24,+,Yeast,,,,,1.0,,False,False,False,,main,B
+X4vg,1,True,True,True,False,X4VG,4-vinylguaiacol,148,+,Yeast,,,0.206333333,0.064,1.0,,False,True,True,,main,A
+X4vg,2,True,True,False,False,neryl.formate,Neryl formate,116,-,Hops,,,,,4.0,,False,False,False,,main,A
+X4vg,3,False,False,False,False,betaglucan.mg.L.,Betaglucan,40,+,Malt,,,,,1.0,,False,False,False,,main,A
+acetic,1,False,False,False,True,lactic_acid.mg.L.,Lactic acid,115,,Wild flora,,,416.6666667,0.172,2.0,,False,True,True,,M3,B
+acetic,1,True,True,False,False,prenyl.isobutyrate,Prenyl isobutyrate,119,+,Yeast,,,,,1.0,,False,False,False,,main,B
+acetic,2,True,False,False,False,ethyl_2.methyl_butyrate,Ethyl 2-methylbutyrate,114,+,Others,,increase,0.027,0.068,1.0,,False,True,True,,main,B
+acetic,3,False,False,True,False,DES,Diethyl sulfide,36,-,Yeast,rotting vegetables,,1.2,0.184,3.0,,False,True,True,,main,B
+acidity,1,True,True,True,False,pH,pH,125,-,Others,,,,,4.0,,False,False,False,,main,A
+acidity,2,False,False,False,False,isopentyl_acetate,Isoamyl acetate,29,-,Yeast,,decrease,0.603333333,0.844,2.0,,False,True,True,,main,A
+acidity,3,False,False,False,False,eugenol,Eugenol,134,+,Spices,,,,,2.0,,False,False,False,,main,A
+aftertaste,1,False,False,True,True,bitterness,Iso-alpha acids,123,,Hops,,,5.0,0.864,5.0,,True,True,True,,M3,B
+aftertaste,1,True,True,True,False,ethanol..v.v.,Ethanol,32,+,Yeast,,,1.757256,0.976,6.0,,True,True,True,,main,B
+aftertaste,2,True,True,False,False,X.E..2.nonenal,E-2-nonenal,60,+,Others,,increase,,,2.0,,False,False,False,,main,B
+aftertaste,3,False,False,True,False,phenethyl_acetate,Phenethyl acetate,30,-,Yeast,,,1.763333333,0.0,2.0,,False,True,True,,main,B
+alcohol,1,True,True,True,False,ethanol..v.v.,Ethanol,32,+,Yeast,,,1.757256,0.976,6.0,,True,True,True,,main,A
+alcohol,2,False,False,True,False,CO2.PSI.,Carbon dioxide,38,+,Others,,,,,4.0,,False,False,False,,main,A
+alcohol,3,False,False,False,False,bitterness,Iso-alpha acids,123,+,Hops,,,5.0,0.864,5.0,,True,True,True,,main,A
+barnyard,1,False,False,True,True,linalool.isovalerate,Linalool isovalerate,57,,Hops,,,,,1.0,,False,False,False,,M3,B
+barnyard,1,True,True,True,False,X2.undecanol,2-undecanol,73,+,Hops,,,,,1.0,,False,False,,同 stale_hops,main,B
+barnyard,2,False,False,True,False,gamma.eudesmol,Gamma-eudesmol,143,+,Spices,,,,,,,False,False,,同 stale_hops,main,B
+barnyard,3,False,False,False,False,heptyl.acetate,Heptyl acetate,20,-,Yeast,,,,,,,False,False,,同 stale_hops,main,B
+bitternes,1,True,True,True,False,bitterness,Iso-alpha acids,123,+,Hops,,,5.0,0.864,5.0,,True,True,True,,main,A
+bitternes,2,True,True,True,False,ethyl_octanoate,Ethyl octanoate,63,+,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,main,A
+bitternes,3,False,False,False,False,CO2.PSI.,Carbon dioxide,38,+,Others,,,,,4.0,,False,False,False,,main,A
+body,1,True,True,True,False,ethanol..v.v.,Ethanol,32,+,Yeast,,,1.757256,0.976,6.0,,True,True,True,,main,A
+body,2,False,False,True,False,color.EBC.,Color,150,+,Malt,,,,,8.0,,True,False,True,,main,A
+body,3,False,False,False,False,propylene.glycol,Propylene glycol,157,-,Others,,,,,1.0,,False,False,False,,main,A
+clove,1,False,False,False,True,hexyl.acetate,Hexyl acetate,127,,Yeast,,,,,2.0,,False,False,False,,M3,A
+clove,1,True,True,True,False,limonene,Limonene,50,+,Hops,,,,,1.0,,False,False,False,,main,A
+clove,2,False,False,False,False,X2.ethyl.1.hexanol,2-ethyl-1-hexanol,90,-,Yeast,,,,,2.0,,False,False,False,,main,A
+clove,3,False,False,False,False,X2.acetylfuran,2-acetylfuran,152,+,Malt,,,,,2.0,,False,False,False,,main,A
+co2,1,False,True,True,True,CO2.PSI.,Carbon dioxide,38,,Others,,,,,4.0,,False,False,False,,M3,A
+co2,1,True,True,True,False,ethyl_octanoate,Ethyl octanoate,63,+,Yeast,,decrease,0.7,0.264,6.0,,True,True,True,,main,A
+co2,2,False,True,True,True,CO2.PSI.,Carbon dioxide,38,+,Others,,,,,4.0,,False,False,False,,main,A
+co2,3,False,False,False,False,X3.methyl.2.hexanol,3-methyl-2-hexanol,93,-,Yeast,,,,,1.0,,False,False,False,,main,A
+coriander,1,False,False,False,True,ethyl..E..linalool,Ethyl linalool,44,,Hops,,,,,0.0,,False,False,False,,M3,B
+coriander,1,True,True,False,False,X2.methyl.benzofuran,2-methyl-benzofuran,49,+,Malt,,,,,1.0,,False,False,False,,main,B
+coriander,2,False,False,False,False,cis.beta.terpineol,Cis-Î²-terpineol,7,+,Hops,,,,,1.0,,False,False,False,,main,B
+coriander,3,False,False,True,False,hexyl.acetate,Hexyl acetate,127,+,Yeast,,,,,2.0,,False,False,False,,main,B
+diacetyl,1,True,True,True,False,eugenol,Eugenol,134,-,Spices,,,,,2.0,,False,False,False,,main,A
+diacetyl,2,False,False,False,False,furfural,Furfural,145,+,Malt,,increase,60.0,0.0,1.0,,False,True,True,,main,A
+diacetyl,3,False,False,False,False,phenethyl_acetate,Phenethyl acetate,30,+,Yeast,,,1.763333333,0.0,2.0,,False,True,True,,main,A
+dms,1,True,True,True,False,protein.g.L.,Protein,150,-,Others,,,1.023933,0.996,6.0,,True,True,True,,main,A
+dms,2,True,True,False,False,terpinen.4.ol,Terpinen-4-ol,44,-,Spices,,,,,2.0,,False,False,False,,main,A
+dms,3,False,True,True,False,unfermentables,Unfermentables,39,-,Malt,,,,,2.0,,False,False,False,,main,A
+lactic,1,True,True,True,False,lactic_acid.mg.L.,Lactic acid,115,+,Wild flora,,,416.6666667,0.172,2.0,,False,True,True,,main,B
+lactic,2,False,False,True,False,isopentyl_acetate,Isoamyl acetate,29,-,Yeast,,decrease,0.603333333,0.844,2.0,,False,True,True,,main,B
+lactic,3,False,False,True,False,phenethyl_alcohol,Phenethyl alcohol,159,+,Yeast,,,35.01,0.024,2.0,,False,True,True,,main,B
+metallic,1,True,True,True,False,iron,Iron,122,+,Others,,,0.1,0.476,3.0,,False,True,True,,main,B
+metallic,2,False,False,False,False,neryl.formate,Neryl formate,116,-,Hops,,,,,4.0,,False,False,False,,main,B
+metallic,3,False,False,False,False,GFS,Sugars,146,-,Malt,,,2.9,0.18,2.0,,False,True,True,,main,B
+orange,1,True,True,True,False,camphor,Camphor,45,+,Spices,,,,,1.0,,False,False,False,,main,A
+orange,2,True,True,True,False,ethanol..v.v.,Ethanol,32,-,Yeast,,,1.757256,0.976,6.0,,True,True,True,,main,A
+orange,3,False,False,False,False,ethyl.furoate,Ethyl furoate,151,-,Malt,,,,,1.0,,False,False,False,,main,A
+overall,1,False,False,False,True,cis.linalool.oxide,Cis-linalool oxide,111,,Hops,,,,,0.0,,False,False,False,,M3,B
+overall,1,True,True,True,False,ethyl_acetate,Ethyl acetate,32,+,Yeast,,decrease,24.0,0.656,3.0,,False,True,True,,main,B
+overall,2,False,False,False,False,X2.3.dihydro.farnesol,"2,3-dihydro-farnesol",18,+,Hops,,,,,2.0,,False,False,False,,main,B
+overall,3,False,False,False,False,X6.methyl.5.hepten.2.one,Methyl heptenone,68,+,Yeast,,,,,2.0,,False,False,False,,main,B
+stale_hops,1,False,False,False,True,ethyl.5.methylhexanoate,Ethyl 5-methylhexanoate,86,,Yeast,,,,,0.0,,False,False,False,,M3,B
+stale_hops,1,True,True,True,False,X2.undecanol,2-undecanol,73,+,Hops,,,,,1.0,,False,False,False,,main,B
+stale_hops,2,False,False,True,False,linalool.isovalerate,Linalool isovalerate,57,+,Hops,,,,,1.0,,False,False,False,,main,B
+stale_hops,3,False,False,False,False,X3.methylthio.propanol,Methionol,82,-,Others,,increase,,,1.0,,False,False,False,,main,B
+sweetness,1,True,True,True,True,GFS,Sugars,146,,Malt,,,2.9,0.18,2.0,,False,True,True,,M3,B
+sweetness,1,True,True,True,False,ethyl_decanoate,Ethyl decanoate,63,-,Yeast,,decrease,1.035,0.0,2.0,,False,True,True,,main,B
+sweetness,2,False,False,True,False,protein.g.L.,Protein,150,+,Others,,,1.023933,0.996,6.0,,True,True,True,,main,B
+sweetness,3,False,False,False,False,unfermentables,Unfermentables,39,+,Malt,,,,,2.0,,False,False,False,,main,B
+t2n,1,False,False,False,True,H2S,Hydrogen sulfide,34,,Yeast,"sulfidic, rotten eggs",,,,0.0,,False,False,False,,M3,C
+t2n,1,True,True,False,False,beta.phellandrene,Beta-phellandrene,47,-,Hops,,,,,6.0,,True,False,True,,main,C
+t2n,2,False,False,True,False,glycerol,Glycerol,31,-,Yeast,,,4.433333333,0.028,2.0,,False,True,True,,main,C
+t2n,3,False,False,False,False,vinyl.caprylate,Vinyl caprylate,147,+,Yeast,,,,,1.0,,False,False,False,,main,C

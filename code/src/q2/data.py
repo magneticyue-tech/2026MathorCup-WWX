@@ -1,5 +1,6 @@
 # code/src/q2/data.py
 """Q2 数据层：候选集合、样本对齐、NA/下限/秩。"""
+
 from __future__ import annotations
 
 import sys
@@ -12,15 +13,15 @@ if str(CURRENT_DIR) not in sys.path:
 
 import re
 from dataclasses import dataclass
-import numpy as np
-import pandas as pd
 
 import config as C
+import pandas as pd
 
 
 @dataclass(frozen=True)
 class Q2Dataset:
     """Q2 主流程所需的最小数据包。"""
+
     chem_raw: pd.DataFrame
     corr: pd.DataFrame
     sensory_raw: pd.DataFrame
@@ -78,8 +79,10 @@ def _resolve_columns(available: list[str], wanted: tuple[str, ...]) -> dict[str,
 
     if missing or ambiguous:
         msg = []
-        if missing: msg.append(f"缺失列：{missing}")
-        if ambiguous: msg.append(f"列名歧义：{ambiguous}")
+        if missing:
+            msg.append(f"缺失列：{missing}")
+        if ambiguous:
+            msg.append(f"列名歧义：{ambiguous}")
         raise KeyError("候选集合排除列解析失败；" + "；".join(msg))
 
     return resolved
@@ -106,7 +109,7 @@ def _rank_standardize(
     ranks = out.rank(axis=0, method="average")
     mu = ranks.mean(axis=0)
     sd = ranks.std(axis=0, ddof=0)
-    
+
     if (sd == 0).any():
         bad = sd[sd == 0].index.tolist()
         raise ValueError(f"存在常数列，无法标准化：{bad[:10]}")
@@ -122,18 +125,20 @@ def load_q2_dataset() -> Q2Dataset:
 
     print("正在处理化合物候选集...")
     ignore_keywords = ["beer_id", "tasting"]
-    
+
     # 1. 过滤 1.csv (化合物数据) 中的非数值列
     numeric_chem_cols = []
     for c in chem.columns:
         if any(k in str(c).lower() for k in ignore_keywords):
             continue
-        test_col = pd.to_numeric(chem[c], errors='coerce')
-        if not test_col.isna().all(): 
+        test_col = pd.to_numeric(chem[c], errors="coerce")
+        if not test_col.isna().all():
             numeric_chem_cols.append(c)
-            
+
     if len(numeric_chem_cols) != 231:
-        raise ValueError(f"过滤后，纯化学列数应为 231，实际为 {len(numeric_chem_cols)}。")
+        raise ValueError(
+            f"过滤后，纯化学列数应为 231，实际为 {len(numeric_chem_cols)}。"
+        )
 
     corr.index = numeric_chem_cols
     corr.columns = numeric_chem_cols
@@ -149,18 +154,22 @@ def load_q2_dataset() -> Q2Dataset:
     for c in sensory.columns:
         if any(k in str(c).lower() for k in ignore_keywords):
             continue
-        test_col = pd.to_numeric(sensory[c], errors='coerce')
+        test_col = pd.to_numeric(sensory[c], errors="coerce")
         if not test_col.isna().all():
             numeric_sensory_cols.append(c)
-            
+
     if len(numeric_sensory_cols) != 50:
-        raise ValueError(f"过滤后，纯感官列数应为 50，实际为 {len(numeric_sensory_cols)}。")
-    
+        raise ValueError(
+            f"过滤后，纯感官列数应为 50，实际为 {len(numeric_sensory_cols)}。"
+        )
+
     sensory = sensory[numeric_sensory_cols]
 
     common = chem.index.intersection(sensory.index)
     if len(common) != len(chem.index) or len(common) != len(sensory.index):
-        raise ValueError(f"样本不一致：chem={len(chem.index)}, sensory={len(sensory.index)}, common={len(common)}")
+        raise ValueError(
+            f"样本不一致：chem={len(chem.index)}, sensory={len(sensory.index)}, common={len(common)}"
+        )
 
     chem = chem.loc[common]
     sensory = sensory.loc[common]
@@ -182,10 +191,10 @@ def load_q2_dataset() -> Q2Dataset:
 
 
 if __name__ == "__main__":
-    print("="*50)
+    print("=" * 50)
     print("开始 Q2 数据层验收测试")
-    print("="*50)
-    
+    print("=" * 50)
+
     try:
         ds = load_q2_dataset()
         print("\n✅ 数据读取成功！")
@@ -195,15 +204,15 @@ if __name__ == "__main__":
         print(f"附件2形状: {ds.corr.shape} (期望: (231, 231))")
         print(f"X_rank形状: {ds.X_rank.shape} (期望: (250, 225))")
         print(f"Y_rank形状: {ds.Y_rank.shape} (期望: (250, 50))")
-        
+
         max_mean = float(ds.X_rank.mean(axis=0).abs().max())
         print(f"X_rank列均值最大绝对值: {max_mean:.6f} (应接近 0)")
-        
+
         std_min = float(ds.X_rank.std(axis=0, ddof=0).min())
         std_max = float(ds.X_rank.std(axis=0, ddof=0).max())
         print(f"X_rank列标准差范围: [{std_min:.6f}, {std_max:.6f}] (应接近 1)")
-        print("="*50)
-        
+        print("=" * 50)
+
     except Exception as e:
         print("\n❌ 运行出错：")
         print(e)
