@@ -2,8 +2,11 @@ import sys
 import numpy as np
 import pandas as pd
 import json
+import warnings
 from pathlib import Path
 from sklearn.metrics import cohen_kappa_score, mean_absolute_error
+
+warnings.filterwarnings('ignore') # 屏蔽烦人的警告
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from src.q1.paths import PROCESSED_DIR, SEED
@@ -29,13 +32,11 @@ def get_best_qwk_thresholds(z_cont, R_true):
                     best_qwk, best_thresholds = qwk, test_t
     return best_thresholds
 
-# 🚨 核心：用 Numpy 重写零点计算，速度提升百倍
 def fast_panel_zeros(Z_arr, panels, decimals=9):
     z_round = np.round(Z_arr, decimals)
     unique_panels = np.unique(panels)
     n_dims = Z_arr.shape[1]
     out = np.full((len(unique_panels), n_dims), np.nan)
-    
     for i, g in enumerate(unique_panels):
         if (panels == g).sum() < 2: continue
         group_z = z_round[panels == g]
@@ -46,7 +47,7 @@ def fast_panel_zeros(Z_arr, panels, decimals=9):
     return pd.DataFrame(out, index=unique_panels)
 
 def main():
-    print("正在执行 T3/T4: 极速版混合参照与敏感性审计...")
+    print("正在执行 T3/T4: 混合参照、敏感性分析与详细指标审计...")
     data = load_q1()
     main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
     oof_z = main_data['oof_z']
@@ -66,14 +67,15 @@ def main():
     L_all = np.zeros((5, 250, 50))
     R_all = np.zeros((5, 250, 50))
     
-    Z_arr = data.Z.values # 提取为 numpy 数组，避免 pandas 拖慢速度
+    Z_arr = data.Z.values
 
     for dim_idx, dim in enumerate(data.dims):
         z_true = Z_arr[:, dim_idx]
         
         for m_val in m_grid:
             m_name = str(m_val)
-            qwk_lin_list, qwk_qwk_list = [], []
+            # 用于详细指标统计
+            records = [] 
             
             for run in range(5):
                 for fold_idx, (train_idx, test_idx) in enumerate(splits[run]):
@@ -85,7 +87,7 @@ def main():
                     
                     if m_val == 3.0: L_all[run, test_idx, dim_idx] = L_test
                     
-                    # 2. 局部参照 A 与混合参照 R (使用极速版)
+                    # 2. 局部参照 A 与混合参照 R
                     zeros_train = fast_panel_zeros(Z_arr[train_idx], panels[train_idx])
                     zeros_test = fast_panel_zeros(Z_arr[test_idx], panels[test_idx])
                     
@@ -126,25 +128,50 @@ def main():
                     thresholds = get_best_qwk_thresholds(z_cont_pred_inner, R_inner)
                     pred_qwk = np.digitize(z_cont_pred_test, thresholds)
                     
-                    # 4. 评估
+                    # 4. 收集所有指标用于评估
                     if len(np.unique(R_test)) > 1:
-                        qwk_lin_list.append(cohen_kappa_score(R_test, pred_lin, weights="quadratic", labels=range(7)))
-                        qwk_qwk_list.append(cohen_kappa_score(R_test, pred_qwk, weights="quadratic", labels=range(7)))
+                        records.append({
+                            "I_mask": I_test,
+                            "R_true": R_test,
+                            "pred_qwk": pred_qwk,
+                            "pred_lin": pred_lin
+                        })
             
-            mean_lin = np.nanmean(qwk_lin_list) if qwk_lin_list else np.nan
-            mean_qwk = np.nanmean(qwk_qwk_list) if qwk_qwk_list else np.nan
-            
+            # 计算当前 m_val 下的各项指标
+            if records:
+                R_true_all = np.concatenate([r["R_true"] for r in records])
+                pred_qwk_all = np.concatenate([r["pred_qwk"] for r in records])
+                I_mask_all = np.concatenate([r["I_mask"] for r in records])
+                
+                qwk_all = cohen_kappa_score(R_true_all, pred_qwk_all, weights="quadratic", labels=range(7))
+                mae_all = mean_absolute_error(R_true_all, pred_qwk_all)
+                acc_all = (np.abs(R_true_all - pred_qwk_all) <= 1).mean()
+                
+                qwk_i1 = cohen_kappa_score(R_true_all[I_mask_all], pred_qwk_all[I_mask_all], weights="quadratic", labels=range(7)) if I_mask_all.sum() > 1 else np.nan
+                mae_i1 = mean_absolute_error(R_true_all[I_mask_all], pred_qwk_all[I_mask_all]) if I_mask_all.sum() > 0 else np.nan
+                
+                qwk_i0 = cohen_kappa_score(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all], weights="quadratic", labels=range(7)) if (~I_mask_all).sum() > 1 else np.nan
+                mae_i0 = mean_absolute_error(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all]) if (~I_mask_all).sum() > 0 else np.nan
+            else:
+                qwk_all = mae_all = acc_all = qwk_i1 = mae_i1 = qwk_i0 = mae_i0 = np.nan
+                
             detailed_metrics.append({
                 "dim": dim, "m_val": m_name,
-                "QWK_linear": mean_lin, "QWK_optimized": mean_qwk
+                "QWK_all": qwk_all, "MAE_all": mae_all, "Acc1_all": acc_all,
+                "QWK_I1": qwk_i1, "MAE_I1": mae_i1,
+                "QWK_I0": qwk_i0, "MAE_I0": mae_i0
             })
             
+        # 完成该维度，生成全量交付
         low, high = np.min(z_true), np.max(z_true)
         z_cont_final = 6 * (zhat[:, dim_idx] - low) / (high - low + 1e-9)
         final_thresholds = get_best_qwk_thresholds(z_cont_final, np.round(z_cont_final).astype(int))
         final_scores_dict[dim] = np.digitize(z_cont_final, final_thresholds)
         selection_params[dim] = {"low": float(low), "high": float(high), "thresholds": final_thresholds.tolist()}
 
+    # ==========================
+    # 保存最终产物
+    # ==========================
     np.savez_compressed(PROCESSED_DIR / "q1_mapping_reference_masks.npz", I=I_all, A=A_all, L=L_all, R=R_all)
     pd.DataFrame(detailed_metrics).to_csv(PROCESSED_DIR / "q1_mapping_detailed_metrics.csv", index=False)
     
