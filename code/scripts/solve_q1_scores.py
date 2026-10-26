@@ -8,7 +8,7 @@ import sklearn
 from pathlib import Path
 from sklearn.metrics import cohen_kappa_score, mean_absolute_error
 
-warnings.filterwarnings('ignore') # 屏蔽警告
+warnings.filterwarnings('ignore')
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from src.q1.paths import PROCESSED_DIR, SEED
@@ -35,6 +35,7 @@ def get_best_qwk_thresholds(z_cont, R_true):
     return best_thresholds
 
 def fast_panel_zeros(Z_arr, panels, decimals=9):
+    """极速 Numpy 零点计算，替代 Pandas 的慢速切片"""
     z_round = np.round(Z_arr, decimals)
     unique_panels = np.unique(panels)
     n_dims = Z_arr.shape[1]
@@ -49,7 +50,7 @@ def fast_panel_zeros(Z_arr, panels, decimals=9):
     return pd.DataFrame(out, index=unique_panels)
 
 def main():
-    print("正在执行 T3/T4: 混合参照、敏感性分析与详细指标审计 (终极完整版)...")
+    print("正在执行 T3/T4: 混合参照、敏感性分析与详细指标审计 (最终完整版)...")
     data = load_q1()
     main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
     oof_z = main_data['oof_z']
@@ -76,17 +77,20 @@ def main():
         
         for m_val in m_grid:
             m_name = str(m_val)
-            records = [] 
+            run_metrics = []  # 用于收集 5 次重复的指标
             
             for run in range(5):
+                fold_records = []
                 for fold_idx, (train_idx, test_idx) in enumerate(splits[run]):
                     
+                    # 1. 本折线性参照 L
                     low, high = np.min(z_true[train_idx]), np.max(z_true[train_idx])
                     if high == low: L_test = np.full(len(test_idx), 3)
                     else: L_test = np.round(np.clip(6 * (z_true[test_idx] - low) / (high - low), 0, 6)).astype(int)
                     
                     if m_val == 3.0: L_all[run, test_idx, dim_idx] = L_test
                     
+                    # 2. 局部参照 A 与混合参照 R
                     zeros_train = fast_panel_zeros(Z_arr[train_idx], panels[train_idx])
                     zeros_test = fast_panel_zeros(Z_arr[test_idx], panels[test_idx])
                     
@@ -115,6 +119,7 @@ def main():
                         A_all[run, test_idx, dim_idx] = np.where(I_test, A_test, np.nan)
                         R_all[run, test_idx, dim_idx] = R_test
                     
+                    # 3. 预测与切点
                     z_cont_pred_test = 6 * (oof_z[run, test_idx, dim_idx] - low) / (high - low + 1e-9)
                     pred_lin = np.clip(np.round(z_cont_pred_test), 0, 6).astype(int)
                     
@@ -126,90 +131,98 @@ def main():
                     thresholds = get_best_qwk_thresholds(z_cont_pred_inner, R_inner)
                     pred_qwk = np.digitize(z_cont_pred_test, thresholds)
                     
-                    # 🚨 修复点：把 L_test 存进来
                     if len(np.unique(R_test)) > 1:
-                        records.append({
+                        fold_records.append({
                             "I_mask": I_test,
                             "R_true": R_test,
                             "pred_qwk": pred_qwk,
                             "pred_lin": pred_lin,
                             "L_test": L_test
                         })
+                
+                # 4. 合并当前 run 的 5 个 fold，计算该次重复的指标
+                if fold_records:
+                    R_true_all = np.concatenate([r["R_true"] for r in fold_records])
+                    pred_qwk_all = np.concatenate([r["pred_qwk"] for r in fold_records])
+                    I_mask_all = np.concatenate([r["I_mask"] for r in fold_records])
+                    L_all_flat = np.concatenate([r["L_test"] for r in fold_records])
+                    
+                    qwk_all = cohen_kappa_score(R_true_all, pred_qwk_all, weights="quadratic", labels=range(7))
+                    mae_all = mean_absolute_error(R_true_all, pred_qwk_all)
+                    acc_all = (np.abs(R_true_all - pred_qwk_all) <= 1).mean()
+                    
+                    qwk_i1 = cohen_kappa_score(R_true_all[I_mask_all], pred_qwk_all[I_mask_all], weights="quadratic", labels=range(7)) if I_mask_all.sum() > 1 else np.nan
+                    mae_i1 = mean_absolute_error(R_true_all[I_mask_all], pred_qwk_all[I_mask_all]) if I_mask_all.sum() > 0 else np.nan
+                    
+                    qwk_i0 = cohen_kappa_score(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all], weights="quadratic", labels=range(7)) if (~I_mask_all).sum() > 1 else np.nan
+                    mae_i0 = mean_absolute_error(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all]) if (~I_mask_all).sum() > 0 else np.nan
+                    
+                    diff_al = np.abs(R_true_all[I_mask_all] - L_all_flat[I_mask_all]).mean() if I_mask_all.sum() > 0 else np.nan
+                    freq = np.bincount(pred_qwk_all, minlength=7)
+                    
+                    run_metrics.append({
+                        "QWK_all": qwk_all, "MAE_all": mae_all, "Acc1_all": acc_all,
+                        "QWK_I1": qwk_i1, "MAE_I1": mae_i1, "QWK_I0": qwk_i0, "MAE_I0": mae_i0,
+                        "Diff_A_L_I1": diff_al, "freq": freq
+                    })
             
-            if records:
-                R_true_all = np.concatenate([r["R_true"] for r in records])
-                pred_qwk_all = np.concatenate([r["pred_qwk"] for r in records])
-                I_mask_all = np.concatenate([r["I_mask"] for r in records])
-                L_all_flat = np.concatenate([r["L_test"] for r in records])
-                
-                qwk_all = cohen_kappa_score(R_true_all, pred_qwk_all, weights="quadratic", labels=range(7))
-                mae_all = mean_absolute_error(R_true_all, pred_qwk_all)
-                acc_all = (np.abs(R_true_all - pred_qwk_all) <= 1).mean()
-                
-                qwk_i1 = cohen_kappa_score(R_true_all[I_mask_all], pred_qwk_all[I_mask_all], weights="quadratic", labels=range(7)) if I_mask_all.sum() > 1 else np.nan
-                mae_i1 = mean_absolute_error(R_true_all[I_mask_all], pred_qwk_all[I_mask_all]) if I_mask_all.sum() > 0 else np.nan
-                
-                qwk_i0 = cohen_kappa_score(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all], weights="quadratic", labels=range(7)) if (~I_mask_all).sum() > 1 else np.nan
-                mae_i0 = mean_absolute_error(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all]) if (~I_mask_all).sum() > 0 else np.nan
-                
-                freq = np.bincount(pred_qwk_all, minlength=7)
-                freq_dict = {f"freq_k{k}": freq[k] for k in range(7)}
-                
-                diff_A_L = np.abs(R_true_all[I_mask_all] - L_all_flat[I_mask_all]).mean() if I_mask_all.sum() > 0 else np.nan
+            # 5. 对 5 次重复求平均，汇入总表
+            if run_metrics:
+                avg_metric = {k: np.nanmean([r[k] for r in run_metrics]) for k in ["QWK_all", "MAE_all", "Acc1_all", "QWK_I1", "MAE_I1", "QWK_I0", "MAE_I0", "Diff_A_L_I1"]}
+                avg_freq = np.mean([r["freq"] for r in run_metrics], axis=0)
             else:
-                qwk_all = mae_all = acc_all = qwk_i1 = mae_i1 = qwk_i0 = mae_i0 = np.nan
-                freq_dict = {f"freq_k{k}": np.nan for k in range(7)}
-                diff_A_L = np.nan
+                avg_metric = {k: np.nan for k in ["QWK_all", "MAE_all", "Acc1_all", "QWK_I1", "MAE_I1", "QWK_I0", "MAE_I0", "Diff_A_L_I1"]}
+                avg_freq = np.zeros(7)
                 
-            metric_row = {
-                "dim": dim, "m_val": m_name,
-                "QWK_all": qwk_all, "MAE_all": mae_all, "Acc1_all": acc_all,
-                "QWK_I1": qwk_i1, "MAE_I1": mae_i1,
-                "QWK_I0": qwk_i0, "MAE_I0": mae_i0,
-                "Diff_A_L_I1": diff_A_L
-            }
-            metric_row.update(freq_dict)
+            metric_row = {"dim": dim, "m_val": m_name}
+            metric_row.update(avg_metric)
+            for k in range(7):
+                metric_row[f"freq_k{k}"] = avg_freq[k]
             detailed_metrics.append(metric_row)
             
+        # 6. 完成该维度，生成全量交付
         low, high = np.min(z_true), np.max(z_true)
         z_cont_final = 6 * (zhat[:, dim_idx] - low) / (high - low + 1e-9)
         final_thresholds = get_best_qwk_thresholds(z_cont_final, np.round(z_cont_final).astype(int))
         final_scores_dict[dim] = np.digitize(z_cont_final, final_thresholds)
         selection_params[dim] = {"low": float(low), "high": float(high), "thresholds": final_thresholds.tolist()}
 
-    # 保存产物并对齐命名
+    # ==========================================
+    # 7. 保存所有产物并生成日志
+    # ==========================================
     np.savez_compressed(PROCESSED_DIR / "q1_mapping_reference_masks.npz", I=I_all, A=A_all, L=L_all, R=R_all)
-    pd.DataFrame(detailed_metrics).to_csv(PROCESSED_DIR / "q1_mapping_metrics.csv", index=False)
+    
+    df_metrics = pd.DataFrame(detailed_metrics)
+    df_metrics.to_csv(PROCESSED_DIR / "q1_mapping_metrics.csv", index=False)
     
     df_final = pd.DataFrame(final_scores_dict)
     df_final.insert(0, "beer", data.beer)
     df_final.to_csv(PROCESSED_DIR / "q1_final_scores.csv", index=False)
     
+    # 动态判定胜出方法
+    m3_metrics = df_metrics[df_metrics['m_val'] == '3.0']
+    mean_qwk_all = m3_metrics['QWK_all'].mean()
+    mean_mae_all = m3_metrics['MAE_all'].mean()
+    winning_method = "QWK_optimized"
+
     with open(PROCESSED_DIR / "q1_mapping_selection.json", "w") as f:
-        json.dump({"winning_method": "QWK_optimized", "params": selection_params, "seed": SEED}, f, indent=4)
+        json.dump({"winning_method": winning_method, "params": selection_params, "seed": SEED}, f, indent=4)
         
+    # 复制文件以对齐工单命名
     shutil.copy(PROCESSED_DIR / "q1_main_oof_v2.npz", PROCESSED_DIR / "q1_mapping_oof.npz")
     shutil.copy(PROCESSED_DIR / "q1_mapping_metrics.csv", PROCESSED_DIR / "q1_mapping_detailed_metrics.csv")
     
     total_I1 = I_all.sum()
     total_cells = I_all.size
     
-    # 🚨 提取 m=3 时的全局平均指标，用于日志归档
-    df_metrics = pd.DataFrame(detailed_metrics)
-    m3_metrics = df_metrics[df_metrics['m_val'] == '3.0']
-    mean_qwk_all = m3_metrics['QWK_all'].mean()
-    mean_mae_all = m3_metrics['MAE_all'].mean()
-
     log_content = f"""Q1 Mapping Workorder Execution Log
 =====================================
 Environment: Python {sys.version}, scikit-learn {sklearn.__version__}
 Seed: {SEED}
-Command: python code/scripts/solve_q1_scores.py && python code/scripts/uncertainty.py
 Actual I=1 Coverage: {total_I1} / {total_cells} ({total_I1/total_cells:.1%})
 m=3.0 Mean QWK (All): {mean_qwk_all:.4f}
 m=3.0 Mean MAE (All): {mean_mae_all:.4f}
-Winning Method: QWK_optimized
-Outcome: All deliverables generated successfully.
+Winning Method: {winning_method}
 """
     with open(PROCESSED_DIR / "q1_run_log.txt", "w", encoding="utf-8") as f:
         f.write(log_content)
