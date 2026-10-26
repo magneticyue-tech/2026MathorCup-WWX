@@ -1,42 +1,36 @@
 # code/src/q2/config.py
-"""Q2 全局配置（双路径精准锁定版）。"""
+"""Q2 全局配置。"""
 from __future__ import annotations
 from pathlib import Path
 
-# 动态获取项目根目录 (向上找 3 层: q2 -> src -> code -> 项目根目录 MathorCupWWX)
+# 动态获取项目根目录 (向上找 3 层: q2 -> src -> code -> 项目根目录)
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
-# =====================================================================
-# 1. 根目录的 data 文件夹（存放原始数据 1~8，以及 Q2 的输出图/表）
-# =====================================================================
-ROOT_DATA = PROJECT_ROOT / "data"
-DATA_RAW = ROOT_DATA / "raw"
-Q2_DIR = ROOT_DATA / "processed" / "q2"
+# 1. 原始数据路径（根据你的截图，在根目录 data/raw）
+DATA_RAW = PROJECT_ROOT / "data" / "raw"
 
-# =====================================================================
-# 2. code 目录下的 data 文件夹（存放 Q1 跑出来的处理结果）
-# =====================================================================
-CODE_DATA = PROJECT_ROOT / "code" / "data"
-Q1_PROCESSED = CODE_DATA / "processed"
+# 2. 处理后的数据路径（统一在 code/data/processed 下）
+PROCESSED_DIR = PROJECT_ROOT / "code" / "data" / "processed"
+Q1_PROCESSED = PROCESSED_DIR
+Q2_DIR = PROCESSED_DIR / "q2"
 
+# 3. 图表输出路径
 FIGURES = PROJECT_ROOT / "figures" / "q2"
 
-# 确保 Q2 输出文件夹存在
 Q2_DIR.mkdir(parents=True, exist_ok=True)
 FIGURES.mkdir(parents=True, exist_ok=True)
 
-# 【原始数据路径】(在根目录 data/raw)
+# 4. 具体文件路径
 CHEM_PATH = DATA_RAW / "1.csv"
 CORR_PATH = DATA_RAW / "2.csv"
 SENSORY_PATH = DATA_RAW / "4.csv"
 THRESHOLD_PATH = DATA_RAW / "8.xlsx"
-
-# 【Q1 接口文件】(在 code/data/processed)
 PANEL_NPZ_PATH = Q1_PROCESSED / "q1_panels.npz"
 
-# =====================================================================
-# 运行前固定参数
-# =====================================================================
+# 审计字典路径
+CHEMICAL_DICT_PATH = PROJECT_ROOT / "experimentalCode" / "results" / "data_audit" / "chemical_dictionary.csv"
+
+# 5. 运行参数
 SEED = 0
 TAU_MAIN = 0.6
 TAU_GRID = (0.5, 0.6, 0.7)
@@ -53,6 +47,4 @@ INTERNAL_STANDARD_COL = "X3.methyl.2.butenal"
 ANNOTATION_ONLY_COLS = COMPOSITE_COLS + (INTERNAL_STANDARD_COL,)
 
 SIGNAL_FLOOR = -1.81781854
-
 BARNYARD_ALIAS = {"barnyard": "stale_hops"}
-NO_PRIOR_DIMS = {"aftertaste", "overall"}
