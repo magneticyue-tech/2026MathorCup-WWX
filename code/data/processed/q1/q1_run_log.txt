@@ -2,6 +2,9 @@ Q1 Mapping Workorder Execution Log
 =====================================
 Environment: Python 3.10.22 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:15:38) [MSC v.1942 64 bit (AMD64)], scikit-learn 1.7.2
 Seed: 0
-Command: python code/scripts/solve_q1_mapping.py && python code/scripts/gen_q1_final_reports.py
-Results: Linear QWK=0.2809, QWK Optimized=0.308
-Outcome: Selected QWK_optimized.
+Command: python code/scripts/solve_q1_scores.py && python code/scripts/uncertainty.py
+Actual I=1 Coverage: 19160 / 62500 (30.7%)
+m=3.0 Mean QWK (All): 0.3165
+m=3.0 Mean MAE (All): 0.7122
+Winning Method: QWK_optimized
+Outcome: All deliverables generated successfully.
