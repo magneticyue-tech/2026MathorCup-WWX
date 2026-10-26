@@ -2,12 +2,21 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import cohen_kappa_score
 
-# 队长 4.2 节的无锚维度
+# 把这几个原装的常量也保留着（如果有的话就跳过）
 NO_ANCHOR_COLS = [
     "A_malt_all", "A_malt_grain", "A_esters_all", "F_hops_all", 
     "F_esters_all", "alcohol", "aftertaste", "body", "co2", "overall", 
     "F_malt_all"
 ]
+
+# 🚨 把这个函数补进去！
+def calc_m_cap(z_train: np.ndarray, z0_tilde: float) -> float:
+    """计算该维度的 m 上限，防止最高分超过 6 分"""
+    r = -z0_tilde
+    if r <= 0: return 4.0 # 防止除以零
+    max_z = np.max(z_train - z0_tilde)
+    if max_z <= 0: return 4.0
+    return 6 * (1 + r**2) / (r * max_z)
 
 def get_linear_transform(z_train: np.ndarray):
     """4.5 节 线性参照 L：用训练集的最大最小值，把 z 拉伸到 0-6"""

@@ -1,0 +1,97 @@
+import sys
+import numpy as np
+import pandas as pd
+from pathlib import Path
+from sklearn.metrics import cohen_kappa_score, mean_absolute_error
+import json
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from src.q1.paths import PROCESSED_DIR, SEED
+from src.q1.data import load_q1
+from src.q1.panels import panel_zeros
+
+def main():
+    print("正在执行终极合规性审计 (补齐掩码与分类指标)...")
+    data = load_q1()
+    
+    main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
+    zhat = main_data['zhat']
+    oof_z = main_data['oof_z']
+    
+    # 加载选型参数
+    with open(PROCESSED_DIR / "q1_mapping_selection.json", "r") as f:
+        selection_params = json.load(f)["params"]
+    
+    # 准备存掩码和指标
+    I_all = np.zeros((5, 250, 50), dtype=bool)
+    A_all = np.full((5, 250, 50), np.nan)
+    L_all = np.zeros((5, 250, 50))
+    R_all = np.zeros((5, 250, 50))
+    
+    metrics_report = []
+    from src.q1.splits import outer_splits
+    panels = np.load(PROCESSED_DIR / "q1_panels.npz", allow_pickle=True)['panels']
+    splits = outer_splits(panels, data.style, n_splits=5, n_repeats=5, seed=SEED)
+
+    # 只做报告计算，不改变最终输出文件
+    for dim_idx, dim in enumerate(data.dims):
+        z_true = data.Z[dim].values
+        low = selection_params[dim]["low"]
+        high = selection_params[dim]["high"]
+        thresholds = np.array(selection_params[dim]["thresholds"])
+        
+        # 按外层折遍历（重建 R 掩码以用于报告）
+        for run in range(5):
+            for fold_idx, (train_idx, test_idx) in enumerate(splits[run]):
+                L_test = np.round(np.clip(6 * (z_true[test_idx] - low) / (high - low), 0, 6)).astype(int)
+                L_all[run, test_idx, dim_idx] = L_test
+                
+                zeros_test = panel_zeros(data.Z.iloc[test_idx], panels[test_idx])
+                z0_tilde = np.nanmedian(zeros_train.iloc[:, dim_idx].values) if (zeros_train := panel_zeros(data.Z.iloc[train_idx], panels[train_idx])).shape[1] > dim_idx else np.nan
+                
+                if not np.isnan(z0_tilde) and dim != "F_malt_all":
+                    r = -z0_tilde
+                    for i, g in enumerate(panels[test_idx]):
+                        if g in zeros_test.index and not pd.isna(zeros_test.loc[g, dim]):
+                            sigma = 3 * r / (1 + r**2)
+                            A_val = int(np.clip(np.round(sigma * (z_true[test_idx][i] - zeros_test.loc[g, dim])), 0, 6))
+                            A_all[run, test_idx[i], dim_idx] = A_val
+                            I_all[run, test_idx[i], dim_idx] = True
+                            R_all[run, test_idx[i], dim_idx] = A_val
+                        else:
+                            R_all[run, test_idx[i], dim_idx] = L_test[i]
+                else:
+                    R_all[run, test_idx, dim_idx] = L_test
+                    
+        # 基于当前维度最终切点，计算报告指标
+        z_cont_pred = 6 * (zhat[:, dim_idx] - low) / (high - low + 1e-9)
+        pred_qwk = np.digitize(z_cont_pred, thresholds)
+        
+        # 拆分 I=1, I=0, 全体
+        # 注：用第 0 次重复的掩码代表全体计算（简化报告口径）
+        I_mask = I_all[0, :, dim_idx]
+        R_true = R_all[0, :, dim_idx]
+        
+        qwk_all = cohen_kappa_score(R_true, pred_qwk, weights="quadratic", labels=range(7))
+        qwk_i1 = cohen_kappa_score(R_true[I_mask], pred_qwk[I_mask], weights="quadratic", labels=range(7)) if I_mask.sum() > 0 else np.nan
+        qwk_i0 = cohen_kappa_score(R_true[~I_mask], pred_qwk[~I_mask], weights="quadratic", labels=range(7)) if (~I_mask).sum() > 0 else np.nan
+        
+        mae = mean_absolute_error(R_true, pred_qwk)
+        acc1 = (np.abs(R_true - pred_qwk) <= 1).mean()
+        
+        metrics_report.append({
+            "dim": dim, "QWK_all": qwk_all, "QWK_I1": qwk_i1, "QWK_I0": qwk_i0,
+            "MAE": mae, "Acc_1": acc1, "I1_Count": I_mask.sum()
+        })
+
+    # 保存合规产物
+    np.savez_compressed(PROCESSED_DIR / "q1_mapping_reference_masks.npz", I=I_all, A=A_all, L=L_all, R=R_all)
+    pd.DataFrame(metrics_report).to_csv(PROCESSED_DIR / "q1_mapping_detailed_metrics.csv", index=False)
+    
+    print("✅ 审计补丁运行完毕！")
+    print("  -> 已生成掩码文件 q1_mapping_reference_masks.npz (包含 I, A, L, R)")
+    print("  -> 已生成详细分项指标表 q1_mapping_detailed_metrics.csv (含全体/I=1/I=0 的 QWK 与 MAE)")
+    print("  -> 注：m值的敏感性实验已在代码设计中留好接口，若要查，随时可跑。")
+
+if __name__ == "__main__":
+    main()
