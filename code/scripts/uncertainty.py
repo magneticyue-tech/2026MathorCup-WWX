@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import pandas as pd
+import json
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -9,13 +10,17 @@ from src.q1.data import load_q1
 from src.q1.convert import NO_ANCHOR_COLS
 
 def main():
-    print("正在生成最终交付产物 (修复版：使用纯内层折外残差防泄漏)...")
+    print("正在生成最终交付产物 (修复版：概率和区间完全对齐获选切点映射)...")
     data = load_q1()
     
-    # 读取主模型产物
     main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
-    zhat = main_data['zhat'] # 5次重复平均后的预测值 (250, 50)
-    inner_z_all = main_data['inner_z'] # 内层交叉验证预测值 (5, 250, 50)
+    zhat = main_data['zhat']
+    inner_z_all = main_data['inner_z']
+    
+    # 🚨 核心修复：读取刚刚 solve_q1_scores.py 跑出来的获选切点
+    with open(PROCESSED_DIR / "q1_mapping_selection.json", "r") as f:
+        selection_data = json.load(f)
+    selection_params = selection_data["params"]
     
     rng = np.random.default_rng(SEED)
     N_BOOTSTRAPS = 200
@@ -29,37 +34,31 @@ def main():
         z_true = data.Z[dim].values
         z_pred = zhat[:, dim_idx]
         
-        # ==========================================
-        # 核心修复点：提取该维度的“内层折外残差池”
-        # ==========================================
-        # 取该维度5次重复的所有内层预测 (5, 250)
+        # 获取该维度的残差池
         inner_z_dim = inner_z_all[:, :, dim_idx] 
-        
-        # 找到不是 NaN 的位置（因为内层预测只针对外层训练集，测试集是 NaN）
         valid_mask = ~np.isnan(inner_z_dim)
-        
-        # 真实值扩展成 (5, 250) 去对齐，提取残差
         z_true_expanded = np.tile(z_true, (5, 1))
         inner_residuals = z_true_expanded[valid_mask] - inner_z_dim[valid_mask]
         
-        # 构造线性参照
-        low, high = np.min(z_true), np.max(z_true)
+        # 获取该维度的切点参数
+        low = selection_params[dim]["low"]
+        high = selection_params[dim]["high"]
+        thresholds = np.array(selection_params[dim]["thresholds"])
+        
         z_cont_pred = 6 * (z_pred - low) / (high - low + 1e-9)
         
-        # ==========================================
-        # Bootstrap 采样 (从内层残差池中抽)
-        # ==========================================
+        # Bootstrap 采样
         boot_scores = []
         for _ in range(N_BOOTSTRAPS):
-            # 这里抽样用的是纯粹的、无泄漏的内层残差
             z_boot = z_pred + rng.choice(inner_residuals, size=len(z_pred), replace=True)
             z_cont_boot = 6 * (z_boot - low) / (high - low + 1e-9)
-            boot_scores.append(np.clip(np.round(z_cont_boot), 0, 6).astype(int))
+            # 🚨 核心修复：使用 digitize 和训练好的切点，而不是 np.round
+            boot_scores.append(np.digitize(z_cont_boot, thresholds))
             
         boot_scores = np.array(boot_scores) # (200, 250)
         
-        final_sc = np.round(np.mean(boot_scores, axis=0)).astype(int)
-        final_scores[dim] = final_sc
+        # 最终得分必须和 csv 里的交付得分一致 (即按切点算出来的真实得分)
+        final_scores[dim] = np.digitize(z_cont_pred, thresholds)
         
         for k in range(7):
             probs_all[f"{dim}_p{k}"] = (boot_scores == k).mean(axis=0)
@@ -69,15 +68,8 @@ def main():
 
     # 保存最终的 npz
     save_path = PROCESSED_DIR / "q1_scores.npz"
-    np.savez_compressed(
-        save_path,
-        **final_scores,
-        **probs_all,
-        **lo_all,
-        **hi_all,
-        seed=SEED
-    )
-    print(f"✅ 终极防泄漏交付文件 q1_scores.npz 已生成。")
+    np.savez_compressed(save_path, **final_scores, **probs_all, **lo_all, **hi_all, seed=SEED)
+    print(f"✅ 终极交付文件 q1_scores.npz 已生成（概率区间对齐切点）。")
 
     # 导出长表
     long_rows = []
@@ -97,7 +89,7 @@ def main():
             
     df_long = pd.DataFrame(long_rows)
     df_long.to_csv(PROCESSED_DIR / "q1_scores_long.csv", index=False)
-    print(f"✅ 终极长表 q1_scores_long.csv 已重新生成。")
+    print(f"✅ 终极长表 q1_scores_long.csv 已重新生成（完全对齐切点）。")
 
 if __name__ == "__main__":
     main()
