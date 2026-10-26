@@ -1,0 +1,250 @@
+﻿\section{数据预处理}
+
+建模之前，首先对 8 个附件的规模、标识列与取值口径做统一核查，并完成缺失值填充、异常值判定、对数底数核验与评分量纲还原四项工作。本章的全部数值均由原始附件直接统计得到，未引入任何外部数据。
+
+\subsection{数据概览与一致性核查}
+
+本赛题提供的附件涵盖化合物丰度、化合物间相关性、感官记分卡、标准化感官面板与理化参数等多个层面，其规模与缺失情况如表~\ref{tab:overview} 所示。
+
+\begin{table}[H]\centering\small
+\caption{各附件数据概览与缺失情况}\label{tab:overview}
+\begin{tabular}{llccrr}
+\toprule
+附件 & 内容 & 规模（样本$\times$列） & 有效测量变量 & 缺失单元格 & 缺失率 \\
+\midrule
+1 (\code{1.csv})  & 化合物丰度矩阵   & $250\times234$ & 231 &   73 & 0.125\% \\
+2 (\code{2.csv})  & 化合物相关矩阵   & $231\times232$ & 231 &    0 & 0       \\
+3 (\code{3.xlsx}) & 感官记分卡       & 12 张记分卡    & 50  & ---  & ---     \\
+4 (\code{4.csv})  & 标准化感官评分   & $250\times53$  &  50 &    0 & 0       \\
+7 (\code{7.csv})  & 感官属性面板     & $250\times189$ & 183 &  750 & 1.59\%  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+核查中有三点需专门说明。
+
+\textbf{第一，样本量口径。}题面正文提及``226 种啤酒''，但实测附件1、附件4、附件7 的样本行数均为 250。两者不一致，且无法由数据本身调和，故本研究一律以实测的 $n=250$ 为准，并在全文保持该口径；题面数字仅在讨论中提及，不参与任何计算。
+
+\textbf{第二，变量列数口径。}附件1 共 234 列，剔除 \code{beer}、\code{beer\_id} 与 \code{tasting\_category\_fine} 三个标识/分类列后，有效测量变量为 231 个；附件2 的相关性矩阵恰为 $231\times231$，与之\textbf{完全对应}。这说明两份附件的变量口径一致，可直接联用而无需对齐映射——附件2 的行序与附件1 的测量列序一一对应，是后续构建共表达网络的前提。
+
+\textbf{第三，附件7 的列构成。}189 列中，3 列为标识与风格标签，另有 3 列为全空列（详见缺失值填充一小节），故有效测量变量为 183 个，全部为数值型感官属性。此外，附件3 汇总表所列的 50 个感官变量与附件4 的 50 个数值列\textbf{一一对应}：前者给出 0--6 原始记分及其记分规则，后者为 250 个样本的标准化面板，二者共同构成问题一的目标变量。
+
+\subsection{缺失值填充}
+
+\subsubsection{缺失情况的定位}
+
+对主要数值附件逐单元格扫描，得到附件1 的 73 个空值集中于 9 个化合物变量，明细见表~\ref{tab:miss1} 与图~\ref{fig:miss}。
+
+\begin{table}[H]\centering\small
+\caption{附件1 中存在缺失的化合物变量}\label{tab:miss1}
+\begin{tabular}{lrr}
+\toprule
+变量 & 缺失个数 & 占 250 个样本的比例 \\
+\midrule
+\code{amyl.acetate}          & 27 & 10.8\% \\
+\code{aroma\_hops\_sum}      & 13 &  5.2\% \\
+\code{methylpyrazine}        & 12 &  4.8\% \\
+\code{X2.3.butanedione}      &  9 &  3.6\% \\
+\code{X3.methylbutanal}      &  7 &  2.8\% \\
+\code{ethyl.nicotinate}      &  2 &  0.8\% \\
+\code{ethyl.isobutyrate}     &  1 &  0.4\% \\
+\code{furfural}              &  1 &  0.4\% \\
+\code{phenylacetaldehyde}    &  1 &  0.4\% \\
+\midrule
+合计 & 73 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.98\textwidth]{fig_missing.png}
+\caption{附件1 缺失值分布}\label{fig:miss}
+\end{figure}
+
+图~\ref{fig:miss}(b) 显示，缺失位置沿样本轴近似均匀散布，未出现按样本成片缺失或按变量成段缺失的情形。这说明缺失并非由某一批次测量整体失败引起，而更接近逐次进样的偶发失效。该观察支持``逐变量建模填补''而非``整行删除''的策略：若删除含缺失的样本，仅 \code{amyl.acetate} 一项即损失 27 个样本点，且缺失集中在特定样本区间，会造成风格分布偏移。
+
+\subsubsection{附件7 的全空列处理}
+
+附件7 的 \code{palate\_acetaldehyde}、\code{palate\_acetate}、\code{palate\_dentist} 三个列在全部 250 个样本上均为空（各 250 个 NA，合计 750 个）。对缺失率达 100\% 的变量，任何插补算法都只能凭空生成数据，其输出完全由模型先验决定而不含任何观测信息。因此本研究\textbf{直接剔除}这三个列，不纳入后续建模，并在结果讨论中注明。
+
+\subsubsection{填补模型：浅层梯度提升树}
+
+题面要求``从化学成分出发还原 0--6 评分''，因此缺失填补不应是孤立的统计插值，而应与下游的``化学成分 $\to$ 评分''映射共用同一套函数形式。为此，本研究以浅层梯度提升树作为填补模型。
+
+设第 $j$ 个存在缺失的变量，其完整观测样本集为 $\mathcal{O}_j$，缺失样本集为 $\mathcal{M}_j$。以化学成分为输入 $\mathbf{x}_i\in\mathbb{R}^{p}$、标准化评分为目标，第 $m$ 轮的浅层回归树为 $f_m$，学习率为 $\eta$，则缺失位置的预测值为
+\begin{equation}\label{eq:gbdt}
+  \hat{y}^{(j)}_{i} \;=\; \sum_{m=1}^{M}\eta\, f_m(\mathbf{x}_i),
+  \qquad i\in\mathcal{M}_j .
+\end{equation}
+
+式~\eqref{eq:gbdt} 的意义在于：该提升树一旦训练完成，即成为一个以化学成分为输入、标准化评分为输出的显式函数，既可用于补齐附件1 的 73 个空值，也可用于预测题面所要求的缺失评分，两者共用同一套参数，避免了``插补模型''与``预测模型''口径不一致的问题。
+
+选择``浅层''（树深 $d\le 3$）而非深树，基于三点考虑：
+
+\begin{enumerate}
+\item 本数据 $n=250$ 而 $p\approx233$，样本量远小于特征数，深树极易记忆训练样本。限制树深相当于对模型复杂度施加显式正则。
+\item 附件2 表明化合物之间存在显著共线性。线性插补（如回归插补、MICE 的线性条件模型）在共线设计下方差会被放大；树模型按特征逐一贪心切分，对共线性不敏感。
+\item 化合物与感官评分之间多为\textbf{阈值型}关系——浓度越过感知阈值后评分才上升。树的阶梯函数形式比线性形式更贴合这一物理机制。
+\end{enumerate}
+
+为防止信息泄漏，式~\eqref{eq:gbdt} 的提升树在\textbf{每一个交叉验证折内重新拟合}：先在训练折上训练，再对验证折的缺失位置做预测；在全量数据上拟合的填补器不得用于任何评估环节。
+
+\subsection{异常值的检测与处理}
+
+\subsubsection{量纲归一与朴素判据}
+
+附件4 与附件7 的变量取值区间差异极大，直接比较绝对偏差没有意义。参照通行做法，先做 Min--Max 归一化：
+\begin{equation}\label{eq:minmax}
+  X' \;=\; \frac{X - X_{\min}}{X_{\max} - X_{\min}} ,
+\end{equation}
+其中 $X$ 为原始数据，$X'$ 为归一化数据，$X_{\min}$、$X_{\max}$ 分别为该变量的最小值与最大值。随后用 Tukey 的 $1.5$ 倍四分位距规则初筛，即
+\begin{equation}\label{eq:tukey}
+  x_i \ \text{判为异常} \iff
+  x_i \notin \big[\,Q_1 - 1.5\,\mathrm{IQR},\;\; Q_3 + 1.5\,\mathrm{IQR}\,\big],
+  \qquad \mathrm{IQR} = Q_3 - Q_1 .
+\end{equation}
+初筛结果见表~\ref{tab:outlier}。
+
+\begin{table}[H]\centering\small
+\caption{朴素 Tukey 规则的初筛结果（已剔除标识列）}\label{tab:outlier}
+\begin{tabular}{lrrrrr}
+\toprule
+数据表 & 数值列数 & 被标记样本数 & 标记率 & $\mathrm{IQR}=0$ 的列数 & 退化列占比 \\
+\midrule
+附件4 &  50 &  693 & 5.54\% &  0 &  0      \\
+附件7 & 183 & 3899 & 8.52\% & 59 & 32.24\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{朴素判据的失效及其原因}
+
+初筛结果暴露出一个必须处理的问题：附件7 的 183 个数值型感官维度中，有 59 个（32.24\%）满足 $Q_1 = Q_3$，即 $\mathrm{IQR} = 0$。
+
+此时式~\eqref{eq:tukey} 的区间退化为单点 $[Q_3,\,Q_3]$，任何不等于该点的取值都会被判为异常。而这 59 个维度的分布形态属于典型的\textbf{零膨胀}：183 个维度中有 177 个（96.7\%）超过半数样本取地板值（对应 0--6 量表中的``不存在''）。于是 $Q_1 = Q_3 = f_j$（地板值），而所有真正被评委打过分的样本全部落在区间之外，被整体标记为异常，见图~\ref{fig:outlier}。
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.98\textwidth]{fig_outlier.png}
+\caption{附件7 感官维度的异常值判定}\label{fig:outlier}
+\end{figure}
+
+图~\ref{fig:outlier}(b) 将``真实评分信号占比''与``被判定异常的占比''逐维度对照：59 个退化维度几乎全部落在对角线上，意味着\textbf{该维度有多少真实信号，就被误判多少异常}。这 59 个维度共含 14750 个样本，其中真实信号 1380 个（9.36\%），而被判定为异常的达 1480 例——误判规模与真实信号规模相当。
+
+这一现象说明，对本数据直接套用``箱线图 + 中位数替换''的常规流程会造成严重的信息破坏：被替换掉的恰恰是该维度唯一有效的观测。
+
+\subsubsection{地板感知的异常判定}
+
+为此，本研究提出地板感知判据。对每个维度 $j$，先识别地板值
+\begin{equation}\label{eq:floor}
+  f_j \;=\; \arg\min_{v}\ \#\big\{\,x_{ij} = v\,\big\},
+\end{equation}
+即出现频次最高的取值；再将样本划分为地板集合 $T_j=\{x_{ij}=f_j\}$ 与尾部集合 $S_j=\{x_{ij}>f_j\}$。地板集合对应``0 分（不存在）''，属正常取值，不参与异常判定；仅在尾部集合内部识别真正的极端高值：
+\begin{equation}\label{eq:madscore}
+  x_{ij}\ \text{判为异常}
+  \iff x_{ij} \;>\; \mathrm{med}(S_j) + 3\times 1.4826 \times \mathrm{MAD}(S_j),
+\end{equation}
+其中 $\mathrm{MAD}(S_j)$ 为尾部集合的绝对中位差，系数 $1.4826$ 使 MAD 在正态假设下与标准差等价。式~\eqref{eq:madscore} 用中位数与 MAD 替代均值与标准差，以抵抗尾部自身极端值的影响。
+
+对附件4 的 50 个数值列（$Q_1\ne Q_3$，判据未退化），朴素 Tukey 结果仍然有效，直接沿用。
+
+\subsubsection{处理方式：标记而不剔除}
+
+与常规做法不同，本研究对识别出的异常值\textbf{只做标记、不做替换或剔除}，理由有三：
+
+\begin{enumerate}
+\item 感官评价中的极端高分是有效信息。某款啤酒在 \code{amyl.acetate}、\code{4VG} 等维度上得高分，正是该样本的判别性特征，用中位数替换会抹掉这一信息。
+\item 下游主模型为梯度提升树，其分裂准则基于特征排序而非取值大小，对异常值天然稳健，无需预先清洗。
+\item 保留标记位可作为后续灵敏度分析的开关：分别在``含异常''与``剔除异常''两种口径下重跑问题一模型，若结论一致，则说明结果不依赖于异常值处理方式，这比单次替换更有说服力。
+\end{enumerate}
+
+\subsection{对数底数核验与量纲统一}
+
+题面明确要求``参与者需自行核实变换底数（$\log_{10}$ 或 $\ln$），并明确正负值与原始浓度的对应逻辑''。本研究采用\textbf{交叉核验法}：附件1 与附件8 对同一批化合物给出两组独立取值，若附件1 存放的是 $z=\log_b c$，则应有 $b^{z}$ 还原出附件8 的浓度。对 37 个可交叉核验的化合物列，分别以三种假设反演并计算平均绝对误差，结果见表~\ref{tab:logbase}。
+
+\begin{table}[H]\centering\small
+\caption{附件1 对数变换底数的判定（37 个化合物列）}\label{tab:logbase}
+\begin{tabular}{lccc}
+\toprule
+假设底数 & 平均绝对误差 MAE & MAE 取值区间 & 判定 \\
+\midrule
+$\log_{10}$ & $2.48\times10^{-10}$ & $[1.8\times10^{-10},\,2.81\times10^{-10}]$ & \textbf{成立} \\
+$\ln$       & $1.37$               & $[0.25,\,2.97]$                        & 否 \\
+恒等变换     & $24.70$             & $[0.92,\,453.30]$                      & 否 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+结论明确：以 $\log_{10}$ 反演时误差为 $2.48\times10^{-10}$，已达双精度浮点的舍入极限；以 $\ln$ 反演时误差为 $1.37$，相差十个数量级。故附件1 的对数底为 $\log_{10}$。
+
+由此，列中取值的正负含义为
+\begin{equation}
+  z > 0 \Leftrightarrow c > 1,\qquad
+  z = 0 \Leftrightarrow c = 1,\qquad
+  z < 0 \Leftrightarrow 0 < c < 1 .
+\end{equation}
+负值\textbf{不代表``负浓度''}，而是浓度低于 1 个计量单位；各列计量单位（mg/L 与 $\mu$g/L）见附件1 的列元数据。
+
+\subsubsection{检出限地板}
+
+进一步核验发现，231 个化合物列全部存在一个反复出现的最小取值，其中 26 列的地板效应足以影响建模。经检验，该值恒等于该列\textbf{最小检出正值的一半}（比值 $0.5\pm5\times10^{-10}$，覆盖全部 26 列）。这符合分析化学中对\emph{低于检出限}样本的``半最小值''编码惯例。地板占比最高的若干化合物见表~\ref{tab:floor} 与图~\ref{fig:floor}。
+
+\begin{table}[H]\centering\small
+\caption{检出限地板效应显著的化合物}\label{tab:floor}
+\begin{tabular}{lrrr}
+\toprule
+化合物 & 地板样本占比 & 唯一取值数 & 地板含义 \\
+\midrule
+\code{CS2}                    & 83.6\% & 42 & 低于检出限 \\
+\code{ethyl.2.methyl.butyrate}& 34.0\% &163 & 低于检出限 \\
+\code{ethyl.isovalerate}      & 33.2\% &166 & 低于检出限 \\
+\code{DES}                    & 11.6\% &222 & 低于检出限 \\
+\code{ethyl.propionate}       &  4.0\% &238 & 低于检出限 \\
+\code{H2S}                    &  4.0\% &241 & 低于检出限 \\
+\code{isobutanol}             &  2.0\% &246 & 低于检出限 \\
+\code{acetaldehyde}           &  0.4\% &250 & 正常低值 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.82\textwidth]{fig_floor.png}
+\caption{附件1 中检出限地板效应显著的化合物}\label{fig:floor}
+\end{figure}
+
+231 个化合物列中有 79 列（34.2\%）的地板样本占比达到 10\% 以上。这一判定对后续建模有直接影响：地板值是\textbf{左删失数据}而非真实低浓度。若直接把它们当作连续观测参与相关性计算或回归拟合，会人为压低方差、抬高地板点与其它变量之间的虚假相关。因此本研究在问题二的相关性分析与问题三的生成建模中，对地板占比高的化合物单独处理，并在灵敏度分析中报告剔除地板点后的结果变化。
+
+\subsection{评分零点归一}
+
+附件3 含 12 张按啤酒组织的感官记分卡与 1 张汇总表。每张记分卡在香气与口感两个区段各\textbf{预留} 6 个评委列（香气 E/G/I/K/M/O，口感 S/U/W/Y/AA/AC），量表锚点为 0（不存在）至 6（突出/压倒性），并在单元格中以 \code{ISBLANK} 嵌套公式自动统计各样本的有效评分人数。
+
+不同评委存在系统性的\textbf{用分习惯}差异：有的倾向打极端分（集中于 0 与 6），有的倾向保守（集中于 2--4）。若直接对各评委评分求平均，这种``用分尺度''的差异会被误当作``风味强度''的差异，从而污染目标变量。
+
+为此，本研究引入评委零点校正。设评委 $r$ 被归入第 $g(r)$ 类（如``极端型''与``保守型''），其评分零点 $\theta_g$ 定义为该类评委相对同一样本全体评委中位数的系统性偏移：
+\begin{equation}\label{eq:zero}
+  \theta_g \;=\; \operatorname{median}_{\,i,\; r\in g}
+  \big(\, s_{ir} - \bar{s}_i \,\big),
+\end{equation}
+其中 $s_{ir}$ 为评委 $r$ 对样本 $i$ 的原始评分，$\bar{s}_i$ 为样本 $i$ 的评委均值。校准评分为
+\begin{equation}\label{eq:calib}
+  \tilde{s}_{ir} \;=\; s_{ir} - \theta_{g(r)} .
+\end{equation}
+式~\eqref{eq:zero} 用中位数而非均值估计零点，可避免个别极端评分主导偏移量。校准后各评委处于同一基准，再汇总并投影回量表范围：
+\begin{equation}\label{eq:restore}
+  \hat{s}_i \;=\; \Pi_{[0,6]}
+  \left( \frac{1}{|R_i|}\sum_{r\in R_i} \tilde{s}_{ir} \right),
+  \qquad
+  \Pi_{[0,6]}(x)=\min\{6,\ \max\{0,\ x\}\} .
+\end{equation}
+
+式~\eqref{eq:restore} 即为从标准化面板还原出的 0--6 实际打分。需要说明的是，评委的分类算法与零点的联合估计涉及迭代求解，属于问题一模型的组成部分，其完整推导见问题一模型的建立与求解一节；本节仅完成数据侧的口径统一与量纲还原。
+
+\subsection{数据预处理流程}
+
+综合上述步骤，本研究的数据预处理流程如图~\ref{fig:flow} 所示：先做数据概览与一致性核查，再分两条支路并行处理缺失值与异常值，随后统一量纲并核验对数底数，最后完成评分零点归一，输出可直接用于问题一至问题三建模的洁净数据集。
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.9\textwidth]{fig_flow.png}
+\caption{数据预处理总体流程}\label{fig:flow}
+\end{figure}
+
+
