@@ -22,8 +22,8 @@
 | Q2 bootstrap 中的图 | 每次在重抽样本上重建 | 固定为附件 2 | <!-- [PENDING] \| Await: Q2 formal run --> 入选频率按位置的变化 | <!-- [PLACEHOLDER] \| Await: Q2 coding work order --> |
 | Q2 bootstrap 单位 | 品评团簇（63 个团） | 单款啤酒 | <!-- [PENDING] \| Await: Q2 formal run --> 入选频率按位置的变化 | <!-- [PLACEHOLDER] \| Await: Q2 coding work order --> |
 | Q2 感官目标 | 附件 4 的 $z$ | 39 个有锚维度改用减去本团零点的参考评分 | <!-- [PENDING] \| Await: Q2 formal run --> Top-3 Jaccard | <!-- [PLACEHOLDER] \| Await: Q2 coding work order --> |
-| Q3 风格内协方差 | 因子 + 模块块，$k=15$，$\kappa=2$ | 纯因子；Ledoit–Wolf | 预运行留出条件对数似然 −240.7 / −244.9 / −267.1 nat/款（κ=2）；生成样本模块内 ρ 0.680 / 0.633（真实 0.724）。<!-- [PENDING] \| Await: Q3 formal run --> §6.2 各指标变化 | `experimentalCode/q3_methodology_checks.py` 检查 2、3 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
-| Q3 因子数 $k$、收缩 $\kappa$ | 留出似然最优 | 相邻网格点 | 预运行：κ=5 比 κ=2 低 0.1 nat；$k=10$、20 分别低 0.8、2.0 nat。<!-- [PENDING] \| Await: Q3 formal run --> | `experimentalCode/q3_methodology_checks.py` 检查 2 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 风格内协方差 | 因子 + 模块块，$k=15$，$\kappa=2$ | 纯因子；Ledoit–Wolf | 预运行留出潜空间高斯评分 −240.7 / −244.9 / −267.1 nat/款（κ=2）；生成样本模块内 ρ 0.680 / 0.633（真实 0.724）。<!-- [PENDING] \| Await: Q3 formal run --> §6.2 各指标变化 | `experimentalCode/q3_methodology_checks.py` 检查 2、3 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
+| Q3 因子数 $k$、收缩 $\kappa$ | 留出潜空间评分最优（嵌套选参） | 相邻网格点 | 预运行：κ=5 比 κ=2 低 0.1 nat；$k=10$、20 分别低 0.8、2.0 nat。<!-- [PENDING] \| Await: Q3 formal run --> | `experimentalCode/q3_methodology_checks.py` 检查 2 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
 | Q3 风格方差 | 共享 $\Sigma_W$ | 风格专属对角缩放 | 预运行风格离散比：Brut 1.73，其余 0.72–1.34。<!-- [PENDING] \| Await: Q3 formal run --> | `experimentalCode/q3_methodology_checks.py` 检查 3 -> <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
 | Q3 并列块的潜变量 | 截断正态条件期望 | 平均秩的正态得分 | <!-- [PENDING] \| Await: Q3 formal run --> 下限比例误差、模块内 ρ | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
 | Q3 化学 NA | 列均值填充 | 单化合物最低位编码 | <!-- [PENDING] \| Await: Q3 formal run --> 生成指标；双乙酰 NA 的 2 款 Pils/Lager 的迁移上界 | <!-- [PLACEHOLDER] \| Await: Q3 coding work order --> |
