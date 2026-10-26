@@ -3,10 +3,11 @@ import numpy as np
 import pandas as pd
 import json
 import warnings
+import shutil
 from pathlib import Path
 from sklearn.metrics import cohen_kappa_score, mean_absolute_error
 
-warnings.filterwarnings('ignore') # 屏蔽烦人的警告
+warnings.filterwarnings('ignore') # 屏蔽警告
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from src.q1.paths import PROCESSED_DIR, SEED
@@ -47,7 +48,7 @@ def fast_panel_zeros(Z_arr, panels, decimals=9):
     return pd.DataFrame(out, index=unique_panels)
 
 def main():
-    print("正在执行 T3/T4: 混合参照、敏感性分析与详细指标审计...")
+    print("正在执行 T3/T4: 混合参照、敏感性分析与详细指标审计 (终极完整版)...")
     data = load_q1()
     main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
     oof_z = main_data['oof_z']
@@ -74,20 +75,17 @@ def main():
         
         for m_val in m_grid:
             m_name = str(m_val)
-            # 用于详细指标统计
             records = [] 
             
             for run in range(5):
                 for fold_idx, (train_idx, test_idx) in enumerate(splits[run]):
                     
-                    # 1. 线性参照 L
                     low, high = np.min(z_true[train_idx]), np.max(z_true[train_idx])
                     if high == low: L_test = np.full(len(test_idx), 3)
                     else: L_test = np.round(np.clip(6 * (z_true[test_idx] - low) / (high - low), 0, 6)).astype(int)
                     
                     if m_val == 3.0: L_all[run, test_idx, dim_idx] = L_test
                     
-                    # 2. 局部参照 A 与混合参照 R
                     zeros_train = fast_panel_zeros(Z_arr[train_idx], panels[train_idx])
                     zeros_test = fast_panel_zeros(Z_arr[test_idx], panels[test_idx])
                     
@@ -116,7 +114,6 @@ def main():
                         A_all[run, test_idx, dim_idx] = np.where(I_test, A_test, np.nan)
                         R_all[run, test_idx, dim_idx] = R_test
                     
-                    # 3. 预测与切点
                     z_cont_pred_test = 6 * (oof_z[run, test_idx, dim_idx] - low) / (high - low + 1e-9)
                     pred_lin = np.clip(np.round(z_cont_pred_test), 0, 6).astype(int)
                     
@@ -128,20 +125,21 @@ def main():
                     thresholds = get_best_qwk_thresholds(z_cont_pred_inner, R_inner)
                     pred_qwk = np.digitize(z_cont_pred_test, thresholds)
                     
-                    # 4. 收集所有指标用于评估
+                    # 🚨 修复点：把 L_test 存进来
                     if len(np.unique(R_test)) > 1:
                         records.append({
                             "I_mask": I_test,
                             "R_true": R_test,
                             "pred_qwk": pred_qwk,
-                            "pred_lin": pred_lin
+                            "pred_lin": pred_lin,
+                            "L_test": L_test
                         })
             
-            # 计算当前 m_val 下的各项指标
             if records:
                 R_true_all = np.concatenate([r["R_true"] for r in records])
                 pred_qwk_all = np.concatenate([r["pred_qwk"] for r in records])
                 I_mask_all = np.concatenate([r["I_mask"] for r in records])
+                L_all_flat = np.concatenate([r["L_test"] for r in records])
                 
                 qwk_all = cohen_kappa_score(R_true_all, pred_qwk_all, weights="quadratic", labels=range(7))
                 mae_all = mean_absolute_error(R_true_all, pred_qwk_all)
@@ -152,28 +150,35 @@ def main():
                 
                 qwk_i0 = cohen_kappa_score(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all], weights="quadratic", labels=range(7)) if (~I_mask_all).sum() > 1 else np.nan
                 mae_i0 = mean_absolute_error(R_true_all[~I_mask_all], pred_qwk_all[~I_mask_all]) if (~I_mask_all).sum() > 0 else np.nan
+                
+                freq = np.bincount(pred_qwk_all, minlength=7)
+                freq_dict = {f"freq_k{k}": freq[k] for k in range(7)}
+                
+                diff_A_L = np.abs(R_true_all[I_mask_all] - L_all_flat[I_mask_all]).mean() if I_mask_all.sum() > 0 else np.nan
             else:
                 qwk_all = mae_all = acc_all = qwk_i1 = mae_i1 = qwk_i0 = mae_i0 = np.nan
+                freq_dict = {f"freq_k{k}": np.nan for k in range(7)}
+                diff_A_L = np.nan
                 
-            detailed_metrics.append({
+            metric_row = {
                 "dim": dim, "m_val": m_name,
                 "QWK_all": qwk_all, "MAE_all": mae_all, "Acc1_all": acc_all,
                 "QWK_I1": qwk_i1, "MAE_I1": mae_i1,
-                "QWK_I0": qwk_i0, "MAE_I0": mae_i0
-            })
+                "QWK_I0": qwk_i0, "MAE_I0": mae_i0,
+                "Diff_A_L_I1": diff_A_L
+            }
+            metric_row.update(freq_dict)
+            detailed_metrics.append(metric_row)
             
-        # 完成该维度，生成全量交付
         low, high = np.min(z_true), np.max(z_true)
         z_cont_final = 6 * (zhat[:, dim_idx] - low) / (high - low + 1e-9)
         final_thresholds = get_best_qwk_thresholds(z_cont_final, np.round(z_cont_final).astype(int))
         final_scores_dict[dim] = np.digitize(z_cont_final, final_thresholds)
         selection_params[dim] = {"low": float(low), "high": float(high), "thresholds": final_thresholds.tolist()}
 
-    # ==========================
-    # 保存最终产物
-    # ==========================
+    # 保存产物并对齐命名
     np.savez_compressed(PROCESSED_DIR / "q1_mapping_reference_masks.npz", I=I_all, A=A_all, L=L_all, R=R_all)
-    pd.DataFrame(detailed_metrics).to_csv(PROCESSED_DIR / "q1_mapping_detailed_metrics.csv", index=False)
+    pd.DataFrame(detailed_metrics).to_csv(PROCESSED_DIR / "q1_mapping_metrics.csv", index=False)
     
     df_final = pd.DataFrame(final_scores_dict)
     df_final.insert(0, "beer", data.beer)
@@ -182,6 +187,12 @@ def main():
     with open(PROCESSED_DIR / "q1_mapping_selection.json", "w") as f:
         json.dump({"winning_method": "QWK_optimized", "params": selection_params, "seed": SEED}, f, indent=4)
         
+    shutil.copy(PROCESSED_DIR / "q1_main_oof_v2.npz", PROCESSED_DIR / "q1_mapping_oof.npz")
+    shutil.copy(PROCESSED_DIR / "q1_mapping_metrics.csv", PROCESSED_DIR / "q1_mapping_detailed_metrics.csv")
+    
+    total_I1 = I_all.sum()
+    total_cells = I_all.size
+    print(f"✅ 实际局部参照覆盖数 (I=1): {total_I1} / {total_cells} 单元 (占比 {total_I1/total_cells:.1%})")
     print("✅ 所有交付文件生成完毕！完全符合工单要求。")
 
 if __name__ == "__main__":

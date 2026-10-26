@@ -13,7 +13,7 @@ from src.q1.data import load_q1
 from src.q1.convert import NO_ANCHOR_COLS
 
 def main():
-    print("正在生成最终交付产物 (修复版：概率区间对齐切点及强断言校验)...")
+    print("正在生成最终交付产物 (概率区间对齐切点及强断言校验)...")
     data = load_q1()
     
     main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
@@ -36,20 +36,17 @@ def main():
         z_true = data.Z[dim].values
         z_pred = zhat[:, dim_idx]
         
-        # 1. 纯内层防泄漏残差
         inner_z_dim = inner_z_all[:, :, dim_idx] 
         valid_mask = ~np.isnan(inner_z_dim)
         z_true_expanded = np.tile(z_true, (5, 1))
         inner_residuals = z_true_expanded[valid_mask] - inner_z_dim[valid_mask]
         
-        # 2. 读取切点参数
         low = selection_params[dim]["low"]
         high = selection_params[dim]["high"]
         thresholds = np.array(selection_params[dim]["thresholds"])
         
         z_cont_pred = 6 * (z_pred - low) / (high - low + 1e-9)
         
-        # 3. Bootstrap 采样
         boot_scores = []
         for _ in range(N_BOOTSTRAPS):
             z_boot = z_pred + rng.choice(inner_residuals, size=len(z_pred), replace=True)
@@ -66,7 +63,7 @@ def main():
         lo_all[f"{dim}_lo"] = np.percentile(boot_scores, 5, axis=0)
         hi_all[f"{dim}_hi"] = np.percentile(boot_scores, 95, axis=0)
 
-    # 4. 强断言校验
+    # 断言校验
     for dim in data.dims:
         p_sum = sum(probs_all[f"{dim}_p{k}"] for k in range(7))
         assert np.allclose(p_sum, 1.0), f"{dim} 概率和不为1！"
