@@ -2,6 +2,7 @@
     "winning_method": "QWK_optimized",
     "params": {
         "A_malt_all": {
+            "method": "QWK",
             "low": -1.552114518,
             "high": 2.876477347,
             "thresholds": [
@@ -14,6 +15,7 @@
             ]
         },
         "A_malt_grain": {
+            "method": "QWK",
             "low": -0.970581582,
             "high": 1.759243217,
             "thresholds": [
@@ -26,6 +28,7 @@
             ]
         },
         "A_malt_bread": {
+            "method": "QWK",
             "low": -0.689772601,
             "high": 2.462206713,
             "thresholds": [
@@ -38,6 +41,7 @@
             ]
         },
         "A_malt_cara": {
+            "method": "QWK",
             "low": -0.599110694,
             "high": 2.193257875,
             "thresholds": [
@@ -50,6 +54,7 @@
             ]
         },
         "A_malt_burn": {
+            "method": "QWK",
             "low": -0.447275469,
             "high": 4.104157537,
             "thresholds": [
@@ -62,6 +67,7 @@
             ]
         },
         "A_hops_all": {
+            "method": "QWK",
             "low": -1.362201516,
             "high": 2.48783156,
             "thresholds": [
@@ -74,6 +80,7 @@
             ]
         },
         "A_hops_citrus": {
+            "method": "QWK",
             "low": -0.579850507,
             "high": 1.817997731,
             "thresholds": [
@@ -86,6 +93,7 @@
             ]
         },
         "A_hops_tropical": {
+            "method": "QWK",
             "low": -0.523589703,
             "high": 3.063614044,
             "thresholds": [
@@ -98,6 +106,7 @@
             ]
         },
         "A_hops_noble": {
+            "method": "QWK",
             "low": -1.0269005,
             "high": 2.123449551,
             "thresholds": [
@@ -110,6 +119,7 @@
             ]
         },
         "A_hops_woody": {
+            "method": "QWK",
             "low": -0.522916254,
             "high": 1.511101066,
             "thresholds": [
@@ -122,6 +132,7 @@
             ]
         },
         "A_esters_all": {
+            "method": "QWK",
             "low": -1.699589618,
             "high": 1.670572305,
             "thresholds": [
@@ -134,6 +145,7 @@
             ]
         },
         "A_esters_ethac": {
+            "method": "QWK",
             "low": -0.848913765,
             "high": 1.78885696,
             "thresholds": [
@@ -146,6 +158,7 @@
             ]
         },
         "A_esters_isoaa": {
+            "method": "QWK",
             "low": -0.868878218,
             "high": 2.171745921,
             "thresholds": [
@@ -158,6 +171,7 @@
             ]
         },
         "A_esters_flower": {
+            "method": "QWK",
             "low": -0.528880348,
             "high": 1.85681377,
             "thresholds": [
@@ -170,6 +184,7 @@
             ]
         },
         "A_esters_fruity": {
+            "method": "QWK",
             "low": -0.689068908,
             "high": 2.406169683,
             "thresholds": [
@@ -182,6 +197,7 @@
             ]
         },
         "F_malt_all": {
+            "method": "QWK",
             "low": -1.649828118,
             "high": 2.466213759,
             "thresholds": [
@@ -194,6 +210,7 @@
             ]
         },
         "F_malt_grain": {
+            "method": "QWK",
             "low": -1.239843672,
             "high": 1.372628057,
             "thresholds": [
@@ -206,6 +223,7 @@
             ]
         },
         "F_malt_bread": {
+            "method": "QWK",
             "low": -0.742979431,
             "high": 1.991660997,
             "thresholds": [
@@ -218,6 +236,7 @@
             ]
         },
         "F_malt_cara": {
+            "method": "QWK",
             "low": -0.555756438,
             "high": 2.368488183,
             "thresholds": [
@@ -230,6 +249,7 @@
             ]
         },
         "F_malt_burn": {
+            "method": "QWK",
             "low": -0.538200898,
             "high": 2.949560062,
             "thresholds": [
@@ -242,6 +262,7 @@
             ]
         },
         "F_hops_all": {
+            "method": "QWK",
             "low": -1.265565644,
             "high": 2.201119254,
             "thresholds": [
@@ -254,6 +275,7 @@
             ]
         },
         "F_hops_citrus": {
+            "method": "QWK",
             "low": -0.667823107,
             "high": 1.950996089,
             "thresholds": [
@@ -266,6 +288,7 @@
             ]
         },
         "F_hops_tropical": {
+            "method": "QWK",
             "low": -0.430393985,
             "high": 2.762132247,
             "thresholds": [
@@ -278,6 +301,7 @@
             ]
         },
         "F_hops_noble": {
+            "method": "QWK",
             "low": -1.167382423,
             "high": 2.364434371,
             "thresholds": [
@@ -290,6 +314,7 @@
             ]
         },
         "F_hops_woody": {
+            "method": "QWK",
             "low": -0.646236921,
             "high": 2.027262089,
             "thresholds": [
@@ -302,6 +327,7 @@
             ]
         },
         "F_esters_all": {
+            "method": "QWK",
             "low": -1.208515159,
             "high": 1.993642465,
             "thresholds": [
@@ -314,6 +340,7 @@
             ]
         },
         "F_esters_ethac": {
+            "method": "QWK",
             "low": -0.876467225,
             "high": 1.873783892,
             "thresholds": [
@@ -326,6 +353,7 @@
             ]
         },
         "F_esters_isoaa": {
+            "method": "QWK",
             "low": -0.726982849,
             "high": 3.063107864,
             "thresholds": [
@@ -338,6 +366,7 @@
             ]
         },
         "F_esters_flower": {
+            "method": "QWK",
             "low": -0.432918788,
             "high": 2.084232862,
             "thresholds": [
@@ -350,6 +379,7 @@
             ]
         },
         "F_esters_fruity": {
+            "method": "QWK",
             "low": -0.690180858,
             "high": 2.329356416,
             "thresholds": [
@@ -362,6 +392,7 @@
             ]
         },
         "acidity": {
+            "method": "QWK",
             "low": -0.72554338,
             "high": 3.781348008,
             "thresholds": [
@@ -374,6 +405,7 @@
             ]
         },
         "bitternes": {
+            "method": "QWK",
             "low": -1.696521301,
             "high": 2.328004649,
             "thresholds": [
@@ -386,6 +418,7 @@
             ]
         },
         "sweetness": {
+            "method": "QWK",
             "low": -1.010874166,
             "high": 2.945475123,
             "thresholds": [
@@ -398,6 +431,7 @@
             ]
         },
         "X4vg": {
+            "method": "QWK",
             "low": -0.701431141,
             "high": 3.355030417,
             "thresholds": [
@@ -410,6 +444,7 @@
             ]
         },
         "diacetyl": {
+            "method": "QWK",
             "low": -0.657461766,
             "high": 2.189226081,
             "thresholds": [
@@ -422,6 +457,7 @@
             ]
         },
         "dms": {
+            "method": "QWK",
             "low": -0.7594485,
             "high": 2.317193605,
             "thresholds": [
@@ -434,6 +470,7 @@
             ]
         },
         "metallic": {
+            "method": "QWK",
             "low": -0.73722619,
             "high": 2.026226247,
             "thresholds": [
@@ -446,6 +483,7 @@
             ]
         },
         "stale_hops": {
+            "method": "QWK",
             "low": -0.38753494,
             "high": 2.731075163,
             "thresholds": [
@@ -458,6 +496,7 @@
             ]
         },
         "t2n": {
+            "method": "QWK",
             "low": -0.513370956,
             "high": 1.647048513,
             "thresholds": [
@@ -470,6 +509,7 @@
             ]
         },
         "orange": {
+            "method": "QWK",
             "low": -0.297576527,
             "high": 4.774454855,
             "thresholds": [
@@ -482,6 +522,7 @@
             ]
         },
         "coriander": {
+            "method": "QWK",
             "low": -0.239478139,
             "high": 3.936706534,
             "thresholds": [
@@ -494,6 +535,7 @@
             ]
         },
         "clove": {
+            "method": "QWK",
             "low": -0.268516935,
             "high": 6.172383248,
             "thresholds": [
@@ -506,6 +548,7 @@
             ]
         },
         "lactic": {
+            "method": "QWK",
             "low": -0.428248412,
             "high": 3.826022977,
             "thresholds": [
@@ -518,6 +561,7 @@
             ]
         },
         "acetic": {
+            "method": "QWK",
             "low": -0.417191891,
             "high": 4.396779269,
             "thresholds": [
@@ -530,6 +574,7 @@
             ]
         },
         "barnyard": {
+            "method": "QWK",
             "low": -0.37825167,
             "high": 2.752413252,
             "thresholds": [
@@ -542,6 +587,7 @@
             ]
         },
         "alcohol": {
+            "method": "QWK",
             "low": -2.150728655,
             "high": 1.741369484,
             "thresholds": [
@@ -554,6 +600,7 @@
             ]
         },
         "aftertaste": {
+            "method": "QWK",
             "low": -2.100344509,
             "high": 1.976961887,
             "thresholds": [
@@ -566,6 +613,7 @@
             ]
         },
         "body": {
+            "method": "QWK",
             "low": -1.862278045,
             "high": 1.716343682,
             "thresholds": [
@@ -578,6 +626,7 @@
             ]
         },
         "co2": {
+            "method": "QWK",
             "low": -1.739427779,
             "high": 1.439582243,
             "thresholds": [
@@ -590,6 +639,7 @@
             ]
         },
         "overall": {
+            "method": "QWK",
             "low": -1.735964657,
             "high": 1.34564954,
             "thresholds": [
