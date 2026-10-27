@@ -1,31 +1,52 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{ctex}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{geometry}
-\usepackage{xcolor}
+\usepackage{caption}
 \usepackage{subcaption}
-\usepackage{subfiles}
+\usepackage{enumitem}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{2em}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\renewcommand{\contentsname}{\centerline{\Large\bfseries 目录}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftdotsep}{1.2}
+\setlength{\cftsecnumwidth}{2.5em}
+\setlength{\cftsubsecnumwidth}{3em}
+\setlength{\cftsubsubsecnumwidth}{4em}
+\setcounter{tocdepth}{3}
+\titleformat{\section}[hang]
+{\centering\Large\bfseries}
+{\thesection}{1em}{}
+\titleformat{\subsection}[hang]
+{\large\bfseries}
+{\thesubsection}{1em}{}
 \usepackage{hyperref}
-\renewcommand{\abstractname}{\centering\Large\bfseries 摘要}
+\hypersetup{colorlinks=true,linkcolor=black}
 
-\geometry{margin=2.5cm}
 
-\title{\textbf{2026年MathorCup大数据竞赛赛道A：啤酒酿造}}
-\author{参赛队编号 \\ MathorCup参赛队伍}
-\date{}
-
+% ==========【正文开始】==========
 \begin{document}
+
+\title{MathorCup竞赛论文题目}
+\author{}
+\date{}
 \maketitle
 
-%==================== 摘要 ====================
-\begin{abstract}
+\section*{摘要}
+
 啤酒作为广受喜爱的发酵饮品，以麦芽、水、啤酒花为主要原料经酵母发酵制成。化合物组成直接决定啤酒香气、口感特征与发酵表现。本文基于商用啤酒风味代谢数据集，以啤酒化学成分与感官风味评分为研究对象，结合Pearson相关系数分析、语义化缺失值填充、零点校准与浅层梯度提升树开展多输出回归研究，实现感官指标预测。结果表明该方案可有效挖掘化学成分与风味的内在联系，为啤酒风味定量调控提供支撑。
 
 \textbf{关键词：}浅层梯度提升树；Pearson相关系数；零点校准；缺失值填充；多输出回归；风味预测
-\end{abstract}
-
+\tableofcontents
+\newpage
 %==================== 问题背景和问题重述 ====================
 \section{问题背景和问题重述}
 \subsection{问题背景}
@@ -38,7 +59,6 @@
     \item \textbf{问题二（化合物‑风味分析）：}利用2.csv化合物相关矩阵构建化合物共表达图，结合1.csv特征，得到每一个感官维度对应的Top‑3关键化合物；使用bootstrap重采样入选频率或者不同建模结果之间Jaccard系数完成稳定性量化，并从化学酿造角度论证结果合理性。
     \item \textbf{问题三（风味与“风味指纹”生成）：}以tasting\_category\_fine作为啤酒风格标签，训练风格条件生成模型，给定指定啤酒风格（Tripel、Kriek、Lambic等）生成合理化合物谱并得到对应感官画像；同时实现跨风格迁移任务，例如将Pils/Lager的化合物谱迁移至Tripel风格，并且保证DMS、Diacetyl、4VG、trans‑2‑nonenal、Stale hops等缺陷化合物指标不能恶化。
 \end{itemize}
-
 %==================== 问题分析 ====================
 \section{问题分析}
 \subsection{问题一分析}
