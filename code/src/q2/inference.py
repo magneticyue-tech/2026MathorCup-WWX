@@ -1,5 +1,5 @@
 # code/src/q2/inference.py
-"""Q2 推断层：严格 Freedman-Lane 置换。"""
+"""Q2 推断层：严格 Freedman-Lane 置换（包含图约束排除）。"""
 import sys
 from pathlib import Path
 CURRENT_DIR = Path(__file__).resolve().parent
@@ -12,27 +12,31 @@ from data import load_q2_dataset
 
 def run_permutation_test():
     print("="*50)
-    print("计算置换零分布门槛（严格 Freedman-Lane）")
+    print("计算置换零分布门槛（严格 Freedman-Lane + 图约束）")
     print("="*50)
 
     ds = load_q2_dataset()
     X_mat, Y_mat = ds.X_rank.values, ds.Y_rank.values
-    cand_cols, dim_cols = ds.candidate_cols, ds.Y_rank.columns
+    cand_cols = ds.candidate_cols
     n = len(ds.sample_ids)
+
+    # 读取图模块信息用于约束
+    df_nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
+    node_to_module = dict(zip(df_nodes["node"], df_nodes["module_id"]))
 
     df_top3 = pd.read_csv(C.Q2_DIR / "top3_results.csv")
     np.random.seed(C.SEED)
     N_PERM = C.N_PERMUTATION
     
     # 剔除 barnyard
-    dim_cols = [d for d in dim_cols if d != "barnyard"]
+    dim_cols = [d for d in ds.Y_rank.columns if d != "barnyard"]
     q_d_dict = {}
 
-    for d_idx, d_name in enumerate(dim_cols):
+    for d_name in dim_cols:
         print(f"  处理维度: {d_name}...")
         y = Y_mat[:, ds.Y_rank.columns.get_loc(d_name)]
         
-        # Top-1 置换 (边际)
+        # 1. 第 1 位 (边际)
         max_abs_r_perms_1 = np.zeros(N_PERM)
         for p in range(N_PERM):
             y_perm = np.random.permutation(y)
@@ -46,12 +50,15 @@ def run_permutation_test():
         
         q2, q3 = np.nan, np.nan
         
-        # Top-2 置换 (Freedman-Lane)
+        # 2. 第 2 位 (Freedman-Lane + 图约束)
         if len(selected) >= 1:
             S_idx = [cand_cols.index(selected[0])]
             X_S = np.column_stack([np.ones(n), X_mat[:, S_idx]])
             e_y = y - X_S @ np.linalg.lstsq(X_S, y, rcond=None)[0]
-            valid_j = [j for j, c in enumerate(cand_cols) if c != selected[0]]
+            
+            # 【核心修复】：只在与第1位不同模块的候选者中计算
+            selected_mod = node_to_module.get(selected[0], -1)
+            valid_j = [j for j, c in enumerate(cand_cols) if node_to_module.get(c) != selected_mod]
             
             max_abs_r_perms_2 = np.zeros(N_PERM)
             for p in range(N_PERM):
@@ -62,15 +69,19 @@ def run_permutation_test():
                     e_j = x_j - X_S @ np.linalg.lstsq(X_S, x_j, rcond=None)[0]
                     denom = np.linalg.norm(e_j) * np.linalg.norm(e_y_perm)
                     r_j.append(np.dot(e_j, e_y_perm) / denom if denom > 0 else 0.0)
-                max_abs_r_perms_2[p] = np.max(np.abs(r_j))
+                max_abs_r_perms_2[p] = np.max(np.abs(r_j)) if r_j else 0.0
             q2 = np.percentile(max_abs_r_perms_2, 95)
 
-        # Top-3 置换 (Freedman-Lane)
+        # 3. 第 3 位 (Freedman-Lane + 图约束)
         if len(selected) >= 2:
             S_idx = [cand_cols.index(selected[0]), cand_cols.index(selected[1])]
             X_S = np.column_stack([np.ones(n), X_mat[:, S_idx]])
             e_y = y - X_S @ np.linalg.lstsq(X_S, y, rcond=None)[0]
-            valid_j = [j for j, c in enumerate(cand_cols) if c not in selected[:2]]
+            
+            # 【核心修复】：只在与前两位不同模块的候选者中计算
+            mod1 = node_to_module.get(selected[0], -1)
+            mod2 = node_to_module.get(selected[1], -1)
+            valid_j = [j for j, c in enumerate(cand_cols) if node_to_module.get(c) not in (mod1, mod2)]
             
             max_abs_r_perms_3 = np.zeros(N_PERM)
             for p in range(N_PERM):
@@ -81,7 +92,7 @@ def run_permutation_test():
                     e_j = x_j - X_S @ np.linalg.lstsq(X_S, x_j, rcond=None)[0]
                     denom = np.linalg.norm(e_j) * np.linalg.norm(e_y_perm)
                     r_j.append(np.dot(e_j, e_y_perm) / denom if denom > 0 else 0.0)
-                max_abs_r_perms_3[p] = np.max(np.abs(r_j))
+                max_abs_r_perms_3[p] = np.max(np.abs(r_j)) if r_j else 0.0
             q3 = np.percentile(max_abs_r_perms_3, 95)
             
         q_d_dict[d_name] = {1: q1, 2: q2, 3: q3}
@@ -98,7 +109,7 @@ def run_permutation_test():
                 df_top3.loc[mask, "is_significant"] = df_top3.loc[mask, "score"].abs() > q_val
 
     df_top3.to_csv(C.Q2_DIR / "top3_results_with_sig.csv", index=False)
-    print("✅ Freedman-Lane 显著性检验完成！已剔除 barnyard。")
+    print("✅ Freedman-Lane 显著性检验完成！已加入图约束。")
 
 if __name__ == "__main__":
     run_permutation_test()

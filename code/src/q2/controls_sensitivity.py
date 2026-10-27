@@ -1,5 +1,5 @@
 # code/src/q2/controls_sensitivity.py
-"""Q2 对照方法与敏感性分析：M0, M1 以及 tau 的 Jaccard 相似度 (严格 49 维)。"""
+"""Q2 对照方法与敏感性分析：M0, M1 以及 tau 的 Jaccard 相似度 (严格 49 维，含模块层)。"""
 from __future__ import annotations
 
 import sys
@@ -74,7 +74,7 @@ def marginal_select(X_mat, y, cand_cols, node_to_module=None):
 
 def run_controls_and_sensitivity():
     print("=" * 50)
-    print("开始对照方法与敏感性分析 (严格 49 维)")
+    print("开始对照方法与敏感性分析 (严格 49 维，含模块层)")
     print("=" * 50)
 
     ds = load_q2_dataset()
@@ -84,7 +84,7 @@ def run_controls_and_sensitivity():
     # 【严格修复】：剔除 barnyard
     dim_cols = [d for d in ds.Y_rank.columns if d != "barnyard"]
 
-    # 读取主方法结果 (需确保读取的是剔除 barnyard 后的表)
+    # 读取主方法结果
     base_file = C.Q2_DIR / "final_top3_with_stability.csv"
     if not base_file.exists():
         raise FileNotFoundError(f"缺少主方法基线表 {base_file}，请先运行 stability.py")
@@ -100,6 +100,7 @@ def run_controls_and_sensitivity():
     np.fill_diagonal(dist_matrix, 0.0)
     dist_matrix = (dist_matrix + dist_matrix.T) / 2
 
+    # 获取各 tau 下的模块映射
     node_to_module_06 = dict(zip(cand_cols, get_modules(dist_matrix, 0.6)))
     node_to_module_05 = dict(zip(cand_cols, get_modules(dist_matrix, 0.5)))
     node_to_module_07 = dict(zip(cand_cols, get_modules(dist_matrix, 0.7)))
@@ -116,12 +117,35 @@ def run_controls_and_sensitivity():
         tau07_top3 = forward_select(X_mat, y, cand_cols, node_to_module_07)
 
         base_t3 = base_top3[d_name]
+        
+        # --- 化合物层 Jaccard ---
+        j_comp_M0 = jaccard(base_t3, m0_top3)
+        j_comp_M1 = jaccard(base_t3, m1_top3)
+        j_comp_t05 = jaccard(base_t3, tau05_top3)
+        j_comp_t07 = jaccard(base_t3, tau07_top3)
+
+        # --- 模块层 Jaccard (统一映射到 tau=0.6 的主图模块) ---
+        base_mod = [node_to_module_06.get(c, -1) for c in base_t3]
+        m0_mod = [node_to_module_06.get(c, -1) for c in m0_top3]
+        m1_mod = [node_to_module_06.get(c, -1) for c in m1_top3]
+        t05_mod = [node_to_module_06.get(c, -1) for c in tau05_top3]
+        t07_mod = [node_to_module_06.get(c, -1) for c in tau07_top3]
+
+        j_mod_M0 = jaccard(base_mod, m0_mod)
+        j_mod_M1 = jaccard(base_mod, m1_mod)
+        j_mod_t05 = jaccard(base_mod, t05_mod)
+        j_mod_t07 = jaccard(base_mod, t07_mod)
+
         results.append({
             "dimension": d_name,
-            "jaccard_M0": jaccard(base_t3, m0_top3),
-            "jaccard_M1": jaccard(base_t3, m1_top3),
-            "jaccard_tau05": jaccard(base_t3, tau05_top3),
-            "jaccard_tau07": jaccard(base_t3, tau07_top3),
+            "jaccard_M0": j_comp_M0,
+            "jaccard_M1": j_comp_M1,
+            "jaccard_tau05": j_comp_t05,
+            "jaccard_tau07": j_comp_t07,
+            "jaccard_mod_M0": j_mod_M0,
+            "jaccard_mod_M1": j_mod_M1,
+            "jaccard_mod_tau05": j_mod_t05,
+            "jaccard_mod_tau07": j_mod_t07,
             "M0_top1_match": base_t3[0] == m0_top3[0],
             "M1_top1_match": base_t3[0] == m1_top3[0],
             "tau05_top1_match": base_t3[0] == tau05_top3[0],
@@ -132,10 +156,18 @@ def run_controls_and_sensitivity():
     df_res.to_csv(C.Q2_DIR / "controls_sensitivity_results.csv", index=False)
 
     print("\n✅ 计算完成！汇总结果如下 (49维平均):")
-    print(f"主方法 vs M0 (无图边际)  : 平均 Jaccard = {df_res['jaccard_M0'].mean():.3f}, Top1相同比例 = {df_res['M0_top1_match'].mean():.2f}")
-    print(f"主方法 vs M1 (图约束边际): 平均 Jaccard = {df_res['jaccard_M1'].mean():.3f}, Top1相同比例 = {df_res['M1_top1_match'].mean():.2f}")
-    print(f"主方法 vs tau=0.5       : 平均 Jaccard = {df_res['jaccard_tau05'].mean():.3f}, Top1相同比例 = {df_res['tau05_top1_match'].mean():.2f}")
-    print(f"主方法 vs tau=0.7       : 平均 Jaccard = {df_res['jaccard_tau07'].mean():.3f}, Top1相同比例 = {df_res['tau07_top1_match'].mean():.2f}")
+    print(f"【化合物层 Jaccard】")
+    print(f"主方法 vs M0 : {df_res['jaccard_M0'].mean():.3f}, Top1相同: {df_res['M0_top1_match'].mean():.2f}")
+    print(f"主方法 vs M1 : {df_res['jaccard_M1'].mean():.3f}, Top1相同: {df_res['M1_top1_match'].mean():.2f}")
+    print(f"主方法 vs 0.5: {df_res['jaccard_tau05'].mean():.3f}, Top1相同: {df_res['tau05_top1_match'].mean():.2f}")
+    print(f"主方法 vs 0.7: {df_res['jaccard_tau07'].mean():.3f}, Top1相同: {df_res['tau07_top1_match'].mean():.2f}")
+    
+    print(f"\n【模块层 Jaccard】")
+    print(f"主方法 vs M0 : {df_res['jaccard_mod_M0'].mean():.3f}")
+    print(f"主方法 vs M1 : {df_res['jaccard_mod_M1'].mean():.3f}")
+    print(f"主方法 vs 0.5: {df_res['jaccard_mod_tau05'].mean():.3f}")
+    print(f"主方法 vs 0.7: {df_res['jaccard_mod_tau07'].mean():.3f}")
+    
     print(f"\n结果已保存至: {C.Q2_DIR / 'controls_sensitivity_results.csv'}")
 
 if __name__ == "__main__":
