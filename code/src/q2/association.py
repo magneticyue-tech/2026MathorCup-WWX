@@ -1,5 +1,5 @@
 # code/src/q2/association.py
-"""Q2 关联层：图约束前向选择。"""
+"""Q2 关联层：图约束前向选择 (严格 49 维，剔除 barnyard)。"""
 from __future__ import annotations
 
 import sys
@@ -27,12 +27,16 @@ def compute_top3():
     X_mat = ds.X_rank.values
     Y_mat = ds.Y_rank.values
     cand_cols = ds.candidate_cols
-    dim_cols = ds.Y_rank.columns
+    
+    # 【严格修复】：剔除 barnyard 维度，保留 49 维
+    dim_cols = [d for d in ds.Y_rank.columns if d != "barnyard"]
     n = len(ds.sample_ids)
 
     results = []
     for d_idx, d_name in enumerate(dim_cols):
-        y = Y_mat[:, d_idx]
+        y = Y_mat[:, ds.Y_rank.columns.get_loc(d_name)]
+        
+        # 第 1 位
         r_1_all = (X_mat.T @ y) / n
         best_1_idx = np.argmax(np.abs(r_1_all))
         best_1_node = cand_cols[best_1_idx]
@@ -44,6 +48,7 @@ def compute_top3():
             "score_type": "spearman", "score": r_1_all[best_1_idx]
         })
 
+        # 第 2、3 位
         for rank in [2, 3]:
             S_indices = [cand_cols.index(s) for s in selected]
             X_S = np.column_stack([np.ones(n), X_mat[:, S_indices]])
@@ -77,9 +82,12 @@ def compute_top3():
                 })
 
     df_results = pd.DataFrame(results)
-    df_results["display_dimension"] = df_results["dimension"].apply(lambda x: "stale_hops (同 barnyard)" if x == "barnyard" else x)
+    # 【严格修复】：按工单要求在 stale_hops 注明同 barnyard
+    df_results["display_dimension"] = df_results["dimension"].apply(
+        lambda x: "stale_hops (同 barnyard)" if x == "stale_hops" else x
+    )
     df_results.to_csv(C.Q2_DIR / "top3_results.csv", index=False)
-    print("✅ Top-3 提取完成！已保存 top3_results.csv")
+    print(f"✅ Top-3 提取完成！共 {len(dim_cols)} 维，已保存 top3_results.csv (无独立 barnyard)")
 
 if __name__ == "__main__":
     compute_top3()

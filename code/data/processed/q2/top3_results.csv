@@ -110,9 +110,9 @@ dms,3,unfermentables,39,partial_spearman,-0.20915477831296053,dms
 metallic,1,iron,122,spearman,0.2447634651778232,metallic
 metallic,2,neryl.formate,116,partial_spearman,-0.2692689478016285,metallic
 metallic,3,GFS,146,partial_spearman,-0.2308434296056204,metallic
-stale_hops,1,X2.undecanol,73,spearman,0.2996737628330855,stale_hops
-stale_hops,2,linalool.isovalerate,57,partial_spearman,0.21208580605098132,stale_hops
-stale_hops,3,X3.methylthio.propanol,82,partial_spearman,-0.170309668475115,stale_hops
+stale_hops,1,X2.undecanol,73,spearman,0.2996737628330855,stale_hops (同 barnyard)
+stale_hops,2,linalool.isovalerate,57,partial_spearman,0.21208580605098132,stale_hops (同 barnyard)
+stale_hops,3,X3.methylthio.propanol,82,partial_spearman,-0.170309668475115,stale_hops (同 barnyard)
 t2n,1,beta.phellandrene,47,spearman,-0.2140081562157678,t2n
 t2n,2,glycerol,31,partial_spearman,-0.20341269327612924,t2n
 t2n,3,vinyl.caprylate,147,partial_spearman,0.1756442602260162,t2n
@@ -131,9 +131,6 @@ lactic,3,phenethyl_alcohol,159,partial_spearman,0.2669657930000047,lactic
 acetic,1,prenyl.isobutyrate,119,spearman,0.40556432998950653,acetic
 acetic,2,ethyl_2.methyl_butyrate,114,partial_spearman,0.2726549240437251,acetic
 acetic,3,DES,36,partial_spearman,-0.25067871557963384,acetic
-barnyard,1,X2.undecanol,73,spearman,0.28470850573552015,stale_hops (同 barnyard)
-barnyard,2,gamma.eudesmol,143,partial_spearman,0.22429968468134967,stale_hops (同 barnyard)
-barnyard,3,heptyl.acetate,20,partial_spearman,-0.18657073383819048,stale_hops (同 barnyard)
 alcohol,1,ethanol..v.v.,32,spearman,0.8171474389230694,alcohol
 alcohol,2,CO2.PSI.,38,partial_spearman,0.356414277111964,alcohol
 alcohol,3,bitterness,123,partial_spearman,0.2227596547718309,alcohol
