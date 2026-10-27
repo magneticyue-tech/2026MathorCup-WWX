@@ -23,11 +23,19 @@ def compute_top3():
 
     ds = load_q2_dataset()
     
+    # ================= 新增图验证 =================
     all_nodes = ds.candidate_cols + ds.annotation_cols
     if len(all_nodes) != 231:
         raise ValueError(f"图节点应为 231，实际为 {len(all_nodes)}")
         
-    print(f"✅ 图节点验证通过：共 {len(all_nodes)} 个节点。")
+    # 验证候选节点间的阈值边
+    abs_corr = ds.corr.loc[ds.candidate_cols, ds.candidate_cols].abs()
+    np.fill_diagonal(abs_corr.values, 0.0)
+    edge_count = int((abs_corr.values >= C.TAU_MAIN).sum() / 2)
+    if edge_count != 245:
+        raise ValueError(f"候选节点间阈值边数应为 245，实际为 {edge_count}")
+    print(f"✅ 图验证通过：231 节点，候选间 {edge_count} 条边。")
+    # ==============================================
 
     graph_nodes_path = C.Q2_DIR / "graph_nodes.csv"
     if not graph_nodes_path.exists():
@@ -108,13 +116,10 @@ def compute_top3():
                     "score": best_r
                 })
             else:
-                raise RuntimeError(f"维度 {d_name} 的前向选择在 rank {rank} 失败，可能是模块约束导致无候选可选。")
+                raise RuntimeError(f"维度 {d_name} 的前向选择在 rank {rank} 失败。")
 
     df_results = pd.DataFrame(results)
-    
-    # 检查是否每个维度严格 3 行
-    assert len(df_results) == 49 * 3, f"期望 147 行结果，实际生成了 {len(df_results)} 行"
-    
+    assert len(df_results) == 49 * 3, f"期望 147 行，实际 {len(df_results)} 行"
     df_results.to_csv(C.Q2_DIR / "top3_results.csv", index=False)
     print(f"✅ Top-3 提取完成！共 {len(dim_cols)} 维，已保存 top3_results.csv (无独立 barnyard)")
 
