@@ -1,285 +1,89 @@
 import sys
 import numpy as np
 import pandas as pd
+from pathlib import Path
 import json
 import warnings
-import shutil
-import sklearn
-from pathlib import Path
-from sklearn.metrics import cohen_kappa_score, mean_absolute_error
 
 warnings.filterwarnings('ignore')
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from src.q1.paths import PROCESSED_DIR, SEED
 from src.q1.data import load_q1
-from src.q1.splits import outer_splits
-from src.q1.convert import calc_m_cap
-
-def get_best_qwk_thresholds(z_cont, R_true):
-    best_thresholds = np.array([0.5, 1.5, 2.5, 3.5, 4.5, 5.5])
-    best_qwk = -np.inf
-    if len(np.unique(R_true)) < 2: return None
-    for _ in range(2):
-        for i in range(6):
-            for step in np.linspace(-0.1, 0.1, 5):
-                test_t = best_thresholds.copy()
-                test_t[i] += step
-                if i > 0 and test_t[i] <= test_t[i-1]: continue
-                if i < 5 and test_t[i] >= test_t[i+1]: continue
-                pred = np.digitize(z_cont, test_t)
-                if len(np.unique(pred)) < 2: continue
-                qwk = cohen_kappa_score(R_true, pred, weights="quadratic", labels=range(7))
-                if qwk > best_qwk:
-                    best_qwk, best_thresholds = qwk, test_t
-    return best_thresholds
-
-def fast_panel_zeros(Z_arr, panels, decimals=9):
-    z_round = np.round(Z_arr, decimals)
-    unique_panels = np.unique(panels)
-    n_dims = Z_arr.shape[1]
-    out = np.full((len(unique_panels), n_dims), np.nan)
-    for i, g in enumerate(unique_panels):
-        if (panels == g).sum() < 2: continue
-        group_z = z_round[panels == g]
-        mins = np.min(group_z, axis=0)
-        for d in range(n_dims):
-            if (group_z[:, d] == mins[d]).sum() >= 2:
-                out[i, d] = mins[d]
-    return pd.DataFrame(out, index=unique_panels)
+from src.q1.discretize import apply_rules, dist_median, dist_interval
 
 def main():
-    print("正在执行 T3/T4: 绝对最终完美版 (包含全部两法/I1/I0指标与频数)...")
+    print("正在加载 T2 预测结果与 T1 目标...")
     data = load_q1()
-    main_data = np.load(PROCESSED_DIR / "q1_main_oof_v2.npz", allow_pickle=True)
-    oof_z = main_data['oof_z']
-    inner_z = main_data['inner_z'] 
-    zhat = main_data['zhat']
     
-    panels = np.load(PROCESSED_DIR / "q1_panels.npz", allow_pickle=True)['panels']
-    splits = outer_splits(panels, data.style, n_splits=5, n_repeats=5, seed=SEED)
-
-    m_grid = [3.0, 2.5, 'cap']
-    detailed_metrics = []
-    selection_params = {}
+    q1_data = np.load(PROCESSED_DIR / "q1_data.npz", allow_pickle=True)
+    G_obs = q1_data['G'] # 250x50 真实等级
     
-    I_all = np.zeros((5, 250, 50), dtype=bool)
-    A_all = np.full((5, 250, 50), np.nan)
-    L_all = np.zeros((5, 250, 50))
-    R_all = np.zeros((5, 250, 50))
+    main_data = np.load(PROCESSED_DIR / "q1_main_oof.npz", allow_pickle=True)
+    oof_mu = main_data['oof_mu'] # (5, 250, 50)
+    inner_mu = main_data['inner_mu'] # (5, 5, 250, 50)
     
-    Z_arr = data.Z.values
-    excluded_dims_by_m = {str(m): set() for m in m_grid}
-
+    print("正在执行 T3 离散化与交付生成...")
+    
+    # 存储最终结果的容器
+    p_final = np.zeros((250, 50, 7))
+    G_hat = np.zeros((250, 50), dtype=int)
+    lo_final = np.zeros((250, 50), dtype=int)
+    hi_final = np.zeros((250, 50), dtype=int)
+    G_hat_Q = np.zeros((250, 50), dtype=int) # 分位数规则的中位数
+    
+    # 为了后续对比，把各种规则的结果都存下来
+    rules_dict = {r: np.zeros((5, 250, 50), dtype=int) for r in ["const", "round", "median", "quant", "qwk_cut"]}
+    
     for dim_idx, dim in enumerate(data.dims):
-        z_true = Z_arr[:, dim_idx]
+        # 提取该维度的所有数据
+        mu_run = oof_mu[:, :, dim_idx] # (5, 250)
+        inner_mu_run = inner_mu[:, :, :, dim_idx] # (5, 5, 250)
+        g_inner_run = G_obs[:, dim_idx] # (250,)
+        y_inner_run = q1_data['xbar'][:, dim_idx] # 连续均值
         
-        for m_val in m_grid:
-            m_name = str(m_val)
-            run_metrics = []
-            
-            for run in range(5):
-                fold_records = []
-                for fold_idx, (train_idx, test_idx) in enumerate(splits[run]):
-                    
-                    low, high = np.min(z_true[train_idx]), np.max(z_true[train_idx])
-                    if high == low: L_test = np.full(len(test_idx), 3)
-                    else: L_test = np.round(np.clip(6 * (z_true[test_idx] - low) / (high - low), 0, 6)).astype(int)
-                    
-                    if m_val == 3.0: L_all[run, test_idx, dim_idx] = L_test
-                    
-                    zeros_train = fast_panel_zeros(Z_arr[train_idx], panels[train_idx])
-                    zeros_test = fast_panel_zeros(Z_arr[test_idx], panels[test_idx])
-                    
-                    col_zeros = zeros_train.iloc[:, dim_idx].dropna().values if zeros_train.shape[1] > dim_idx else []
-                    z0_tilde = np.median(col_zeros) if len(col_zeros) > 0 else np.nan
-                    
-                    I_test = np.zeros(len(test_idx), dtype=bool)
-                    A_test = np.zeros(len(test_idx), dtype=int)
-                    R_test = L_test.copy()
-                    
-                    if not np.isnan(z0_tilde) and dim != "F_malt_all":
-                        r = -z0_tilde
-                        current_m = min(4.0, calc_m_cap(z_true[train_idx], z0_tilde)) if m_val == 'cap' else m_val
-                        sigma = current_m * r / (1 + r**2)
-                        
-                        if zeros_test.shape[1] > dim_idx:
-                            for i, g in enumerate(panels[test_idx]):
-                                if g in zeros_test.index and not pd.isna(zeros_test.loc[g, dim_idx]):
-                                    z0_g = zeros_test.loc[g, dim_idx]
-                                    A_test[i] = int(np.clip(np.round(sigma * (z_true[test_idx][i] - z0_g)), 0, 6))
-                                    I_test[i] = True
-                        R_test = np.where(I_test, A_test, L_test)
-                        
-                    if m_val == 3.0:
-                        I_all[run, test_idx, dim_idx] = I_test
-                        A_all[run, test_idx, dim_idx] = np.where(I_test, A_test, np.nan)
-                        R_all[run, test_idx, dim_idx] = R_test
-                    
-                    z_cont_pred_test = 6 * (oof_z[run, test_idx, dim_idx] - low) / (high - low + 1e-9)
-                    pred_lin = np.clip(np.round(z_cont_pred_test), 0, 6).astype(int)
-                    
-                    valid_inner = ~np.isnan(inner_z[run, :, dim_idx])
-                    inner_idx = np.where(valid_inner)[0]
-                    
-                    z_true_inner = z_true[inner_idx]
-                    L_inner = np.round(np.clip(6 * (z_true_inner - low) / (high - low), 0, 6)).astype(int)
-                    R_inner = L_inner.copy()
-                    
-                    if not np.isnan(z0_tilde) and dim != "F_malt_all":
-                        zeros_inner = fast_panel_zeros(Z_arr[inner_idx], panels[inner_idx])
-                        col_zeros_in = zeros_inner.iloc[:, dim_idx].dropna().values if zeros_inner.shape[1] > dim_idx else []
-                        z0_tilde_in = np.median(col_zeros_in) if len(col_zeros_in) > 0 else np.nan
-                        
-                        if not np.isnan(z0_tilde_in):
-                            current_m_in = min(4.0, calc_m_cap(z_true_inner, z0_tilde_in)) if m_val == 'cap' else m_val
-                            sigma_in = current_m_in * (-z0_tilde_in) / (1 + (-z0_tilde_in)**2)
-                            I_test_in = np.zeros(len(inner_idx), dtype=bool)
-                            A_test_in = np.zeros(len(inner_idx), dtype=int)
-                            for i_in, g_in in enumerate(panels[inner_idx]):
-                                if g_in in zeros_inner.index and not pd.isna(zeros_inner.loc[g_in, dim_idx]):
-                                    z0_g_in = zeros_inner.loc[g_in, dim_idx]
-                                    A_test_in[i_in] = int(np.clip(np.round(sigma_in * (z_true_inner[i_in] - z0_g_in)), 0, 6))
-                                    I_test_in[i_in] = True
-                            R_inner = np.where(I_test_in, A_test_in, L_inner)
-                    
-                    z_cont_pred_inner = 6 * (inner_z[run, inner_idx, dim_idx] - low) / (high - low + 1e-9)
-                    thresholds = get_best_qwk_thresholds(z_cont_pred_inner, R_inner)
-                    pred_qwk = pred_lin if thresholds is None else np.digitize(z_cont_pred_test, thresholds)
-                    
-                    if len(np.unique(R_test)) > 1:
-                        fold_records.append({
-                            "I_mask": I_test, "R_true": R_test,
-                            "pred_qwk": pred_qwk, "pred_lin": pred_lin, "L_test": L_test
-                        })
-                    else:
-                        excluded_dims_by_m[m_name].add(dim)
-                
-                if fold_records:
-                    R_true_all = np.concatenate([r["R_true"] for r in fold_records])
-                    pred_qwk_all = np.concatenate([r["pred_qwk"] for r in fold_records])
-                    pred_lin_all = np.concatenate([r["pred_lin"] for r in fold_records])
-                    I_mask_all = np.concatenate([r["I_mask"] for r in fold_records])
-                    L_all_flat = np.concatenate([r["L_test"] for r in fold_records])
-                    
-                    # 🚨 严格拆分 I=1 和 I=0 的掩码
-                    mask_i1 = I_mask_all
-                    mask_i0 = ~I_mask_all
-                    
-                    # 全体指标
-                    qwk_all = cohen_kappa_score(R_true_all, pred_qwk_all, weights="quadratic", labels=range(7))
-                    mae_all = mean_absolute_error(R_true_all, pred_qwk_all)
-                    acc_all = (np.abs(R_true_all - pred_qwk_all) <= 1).mean()
-                    
-                    # 两法对比指标
-                    lin_qwk = cohen_kappa_score(R_true_all, pred_lin_all, weights="quadratic", labels=range(7))
-                    lin_mae = mean_absolute_error(R_true_all, pred_lin_all)
-                    lin_acc = (np.abs(R_true_all - pred_lin_all) <= 1).mean()
-                    
-                    # 🚨 I=1 指标（补全 Acc1 和 频数）
-                    qwk_i1 = cohen_kappa_score(R_true_all[mask_i1], pred_qwk_all[mask_i1], weights="quadratic", labels=range(7)) if mask_i1.sum() > 1 else np.nan
-                    mae_i1 = mean_absolute_error(R_true_all[mask_i1], pred_qwk_all[mask_i1]) if mask_i1.sum() > 0 else np.nan
-                    acc_i1 = (np.abs(R_true_all[mask_i1] - pred_qwk_all[mask_i1]) <= 1).mean() if mask_i1.sum() > 0 else np.nan
-                    freq_i1 = np.bincount(pred_qwk_all[mask_i1], minlength=7) if mask_i1.sum() > 0 else np.zeros(7)
-                    
-                    # 🚨 I=0 指标（补全 Acc1 和 频数）
-                    qwk_i0 = cohen_kappa_score(R_true_all[mask_i0], pred_qwk_all[mask_i0], weights="quadratic", labels=range(7)) if mask_i0.sum() > 1 else np.nan
-                    mae_i0 = mean_absolute_error(R_true_all[mask_i0], pred_qwk_all[mask_i0]) if mask_i0.sum() > 0 else np.nan
-                    acc_i0 = (np.abs(R_true_all[mask_i0] - pred_qwk_all[mask_i0]) <= 1).mean() if mask_i0.sum() > 0 else np.nan
-                    freq_i0 = np.bincount(pred_qwk_all[mask_i0], minlength=7) if mask_i0.sum() > 0 else np.zeros(7)
-                    
-                    diff_al = np.abs(R_true_all[mask_i1] - L_all_flat[mask_i1]).mean() if mask_i1.sum() > 0 else np.nan
-                    freq = np.bincount(pred_qwk_all, minlength=7)
-                    
-                    run_metrics.append({
-                        "QWK_all": qwk_all, "MAE_all": mae_all, "Acc1_all": acc_all,
-                        "Lin_QWK_all": lin_qwk, "Lin_MAE_all": lin_mae, "Lin_Acc1_all": lin_acc,
-                        "QWK_I1": qwk_i1, "MAE_I1": mae_i1, "Acc1_I1": acc_i1, "freq_I1": freq_i1,
-                        "QWK_I0": qwk_i0, "MAE_I0": mae_i0, "Acc1_I0": acc_i0, "freq_I0": freq_i0,
-                        "Diff_A_L_I1": diff_al, "freq": freq
-                    })
-            
-            if run_metrics:
-                keys_to_avg = ["QWK_all", "MAE_all", "Acc1_all", "Lin_QWK_all", "Lin_MAE_all", "Lin_Acc1_all", "QWK_I1", "MAE_I1", "Acc1_I1", "QWK_I0", "MAE_I0", "Acc1_I0", "Diff_A_L_I1"]
-                avg_metric = {k: np.nanmean([r[k] for r in run_metrics]) for k in keys_to_avg}
-                avg_freq = np.mean([r["freq"] for r in run_metrics], axis=0)
-                avg_freq_i1 = np.mean([r["freq_I1"] for r in run_metrics], axis=0)
-                avg_freq_i0 = np.mean([r["freq_I0"] for r in run_metrics], axis=0)
-            else:
-                avg_metric = {k: np.nan for k in ["QWK_all", "MAE_all", "Acc1_all", "Lin_QWK_all", "Lin_MAE_all", "Lin_Acc1_all", "QWK_I1", "MAE_I1", "Acc1_I1", "QWK_I0", "MAE_I0", "Acc1_I0", "Diff_A_L_I1"]}
-                avg_freq, avg_freq_i1, avg_freq_i0 = np.zeros(7), np.zeros(7), np.zeros(7)
-                
-            metric_row = {"dim": dim, "m_val": m_name}
-            metric_row.update(avg_metric)
-            
-            # 导出所有的频数
-            for k in range(7):
-                metric_row[f"freq_all_k{k}"] = avg_freq[k]
-                metric_row[f"freq_I1_k{k}"] = avg_freq_i1[k]
-                metric_row[f"freq_I0_k{k}"] = avg_freq_i0[k]
-                
-            detailed_metrics.append(metric_row)
-
-    # 🚨 两法动态选型
-    df_metrics = pd.DataFrame(detailed_metrics)
-    m3_df = df_metrics[df_metrics['m_val'] == '3.0']
-    mean_qwk_opt = m3_df['QWK_all'].mean()
-    mean_qwk_lin = m3_df['Lin_QWK_all'].mean()
-    winning_method = "QWK_optimized" if mean_qwk_opt > mean_qwk_lin else "Direct_Linear"
-
-    final_scores_dict = {}
-    for dim_idx, dim in enumerate(data.dims):
-        z_true = Z_arr[:, dim_idx]
-        low, high = np.min(z_true), np.max(z_true)
-        z_cont_final = 6 * (zhat[:, dim_idx] - low) / (high - low + 1e-9)
+        p_runs = []
+        quant_medians = []
         
-        if winning_method == "QWK_optimized":
-            final_thresholds = get_best_qwk_thresholds(z_cont_final, np.round(z_cont_final).astype(int))
-            if final_thresholds is None:
-                final_thresholds = [0.5, 1.5, 2.5, 3.5, 4.5, 5.5]
-            final_scores_dict[dim] = np.digitize(z_cont_final, final_thresholds)
-            selection_params[dim] = {"method": "QWK", "low": float(low), "high": float(high), "thresholds": [float(t) for t in final_thresholds]}
-        else:
-            final_scores_dict[dim] = np.clip(np.round(z_cont_final), 0, 6).astype(int)
-            selection_params[dim] = {"method": "Linear", "low": float(low), "high": float(high)}
-
-    # 保存产物
-    np.savez_compressed(PROCESSED_DIR / "q1_mapping_reference_masks.npz", I=I_all, A=A_all, L=L_all, R=R_all)
-    df_metrics.to_csv(PROCESSED_DIR / "q1_mapping_metrics.csv", index=False)
-    
-    df_final = pd.DataFrame(final_scores_dict)
-    df_final.insert(0, "beer", data.beer)
-    df_final.to_csv(PROCESSED_DIR / "q1_final_scores.csv", index=False)
-
-    with open(PROCESSED_DIR / "q1_mapping_selection.json", "w") as f:
-        json.dump({"winning_method": winning_method, "params": selection_params, "seed": SEED}, f, indent=4)
+        for run in range(5):
+            # 把5折的内层预测拼起来（去掉 NaN，只保留有效的内层预测作为残差池）
+            inner_preds = inner_mu_run[run] # (5, 250)
+            valid_mask = ~np.isnan(inner_preds)
+            
+            # 提取有效的连续预测、真实均值和真实等级
+            mu_inner = inner_preds[valid_mask]
+            y_inner = np.tile(y_inner_run, (5, 1))[valid_mask]
+            g_inner = np.tile(g_inner_run, (5, 1))[valid_mask]
+            
+            # 调用离散化函数
+            res = apply_rules(mu_run[run], mu_inner, y_inner, g_inner)
+            
+            p_runs.append(res['p'])
+            for rule in ["const", "round", "median", "quant", "qwk_cut"]:
+                rules_dict[rule][run, :, dim_idx] = res[rule]
+                
+            quant_medians.append(res['quant'])
+            
+        # 按照工单 §3.5 合并 5 次重复
+        p_final[:, dim_idx] = np.mean(p_runs, axis=0) # p_final 为 5 次 p 的平均
+        G_hat[:, dim_idx] = dist_median(p_final[:, dim_idx]) # 由 p_final 取中位数
+        lo_final[:, dim_idx], hi_final[:, dim_idx] = dist_interval(p_final[:, dim_idx]) # 由 p_final 算区间
         
-    shutil.copy(PROCESSED_DIR / "q1_main_oof_v2.npz", PROCESSED_DIR / "q1_mapping_oof.npz")
-    shutil.copy(PROCESSED_DIR / "q1_mapping_metrics.csv", PROCESSED_DIR / "q1_mapping_detailed_metrics.csv")
-    
-    total_I1 = I_all.sum()
-    total_cells = I_all.size
-    excluded_str = {m: list(dims) for m, dims in excluded_dims_by_m.items() if dims}
-    
-    log_content = f"""Q1 Mapping Workorder Execution Log
-=====================================
-Environment: Python {sys.version}, scikit-learn {sklearn.__version__}
-Seed: {SEED}
-Actual I=1 Coverage: {total_I1} / {total_cells} ({total_I1/total_cells:.1%})
-Mean QWK (Optimized): {mean_qwk_opt:.4f}
-Mean QWK (Direct Linear): {mean_qwk_lin:.4f}
-Winning Method: {winning_method}
-Excluded Dims (Undefined): {excluded_str}
-"""
-    with open(PROCESSED_DIR / "q1_run_log.txt", "w", encoding="utf-8") as f:
-        f.write(log_content)
+        # G_hat_Q 为 5 次 quant 规则结果的中位数
+        G_hat_Q[:, dim_idx] = np.median(np.array(quant_medians), axis=0).astype(int)
 
-    print(f"✅ 实际局部参照覆盖数 (I=1): {total_I1} / {total_cells} 单元 (占比 {total_I1/total_cells:.1%})")
-    print(f"✅ 平均 QWK (QWK优化): {mean_qwk_opt:.4f} | 平均 QWK (直接线性): {mean_qwk_lin:.4f}")
-    print(f"🏆 胜出方法: {winning_method}")
-    if excluded_str:
-        print(f"⚠️ 被排除的无定义维度 (部分): {excluded_str}")
-    print("✅ 所有交付文件生成完毕！完全符合工单要求。")
+    print("正在保存 q1_scores.npz...")
+    save_path = PROCESSED_DIR / "q1_scores.npz"
+    np.savez_compressed(
+        save_path,
+        p_final=p_final,
+        G_hat=G_hat,
+        lo=lo_final,
+        hi=hi_final,
+        G_hat_Q=G_hat_Q,
+        **{f"grade_{r}": rules_dict[r] for r in rules_dict}
+    )
+    print(f"✅ T3 运行完毕，最终评分已存入: {save_path}")
 
 if __name__ == "__main__":
     main()
