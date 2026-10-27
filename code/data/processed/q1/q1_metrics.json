@@ -59,43 +59,10 @@
         "acetic",
         "barnyard"
     ],
-    "b2_paper_mean_r2": -3.718649324910256,
-    "t6_als_mae": 0.09608,
-    "t6_knn_mae": 0.46208,
-    "checks": {
-        "T1_G_counts_match": true,
-        "T1_date_groups_match": true,
-        "T2_no_data_leak": true,
-        "T3_prob_sum_to_1": true,
-        "T4_k2_rf_calculated": true,
-        "T5_cluster_bootstrap": true,
-        "T6_external_read": true,
-        "b2_paper_r2": -3.718649324910256,
-        "loso_mae": {
-            "LOSO_Low/No alcohol": 0.5475,
-            "LOSO_Fruitbeer": 0.655,
-            "LOSO_Dubbel": 0.398,
-            "LOSO_Pils/Lager": 0.3563636363636364,
-            "LOSO_Flanders old brown": 0.464,
-            "LOSO_Kriek": 0.54,
-            "LOSO_Blond": 0.4296774193548387,
-            "LOSO_Wheat": 0.41833333333333333,
-            "LOSO_Stout/Porter": 0.5692307692307692,
-            "LOSO_Amber": 0.4716666666666667,
-            "LOSO_Brett/cofermented": 0.4166666666666667,
-            "LOSO_Lambic": 0.37636363636363634,
-            "LOSO_Tripel": 0.49142857142857144,
-            "LOSO_Saison": 0.534,
-            "LOSO_Scotch": 0.496,
-            "LOSO_West Flanders ale": 0.4857142857142857,
-            "LOSO_Hoppy": 0.5164705882352941,
-            "LOSO_Faro": 0.3933333333333333,
-            "LOSO_Strong ale": 0.5233333333333333,
-            "LOSO_Brown": 0.38333333333333336,
-            "LOSO_Christmas": 0.5555555555555556,
-            "LOSO_Brut": 0.635
-        },
-        "als_mae": 0.09608,
-        "knn_mae": 0.46208
-    }
+    "b2_paper_mean_r2": -4.444960346532181,
+    "t6_als_ci": [
+        0.3449532878189004,
+        0.40532523765360534
+    ],
+    "t6_alpha_flag": false
 }

@@ -53,3 +53,20 @@ def cluster_bootstrap(a, b, groups, n_boot=2000, seed=0):
         idx = np.concatenate([np.where(groups == g)[0] for g in boot_groups])
         diffs.append(np.mean(a[idx]) - np.mean(b[idx]))
     return np.percentile(diffs, 2.5), np.percentile(diffs, 97.5)
+
+def log_loss_score(p, G, eps=1e-9):
+    """工单要求的 Log Loss"""
+    p_true = np.take_along_axis(p, G[..., np.newaxis], axis=2).squeeze()
+    return float(-np.mean(np.log(np.clip(p_true, eps, 1-eps))))
+
+def split_report(G, Ghat, zero_heavy_dims, dims):
+    """工单要求的：分别报告 ZERO_HEAVY_DIMS 与其余维度的指标"""
+    zero_heavy_idx = [i for i, d in enumerate(dims) if d in zero_heavy_dims]
+    other_idx = [i for i, d in enumerate(dims) if d not in zero_heavy_dims]
+    
+    report = {}
+    if zero_heavy_idx:
+        report["zero_heavy_mae"] = float(grade_mae(G[:, zero_heavy_idx], Ghat[:, zero_heavy_idx]))
+    if other_idx:
+        report["other_mae"] = float(grade_mae(G[:, other_idx], Ghat[:, other_idx]))
+    return report
