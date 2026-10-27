@@ -18,3 +18,38 @@ def qwk_by_dim(G, Ghat):
         except:
             scores.append(np.nan)
     return np.array(scores)
+
+def rps(p, G):
+    F = np.cumsum(p, axis=-1)
+    O = (np.arange(7) >= G[..., np.newaxis]).astype(float)
+    return np.mean(np.sum((F - O)**2, axis=-1))
+
+def confusion_pooled(G, Ghat):
+    cm = np.zeros((7, 7), dtype=int)
+    for i in range(len(G)):
+        for j in range(G.shape[1]):
+            cm[G[i, j], Ghat[i, j]] += 1
+    return cm
+
+def balanced_accuracy(cm):
+    recalls = np.diag(cm) / (cm.sum(axis=1) + 1e-9)
+    return np.mean(recalls)
+
+def wins_by_dim(G, Ghat_a, Ghat_b):
+    """逐维比较 MAE"""
+    wins = 0
+    for d in range(G.shape[1]):
+        if grade_mae(G[:, d], Ghat_a[:, d]) < grade_mae(G[:, d], Ghat_b[:, d]):
+            wins += 1
+    return wins
+
+def cluster_bootstrap(a, b, groups, n_boot=2000, seed=0):
+    """工单要求的：按日期组整组重抽样算 CI"""
+    rng = np.random.default_rng(seed)
+    unique_groups = np.unique(groups)
+    diffs = []
+    for _ in range(n_boot):
+        boot_groups = rng.choice(unique_groups, size=len(unique_groups), replace=True)
+        idx = np.concatenate([np.where(groups == g)[0] for g in boot_groups])
+        diffs.append(np.mean(a[idx]) - np.mean(b[idx]))
+    return np.percentile(diffs, 2.5), np.percentile(diffs, 97.5)
