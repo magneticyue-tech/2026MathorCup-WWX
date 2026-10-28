@@ -16,7 +16,7 @@ refs:
 
 ## 前置条件
 
-只有在 `q2-statistical-fixes` 通过其小样本验收，且 `q2-sensitivity-runs` 的 NA 决策已由 Modeling 确认、所有敏感性代码通过小样本验收后，才开始本工单。开始前重新读取当前方法文档和 Q2 活文档，检查 `git status`、原始附件、Q1 panel/参数产物和全部 Q2 输出路径。
+只有在 `q2-statistical-fixes` 通过其小样本验收，且 `q2-sensitivity-runs` 的全部敏感性代码通过小样本验收后，才开始本工单。逐对删除按 `model/q2_methodology.md` §2.2、§7.3 限定为边际相关诊断。开始前重新读取当前方法文档和 Q2 活文档，检查 `git status`、原始附件、Q1 panel/参数产物和全部 Q2 输出路径。
 
 ## 正式运行顺序
 
@@ -42,6 +42,7 @@ refs:
 使用脚本或结构化读取 CSV 验收，不靠肉眼抽查：
 
 - `top3_results.csv`、`top3_results_with_sig.csv`、`final_top3_with_stability.csv` 各有 147 行、49 个维度、每维 3 行；无 barnyard。
+- 向 Writing 移交主方法 147 行的紧凑附录表数据视图：从最终合理性表只取 `method=main`，按 Q1 六组维度与附件 4 维度顺序、组内 rank 1–3 排列，列为维度、名次、化合物、方向、`pi_c`、`stability`、`grade`；六组互不重叠且合计 147 行。完整合理性 CSV 与 M3 差异行分别保留，不能把宽表或 M3 行直接排入主结果附录表。表注与不适用值口径见 `model/q2_methodology.md` §1。
 - 最终合理性表有 147 条 `main` 行；M3 行数等于 M3 与主方法 Top-1 不同的维度数。M3 行的维度、化合物、来源标签、区间和对照标记可追溯；缺少的统计量明确标为不适用，不写成 0。
 - `graph_nodes.csv` 有 231 行；`graph_edges.csv` 中候选-候选边为 245 条，注释节点相关边单独统计。
 - 63 个品评团；主稳定性和置换各按配置完成 1000 次。每个模拟设置恰为 1000 次。

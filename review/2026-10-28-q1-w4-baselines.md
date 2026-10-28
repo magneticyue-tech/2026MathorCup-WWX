@@ -5,7 +5,6 @@ to: coding
 status: open
 severity: major
 refs:
-  - review/2026-10-28-q1-index.md
   - review/2026-10-28-q1-w2-main-model.md
   - review/2026-10-28-q1-w3-scores.md
   - model/q1_methodology.md
@@ -19,7 +18,7 @@ refs:
 - 现有实现的错误：标为 EN 的对照实际是主模型参数的 HistGBR（与主模型折外预测相关 0.99994）；RF 在 `q1_metrics.json` 中为 0.0；线性回归、B0g、化学加风格缺失；B2 的目标用了 x̄，应为附件 4 的 z；对照只取第 0 次重复、只用四舍五入。
 - 所有连续对照与主模型使用同一套外层划分和同一种子，像主模型一样产生 `oof` 与 `inner`，再由 W3 的 `apply_rules` 用各自的残差池离散。
 - 只创建或修改：`code/src/q1/baselines.py`、`code/scripts/solve_q1_baselines.py`、`code/tests/test_q1_baselines.py`。
-- 依赖：W1（`ChemNAEncoder`、`DIMS`、`DIM_GROUPS`、`FLOOR_VALUE`、`load_q1`）、W2（`outer_splits`、`inner_splits`、`paper_split`、`fit_outer_fold`、`CONFIGS`、`q1_main_oof.npz`）、W3（`apply_rules`、`grade`、`dist_median`、`q1_scores.npz`）。先读 `review/2026-10-28-q1-index.md` 的「通用约定」。
+- 依赖：W1（`ChemNAEncoder`、`DIMS`、`DIM_GROUPS`、`FLOOR_VALUE`、`load_q1`）、W2（`outer_splits`、`inner_splits`、`paper_split`、`fit_outer_fold`、`CONFIGS`、`q1_main_oof.npz`）、W3（`apply_rules`、`grade`、`dist_median`、`q1_scores.npz`）。运行环境与通用约定见本工单末尾「通用约定」。
 
 ## 模型清单
 
@@ -93,9 +92,10 @@ B2（只与论文 Table S3 对照，不进入等级比较）：
 - 单元为 `(模型, r, k)`。b0、b1 在主进程直接计算；lin10、enet、rf、chemstyle 用 `joblib.Parallel(n_jobs=workers)`；每个单元结果写入 `CHUNK_DIR/baselines/<模型>_r{r}_k{k}.npz`（键：`train_idx`、`test_idx`、`oof`、`inner`、`chosen`、`scores`，后两个为 JSON 字符串），已存在则读取。不带 `--only` 时，全部单元就绪后合并并写最终文件。
 - 合并后对每个模型、每个 `(r, k, d)`：`apply_rules(oof[r, test, d], inner[r, k, train, d], xbar[train, d])`，把 `RULES` 中各规则的等级写入对应测试行，并把 `p` 写入。
 - B2：50 个维度用 joblib 并行（`--workers`），写 `b2_test_idx`、`b2_pred`（75, 50）、`b2_r2`（50）、`b2_params`（JSON）、`b2_log_cols`（JSON，每维入选的对数列个数）。
+- `chemstyle` 作为 §5.2 的预设回退模型，另生成交付汇总：`p_chemstyle.mean(0)` 为 `chemstyle_final_p`；据此计算 `chemstyle_final_G_hat`、`chemstyle_final_lo`、`chemstyle_final_hi`；`chemstyle_final_G_hat_Q` 为 5 次 `grade_chemstyle_quant` 的中位数；`chemstyle_final_mu_hat` 为 5 次 `oof_chemstyle` 的均值。此汇总只供 W8 在 `success=false` 时选择，不替代 Q1 的主模型评价或 Q3 化学模型。
 - 输出 `PROCESSED_DIR/q1_baselines.npz`，键：
   - 对每个模型 `m`：`oof_<m>`（5, 250, 50）、`inner_<m>`（5, 5, 250, 50）、`chosen_<m>`（JSON，键 `r_k_组名`；b0、b1 为空对象）、`p_<m>`（5, 250, 50, 7）、`grade_<m>_<rule>`（5, 250, 50），`rule` 取 `RULES` 全部六项；
-  - `b2_*`、`checks`（JSON 列表）、`seed`、`meta`。
+  - `chemstyle_final_p`（250, 50, 7）、`chemstyle_final_G_hat`、`chemstyle_final_G_hat_Q`、`chemstyle_final_lo`、`chemstyle_final_hi`、`chemstyle_final_mu_hat`（均为 250×50）；`b2_*`、`checks`（JSON 列表）、`seed`、`meta`。
 - 任一 `checks` 项不通过时仍写出 npz，随后以非零退出码结束并在终端列出失败项。
 
 ## 任务 3：`code/tests/test_q1_baselines.py`
@@ -153,5 +153,41 @@ B2 的差距超过 0.03 时，`passed=false` 并照实回报，不为逼近 0.18
 - 不得只取第 0 次重复，也不得只用四舍五入离散。
 - B2 的目标不得改用 x̄；B2 不进入任何等级比较。
 
+## 通用约定
+
+执行顺序：W1 → W2 → W3 → W4 与 W5（可并行）→ W6 → W7 → W8；W9（OAV，可选）在 W2 之后随时可做。每个工单单独领取、单独验收。
+
+### 方法论中已定的决定
+
+- OAV 类别名单见 `model/q1_methodology.md` §3.2；B2 的设定与网格见 §5.3；正文报告啤酒的选取规则见 §5.2。这些不在工单中另行决定，工单与方法论冲突时以方法论为准，并在回报中写明。
+- 敏感性对照臂和 K2 沿用主运行在各外层折、各维度组选定的超参数，不单独做嵌套 CV。
+- 5 次重复先平均 `p` 再取中位数；`G_hat_Q` 取 5 次分位数切点等级的中位数。
+
+### 运行环境
+
+- 正式运行用 `PY=/e/anaconda3/python.exe`：Python 3.13.9、scikit-learn 1.7.2、numpy 2.3.5、pandas 2.3.3，已装 pytest、black、ruff。`E:/anaconda3/envs/mathorcup`（scikit-learn 1.9.1）和 PATH 上默认的 `python`（3.14、scikit-learn 1.9.0、无 pytest）不用于正式运行。
+- 每个求解脚本开头调用 `require_sklearn('1.7.2')`，版本不符即退出；`meta` 记录实际版本。
+- `HistGradientBoostingRegressor` 在 `warm_start` 下，`max_iter` 取 100、200、400 与分别拟合的结果一致（本机核对，最大差 0.0）。一次拟合到 400 轮约 1 秒（单线程）。
+- Q1 范围（black、ruff 只检查这些文件，不动 Q2、Q3 代码）：`code/src/q1/`、`code/scripts/solve_q1_*.py`、`code/scripts/export_q1_*.py`、`code/scripts/fig_q1_*.py`（不含 `fig_q1_methodology_flowchart.py`）、`code/scripts/tab_q1_*.py`、`code/tests/`。
+- 不要求逐元素复现预运行。完整执行实验，各项数值与方法论中的预运行数字在工单给定容差内一致即可。
+
+### 执行规则
+
+1. 一次只领一个工单；领取时把 `status` 改为 `ack`。
+2. 只创建或修改本工单列出的文件。不得新建 `final_*`、`fix_*`、`gen_*`、`patch_*`、`perfect_*` 一类补丁脚本；需要改动时修改原文件。
+3. 代码中不得写入任何结果数值，包括指标、MAE、R²、状态字符串和 `checks` 的布尔值。输出的每个数由本次运行算出。`checks` 为列表，每项含 `name`、`observed`、`expected`、`tol`、`passed`，`passed` 由代码比较得出。
+4. 预运行数值仅作回归核对。超出容差时写明观测值与预期值，不修改方法或容差；偏差超过容差 3 倍时自动开 `review/` 线程并附复现材料，但仅数值偏差不阻断当前任务或独立下游任务。只有方法预先定义的结构不变量失败、产物不完整或方法无法解释的实质偏离，才暂停依赖该产物的任务并在对应线程定位问题。
+5. 不吞异常：不用 `try/except` 返回 0 或 NaN 代替失败；文件缺失即抛错退出。指标确实不适用时写 NaN，并在同一输出中写原因字符串。
+6. `code/src/q1/` 不得有 `__main__`，导入时不得读写文件、建目录或绘图。目录由脚本调用 `paths.ensure_dirs()` 创建。
+7. 求解脚本不绘图，绘图脚本不求解；绘图脚本只读 `code/data/processed/q1/`。
+8. 先写 pytest 再写实现。测试放 `code/tests/`，秒级完成。
+9. 每个求解脚本接受 `--smoke`：1 次重复、2 个外层折、bootstrap 20 次，输出写入 `code/data/processed/q1/_smoke/`。冒烟和测试通过后才启动正式运行。
+10. 耗时任务按单元把中间结果写入 `code/data/processed/q1/_chunks/<任务名>/<单元>.npz`；已存在的单元跳过；最终 npz 由中间文件合并，合并前断言单元个数。`_smoke/` 与 `_chunks/` 已加入 `.gitignore`（W1 任务 0.7）。
+11. 并行：`OMP_NUM_THREADS`、`OPENBLAS_NUM_THREADS`、`MKL_NUM_THREADS` 设为 1；用 joblib 进程池，进程数不超过 8，并行只在外层折、重复或维度组上展开。
+12. 种子：`SEED = 0`。外层第 r 次重复（r=0..4）用 `SEED + r`，内层用 `SEED + 100 + r`；树模型 `random_state=SEED`；bootstrap 用 `np.random.default_rng(SEED)`，2,000 次；每个 npz 存 `seed`。
+13. 格式：`PY -m black --check` 与 `PY -m ruff check` 对 Q1 范围通过（配置见 W1 任务 0.5）。git commit 须先征得用户同意。
+14. 卡住时，在回报中写「卡点」：文件、命令、报错全文、已尝试的做法。不绕过、不降级、不写占位结果。
+15. 回报格式：运行命令、耗时、产物路径与 SHA-256 前 12 位、验收项逐条的观测值与通过状态、偏离工单之处。
+
 ## 处理结果
-<!-- [PLACEHOLDER] | Await: coding 回复 ack 并按索引的回报格式逐项回报 -->
+<!-- [PLACEHOLDER] | Await: coding 回复 ack 并按「通用约定」第 15 条的格式逐项回报 -->

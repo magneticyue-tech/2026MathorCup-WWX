@@ -17,7 +17,6 @@ refs:
 
 1. W4 的前置条件全部满足，且 W4 的 `q1_bridge.py` 通过验收。
 2. W5a 已 resolved，`q3_transfer_chem.npz` 存在。
-3. Modeling 已确认索引线程待决策第 1 项，方法论 §5.2、§5.5、§6.4 已改写为 Q1 的 x̄ 口径。
 
 ## 问题
 
@@ -26,7 +25,7 @@ Q3 缺少感官层路径搜索、α*、α_fit、同约束对照（T4、T5、T2�
 
 ## 背景 / 复现
 
-读方法论 §5.2、§5.3 末段、§5.5–§5.7、§6.4。参考实现为预检查 7，第 466–540 行（感官层）与第 488–496 行（判别器与马氏距离）；预检查的感官基准用重构输入，且 grade_cont 是 z 线性等级，均不得沿用。
+读方法论 §5.2、§5.3 末段、§5.5–§5.7、§6.4。感官主约束比较 Q1 预测分布中位等级；`mu_cont` 敏感性规则直接比较 0–6 分连续预测 μ̂，不使用附件 4 的 z 线性换算。参考实现为预检查 7，第 466–540 行（感官层）与第 488–496 行（判别器与马氏距离）；预检查的感官基准用重构输入，不得沿用。
 本工单用 W5a 的 `defects.py`、`transfer.py`，用 W4 的 `q1_bridge.py`。全数据生成器配置与 W5a 的 `--config final` 相同。
 
 ## 文件与函数
@@ -79,7 +78,7 @@ Q3 缺少感官层路径搜索、α*、α_fit、同约束对照（T4、T5、T2�
 - `q3_transfer_defects.csv`：每款 × 9 个化学缺陷列，含迁移前后取值、OAV（无阈值为 NaN）、上界 b、是否有效约束、是否源缺失；每款 × 6 个感官维度，含迁移前后等级与原尺度复查结果。
 - `q3_transfer_top_changes.csv`：每款 |u*_j − u_bj| / sqrt(C_jj) 的前 15 个，附 Q2 模块号。
 - `q3_transfer_portraits.csv`：每款迁移前、迁移后、目标风格真实啤酒（Q1 `oof_mu` 对 5 次重复取平均后取目标风格啤酒的中位数）三组 50 维画像。
-- `q3_transfer_pairs.csv`：462 行，列含 `src`、`tgt`、`n_src`、`alpha_star` 的均值与四分位、`frac_alpha1`、`frac_alpha0`、`frac_t0_chem_viol`、`frac_t0_sens_viol`、`p_main_median`、`p_t4_median`、各 category 比例、`n_src_missing_defect`。
+- `q3_transfer_pairs.csv`：462 行，每个有序源风格/目标风格一行且 `(src, tgt)` 唯一，`src != tgt`。列含 `src`、`tgt`、`n_src`、`alpha_star_mean`、`alpha_star_q25`、`alpha_star_q75`、`frac_alpha1`、`frac_alpha0`、`frac_t0_chem_viol`、`frac_t0_sens_viol`、`p_main_median`、`p_t4_median`、`frac_ref`、`frac_improved`、`frac_unchanged`、`frac_no_improve`、`n_src_missing_defect`。四个 `frac_*` 结论列依次对应方法论 §6.4 的“达到参照范围”“改善”“保持原谱”“未改善”，按该节的先后顺序判定，逐对四列之和为 1；这些列供 W6 的论文汇总表使用。
 另报：两层违约率，按全部啤酒与只按化学层可完全判定的啤酒（不含源缺失缺陷单元格）分别计算（Pils/Lager → Tripel 为 9/11 可完全判定）；感官基准与 Q1 对原输入预测等级不同的啤酒数。
 
 ## 验收标准
