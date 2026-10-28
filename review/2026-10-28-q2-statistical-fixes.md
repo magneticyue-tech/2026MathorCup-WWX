@@ -2,7 +2,7 @@
 id: 2026-10-28-q2-statistical-fixes
 from: modeling
 to: coding
-status: open
+status: ack
 severity: major
 refs:
   - review/2026-10-28-q2-complete-run.md
@@ -60,4 +60,13 @@ refs:
 
 ## 处理结果
 
-待 Coding 完成后填写。
+- 完成状态：完成，小样本验收通过（Coding，2026-10-29）。
+- 修改文件：`code/src/q2/config.py`、`data.py`、`full_controls.py`、`rationality.py`、`simulation.py`、`advanced_audits.py`、`check_attachment6.py`；新增 `core.py`、`labels.py`。
+- M3 参数来源：`code/data/processed/q1/q1_main_oof.npz` 的 `chosen_params`（键 `r_k_组`，25 外层折 × 6 组，含 `mono`）；外层划分为 `src.q1.splits.outer_splits(date_group, style, 5, 5, seed=0)`，与 `fold_id` 逐折一致，各折训练/测试品评团不相交；单调约束用 `src.q1.features.monotone_cst`。特征为 225 个候选原值、训练折列均值填充；目标为附件 4 z 的标准化秩；置换重要度 `n_repeats=5`，`random_state=SEED+10r+k`。已移除 `KFold`、Q2 自建网格与三折内层搜索。
+- 风格内区间：品评团簇 bootstrap，与主稳定性同一组索引（`core.bootstrap_indices`，SEED=0）；重抽样本内重算秩，对截距 + 21 个风格虚拟变量回归取残差后求相关；2.5%/97.5% 分位；`flag_style_ci0` 来自该区间，`covariation = flag_style_ci0 OR flag_breadth5 OR flag_oav_lt1`（缺失按三值逻辑保留）。`flag_oav_lt1` 改为“全部啤酒 OAV<1”（原代码为比例<1）。
+- 模拟：配置新增 `N_SIMULATION=1000`、`SIM_WEIGHTS`、`SIM_TARGET_R`、`SIM_PANEL_OFFSET_SD=0.15`（同检查 7）；输出 6 行，主方法与 M1 的化合物层、模块层找回率和非植入模块比例，分母为模拟重复数。
+- 审计：`advanced_audits.py` 调用 `check_attachment6.check_att6()`（误差超 1e-12 报错）；零膨胀经 `load_q2_dataset()` 对齐，`at_zero` 由 `src.q1.panels.at_zero_mask` 生成，只检查最终 C 级维度。
+- 其他修正：`rank_standardize` 删除对下限 −1.81781854 的截断（原代码把 15 列共 1,172 个低于该值的单元并列为下限）。
+- 小样本命令与结果：`C:/Users/11600/anaconda3/envs/mathorcup_new/python.exe code/src/q2/full_controls.py --smoke`（A_malt_all，重复 0 的 5 折，参数逐项一致）；风格内区间 20 次 ×2 次运行逐项相同、147 行、区间有序且在 [−1,1]、flag 与端点一致；`simulation.py --smoke` 每设置 10 次、6 行、比例在 [0,1]；`at_zero` 250×50 与样本逐行一致。小样本文件写入 `_smoke/` 后已删除。
+- 剩余问题：`model/q2_methodology.md` §4.6 的区间定义补写未做（用户限定本次只做代码），由 Modeling 补入。
+

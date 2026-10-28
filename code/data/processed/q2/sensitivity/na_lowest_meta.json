@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "arm": "na_lowest",
+  "description": "单化合物 NA 最低位并列",
+  "n_permutation": 1000,
+  "n_bootstrap": 1000,
+  "seed": 0,
+  "tau": 0.6,
+  "na_scheme": "lowest",
+  "n_candidates": 225,
+  "graph_source": "attachment2",
+  "rebuild_graph": true,
+  "boot_unit": "panel",
+  "q_reused_from_baseline": false,
+  "seconds": 26.2
+}

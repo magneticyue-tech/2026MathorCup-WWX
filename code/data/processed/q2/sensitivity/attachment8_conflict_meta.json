@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "arm": "attachment8_conflict",
+  "description": "24 款啤酒 80 个冲突单元格改用附件 8；图由替换后的附件 1 逐对重算",
+  "n_permutation": 1000,
+  "n_bootstrap": 1000,
+  "seed": 0,
+  "tau": 0.6,
+  "na_scheme": "mean",
+  "n_candidates": 225,
+  "graph_source": "recompute",
+  "rebuild_graph": true,
+  "boot_unit": "panel",
+  "q_reused_from_baseline": false,
+  "seconds": 26.3
+}

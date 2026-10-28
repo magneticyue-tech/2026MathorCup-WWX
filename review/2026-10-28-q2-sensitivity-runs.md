@@ -2,7 +2,7 @@
 id: 2026-10-28-q2-sensitivity-runs
 from: modeling
 to: coding
-status: open
+status: ack
 severity: major
 refs:
   - review/2026-10-28-q2-complete-run.md
@@ -46,4 +46,12 @@ refs:
 
 ## 处理结果
 
-待 Coding 按已定口径完成后填写。
+- 完成状态：完成（Coding，2026-10-29）。入口 `code/src/q2/sensitivity_runs.py`，可续跑（`*_meta.json` 记录状态；`--only`、`--force`）。
+- 命令：`C:/Users/11600/anaconda3/envs/mathorcup_new/python.exe code/src/q2/sensitivity_runs.py`；小样本 `--smoke`（10 次置换/bootstrap，两次固定种子运行逐项一致，各方案 49 维）。
+- 种子与次数：SEED=0；各完整方案置换 1000、bootstrap 1000。`boot_fixed_graph` 与主分析同一组品评团索引；`boot_fixed_graph`、`boot_beer_unit` 选择与数据不变，沿用基线置换门槛，CI 与 π^c 由本方案 bootstrap 重算。
+- 结果（49 维平均化合物层/模块层 Jaccard；Top-1 改变数；等级改变）：τ=0.5 1.000/1.000，0，1；τ=0.7 0.990/0.993，0，0；加回综合指标 0.863/0.867，5，1；加回内标 0.984/0.984，0，0；NA 最低位 0.980/0.980，0，0；附件 8 冲突 0.943/0.943，1，0；固定图 1.000/1.000，0，0；单款啤酒 1.000/1.000，0，2；有锚目标 0.692/0.696，6，2。等级改变名单见 `sensitivity_summary.csv` 的 `grade_changed_dims`。
+- 逐对删除：边际 Spearman 与有效样本数见 `pairwise_deletion_marginal.csv`；附件 6 44 行误差 6.66e-16；Top-3、Jaccard、Top-1、等级标为不适用。
+- 实现口径：附件 8 冲突 80 单元/24 款由 `calibrated_discordances.csv` 与附件 8 `Calibrated chemical dataset` 逐值核对后替换，清单 `attachment8_replacements.csv`，该方案图由替换后附件 1 逐对重算。有锚维度：附件 4 50 维中 40 维有团零点，去掉 barnyard 后恰为 39 个交付维度（`anchored_dims.csv`）；团内无零点的啤酒用该维度各团零点中位数（同问题 1 旧版 m 模型的填补），记为实现假设。模块层 Jaccard 统一映射到 τ=0.6 基线模块，基线外的列各自成类。
+- 输出：`code/data/processed/q2/sensitivity/`（`<方案>_table.csv`、`<方案>_compare.csv`、`<方案>_meta.json`、`sensitivity_summary.csv`）。
+- 剩余问题：`model/sensitivity_analysis.md` 的 Q2 行未改（用户限定本次只做代码），数值由 Modeling 从 `sensitivity_summary.csv` 填入。
+

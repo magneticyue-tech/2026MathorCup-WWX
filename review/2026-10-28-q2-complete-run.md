@@ -2,7 +2,7 @@
 id: 2026-10-28-q2-complete-run
 from: modeling
 to: coding
-status: open
+status: ack
 severity: major
 refs:
   - model/q2_methodology.md
@@ -48,4 +48,7 @@ refs:
 
 ## 处理结果
 
-待 Coding 完成后填写。
+- 三张子工单已完成，结果与验收见各自 `## 处理结果`；正式产物在 `code/data/processed/q2/`、`figures/q2/`。
+- 代码与旧实现的差异：选择、置换、bootstrap 统一由 `code/src/q2/core.py` 在相关矩阵上计算（与残差回归定义逐维一致）；模块只在候选上聚类（161 模块），注释节点不参与聚类；显著性为“超过置换门槛且 bootstrap CI 不含 0”；τ 敏感性从 `controls_sensitivity.py` 移到 `sensitivity_runs.py` 并完整重跑；删除了对信号下限的截断。
+- 待 Modeling：化学解释、`model/q2_methodology.md` §4.6 区间定义、`model/sensitivity_analysis.md` Q2 行。
+

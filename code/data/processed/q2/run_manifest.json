@@ -1,0 +1,309 @@
+{
+  "run_time": "2026-10-29T07:11:22",
+  "total_seconds": 1.8,
+  "git_head": "52e2cbe35bcdda0f0bfcfb3001c768a3d8d9bb94",
+  "python": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe",
+  "inputs": {
+    "data/raw/1.csv": "419849227a02e0c792cd405e6865035b7f58af1a92efa362dbb68a7ca2882f69",
+    "data/raw/2.csv": "415709ac10f2f730d31f249bd6ac108250bdfbfd62e0055f4d8db9b41ec9cc4c",
+    "data/raw/4.csv": "43a7b38682ed81ce64d97ebc1874c09dffac023ade4877f34e3c83ef7d42dc1c",
+    "data/raw/6.csv": "a55004fb0390299a5c8089f0c37d3bfc006e7049963c84d7d9652affabe614ae",
+    "data/raw/8.xlsx": "f2316766792111d98281bd35c8403682be8c8069d166a7a7d5887ffbb227700a",
+    "code/data/processed/q1/q1_data.npz": "075ed38c4fe34b3368fa0ac10150fcde4d67746bbda65e9d2b4eddcf727cc43c",
+    "code/data/processed/q1/q1_main_oof.npz": "5e720440a69056d4e8120f728781993676004b729a98a6cf17671b963a8baa3a",
+    "experimentalCode/results/data_audit/chemical_dictionary.csv": "22dad79f0fc3ff29cdc5e1700939db11b9bc40f4630f7159c1e73b5cd113b085",
+    "experimentalCode/results/data_audit/calibrated_discordances.csv": "2c90a2627f97e36025ac750631da16734a81e0af9846a1ad79770b0243d20d8e"
+  },
+  "steps": [
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/data.py",
+      "returncode": 0,
+      "seconds": 0.6
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/graph.py",
+      "returncode": 0,
+      "seconds": 1.4
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/association.py",
+      "returncode": 0,
+      "seconds": 0.9
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/inference.py",
+      "returncode": 0,
+      "seconds": 2.0
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/stability.py",
+      "returncode": 0,
+      "seconds": 29.5
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/rationality.py",
+      "returncode": 0,
+      "seconds": 6.0
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/controls_sensitivity.py",
+      "returncode": 0,
+      "seconds": 0.9
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/full_controls.py",
+      "returncode": 0,
+      "seconds": 287.6
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/simulation.py",
+      "returncode": 0,
+      "seconds": 2.6
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/sensitivity_runs.py",
+      "returncode": 0,
+      "seconds": 249.1
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/check_attachment6.py",
+      "returncode": 0,
+      "seconds": 1.3
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/advanced_audits.py",
+      "returncode": 0,
+      "seconds": 1.6
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/extra_figures.py",
+      "returncode": 0,
+      "seconds": 2.5
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/pipeline_final.py",
+      "returncode": 0,
+      "seconds": 2.1
+    },
+    {
+      "command": "C:\\Users\\11600\\anaconda3\\envs\\mathorcup_new\\python.exe code/src/q2/acceptance.py",
+      "returncode": 0,
+      "seconds": 1.8
+    }
+  ],
+  "seed": 0,
+  "n_bootstrap": 1000,
+  "n_permutation": 1000,
+  "n_simulation": 1000,
+  "tau_main": 0.6,
+  "m3": {
+    "outer_splits": "5x5",
+    "perm_repeats": 5
+  },
+  "sensitivity": {
+    "attachment8_conflict": {
+      "status": "ok",
+      "arm": "attachment8_conflict",
+      "description": "24 款啤酒 80 个冲突单元格改用附件 8；图由替换后的附件 1 逐对重算",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.6,
+      "na_scheme": "mean",
+      "n_candidates": 225,
+      "graph_source": "recompute",
+      "rebuild_graph": true,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": false,
+      "seconds": 26.3
+    },
+    "boot_beer_unit": {
+      "status": "ok",
+      "arm": "boot_beer_unit",
+      "description": "bootstrap 单位改为单款啤酒（250 有放回）",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.6,
+      "na_scheme": "mean",
+      "n_candidates": 225,
+      "graph_source": "attachment2",
+      "rebuild_graph": true,
+      "boot_unit": "beer",
+      "q_reused_from_baseline": true,
+      "seconds": 25.0
+    },
+    "boot_fixed_graph": {
+      "status": "ok",
+      "arm": "boot_fixed_graph",
+      "description": "bootstrap 中固定附件 2 图（与主分析同一组品评团索引）",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.6,
+      "na_scheme": "mean",
+      "n_candidates": 225,
+      "graph_source": "attachment2",
+      "rebuild_graph": false,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": true,
+      "seconds": 4.0
+    },
+    "cand_plus_composites": {
+      "status": "ok",
+      "arm": "cand_plus_composites",
+      "description": "候选加回 5 个综合指标（230）",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.6,
+      "na_scheme": "mean",
+      "n_candidates": 230,
+      "graph_source": "attachment2",
+      "rebuild_graph": true,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": false,
+      "seconds": 30.0
+    },
+    "cand_plus_internal_std": {
+      "status": "ok",
+      "arm": "cand_plus_internal_std",
+      "description": "候选加回内标（226）",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.6,
+      "na_scheme": "mean",
+      "n_candidates": 226,
+      "graph_source": "attachment2",
+      "rebuild_graph": true,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": false,
+      "seconds": 26.3
+    },
+    "na_lowest": {
+      "status": "ok",
+      "arm": "na_lowest",
+      "description": "单化合物 NA 最低位并列",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.6,
+      "na_scheme": "lowest",
+      "n_candidates": 225,
+      "graph_source": "attachment2",
+      "rebuild_graph": true,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": false,
+      "seconds": 26.2
+    },
+    "sensory_anchored": {
+      "status": "ok",
+      "arm": "sensory_anchored",
+      "description": "39 个有锚维度改用 z 减去本团零点（团内无零点用该维度零点中位数）",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.6,
+      "na_scheme": "mean",
+      "n_candidates": 225,
+      "graph_source": "attachment2",
+      "rebuild_graph": true,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": false,
+      "seconds": 26.4
+    },
+    "tau_0.5": {
+      "status": "ok",
+      "arm": "tau_0.5",
+      "description": "模块阈值 τ=0.5",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.5,
+      "na_scheme": "mean",
+      "n_candidates": 225,
+      "graph_source": "attachment2",
+      "rebuild_graph": true,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": false,
+      "seconds": 26.7
+    },
+    "tau_0.7": {
+      "status": "ok",
+      "arm": "tau_0.7",
+      "description": "模块阈值 τ=0.7",
+      "n_permutation": 1000,
+      "n_bootstrap": 1000,
+      "seed": 0,
+      "tau": 0.7,
+      "na_scheme": "mean",
+      "n_candidates": 225,
+      "graph_source": "attachment2",
+      "rebuild_graph": true,
+      "boot_unit": "panel",
+      "q_reused_from_baseline": false,
+      "seconds": 26.4
+    }
+  },
+  "outputs_sha256": {
+    "code/data/processed/q2/acceptance_log.csv": "92e8c81453412e9edb72784afcb84acb3079b9709339d750be0fa4a83c11882e",
+    "code/data/processed/q2/appendix_main_147.csv": "a58f6a0bf56c42e2fd1ceb87ad6484fc8cff18803063a2e7a81a068a44680243",
+    "code/data/processed/q2/controls_sensitivity_results.csv": "8aa899e40d182ba6e6695f5bce438d58aef22e4ca892eb4b33e845b61c05fd34",
+    "code/data/processed/q2/final_top3_with_rationality.csv": "843877c32b4693f937fc3fb25a42e6671035e2dbafdeefa79c381ed1520f9eb0",
+    "code/data/processed/q2/final_top3_with_stability.csv": "c8d19df5bbd91296c9a1b11736e004502d66491b5edad0cbb1f4f5a6a7340afc",
+    "code/data/processed/q2/full_controls_results.csv": "7720d1e8b077bd559ca60627a8379330e0696738897108e8710408717a58cfa2",
+    "code/data/processed/q2/graph_edges.csv": "35dc1b1ed6660ead01356dcf85470732af270279d9422135dd48f702d862b10f",
+    "code/data/processed/q2/graph_modules.csv": "3d6a5cac6d7a4fb659ec04cb179fc1ce8b008c8171d2750c60ac6e283f51fbd7",
+    "code/data/processed/q2/graph_nodes.csv": "83cd422462ba28409876348420c8485e1194689f01f38563a4177a2023d3943b",
+    "code/data/processed/q2/handoff_modeling.md": "d92da60d849baae18304f954774aaa6a5a6205201851d2cf818ccc47440bb172",
+    "code/data/processed/q2/m3_fold_records.csv": "e427d64dcfddbed405ae786b764dfc24dd5070f5194c63f6ad5a18b68cd57603",
+    "code/data/processed/q2/q2_bootstrap_main.npz": "099309b74c669ded652c73ed81c8f8682d3ba7943a19bda1ee2485c13bf560b2",
+    "code/data/processed/q2/q2_m3_importance.npz": "25a945d6a995b51698cae2ae0d207633d2b060c2572a87ff7d9ae7cf2ed2f9a7",
+    "code/data/processed/q2/q2_permutation.npz": "175ff83642b1b2e9b8fb687d2c81aeaa1b7db792807024bdfc82b9fd5d3cf7e9",
+    "code/data/processed/q2/q2_selection.npz": "ca4b7eff4957db2a13fd4862254a9075145bad51e7e157708f0a5b58b0dca1ca",
+    "code/data/processed/q2/run_log.txt": "b95d22be900f6392af45da2cf2d74f79cdc37fe6b2e4025613bf61b6486d99aa",
+    "code/data/processed/q2/sensitivity/anchored_dims.csv": "0d5a550c65e30f30bf4686ddd8035929d2c8731e3508ed56f198208a5c181dff",
+    "code/data/processed/q2/sensitivity/attachment8_conflict_compare.csv": "aac7d27773535bfac5471d04a88954bb63ab07d49c2d63e57e6de8cf052924fa",
+    "code/data/processed/q2/sensitivity/attachment8_conflict_meta.json": "87eeae60ddb8d6dc182d7f21353880654f89bd71e48b47d95804040ddf82d142",
+    "code/data/processed/q2/sensitivity/attachment8_conflict_table.csv": "dade6777f9dab1400c0858d30eb2487cb26fba3fffbf51bbfa2838f074502de1",
+    "code/data/processed/q2/sensitivity/attachment8_replacements.csv": "c446efe1fa531b8e675dcd478e832b24067a5aceb0ae09cc3716a7fb4ccc409b",
+    "code/data/processed/q2/sensitivity/baseline_table.csv": "d4d0fc2bcc2ad41f9020aca88adad41dc2440d442bdfab2708508ff00cd43e04",
+    "code/data/processed/q2/sensitivity/boot_beer_unit_compare.csv": "e7f5848c05fb1029d47b1801c954c79d3d9736620c757a57248ff497fdde898c",
+    "code/data/processed/q2/sensitivity/boot_beer_unit_meta.json": "fb67d25c292cc376b4f9a0377fb0a57f92032fbef5ef6f5753169ecea17f3e70",
+    "code/data/processed/q2/sensitivity/boot_beer_unit_table.csv": "32242af5abcc441d40f1c755fbe559918413a5ced9bbc6c4de2ff548f7b6f809",
+    "code/data/processed/q2/sensitivity/boot_fixed_graph_compare.csv": "e60ec8165bf24b2d8bf84695e39fcd7ba5a312f79f98f4492bb202f060c6b766",
+    "code/data/processed/q2/sensitivity/boot_fixed_graph_meta.json": "b896deabd0cf1eea721d6db5ae2565f38d2dd3fbe55e4e302a99ad9b0189950a",
+    "code/data/processed/q2/sensitivity/boot_fixed_graph_table.csv": "088d2f31e510ddc6d9638dba8b9d5cbb28ec96c8df61d49030cc204997c5ba36",
+    "code/data/processed/q2/sensitivity/cand_plus_composites_compare.csv": "6b385bd08f21f36b1f2d40e045fc7538405d0769e59e923c677b5f04cd724e99",
+    "code/data/processed/q2/sensitivity/cand_plus_composites_meta.json": "934d3cbee265f7e724ee44f2ba2865951a7f6be26dfe7abf54458ebf27eb862d",
+    "code/data/processed/q2/sensitivity/cand_plus_composites_table.csv": "e839d0926aa8885cb892f61914c48e738ce53b5c2e3205960e69bbba1fef7fc1",
+    "code/data/processed/q2/sensitivity/cand_plus_internal_std_compare.csv": "5375a81ee06cce9ce5f658560f514457fe6c71b1152c4837194cca3fc56579b3",
+    "code/data/processed/q2/sensitivity/cand_plus_internal_std_meta.json": "025c9e15f2dcd3a519d831a4bb17b51204fb73e892e2bc3b7d7112d4120937f5",
+    "code/data/processed/q2/sensitivity/cand_plus_internal_std_table.csv": "f3043b3f5ac3c989afd0f8e5b74298cfcd892bbb8b6f7bb7dd3b6bf4856ed10d",
+    "code/data/processed/q2/sensitivity/na_lowest_compare.csv": "9b792ba1c82c3e52327c956e9a340a4eaadeb66cf81f33ef8359efa39059bf8c",
+    "code/data/processed/q2/sensitivity/na_lowest_meta.json": "c35915ad597231e50a6f927d7f119785d20bd5f22081684d3707d484f401207f",
+    "code/data/processed/q2/sensitivity/na_lowest_table.csv": "5c087108181ae1378bfde1d078b9dd56915f8f40352e7275743355f0803a3e99",
+    "code/data/processed/q2/sensitivity/pairwise_deletion_marginal.csv": "dce32288bf78933ec3c4637d9f2f09a392bb0048155aa21d3054be63da4d3858",
+    "code/data/processed/q2/sensitivity/sensitivity_summary.csv": "513045a4e57b68890f24f99738c75400094cdb881c13925020a56dafa79de87a",
+    "code/data/processed/q2/sensitivity/sensory_anchored_compare.csv": "6b49cf9d54b2c6c6d661049e733c79b213e417d59c3d41d1579f4d4d849ba156",
+    "code/data/processed/q2/sensitivity/sensory_anchored_meta.json": "46ec1757543a39481c5e4371634d582167c21cc8249e8d0161d5d46bf3830856",
+    "code/data/processed/q2/sensitivity/sensory_anchored_table.csv": "42de26c7db335c322f1c7236c66c239cbf0f8924a114642e493c6593e971f762",
+    "code/data/processed/q2/sensitivity/tau_0.5_compare.csv": "f5b01c3f60a2f0d7601f8b5196b5209438fede3fc0ae2e719fdf7ab754b93fc3",
+    "code/data/processed/q2/sensitivity/tau_0.5_meta.json": "703c0d2fa6d21958c692f00647a55bcc33f7b1fee49d008495da134f3706d36c",
+    "code/data/processed/q2/sensitivity/tau_0.5_table.csv": "a0024af9052fb395027aed45da0d847bf24e6bda36c23306b710a80773aa08e4",
+    "code/data/processed/q2/sensitivity/tau_0.7_compare.csv": "0abcfa0b3b4fb4e89d95b18b340e956daa555bbe8a9d5de9c14e8c648488de62",
+    "code/data/processed/q2/sensitivity/tau_0.7_meta.json": "7cf0098f113f7df8dbb20d9cd73f77bebc990f503960c3f4eea1407bf408156d",
+    "code/data/processed/q2/sensitivity/tau_0.7_table.csv": "011970d599cb2e463bb389a657b2532f8580cb981aec0af6040bb212ef824d11",
+    "code/data/processed/q2/simulation_recovery_results.csv": "8dff3928219d21658d560476f99c2dd127e191d247b2fa57c9171a707f1b6908",
+    "code/data/processed/q2/top3_results.csv": "86648f92fe5cc93f7d3fa48d69b48c59b800c7c42f01f19f3bfad86516d259b5",
+    "code/data/processed/q2/top3_results_with_sig.csv": "a4583c83d51a7b8751d4f5b61a65995f1caaf7b917fce6682c66c0b6d275b4ef",
+    "code/data/processed/q2/zero_inflation_c_grade.csv": "fd78c950fdc52809cf5766924422d56975fa0aa1f34f06f1ac7e546ce121ca60",
+    "figures/q2/method_comparison.png": "c38857e58df73446d395a8937e8136568df204ca6465db3e00fb610fdc7a544e",
+    "figures/q2/module_sizes.png": "cdfde9b60fcb598aaa0339280e489a18ff06c8d79cd6bd6851cbf909259b84bb",
+    "figures/q2/network_graph.png": "5428a49b8fb4aca3ffa1d7bcc767b7e968aa7b799cecd5f4637829ff683fa625",
+    "figures/q2/stability_pi_c_hist.png": "84e2cfc701626ddb878ed60274d54c5c0c297d272eee8c35bd7da2a76804262f",
+    "figures/q2/top1_heatmap.png": "8ffb60f93cce4179bb133261be63c94169d2353e967eb6c1f1fc055352d4210a"
+  },
+  "console_log": "code/data/processed/q2/run_log.txt"
+}

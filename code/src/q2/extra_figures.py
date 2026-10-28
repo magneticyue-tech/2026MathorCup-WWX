@@ -1,143 +1,134 @@
 # code/src/q2/extra_figures.py
-"""Q2 辅助图表生成：网络图、方法对比图、稳定性分布图、模块大小图。"""
+"""Q2 图：共表达网络（§3.4）、方法对比、π^c 分布、模块大小。只读 code/data/processed/q2 的结果。"""
 import sys
 from pathlib import Path
+
 CURRENT_DIR = Path(__file__).resolve().parent
 if str(CURRENT_DIR) not in sys.path:
     sys.path.insert(0, str(CURRENT_DIR))
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import networkx as nx
-from sklearn.manifold import MDS
-import config as C
+import matplotlib
 
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'Arial Unicode MS']
-plt.rcParams['axes.unicode_minus'] = False
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+from scipy.spatial import ConvexHull  # noqa: E402
+from sklearn.manifold import MDS  # noqa: E402
+
+import config as C  # noqa: E402
+
+plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei", "Arial Unicode MS", "DejaVu Sans"]
+plt.rcParams["axes.unicode_minus"] = False
+
+ORIGIN_COLORS = {
+    "Yeast": "#2a78b5", "Hops": "#3a9a4a", "Malt": "#c98a1b", "Spices": "#b5465a",
+    "Others": "#7d6aa8", "Wild flora": "#5aa5a0", "Internal standard solution": "#222222",
+}
+
 
 def plot_network_graph():
-    print("正在绘制共表达网络图...")
-    df_nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
-    df_edges = pd.read_csv(C.Q2_DIR / "graph_edges.csv")
-    
-    G = nx.Graph()
-    for _, row in df_nodes.iterrows():
-        G.add_node(row["node"], module=row["module_id"], k_in=row["k_in"], is_cand=row["is_candidate"])
-    for _, row in df_edges.iterrows():
-        G.add_edge(row["source"], row["target"], weight=row["weight_abs"])
+    nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
+    edges = pd.read_csv(C.Q2_DIR / "graph_edges.csv")
+    corr = pd.read_csv(C.CORR_PATH, index_col=0)
+    chem_cols = [c for c in pd.read_csv(C.CHEM_PATH, nrows=1).columns if c not in ("beer", "beer_id", "tasting_category_fine")]
+    corr = pd.DataFrame(corr.values, index=chem_cols, columns=chem_cols).loc[nodes["node"], nodes["node"]]
+    D = 1.0 - corr.abs().to_numpy()
+    D = (D + D.T) / 2
+    np.fill_diagonal(D, 0.0)
+    xy = MDS(n_components=2, dissimilarity="precomputed", random_state=C.SEED, n_init=4,
+             normalized_stress="auto").fit_transform(D)
+    pos = dict(zip(nodes["node"], xy))
 
-    # 提取最大连通子图计算 MDS
-    largest_cc = max(nx.connected_components(G), key=len)
-    G_sub = G.subgraph(largest_cc)
-    nodes = list(G_sub.nodes())
-    n = len(nodes)
-    dist_matrix = np.zeros((n, n))
-    for i in range(n):
-        lengths = nx.single_source_dijkstra_path_length(G_sub, nodes[i], weight=lambda u, v, d: 1.0 - d['weight'] + 0.01)
-        for j in range(n):
-            dist_matrix[i, j] = lengths.get(nodes[j], 2.0)
-            
-    mds = MDS(n_components=2, dissimilarity="precomputed", random_state=C.SEED, n_init=1, max_iter=100)
-    coords = mds.fit_transform(dist_matrix)
-    pos = {node: coords[i] for i, node in enumerate(nodes)}
-    for node in G.nodes():
-        if node not in pos: pos[node] = np.random.randn(2) * 2
+    fig, ax = plt.subplots(figsize=(12, 10))
+    for e in edges.itertuples():
+        (x1, y1), (x2, y2) = pos[e.source], pos[e.target]
+        ax.plot([x1, x2], [y1, y2], color="#999999", lw=0.4 + 1.2 * (e.weight_abs - 0.6), alpha=0.5,
+                ls="-" if e.rho >= 0 else "--", zorder=1)
+    for m, g in nodes[nodes["is_candidate"]].groupby("module_id"):
+        if len(g) >= 3:
+            pts = np.array([pos[n] for n in g["node"]])
+            hull = ConvexHull(pts)
+            poly = pts[hull.vertices]
+            ax.fill(poly[:, 0], poly[:, 1], color="#cccccc", alpha=0.25, zorder=0)
+        elif len(g) == 2:
+            pts = np.array([pos[n] for n in g["node"]])
+            ax.plot(pts[:, 0], pts[:, 1], color="#bbbbbb", lw=4, alpha=0.4, zorder=0)
+    for origin, g in nodes.groupby(nodes["origin_paper"].fillna("NA")):
+        pts = np.array([pos[n] for n in g["node"]])
+        ann = g["is_annotation"].to_numpy()
+        col = ORIGIN_COLORS.get(origin, "#aaaaaa")
+        ax.scatter(pts[~ann, 0], pts[~ann, 1], s=18, color=col, label=origin, zorder=2)
+        if ann.any():
+            ax.scatter(pts[ann, 0], pts[ann, 1], s=40, facecolor="white", edgecolor=col, marker="s", zorder=3)
+    mods = pd.read_csv(C.Q2_DIR / "graph_modules.csv")
+    for h in mods.loc[mods["size"] >= 3, "hub"]:
+        x, y = pos[h]
+        ax.text(x, y, h, fontsize=7, ha="left", va="bottom", zorder=4)
+    ax.scatter([], [], s=40, facecolor="white", edgecolor="#555555", marker="s", label="注释节点")
+    ax.legend(loc="upper right", fontsize=8, frameon=False)
+    ax.set_title("化合物共表达图（|ρ|≥0.6 的边；灰色区域为多成员模块；MDS 基于 1−|ρ|）")
+    ax.set_axis_off()
+    fig.tight_layout()
+    fig.savefig(C.FIGURES / "network_graph.png", dpi=300)
+    plt.close(fig)
 
-    plt.figure(figsize=(14, 10))
-    modules = df_nodes["module_id"].unique()
-    cmap = plt.get_cmap("tab20", len(modules))
-    module_colors = {m: cmap(i) for i, m in enumerate(modules)}
-    
-    nx.draw_networkx_edges(G, pos, alpha=0.1, edge_color='gray')
-    node_colors = [module_colors[G.nodes[node]["module"]] for node in G.nodes()]
-    node_sizes = [50 + G.nodes[node]["k_in"] * 150 for node in G.nodes()]
-    nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_sizes, alpha=0.85, edgecolors='white')
-    
-    # 只给前 10 个 Hub 节点加标签
-    hubs = df_nodes.sort_values("k_in", ascending=False).head(10)["node"].tolist()
-    for node in hubs:
-        x, y = pos[node]
-        plt.text(x, y + 0.1, node, fontsize=9, ha='center', va='bottom',
-                 bbox=dict(facecolor="white", edgecolor="none", alpha=0.8, pad=0.3))
-
-    plt.title(r"Compound Co-expression Network (\(\tau = 0.6\))", fontsize=16)
-    plt.axis("off")
-    plt.tight_layout()
-    plt.savefig(C.FIGURES / "network_graph.png", dpi=300, bbox_inches='tight')
-    plt.close()
 
 def plot_method_jaccard():
-    print("正在绘制方法对比柱状图...")
-    # 读取敏感性分析（M0/M1/tau）和高级控制（M2/M3/风格内）
-    sens_file = C.Q2_DIR / "controls_sensitivity_results.csv"
-    full_file = C.Q2_DIR / "full_controls_results.csv"
-    
-    if not sens_file.exists() or not full_file.exists():
-        print("  ⚠️ 找不到对比结果表，跳过。")
-        return
-        
-    df_sens = pd.read_csv(sens_file)
-    df_full = pd.read_csv(full_file)
-    
-    data = [
-        ("M0 (无图边际)", df_sens["jaccard_M0"].mean()),
-        ("M1 (图约束边际)", df_sens["jaccard_M1"].mean()),
-        ("M2 (ElasticNet)", df_full["jaccard_M2"].mean()),
-        ("M3 (GBM)", df_full["jaccard_M3"].mean()),
-        ("风格内", df_full["jaccard_Within"].mean())
-    ]
-    labels, values = zip(*data)
-    
-    plt.figure(figsize=(8, 5))
-    bars = plt.barh(labels, values, color=['#ff9999','#66b3ff','#99ff99','#ffcc99','#c2c2f0'])
-    
-    for bar in bars:
-        plt.text(bar.get_width() + 0.01, bar.get_y() + bar.get_height()/2, f'{bar.get_width():.3f}', va='center')
-        
-    plt.xlabel("平均 Jaccard 相似度 (与主方法相比)")
-    plt.title("不同对照方法 vs 主方法 (49维平均)")
-    plt.xlim(0, 1.0)
-    plt.tight_layout()
-    plt.savefig(C.FIGURES / "method_comparison.png", dpi=300, bbox_inches='tight')
-    plt.close()
+    full = pd.read_csv(C.Q2_DIR / "full_controls_results.csv")
+    labels = ["M0 无图约束边际", "M1 图约束边际", "M2 ElasticNet", "M3 GBM", "风格内"]
+    keys = ["M0", "M1", "M2", "M3", "Within"]
+    comp = [full[f"jaccard_{k}"].mean() for k in keys]
+    mod = [full[f"jaccard_mod_{k}"].mean() for k in keys]
+    y = np.arange(len(keys))
+    fig, ax = plt.subplots(figsize=(7, 4))
+    ax.barh(y - 0.18, comp, height=0.36, color="#2a78b5", label="化合物层")
+    ax.barh(y + 0.18, mod, height=0.36, color="#9cc3e4", label="模块层")
+    for i, (a, b) in enumerate(zip(comp, mod)):
+        ax.text(a + 0.01, i - 0.18, f"{a:.3f}", va="center", fontsize=8)
+        ax.text(b + 0.01, i + 0.18, f"{b:.3f}", va="center", fontsize=8)
+    ax.set_yticks(y, labels)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 1)
+    ax.set_xlabel("与主方法 Top-3 的 Jaccard（49 维平均）")
+    ax.legend(frameon=False, fontsize=8)
+    fig.tight_layout()
+    fig.savefig(C.FIGURES / "method_comparison.png", dpi=300)
+    plt.close(fig)
+
 
 def plot_stability_hist():
-    print("正在绘制稳定性入选频率分布图...")
     df = pd.read_csv(C.Q2_DIR / "final_top3_with_stability.csv")
-    pi_c_values = df["pi_c"].dropna().values
-    
-    plt.figure(figsize=(8, 5))
-    sns.histplot(pi_c_values, bins=20, kde=True, color="coral")
-    plt.axvline(0.6, color='red', linestyle='--', label='稳定门槛 (0.6)')
-    plt.axvline(1/3, color='orange', linestyle='--', label='中等门槛 (1/3)')
-    plt.title("Top-3 化合物 Bootstrap 入选频率 (pi_c) 分布")
-    plt.xlabel("入选频率 (pi_c)")
-    plt.ylabel("频数")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(C.FIGURES / "stability_pi_c_hist.png", dpi=300, bbox_inches='tight')
-    plt.close()
+    fig, ax = plt.subplots(figsize=(7, 4))
+    bins = np.linspace(0, 1, 21)
+    for k, col in zip((1, 2, 3), ("#2a78b5", "#3a9a4a", "#c98a1b")):
+        ax.hist(df.loc[df["rank"] == k, "pi_c"], bins=bins, alpha=0.6, color=col, label=f"第 {k} 位")
+    ax.axvline(C.STABLE_THRESHOLD, color="k", ls="--", lw=1)
+    ax.axvline(C.MEDIUM_THRESHOLD, color="k", ls=":", lw=1)
+    ax.set_xlabel("化合物层入选频率 π^c（品评团簇 bootstrap，B=1000）")
+    ax.set_ylabel("项数")
+    ax.legend(frameon=False, fontsize=8)
+    fig.tight_layout()
+    fig.savefig(C.FIGURES / "stability_pi_c_hist.png", dpi=300)
+    plt.close(fig)
+
 
 def plot_module_sizes():
-    print("正在绘制模块大小分布图...")
-    df_modules = pd.read_csv(C.Q2_DIR / "graph_modules.csv")
-    sizes = df_modules["size"].values
-    
-    plt.figure(figsize=(8, 5))
-    sns.histplot(sizes, bins=range(1, max(sizes)+2), discrete=True, color="skyblue")
-    plt.title("模块大小分布 (τ=0.6)")
-    plt.xlabel("模块内化合物数量")
-    plt.ylabel("模块个数")
-    plt.tight_layout()
-    plt.savefig(C.FIGURES / "module_sizes.png", dpi=300, bbox_inches='tight')
-    plt.close()
+    sizes = pd.read_csv(C.Q2_DIR / "graph_modules.csv")["size"]
+    fig, ax = plt.subplots(figsize=(6, 4))
+    vc = sizes.value_counts().sort_index()
+    ax.bar(vc.index, vc.values, color="#2a78b5")
+    ax.set_yscale("log")
+    ax.set_xlabel("模块成员数（τ=0.6）")
+    ax.set_ylabel("模块数")
+    fig.tight_layout()
+    fig.savefig(C.FIGURES / "module_sizes.png", dpi=300)
+    plt.close(fig)
+
 
 if __name__ == "__main__":
     plot_network_graph()
     plot_method_jaccard()
     plot_stability_hist()
     plot_module_sizes()
-    print("✅ 所有辅助图表已保存至 figures/q2/")
+    print("图已更新：network_graph、method_comparison、stability_pi_c_hist、module_sizes")

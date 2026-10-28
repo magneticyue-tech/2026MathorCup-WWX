@@ -2,7 +2,7 @@
 id: 2026-10-28-q2-final-run-acceptance
 from: modeling
 to: coding
-status: open
+status: ack
 severity: major
 refs:
   - review/2026-10-28-q2-complete-run.md
@@ -59,4 +59,11 @@ refs:
 
 ## 处理结果
 
-待 Coding 完成后填写。
+- 完成状态：正式运行完成，结构化验收全部通过（`code/data/processed/q2/acceptance_log.csv`）。
+- 命令：`C:/Users/11600/anaconda3/envs/mathorcup_new/python.exe code/src/q2/run_all.py`（按本工单 1–12 步顺序逐条运行并检查返回码，末步新增 `acceptance.py`）；首次运行 `acceptance.py` 因数据类型错误失败，修复后 `run_all.py --start acceptance.py` 重跑。控制台日志 `run_log.txt`，清单 `run_manifest.json`（时间、HEAD、输入与输出 SHA-256、命令、seed、次数、敏感性设置）。
+- 次数：SEED=0；置换 1000；主 bootstrap 1000（63 个品评团）；模拟每设置 1000；M3 25 外层折。
+- 验收：三张主表各 147 行/49 维；最终表 147 条 main + 24 条 M3（= Top-1 不同的维度数）；图 231 节点、候选间边 245、注释相关边 21；附件 2 误差 1.05e-15、附件 6 误差 6.66e-16；等级独立复算一致，A 22、B 25、C 2（A_esters_flower、t2n）；附件 8 标签与字典 1,386 单元一致；图表已按本次结果重绘。
+- 主要数值：q_d 中位 0.228；超门槛 47/37/20；π^c 按位置 0.57/0.36/0.19；J_boot 0.269；稳定/中等/不稳定 29/43/75；共变标记 80/147；模块可分假设被推翻 0 项。对照 Jaccard（化合物/模块/Top-1 相同比例）：M0 0.327/0.390/1.00，M1 0.371/0.390/1.00，M2 0.506/0.512/0.63，M3 0.294/0.300/0.51，风格内 0.290/0.316/0.35。
+- 移交：`appendix_main_147.csv`（六组、147 行）、`handoff_modeling.md`（A/B/C、每维 Top-3、不显著/低稳定项、M3 差异、共变标记、阈值证据、同模块成员、同 barnyard 标注）；`interpretation` 留空。
+- 剩余问题：化学解释与 `model/` 文档更新待 Modeling；本线程待其完成后改为 resolved。
+
