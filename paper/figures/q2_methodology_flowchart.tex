@@ -6,51 +6,51 @@
 \input{flowchart_style.tex}
 \begin{document}
 \begin{tikzpicture}[fc]
-\path[use as bounding box] (0,0) rectangle (158,158);
-\sidelabel{0}{22}{输\\入\\与\\定\\义}
+\path[use as bounding box] (0,0) rectangle (158,165);
+\sidelabel{0}{21}{输\\入\\与\\定\\义}
 \node[io,text width=69.5mm,h=18mm] (chem) at (9,0) {\bt{化学输入}%
 250款啤酒；附件1的231列中排除5个综合指标和1个实验内标，留下225个单体化合物\\
 附件2提供231列之间的Spearman秩相关矩阵};
 \node[io,text width=69.5mm,h=18mm] (sens) at (85.5,0) {\bt{感官目标与“关键”的含义}%
 逐款原始品评小组均分转为秩；49个可归因维度\\
 “关键”指控制已选化合物后的较强关联，不等于因果作用};
-\sidelabel{25}{69}{筛\\选\\模\\型}
-\node[box,text width=146mm,h=13mm] (graph) at (9,25) {\bt{构建化合物共表达图与模块}%
+\sidelabel{26}{73}{筛\\选\\模\\型}
+\node[box,text width=146mm,h=13mm] (graph) at (9,26) {\bt{构建化合物共表达图与模块}%
 用相关系数绝对值作边权；在$1-|\rho|$距离上层次聚类。阈值$|\rho|=0.6$划分模块，0.5与0.7作敏感性检查。};
 \bus{chem,sens}{graph}{23}{45.25}{121.75}
-\node[box,text width=44mm,h=23mm] (sim) at (9,46) {\bt{选择规则的独立依据}%
+\node[box,text width=44mm,h=23mm] (sim) at (9,47) {\bt{选择规则的独立依据}%
 只用真实化学矩阵植入已知的3个化合物，比较能否找回\\
 避免以感官结果反选规则};
-\node[key,text width=44mm,h=23mm] (select) at (60,46) {\bt{图约束前向选择}%
+\node[key,text width=44mm,h=23mm] (select) at (60,47) {\bt{图约束前向选择}%
 第一位取绝对秩相关最大者\\
 第二、三位取控制已选集合后的绝对秩偏相关最大者\\
 同一模块不重复入选};
-\node[box,text width=44mm,h=23mm] (sig) at (111,46) {\bt{统计证据}%
+\node[box,text width=44mm,h=23mm] (sig) at (111,47) {\bt{统计证据}%
 置换检验评估最大关联；后两位使用保留已选变量作用的置换\\
 日期组重抽的关联区间须排除零};
 \bus{graph}{sim,select,sig}{44}{32.5}{134.5}
-\sidelabel{74}{100}{稳\\定\\性}
-\node[box,text width=69.5mm,h=22mm] (boot) at (9,74) {\bt{重复抽样}%
+\sidelabel{80}{110}{稳\\定\\性}
+\node[box,text width=69.5mm,h=24mm] (boot) at (9,80) {\bt{重复抽样}%
 25个品评日期组有放回重抽1000次；每次重建图和模块，再选前三个\\
 记录逐化合物和逐模块的入选频率};
-\node[box,text width=69.5mm,h=22mm] (compare) at (85.5,74) {\bt{替代方法对照}%
+\node[box,text width=69.5mm,h=24mm] (compare) at (85.5,80) {\bt{替代方法对照}%
 无图约束、单次边际选择、弹性网络和梯度提升树置换重要度\\
 用Jaccard交并比衡量前三个集合的一致性};
-\bus{sim,select,sig}{boot,compare}{72}{45.25}{121.75}
-\sidelabel{106}{158}{解\\释\\与\\交\\付}
-\node[box,text width=44mm,h=25mm] (grade) at (9,108) {\bt{维度证据分级}%
+\bus{sim,select,sig}{boot,compare}{77}{32.5}{134.5}
+\sidelabel{114}{165}{解\\释\\与\\交\\付}
+\node[box,text width=44mm,h=25mm] (grade) at (9,114) {\bt{维度证据分级}%
 显著且第一位入选频率至少0.6：较强证据\\
 仅显著：有限证据\\
 其余：未找到可靠关键化合物};
-\node[box,text width=44mm,h=25mm] (chemval) at (60,108) {\bt{化学合理性}%
+\node[box,text width=44mm,h=25mm] (chemval) at (60,114) {\bt{化学合理性}%
 附件8原始来源和缺陷标签；风格内关联与气味阈值\\
 解释标为事后；作者加标实验作独立核验};
-\node[io,text width=44mm,h=25mm] (out) at (111,108) {\bt{输出}%
+\node[io,text width=44mm,h=25mm] (out) at (111,114) {\bt{输出}%
 49个维度各列3个候选、关联强度、区间、入选频率及证据等级\\
 化合物模块供问题三使用};
-\bus{boot,compare}{grade,chemval,out}{105}{32.5}{134.5}
-\node[box,text width=146mm,h=13mm] (boundary) at (9,140) {\bt{结论边界}%
+\bus{boot,compare}{grade,chemval,out}{110}{32.5}{134.5}
+\node[box,text width=146mm,h=13mm] (boundary) at (9,149) {\bt{结论边界}%
 共表达和感官秩关联只能支持“共同变化”；第2、3位不稳定时仍按题意列出，但须标明证据不足。};
-\bus{grade,chemval,out}{boundary}{137}{32.5}{134.5}
+\bus{grade,chemval,out}{boundary}{145}{32.5}{134.5}
 \end{tikzpicture}
 \end{document}
