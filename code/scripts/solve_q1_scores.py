@@ -1,89 +1,197 @@
-import sys
-import numpy as np
-import pandas as pd
-from pathlib import Path
+import argparse
 import json
-import warnings
+import sys
+import time
+from pathlib import Path
 
-warnings.filterwarnings('ignore')
+import numpy as np
 
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-from src.q1.paths import PROCESSED_DIR, SEED
-from src.q1.data import load_q1
-from src.q1.discretize import apply_rules, dist_median, dist_interval
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from solve_q1_data import make_check  # noqa: E402
+from src.q1.discretize import (  # noqa: E402
+    apply_rules,
+    dist_interval,
+    dist_median,
+    quantile_cuts,
+    qwk_score,
+)
+from src.q1.meta import require_sklearn, run_meta  # noqa: E402
+from src.q1.paths import PROCESSED_DIR, SEED, SMOKE_DIR, ensure_dirs  # noqa: E402
+
+RULES = ("const", "round", "median", "quant", "qwk_cut", "median_knn")
+
+
+def rep_mean(fn, G, Gh, cells):
+    vals = [fn(G[cells[r]], Gh[r][cells[r]]) for r in range(len(Gh)) if cells[r].any()]
+    return float(np.mean(vals))
+
+
+def mean_qwk(G, Gh, rows):
+    out = []
+    for r in range(len(Gh)):
+        if not rows[r].any():
+            continue
+        q = [qwk_score(G[rows[r], d], Gh[r, rows[r], d]) for d in range(G.shape[1])]
+        out.append(np.nanmean(q))
+    return float(np.mean(out))
+
 
 def main():
-    print("正在加载 T2 预测结果与 T1 目标...")
-    data = load_q1()
-    
-    q1_data = np.load(PROCESSED_DIR / "q1_data.npz", allow_pickle=True)
-    G_obs = q1_data['G'] # 250x50 真实等级
-    
-    main_data = np.load(PROCESSED_DIR / "q1_main_oof.npz", allow_pickle=True)
-    oof_mu = main_data['oof_mu'] # (5, 250, 50)
-    inner_mu = main_data['inner_mu'] # (5, 5, 250, 50)
-    
-    print("正在执行 T3 离散化与交付生成...")
-    
-    # 存储最终结果的容器
-    p_final = np.zeros((250, 50, 7))
-    G_hat = np.zeros((250, 50), dtype=int)
-    lo_final = np.zeros((250, 50), dtype=int)
-    hi_final = np.zeros((250, 50), dtype=int)
-    G_hat_Q = np.zeros((250, 50), dtype=int) # 分位数规则的中位数
-    
-    # 为了后续对比，把各种规则的结果都存下来
-    rules_dict = {r: np.zeros((5, 250, 50), dtype=int) for r in ["const", "round", "median", "quant", "qwk_cut"]}
-    
-    for dim_idx, dim in enumerate(data.dims):
-        # 提取该维度的所有数据
-        mu_run = oof_mu[:, :, dim_idx] # (5, 250)
-        inner_mu_run = inner_mu[:, :, :, dim_idx] # (5, 5, 250)
-        g_inner_run = G_obs[:, dim_idx] # (250,)
-        y_inner_run = q1_data['xbar'][:, dim_idx] # 连续均值
-        
-        p_runs = []
-        quant_medians = []
-        
-        for run in range(5):
-            # 把5折的内层预测拼起来（去掉 NaN，只保留有效的内层预测作为残差池）
-            inner_preds = inner_mu_run[run] # (5, 250)
-            valid_mask = ~np.isnan(inner_preds)
-            
-            # 提取有效的连续预测、真实均值和真实等级
-            mu_inner = inner_preds[valid_mask]
-            y_inner = np.tile(y_inner_run, (5, 1))[valid_mask]
-            g_inner = np.tile(g_inner_run, (5, 1))[valid_mask]
-            
-            # 调用离散化函数
-            res = apply_rules(mu_run[run], mu_inner, y_inner, g_inner)
-            
-            p_runs.append(res['p'])
-            for rule in ["const", "round", "median", "quant", "qwk_cut"]:
-                rules_dict[rule][run, :, dim_idx] = res[rule]
-                
-            quant_medians.append(res['quant'])
-            
-        # 按照工单 §3.5 合并 5 次重复
-        p_final[:, dim_idx] = np.mean(p_runs, axis=0) # p_final 为 5 次 p 的平均
-        G_hat[:, dim_idx] = dist_median(p_final[:, dim_idx]) # 由 p_final 取中位数
-        lo_final[:, dim_idx], hi_final[:, dim_idx] = dist_interval(p_final[:, dim_idx]) # 由 p_final 算区间
-        
-        # G_hat_Q 为 5 次 quant 规则结果的中位数
-        G_hat_Q[:, dim_idx] = np.median(np.array(quant_medians), axis=0).astype(int)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--smoke", action="store_true")
+    args = parser.parse_args()
 
-    print("正在保存 q1_scores.npz...")
-    save_path = PROCESSED_DIR / "q1_scores.npz"
+    require_sklearn()
+    ensure_dirs()
+    io_dir = SMOKE_DIR if args.smoke else PROCESSED_DIR
+    t0 = time.time()
+
+    z = np.load(PROCESSED_DIR / "q1_data.npz", allow_pickle=False)
+    xbar, G = z["xbar"], z["G"]
+    m = np.load(io_dir / "q1_main_oof.npz", allow_pickle=False)
+    oof_mu, inner_mu, fold_id = m["oof_mu"], m["inner_mu"], m["fold_id"]
+    R, K, n, D = inner_mu.shape
+
+    units = []
+    for r in range(R):
+        for k in range(K):
+            te = np.where(fold_id[r] == k)[0]
+            if len(te) == 0:
+                continue
+            tr = np.where(fold_id[r] != k)[0]
+            filled = np.where(~np.isnan(inner_mu[r, k]).any(1))[0]
+            assert np.array_equal(filled, tr), f"inner_mu[{r},{k}] 的非 NaN 行不等于训练行"
+            units.append((r, k, tr, te))
+    print(f"外层折 {len(units)} 个", flush=True)
+
+    p = np.full((R, n, D, 7), np.nan)
+    p_knn = np.full((R, n, D, 7), np.nan)
+    grades = {rule: np.full((R, n, D), -1, dtype=int) for rule in RULES}
+    for r, k, tr, te in units:
+        for d in range(D):
+            out = apply_rules(oof_mu[r, te, d], inner_mu[r, k, tr, d], xbar[tr, d])
+            p[r, te, d], p_knn[r, te, d] = out["p"], out["p_knn"]
+            for rule in RULES:
+                grades[rule][r, te, d] = out[rule]
+
+    tested = fold_id >= 0
+    full_reps = [r for r in range(R) if tested[r].all()]
+    deliver_reps = full_reps if full_reps else sorted({u[0] for u in units})
+    deliver_rows = tested[deliver_reps].all(0)
+    p_final = p[deliver_reps].mean(axis=0)
+    G_hat = np.full((n, D), -1, dtype=int)
+    lo = np.full((n, D), -1, dtype=int)
+    hi = np.full((n, D), -1, dtype=int)
+    G_hat[deliver_rows] = dist_median(p_final[deliver_rows])
+    lo_, hi_ = dist_interval(p_final[deliver_rows])
+    lo[deliver_rows], hi[deliver_rows] = lo_, hi_
+    G_hat_Q = np.full((n, D), -1, dtype=int)
+    G_hat_Q[deliver_rows] = np.median(
+        grades["quant"][deliver_reps][:, deliver_rows], axis=0
+    ).astype(int)
+
+    if full_reps == list(range(R)):
+        final_resid = np.stack([(xbar[None, :, d] - oof_mu[:, :, d]).ravel() for d in range(D)])
+        final_qcuts = np.stack(
+            [quantile_cuts(oof_mu[:, :, d].mean(axis=0), G[:, d]) for d in range(D)]
+        )
+    else:
+        final_resid = np.full((D, R * n), np.nan)
+        final_qcuts = np.full((D, 6), np.nan)
+
+    dr = deliver_rows
+    p_rows = p[:, :, :, :][tested]
+    all_grades_ok = all(
+        g[tested].min() >= 0 and g[tested].max() <= 6 for g in grades.values()
+    ) and bool(((G_hat[dr] >= 0) & (G_hat[dr] <= 6)).all())
+    checks = [
+        make_check(
+            "p_final 每行和为 1",
+            float(np.abs(p_final[dr].sum(-1) - 1).max()),
+            0.0,
+            1e-12,
+        ),
+        make_check(
+            "lo ≤ G_hat ≤ hi 处处成立",
+            bool(((lo[dr] <= G_hat[dr]) & (G_hat[dr] <= hi[dr])).all()),
+            True,
+        ),
+        make_check(
+            "G_hat 等于由保存的 p_final 重算的中位数",
+            bool((dist_median(p_final[dr]) == G_hat[dr]).all()),
+            True,
+        ),
+        make_check("各等级数组取值在 0..6", bool(all_grades_ok), True),
+        make_check(
+            "grade_qwk_cut 与 grade_quant 逐元素相同的占比小于 1",
+            bool((grades["qwk_cut"][tested] == grades["quant"][tested]).mean() < 1),
+            True,
+        ),
+    ]
+    assert np.isfinite(p_rows).all()
+
+    mae = {
+        rule: rep_mean(lambda a, b: np.abs(a - b).mean(), G, grades[rule], tested) for rule in RULES
+    }
+    ex_med = rep_mean(lambda a, b: (a == b).mean(), G, grades["median"], tested)
+    qwk_round = mean_qwk(G, grades["round"], tested)
+    qwk_quant = mean_qwk(G, grades["quant"], tested)
+    s56_quant = rep_mean(lambda a, b: (b >= 5).mean(), G, grades["quant"], tested)
+    s56_med = rep_mean(lambda a, b: (b >= 5).mean(), G, grades["median"], tested)
+    cover = float(((G[dr] >= lo[dr]) & (G[dr] <= hi[dr])).mean())
+    width = float((hi[dr] - lo[dr]).mean())
+    print(
+        "等级 MAE "
+        + "，".join(f"{k} {v:.4f}" for k, v in mae.items())
+        + f"；中位数完全一致 {ex_med:.4f}；QWK 四舍五入 {qwk_round:.4f}、分位数 {qwk_quant:.4f}"
+        + f"；5–6 级占比 分位数 {s56_quant:.4f}、中位数 {s56_med:.4f}"
+        + f"；覆盖率 {cover:.4f}，宽度 {width:.4f}"
+    )
+    if not args.smoke:
+        checks += [
+            make_check("常量规则等级 MAE", mae["const"], 0.550, 0.015),
+            make_check("四舍五入等级 MAE", mae["round"], 0.495, 0.015),
+            make_check("预测分布中位数等级 MAE", mae["median"], 0.484, 0.015),
+            make_check("近邻残差中位数等级 MAE", mae["median_knn"], 0.477, 0.015),
+            make_check("分位数切点等级 MAE", mae["quant"], 0.571, 0.02),
+            make_check("预测分布中位数完全一致率", ex_med, 0.574, 0.015),
+            make_check("四舍五入 QWK", qwk_round, 0.310, 0.02),
+            make_check("分位数切点 QWK", qwk_quant, 0.370, 0.02),
+            make_check("分位数切点 5–6 级占比", s56_quant, 0.0146, 0.005),
+            make_check("预测分布中位数 5–6 级占比 ≤ 0.001", s56_med <= 0.001, True),
+            make_check("中位数 MAE 低于四舍五入 MAE", mae["median"] < mae["round"], True),
+            make_check("90% 区间覆盖率", cover, 0.969, 0.03),
+            make_check("90% 区间平均宽度", width, 1.95, 0.10),
+        ]
+
+    out = io_dir / "q1_scores.npz"
     np.savez_compressed(
-        save_path,
+        out,
+        p=p,
+        p_knn=p_knn,
+        **{f"grade_{rule}": grades[rule] for rule in RULES},
         p_final=p_final,
         G_hat=G_hat,
-        lo=lo_final,
-        hi=hi_final,
+        lo=lo,
+        hi=hi,
         G_hat_Q=G_hat_Q,
-        **{f"grade_{r}": rules_dict[r] for r in rules_dict}
+        final_resid=final_resid,
+        final_qcuts=final_qcuts,
+        checks=json.dumps(checks, ensure_ascii=False),
+        seed=SEED,
+        meta=run_meta(),
     )
-    print(f"✅ T3 运行完毕，最终评分已存入: {save_path}")
+    for c in checks:
+        mark = "PASS" if c["passed"] else "FAIL"
+        print(f"[{mark}] {c['name']}: observed={c['observed']} expected={c['expected']}")
+    print(f"耗时 {time.time() - t0:.0f} 秒；写出 {out}")
+
+    failed = [c["name"] for c in checks if not c["passed"]]
+    if failed:
+        print("失败项：" + "；".join(failed))
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

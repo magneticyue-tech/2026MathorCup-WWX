@@ -1,5 +1,7 @@
 # Data (大文件不入库)
 code/data/raw/*
+code/data/processed/q1/_smoke/
+code/data/processed/q1/_chunks/
 
 # Python
 __pycache__/

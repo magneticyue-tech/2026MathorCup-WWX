@@ -2,7 +2,7 @@
 id: 2026-10-28-q1-w8-deliverables
 from: modeling
 to: coding
-status: open
+status: ack
 severity: major
 refs:
   - model/q1_methodology.md
@@ -176,4 +176,28 @@ cd code && $PY -m pytest tests -q
 15. 回报格式：运行命令、耗时、产物路径与 SHA-256 前 12 位、验收项逐条的观测值与通过状态、偏离工单之处。
 
 ## 处理结果
-<!-- [PLACEHOLDER] | Await: coding 回复 ack 并按「通用约定」第 15 条的格式逐项回报 -->
+
+coding 回报（2026-10-29，状态 ack，待 modeling 验收）。
+
+运行命令（`PY=C:/Users/11600/anaconda3/envs/mathorcup_new/python.exe`）：按「验收」三条命令执行；再生成检查已做（删除 `figures/q1/` 下除 `legacy_z/` 以外的全部文件后只运行导出、绘图与表脚本，全部文件重新出现）。
+
+结构类检查全部通过：7 个 `fig_q1_*.pdf`、5 组 `tab_q1_*.csv/.tex`；PDF 均以 `%PDF` 开头且非空；宽表 (250, 52)，长表 12500 行；`REPORT_ROWS` 与多日期名单相同；`tab_q1_metrics.csv` 与 `q1_metrics.json` 在 1e-9 内一致；pytest 全部 123 项通过（含 XeLaTeX 编译与逐页渲染检查）。
+
+交付来源：`success` = True，`model_key` = `main`。
+
+图（SHA-256 前 12 位）：`fig_q1_confusion.pdf` `4e905014e264`、`fig_q1_paired_diff.pdf` `95dd339e773b`、`fig_q1_reference_error.pdf` `4c40de97db9d`、`fig_q1_reliability.pdf` `964e16c73d71`、`fig_q1_rules.pdf` `73fa672367be`、`fig_q1_sensitivity.pdf` `740845776d59`、`fig_q1_stress.pdf` `eae670a10153`。
+
+交付文件：`q1_delivery_scores.npz` `e9b10302dd7d`、`q1_delivery_scores.json` `7bbed123f65a`、`q1_final_scores.csv` `b33c69e8a1ce`、`q1_scores_long.csv` `b4e4b23497e1`。
+
+`REPORT_ROWS`（行号 → `beer`）：21→202、37→185、42→139、49→224、91→219、104→37、112→238、130→23、166→127、190→75、201→214、206→114。
+
+各脚本读入文件：`export_q1_scores.py`：`q1_metrics.json`、`q1_data.npz`、`q1_scores.npz`、`q1_main_oof.npz`（`success=False` 时改读 `q1_baselines.npz`）；`fig_q1_rules`、`fig_q1_paired_diff`、`fig_q1_reliability`、`fig_q1_reference_error`、`tab_q1_rules`、`tab_q1_paired`：`q1_metrics.json`；`fig_q1_confusion`：`q1_metrics.npz`；`fig_q1_sensitivity`：`q1_sensitivity.json`；`fig_q1_stress`：`q1_stress.json`；`tab_q1_metrics`：`q1_metrics.json`、`q1_baselines.npz`；`tab_q1_external`：`q1_external.json`；`tab_q1_report_beers`：`q1_scores_long.csv`、`q1_data.npz`、`q1_delivery_scores.json`，常量 `REPORT_ROWS`。
+
+`paper/main.tex` 导言区增加 `longtable`、`pdflscape`，正文未改。
+
+偏离工单之处：
+- `git diff --stat` 显示 `code/src/q1/` 下的求解模块相对 HEAD 有改动，均来自 W2–W7 的重写；W8 未修改任何求解模块。
+- `plotstyle.py` 另含模型、规则、敏感性臂的中文标签字典与读入辅助函数（`load_json`、`load_npz`、`script_args`），供各绘图与表脚本共用。
+- `tables.write_table` 增加可选参数 `tex_df`、`colfmt`，使 CSV 保留机器可读列名而 TeX 使用中文表头。
+- `tab_q1_external` 的表尾汇总行与逐行表共用列，汇总行中 `ctrl_mean`、`ctrl_se`、`G_hat` 三列依次为等级 MAE、完全一致数、平均有符号误差，表注已说明。
+- Q1 范围 black/ruff：`code/src/q1/panels.py` 不通过；W5 规定该文件不改，因此未格式化。其余全部通过。
