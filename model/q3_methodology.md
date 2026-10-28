@@ -44,7 +44,7 @@
 | 附件 4 标准化评分 $z$ | 不作为 Q3 感官目标、观测对照或迁移约束；这些量均接入 Q1 原始评分均值 $\bar x$ 训练的模型 |
 | 附件 7 | 另一套评价体系，与附件 4 的维度不能对应 |
 | 附件 8 *GBM importance MDI*、*GBM SHAP Values* | 训练目标未说明 |
-| 外部数据 | `memory/no-external-data.md`；trans-2-nonenal 等缺失阈值不从文献补入（§5.1） |
+| 文献数据 | trans-2-nonenal 等缺失阈值不从文献补入（§5.1） |
 
 **符号。** 全局符号见 `assumptions.md`。
 

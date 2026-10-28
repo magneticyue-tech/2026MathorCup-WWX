@@ -34,6 +34,7 @@ refs:
 ## 固定验收口径
 
 - 输入：250 款啤酒、225 个候选化学列、6 个图注释列；交付 49 个感官维度，barnyard 不单独建模，stale_hops 标注“同 barnyard”。
+- 感官目标与分组：感官目标为 `xbar` 的秩，bootstrap 重抽单位和分组 CV 单位为 25 个日期组；来源、键、形状和缺项处理见 `q2-final-run-acceptance` 的“输入口径”。附件 4 的 `z` 只用于感官目标的敏感性臂。
 - 主表：49 个维度各有且仅有 3 行 `main`；仅在 M3 Top-1 与主方法不同时追加对应 `M3` 行。
 - 图：231 个节点；阈值 0.6 的候选间边为 245 条，涉及注释节点的边另报。
 - 正式置换与主 bootstrap：均使用 `config.py` 的 `SEED`、`N_PERMUTATION=1000`、`N_BOOTSTRAP=1000`。不得用预运行或旧产物代替。
@@ -43,6 +44,7 @@ refs:
 ## 当前已知执行注意
 
 - 原始数据路径由 `code/src/q2/config.py` 指向 `data/raw`，Q2 结果目录为 `code/data/processed/q2`。每次运行前核实路径，不能套用旧工单中的目录。
+- 现有 `code/src/q2/` 中读取 `q1_panels.npz`、附件 4 的 `z`、63 个推断品评团或 `at_zero` 掩码的位置（已知涉及 `config.py`、`data.py`、`stability.py`、`full_controls.py`、`advanced_audits.py`、`controls_sensitivity.py`），按方法 §2.3、§2.4、§5.1、§6.6 改为 `xbar` 的秩与 `date_group`，再运行任何步骤。
 - Modeling/Writing 向结果文档写入前，重新读 `model/` 的活文档、`figures/` 和 `code/data/processed/` 最新结果。
 - Coding 每次运行求解器前，重新读本工单、三个子工单和 `model/q2_methodology.md`。
 

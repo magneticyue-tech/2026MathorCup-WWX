@@ -8,6 +8,6 @@ type: constraint
 
 **依据：** 用 Zenodo 23624915 的原始评分按上述规则重建，复现 11,274/12,500 个单元（90.2%，误差中位数 2.8e-10）；其余 1,226 个单元全部来自 15 个零方差的“品评员 × 维度”组合（`experimentalCode/q1_raw_target/q1_raw_data_checks.py` 检查 B、C）。
 
-**如何应用：** 标准化去掉了 0–6 的位置和尺度，没有原始评分时，无法在不加假设的情况下还原 0–6 分。Q1 主线以原始评分为目标，附件 4 只用于对照 C1、C2（`model/q1_methodology.md` §1.3）。
+**如何应用：** 标准化去掉了 0–6 的位置和尺度，没有原始评分时，无法在不加假设的情况下还原 0–6 分。Q1、Q2 主线以原始评分为感官目标；附件 4 在 Q1 只用于对照 C1、C2（`model/q1_methodology.md` §1.3），在 Q2 只用于敏感性臂（`model/q2_methodology.md` §7.3）。
 
-相关：[[data-provenance-zenodo]]、[[no-external-data]]
+相关：[[data-provenance-zenodo]]

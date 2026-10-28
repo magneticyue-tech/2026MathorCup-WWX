@@ -1,0 +1,49 @@
+% 数据预处理流程；所有缩写在图内释义。
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage[UTF8,fontset=windows]{ctex}
+\usepackage{amsmath}
+\setmainfont{Times New Roman}
+\input{flowchart_style.tex}
+\begin{document}
+\begin{tikzpicture}[fc]
+\path[use as bounding box] (0,0) rectangle (158,160);
+\sidelabel{0}{48}{数\\据\\核\\验}
+\node[io,text width=146mm,h=16mm] (in) at (9,0) {\bt{输入与目标}%
+附件1：250款啤酒、231个化学及理化特征；附件2：相关矩阵；附件3：0--6分记分卡；附件4：50维标准化均值\\
+附件8：部分化合物的校准浓度与气味阈值；Schreurs等（2024）数据记录新版：逐品评员0--6分原始评分};
+\node[box,text width=69.5mm,h=22mm] (id) at (9,22) {\bt{样本与评分对齐}%
+原始评分2197条；\texttt{beer\_name}对应附件1、4的行号\\
+按行号对齐后，原始均分与附件4逐维秩相关中位数0.969};
+\node[box,text width=69.5mm,h=22mm] (target) at (85.5,22) {\bt{评分尺度判定}%
+附件4是按“品评员$\times$维度”标准化再汇总的均值，可复现90.2\%单元\\
+标准化丢失0--6分的位置与尺度；主目标为原始品评小组均分};
+\bus{in}{id,target}{19.5}{45.25}{121.75}
+\sidelabel{50}{99}{特\\征\\处\\理}
+\node[box,text width=44mm,h=20mm] (scale) at (9,52) {\bt{231列的尺度}%
+37列经核实为常用对数浓度；33列为线性尺度\\
+157列无绝对浓度校准；4列为综合指标};
+\node[box,text width=44mm,h=20mm] (na) at (60,52) {\bt{73个化学空值}%
+涉及9列、63款；主设定用训练折列均值填充\\
+中位数、最低位和原生缺失路由作对照};
+\node[box,text width=44mm,h=20mm] (floor) at (111,52) {\bt{未检出状态与极端值}%
+142个信号列共享下限，按并列最低秩处理\\
+极端值保留；不将下限反推为精确浓度};
+\bus{id,target}{scale,na,floor}{49}{32.5}{134.5}
+\node[box,text width=146mm,h=12mm] (rule) at (9,78) {\bt{变量用途}%
+预测可保留综合指标；归因和生成排除5个综合指标及1个实验内标，留下225个单体化合物};
+\bus{scale,na,floor}{rule}{76}{32.5}{134.5}
+\sidelabel{101}{160}{三\\问\\接\\口}
+\node[io,text width=44mm,h=32mm] (q1) at (9,104) {\bt{问题一：等级预测}%
+231列化学特征预测原始品评小组均分，再输出0--6等级\\
+验证按25个品评日期组隔离};
+\node[io,text width=44mm,h=32mm] (q2) at (60,104) {\bt{问题二：关联归因}%
+附件2构建共表达图；225个候选与原始感官均分转为秩\\
+对49个维度各报告3个关联候选及稳定性};
+\node[io,text width=44mm,h=32mm] (q3) at (111,104) {\bt{问题三：生成与迁移}%
+225列映入潜在高斯空间；综合指标另行派生\\
+迁移检查9列化学缺陷与6个感官缺陷维度};
+\bus{rule}{q1,q2,q3}{101}{32.5}{134.5}
+\node[box,text width=146mm,h=10mm] at (9,144) {\bt{跨问题验证原则}%
+填充与统计变换只在训练折估计；化学分布按留出啤酒验证，感官预测按日期组验证。};
+\end{tikzpicture}
+\end{document}

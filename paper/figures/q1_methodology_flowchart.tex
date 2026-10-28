@@ -1,51 +1,55 @@
-% 编译：xelatex -interaction=nonstopmode -halt-on-error -output-directory=figures paper/figures/q1_methodology_flowchart.tex
-% 插图：\includegraphics[width=\linewidth]{q1_methodology_flowchart.pdf}
+% 问题一方法：从化学特征到原始0--6分等级。
 \documentclass[tikz,border=0pt]{standalone}
 \usepackage[UTF8,fontset=windows]{ctex}
 \usepackage{amsmath}
-\usetikzlibrary{arrows.meta,calc}
 \setmainfont{Times New Roman}
+\input{flowchart_style.tex}
 \begin{document}
-\begin{tikzpicture}[x=1mm,y=-1mm,>=Latex,
-  line width=0.45pt,
-  box/.style={draw,rectangle,anchor=north west,inner sep=1.6mm,outer sep=0pt,align=left,font=\songti\fontsize{9.2}{11.2}\selectfont},
-  side/.style={draw,rectangle,anchor=north west,inner sep=0pt,outer sep=0pt,text width=5.8mm,align=center,font=\songti\fontsize{10}{11.5}\selectfont},
-  edge/.style={->,line width=0.45pt},
-  small/.style={font=\songti\fontsize{8.5}{12}\selectfont,fill=white,inner sep=0.5mm}]
-\path[use as bounding box] (0,0) rectangle (158,169);
-
-% 数据基础：输入与预处理。
-\node[side,minimum height=20mm] at (0.3,0.3) {数\\据\\基\\础};
-\node[box,dashed,text width=67.5mm,minimum height=20mm] (data) at (10.5,0.3) {附件1、3、4\\250款啤酒、231个化学特征\\50维标准化感官评分与维度定义};
-\node[box,text width=67.5mm,minimum height=20mm] (prep) at (86.8,0.3) {数据对齐与预处理\\训练折列均值填补化学NA\\多维精确并列连边，推断品评团};
-\draw[edge] (data.east) -- (prep.west);
-
-% 连续预测：分组调参与逐维回归。
-\node[side,minimum height=43mm] at (0.3,26.3) {连\\续\\预\\测};
-\node[box,text width=67.5mm,minimum height=23mm] (cv) at (10.5,26.3) {分组嵌套交叉验证\\品评团分组、风格分层\\外层5折$\times$5次重复，内层4折};
-\node[box,text width=67.5mm,minimum height=23mm] (model) at (86.8,26.3) {化学特征$X\to$连续感官评分$z$\\逐维拟合浅层直方图梯度提升树\\按6个维度组共享超参数\\以内层平均Spearman选择配置};
-\draw[edge] (prep.south) -- ++(0,3) -| (cv.north);
-\draw[edge] (cv.east) -- (model.west);
-\node[box,dashed,text width=143.8mm,minimum height=14mm] (oof) at (10.5,55.3) {汇集折外连续预测\\每次重复覆盖250款啤酒，保存50维预测及训练折参数};
-\draw[edge] (model.south) -- (model.south |- oof.north);
-
-% 等级映射：参照构造与候选映射并列。
-\node[side,minimum height=46mm] at (0.3,75.3) {等\\级\\映\\射};
-\node[box,text width=67.5mm,minimum height=26mm] (reference) at (10.5,75.3) {构造混合参照等级$R$\\线性参照$L$：训练折端点映至0--6\\局部参照$A$：本团零点与$m=3$尺度\\有效局部单元取$A$，其余取$L$};
-\node[box,text width=67.5mm,minimum height=26mm] (mapping) at (86.8,75.3) {连续预测$\hat z\to$0--6候选等级\\直接线性缩放并取整\\线性缩放后采用6个有序切点\\以内层折外预测拟合QWK切点};
-\draw[edge] (oof.south -| mapping.north) -- (mapping.north);
-\draw[edge] (reference.east) -- (mapping.west);
-\node[box,text width=143.8mm,minimum height=14mm] (select) at (10.5,107.3) {比较并选择等级映射\\以混合参照$R$计算两法5次重复的50维平均外层QWK，取较高者};
-\draw[edge] (reference.south) -- (reference.south |- select.north);
-\draw[edge] (mapping.south) -- (mapping.south |- select.north);
-
-% 结果应用：现有样本使用折外预测，新样本使用全数据模型。
-\node[side,minimum height=41mm] at (0.3,127.3) {结\\果\\应\\用};
-\node[box,dashed,text width=67.5mm,minimum height=21mm] (scores) at (10.5,127.3) {现有250款啤酒评分\\5次折外连续预测取平均\\经最终选定映射输出250$\times$50等级};
-\node[box,text width=67.5mm,minimum height=21mm] (new) at (86.8,127.3) {全数据重新拟合与新啤酒预测\\化学特征经连续模型与选定映射\\得到感官等级，支持Q3应用};
-\draw[edge] (select.south -| scores.north) -- (scores.north);
-\draw[edge] (select.south -| new.north) -- (new.north);
-\node[box,text width=143.8mm,minimum height=14mm] (metrics) at (10.5,154.3) {方法评价与敏感性分析\\Spearman、RMSE、$R^2$；QWK、MAE、$\pm1$准确率；模型对照与尺度敏感性};
-\draw[edge] (scores.south) -- (scores.south |- metrics.north);
+\begin{tikzpicture}[fc]
+\path[use as bounding box] (0,0) rectangle (158,164);
+\sidelabel{0}{27}{问\\题\\与\\数\\据}
+\node[io,text width=69.5mm,h=23mm] (x) at (9,0) {\bt{输入：附件1的化学及理化特征}%
+250款啤酒，每款231列；空值仅用训练折列均值填充\\
+模型不使用风格标签，以检验化学信息本身的预测力};
+\node[io,text width=69.5mm,h=23mm] (y) at (85.5,0) {\bt{目标：原始品评员评分}%
+Schreurs等（2024）同一数据记录新版公布的2197条0--6分记录\\
+逐款、逐维求品评小组均分；四舍五入为实测等级\\
+50个维度；同一品评日期的啤酒并为25个日期组};
+\sidelabel{29}{78}{预\\测\\方\\法}
+\node[box,text width=146mm,h=13mm] (cv) at (9,31) {\bt{分组嵌套交叉验证}%
+外层按日期组隔离、按风格尽量分层：5折重复5次；内层4折选超参数并获取训练集折外残差。};
+\bus{x,y}{cv}{28.5}{45.25}{121.75}
+\node[key,text width=69.5mm,h=22mm] (model) at (9,52) {\bt{连续评分模型}%
+每个维度拟合浅层梯度提升树模型，以平方误差预测品评小组均分\\
+超参数在六个感官维度组内共享，由内层误差选择};
+\node[box,text width=69.5mm,h=22mm] (dist) at (85.5,52) {\bt{从连续分到等级分布}%
+对留出啤酒的连续预测逐一加上训练集折外残差，再截断并取整到0--6\\
+七个等级的相对频数构成预测概率};
+\draw[edge] (cv.south -| model.north) -- (model.north);
+\draw[edge] (model.east) -- (dist.west);
+\sidelabel{80}{106}{评\\分\\交\\付}
+\node[io,text width=69.5mm,h=19mm] (main) at (9,82) {\bt{主输出：预测等级与90\%等级区间}%
+等级预测分布的中位数使预测等级绝对误差的期望最小\\
+250款现有啤酒给出未见过同日期组的折外预测};
+\node[io,text width=69.5mm,h=19mm] (other) at (85.5,82) {\bt{补充输出：分位数切点等级}%
+切点在训练折拟合，使预测的等级比例接近实测比例\\
+用于展示高等级风味的分布，不参与主模型选型};
+\bus{model,dist}{main,other}{79}{45.25}{121.75}
+\sidelabel{108}{164}{证\\据\\与\\适\\用}
+\node[box,text width=44mm,h=25mm] (metric) at (9,111) {\bt{主判据与不确定性}%
+12500个啤酒--维度等级的平均绝对误差\\
+按日期组重抽，报告相对基线的配对差及95\%区间};
+\node[box,text width=44mm,h=25mm] (ctrl) at (60,111) {\bt{对照回答不同问题}%
+风格收缩均值：化学信息是否有增益\\
+弹性网络：非线性是否必要\\
+仅用附件4的换算：原始评分的价值};
+\node[box,text width=44mm,h=25mm] (limit) at (111,111) {\bt{误差边界与稳健性}%
+品评小组半组一致性给出噪声参照\\
+检验填充、目标定义、残差方案与单调约束的影响};
+\bus{main,other}{metric,ctrl,limit}{108.5}{32.5}{134.5}
+\node[io,text width=146mm,h=16mm] (out) at (9,144) {\bt{交付与使用范围}%
+报告实测等级、折外预测等级、概率及区间；未超过风格基线时，评分交付改用化学加风格模型。\\
+新啤酒用全数据重拟合；问题三始终使用纯化学模型。};
+\bus{metric,ctrl,limit}{out}{141.5}{32.5}{134.5}
 \end{tikzpicture}
 \end{document}

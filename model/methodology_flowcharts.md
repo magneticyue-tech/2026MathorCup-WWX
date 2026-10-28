@@ -1,27 +1,21 @@
-# 问题 1 方法论流程图
+# 方法流程图
 
-依据 [q1_methodology.md](q1_methodology.md)，按数据准备、连续预测、等级映射和结果输出组织方法。
+数据预处理与三个问题各一张流程图，以 `data_preprocessing.md`、`q1_methodology.md`、`q2_methodology.md`、`q3_methodology.md` 的现行口径为准。图内只写数据核验数字、方法、输出与结论边界，不把预运行效果写作最终结果。方法源文件改变时应同步图源并重新编译。
 
-## A4矩形排版
+| 图 | 论文位置 | 图源 | 编译命令 | 图幅（毫米） |
+|---|---|---|---|---:|
+| ![数据预处理](../figures/prep_methodology_flowchart.png) | 数据预处理章末 | `paper/figures/prep_methodology_flowchart.tex` | `python code/scripts/fig_prep_methodology_flowchart.py` | 158 × 164 |
+| ![问题一](../figures/q1_methodology_flowchart.png) | 问题一模型建立节首 | `paper/figures/q1_methodology_flowchart.tex` | `python code/scripts/fig_q1_methodology_flowchart.py` | 158 × 171 |
+| ![问题二](../figures/q2_methodology_flowchart.png) | 问题二模型建立节首 | `paper/figures/q2_methodology_flowchart.tex` | `python code/scripts/fig_q2_methodology_flowchart.py` | 158 × 166 |
+| ![问题三](../figures/q3_methodology_flowchart.png) | 问题三模型建立节首 | `paper/figures/q3_methodology_flowchart.tex` | `python code/scripts/fig_q3_methodology_flowchart.py` | 158 × 176 |
 
-![问题1方法论流程图](../figures/q1_methodology_flowchart.png)
+每张图输出单页 PDF、SVG 和 300 dpi PNG 到 `figures/`。论文使用 PDF；插图宽度以正文版心为上限。共用排版样式位于 `paper/figures/flowchart_style.tex`：虚线框表示输入或输出，粗框表示主方法步骤，细框表示依据或对照；箭头给出数据流和处理顺序。
 
-成图采用黑白矩形框、直角箭头、宋体正文和侧边竖排分区标题，由XeLaTeX与TikZ编译。图宽158毫米、高169毫米，适配A4纵向纸张及25.4毫米页边距。正文9.2磅、行距11.2磅，框内边距1.6毫米，纵向框间距6毫米。
+四图的阅读主线如下。
 
-- [矢量PDF](../figures/q1_methodology_flowchart.pdf)
-- [矢量SVG](../figures/q1_methodology_flowchart.svg)
-- [LaTeX源文件](../paper/figures/q1_methodology_flowchart.tex)
+- **数据预处理：** 数据来源与评分对齐 → 尺度、空值及未检出状态 → 变量用途 → 三问各自的输入和验证单位。未校准信号的对数底数在图内保持为假设。
+- **问题一：** 化学特征与原始评分 → 日期组嵌套交叉验证 → 连续评分与等级预测分布 → 主输出及补充输出 → 预测误差、对照和不确定性 → 折外评分及全数据模型。
+- **问题二：** 化合物与感官秩 → 共表达图 → 模拟还原支持的图约束前向选择及置换检验 → 日期组重抽和替代方法 → 化学证据与前三项关联候选。图内明确“关键”是关联定义，不是因果主张。
+- **问题三：** 风格和化学谱 → 秩变换与风格条件潜在高斯模型 → 留出啤酒的保真、新颖性、可用性检查 → 感官画像与风味指纹 → 潜空间平移、化学投影、感官路径及原尺度复查。
 
-在论文中使用`\includegraphics[width=\linewidth]{q1_methodology_flowchart.pdf}`插入。
-重新生成命令：`python code/scripts/fig_q1_methodology_flowchart.py`。
-
-
-图中Z表示附件4的标准化连续评分，折外连续预测由化学模型产生；L、A和R为构造参照，最终0–6输出为感官等级。品评团零点用于构造局部参照A；预测等级由连续预测与选定映射共同确定。
-
-## 方法说明
-
-1. **数据准备。** 按啤酒编号和附件3的维度定义整理输入；化学数据的NA以训练折非缺失观测的列均值填充。
-2. **连续预测。** 每个感官维度拟合一个`HistGradientBoostingRegressor`。在内层交叉验证中选择树深、叶节点样本量、迭代次数、正则化及单调约束配置；类别级OAV和零膨胀维度的障碍模型作为候选扩展，按内层Spearman比较。
-3. **参照构造。** 线性参照L以训练折逐维端点确定；局部参照A以组维零点和代表性品评员尺度确定，其中尺度为`3r/(1+r²)`，r为训练折该维有效零点中位数的相反数。混合参照R在有效局部单元采用A，其余采用L。
-4. **映射选择。** 两种候选共用连续预测和外层划分。直接线性映射将连续预测缩放到0–6后取整；QWK切点映射在缩放后使用6个有序切点。以5次重复的50维平均外层QWK选择映射，指标相同时选直接线性映射。
-5. **结果交付。** 现有250款啤酒采用5次折外连续预测的均值，并应用最终拟合的选定映射。全体数据重新拟合的连续模型用于新啤酒及Q3。等级评价同时报告全体、局部参照单元和线性参照单元的结果；尺度敏感性取`m=2.5`和`m=min(4, cap_d)`。
+图采用完整中文名称解释统计量与对照的作用，不使用需查正文才能识别的内部代号。完整参数网格、数值验收阈值及敏感性臂仍以各问题的方法源文件为准。
