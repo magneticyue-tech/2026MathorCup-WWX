@@ -193,7 +193,7 @@ coding 回报（2026-10-29，状态 ack，待 modeling 验收）。
 
 各脚本读入文件：`export_q1_scores.py`：`q1_metrics.json`、`q1_data.npz`、`q1_scores.npz`、`q1_main_oof.npz`（`success=False` 时改读 `q1_baselines.npz`）；`fig_q1_rules`、`fig_q1_paired_diff`、`fig_q1_reliability`、`fig_q1_reference_error`、`tab_q1_rules`、`tab_q1_paired`：`q1_metrics.json`；`fig_q1_confusion`：`q1_metrics.npz`；`fig_q1_sensitivity`：`q1_sensitivity.json`；`fig_q1_stress`：`q1_stress.json`；`tab_q1_metrics`：`q1_metrics.json`、`q1_baselines.npz`；`tab_q1_external`：`q1_external.json`；`tab_q1_report_beers`：`q1_scores_long.csv`、`q1_data.npz`、`q1_delivery_scores.json`，常量 `REPORT_ROWS`。
 
-`paper/main.tex` 导言区增加 `longtable`、`pdflscape`，正文未改。
+`paper/main.tex` 与 `paper/main.pdf` 按用户要求保持队友远端版本，未加入 `longtable`、`pdflscape`；`tab_q1_report_beers.tex` 需要这两个宏包，引用前由 writing 在论文导言区自行决定是否加入。测试中的编译检查使用独立的临时包装文档，不依赖 `paper/main.tex`。
 
 偏离工单之处：
 - `git diff --stat` 显示 `code/src/q1/` 下的求解模块相对 HEAD 有改动，均来自 W2–W7 的重写；W8 未修改任何求解模块。
