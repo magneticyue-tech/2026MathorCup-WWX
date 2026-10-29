@@ -129,7 +129,8 @@ def test_formal_npz_alignment(q1):
 
 
 def _tree(root: Path):
-    return sorted(str(p.relative_to(root)) for p in root.rglob("*"))
+    # 导入时解释器写入的字节码缓存不算 paths.py 新建的目录。
+    return sorted(str(p.relative_to(root)) for p in root.rglob("*") if "__pycache__" not in p.parts)
 
 
 def test_import_paths_creates_no_dirs(tmp_path):

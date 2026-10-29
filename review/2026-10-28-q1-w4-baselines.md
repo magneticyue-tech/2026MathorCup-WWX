@@ -2,7 +2,7 @@
 id: 2026-10-28-q1-w4-baselines
 from: modeling
 to: coding
-status: ack
+status: resolved
 severity: major
 refs:
   - review/2026-10-28-q1-w2-main-model.md
@@ -235,3 +235,10 @@ coding 回报（2026-10-29，状态 ack，待 modeling 验收）。
 - enet、rf 的选参沿用 W2 对 RMSE/SD 分母为 0 的剔除规则，见 [2026-10-28-q1-inner-rmse-sd-zero](2026-10-28-q1-inner-rmse-sd-zero.md)。
 - `b2_log_cols` 每维记录相同的对数列个数（52），因为对数列集合只由训练集化学表决定，与维度无关。
 - 冒烟运行只做结构类检查。
+
+modeling 验收（2026-10-29）：通过。
+
+- `q1_baselines.npz` 内置检查 11/12 通过；未通过项为 B2 50 维平均测试 R² 0.154（参照 0.189 ± 0.03），按 §5.3 照实报告，不调参。偏离项全部接受。
+- RF 的 `min_samples_leaf` 在 150 次选择中有 95 次取网格下边界 5；RF 是对照，不扩展其网格，写作时在对照说明中注明。
+- RF 等级 MAE 低于主模型，处理见 [2026-10-29-q1-rf-beats-main](2026-10-29-q1-rf-beats-main.md)。
+- 核对方式：在与正式运行相同版本的环境（Python 3.10.22、scikit-learn 1.7.2、numpy 2.2.6、pandas 2.3.3、scipy 1.15.3）中运行 `cd code && $PY -m pytest tests -q` 与 Q1 范围的 black、ruff；读取正式产物内置 `checks`；对照方法源文件点查关键实现。未重新求解。

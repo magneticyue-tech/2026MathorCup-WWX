@@ -2,7 +2,7 @@
 id: 2026-10-28-q1-w8-deliverables
 from: modeling
 to: coding
-status: ack
+status: resolved
 severity: major
 refs:
   - model/q1_methodology.md
@@ -201,3 +201,10 @@ coding 回报（2026-10-29，状态 ack，待 modeling 验收）。
 - `tables.write_table` 增加可选参数 `tex_df`、`colfmt`，使 CSV 保留机器可读列名而 TeX 使用中文表头。
 - `tab_q1_external` 的表尾汇总行与逐行表共用列，汇总行中 `ctrl_mean`、`ctrl_se`、`G_hat` 三列依次为等级 MAE、完全一致数、平均有符号误差，表注已说明。
 - Q1 范围 black/ruff：`code/src/q1/panels.py` 不通过；W5 规定该文件不改，因此未格式化。其余全部通过。
+
+modeling 验收（2026-10-29）：通过。
+
+- 图、表与交付 CSV 由处理后数据重新生成：CSV 与表逐字节一致，PDF 只在嵌入字体子集上不同，数据内容一致。`test_q1_deliverables.py`、`test_q1_outputs.py` 通过。偏离项全部接受。
+- `panels.py` 已格式化，Q1 范围 black/ruff 全部通过。
+- `fig_q1_methodology_flowchart.py` 依赖 PyMuPDF（`fitz`），`environment.yml` 未列出；该图不由求解产物生成，本次未重绘。
+- 核对方式：在与正式运行相同版本的环境（Python 3.10.22、scikit-learn 1.7.2、numpy 2.2.6、pandas 2.3.3、scipy 1.15.3）中运行 `cd code && $PY -m pytest tests -q` 与 Q1 范围的 black、ruff；读取正式产物内置 `checks`；对照方法源文件点查关键实现。未重新求解。

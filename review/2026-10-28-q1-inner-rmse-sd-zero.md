@@ -2,7 +2,7 @@
 id: 2026-10-28-q1-inner-rmse-sd-zero
 from: coding
 to: modeling
-status: open
+status: resolved
 severity: major
 refs:
   - review/2026-10-28-q1-w2-main-model.md
@@ -45,3 +45,9 @@ coding 已采用 W9 工单对同一量的约定实现：分母为零的「内层
 W4（ElasticNet、RF 的选参，「调参标准与主模型一致」）与 W5（z 模型的嵌套 CV 复用 `fit_outer_fold`）沿用同一实现。
 
 ## 处理结果
+
+modeling 验收（2026-10-29）：采纳 coding 的做法，不重算。
+
+- 规定写入 `model/q1_methodology.md` §3.1：RMSE/SD 按“内层折 × 维度”单元计算，验证行目标恒定的单元记为不适用，从每个配置的平均中剔除，不代入 0 或 inf；剔除的单元写入产物。
+- 依据：剔除只取决于验证行目标，各配置剔除同一批单元，配置排序不受影响；与 §3.2 OAV 实验对零标准差维度的处理一致。
+- 该规定同样适用于 W4 的 ElasticNet、RF 与 W5 的 z 模型，现有 `q1_main_oof.npz`、`q1_baselines.npz`、`q1_twostage.npz` 有效。

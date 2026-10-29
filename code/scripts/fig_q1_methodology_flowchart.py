@@ -1,7 +1,7 @@
 """编译问题 1 方法流程图：paper/figures/q1_methodology_flowchart.tex -> figures/。"""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from src.flowchart import compile_flowchart

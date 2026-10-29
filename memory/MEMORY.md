@@ -22,3 +22,4 @@ frontmatter（见 `_TEMPLATE.md`）。本索引列出所有记忆文件，每条
 - [综合指标近似单一成分](composite-columns-near-duplicates.md) — 5 个综合指标各近似一个成分，不作为归因候选
 - [不编写事后预期表](no-post-hoc-expectation-table.md) — 化学合理性只用附件 8 原始标签与事后解释，不计算命中率
 - [方法决策闭环](method-decision-closure.md) — 先在方法源文件固定目标、估计与不适用口径，再由工单引用并同步下游文档
+- [Q1 主模型保留](q1-main-model-retained.md) — RF 等级 MAE 更低但 QWK 更低、网格下边界经扩展检查无改善，主模型与网格不变

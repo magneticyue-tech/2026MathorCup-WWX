@@ -13,5 +13,6 @@
 | 5 | `run_fold.py REP K`（15 折）→ `merge_folds.py` → `eval_twostage.py` | 一阶段与 C1、C2；混合参照 R 的误差 | §5.3 |
 | 6 | `run_fold_1s.py REP K`（15 折）→ `eval_rules_1s.py` | 离散规则比较 | §4 |
 | 7 | `run_fold_k2.py REP K`（15 折）→ `eval_k2.py` | K2 对照、混淆矩阵、RPS、对数损失、区间覆盖 | §4.1、§5.3 |
+| 8 | `exp_grid_boundary.py` | 正式运行后的调参网格边界检查：扩展网格、按正式划分的重复 0 嵌套选参，输出 `grid_boundary.json`；需 scikit-learn 1.7.2 与 `code/data/processed/q1/` 正式产物 | §3.1 |
 
 逐折脚本可并行：`for rep in 0 1 2; do for k in 0 1 2 3 4; do echo "$rep $k"; done; done | OMP_NUM_THREADS=1 xargs -P 15 -L 1 sh -c 'python experimentalCode/q1_raw_target/run_fold_k2.py $0 $1'`。`exp_twostage.py` 直接运行时使用 joblib 多进程，在本机出现工作进程被终止，改用 `run_fold.py` 逐折运行。

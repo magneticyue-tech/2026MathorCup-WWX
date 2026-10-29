@@ -2,7 +2,7 @@
 id: 2026-10-28-q1-w7-sensitivity
 from: modeling
 to: coding
-status: ack
+status: resolved
 severity: major
 refs:
   - model/q1_methodology.md
@@ -322,3 +322,10 @@ coding 回报（2026-10-29，状态 ack，待 modeling 验收）。
 - 冒烟时外部检查与正式运行内容相同（只是输出目录不同）。
 - 压力测试 `--smoke` 只跑款数最少的 2 个风格。
 - 各脚本复用 `solve_q1_metrics.py` 的 `sanitize`、`has_string_numbers`，以及 `solve_q1_data.py` 的 `make_check`。
+
+modeling 验收（2026-10-29）：通过。
+
+- `q1_sensitivity` 19/19、`q1_stress` 5/5、`q1_external` 6/6 内置检查通过；α 目标的品评员效应只用训练啤酒评分估计。偏离项全部接受。
+- 敏感性结论：8 个臂中只有附件 8 冲突单元臂的等级 MAE 配对差 CI 不含 0（+0.0020 [+0.0006, +0.0032]），其余均含 0；交付等级变化比例 0.07%–5.2%（α 目标最大）。`alpha_flag` 为 False，不开线程。
+- 留一风格的测试啤酒中有 139 款与训练啤酒同属一个日期组，该划分不比主划分更严格；写作只作定性解读。
+- 核对方式：在与正式运行相同版本的环境（Python 3.10.22、scikit-learn 1.7.2、numpy 2.2.6、pandas 2.3.3、scipy 1.15.3）中运行 `cd code && $PY -m pytest tests -q` 与 Q1 范围的 black、ruff；读取正式产物内置 `checks`；对照方法源文件点查关键实现。未重新求解。

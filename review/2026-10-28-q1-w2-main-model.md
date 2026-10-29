@@ -2,7 +2,7 @@
 id: 2026-10-28-q1-w2-main-model
 from: modeling
 to: coding
-status: ack
+status: resolved
 severity: blocker
 refs:
   - review/2026-10-28-q1-w1-data.md
@@ -213,3 +213,10 @@ coding 回报（2026-10-28，状态 ack，待 modeling 验收）。
 - `solve_q1_main.py` 从 `solve_q1_data.py` 导入 `make_check`。
 - `test_no_leakage` 与 `test_merge_inner_rows` 需真实拟合，各约 20–30 秒。
 - 解释器路径与库版本同 W1 回报。
+
+modeling 验收（2026-10-29）：通过。
+
+- `q1_main_oof.npz` 内置检查 9/9 通过；嵌套 CV、组内共享选参、内层残差池与 §3.1、§4.1 一致。偏离项全部接受。
+- 分母为 0 的剔除规则已写入方法论 §3.1，见 [2026-10-28-q1-inner-rmse-sd-zero](2026-10-28-q1-inner-rmse-sd-zero.md)。
+- 150 次选择的 `max_iter` 全部取下边界 100。§3.1 新增网格边界检查：扩展网格后最优点位于内部，外层指标没有改善，主网格保持不变，不重算。见 [[q1-main-model-retained]]。
+- 核对方式：在与正式运行相同版本的环境（Python 3.10.22、scikit-learn 1.7.2、numpy 2.2.6、pandas 2.3.3、scipy 1.15.3）中运行 `cd code && $PY -m pytest tests -q` 与 Q1 范围的 black、ruff；读取正式产物内置 `checks`；对照方法源文件点查关键实现。未重新求解。
