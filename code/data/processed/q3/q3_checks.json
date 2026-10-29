@@ -1,0 +1,392 @@
+{
+ "checks": [
+  {
+   "name": "生成列数",
+   "expected": 225,
+   "observed": 225,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "风格数与样本量范围",
+   "expected": [
+    22,
+    3,
+    31
+   ],
+   "observed": [
+    22,
+    3,
+    31
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "最小值并列列数与单元格数",
+   "expected": [
+    156,
+    7592
+   ],
+   "observed": [
+    156,
+    7592
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "共同下限列数与单元格数",
+   "expected": [
+    142,
+    6807
+   ],
+   "observed": [
+    142,
+    6807
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "潜变量方差最小值",
+   "expected": 0.46,
+   "observed": 0.4586538220214998,
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "潜变量方差 10% 分位",
+   "expected": 0.87,
+   "observed": 0.8673772551212658,
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "非缺失往返最大误差",
+   "expected": 0.0,
+   "observed": 0.0,
+   "tol": 1e-09,
+   "pass": true
+  },
+  {
+   "name": "amyl.acetate NA 数",
+   "expected": 27,
+   "observed": 27,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "η² 中位与四分位",
+   "expected": [
+    0.25,
+    0.178,
+    0.347
+   ],
+   "observed": [
+    0.25037661976553427,
+    0.17785878886083067,
+    0.3472031010684271
+   ],
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "name": "η² 置换零分布中位",
+   "expected": 0.081,
+   "observed": 0.08125878922220145,
+   "tol": 0.003,
+   "pass": true
+  },
+  {
+   "name": "η² 理论值 (S−1)/(n−1)",
+   "expected": 0.084,
+   "observed": 0.08433734939759036,
+   "tol": 0.0005,
+   "pass": true
+  },
+  {
+   "name": "超过置换 95% 分位的列数",
+   "expected": 198,
+   "observed": 198,
+   "tol": 2,
+   "pass": true
+  },
+  {
+   "name": "风格内残差累计方差占比 PC1/10/30",
+   "expected": [
+    0.18,
+    0.5,
+    0.72
+   ],
+   "observed": [
+    0.18325572627910658,
+    0.5047173965117896,
+    0.7241133041730496
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "aroma_hops_sum 岭回归 R²",
+   "expected": 0.78,
+   "observed": 0.7770308050825059,
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "esters_sum 岭回归 R²",
+   "expected": 0.94,
+   "observed": 0.9387274069569994,
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "其余三项 R² 介于两者之间",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "双乙酰 NA / Pils NA / 非缺失",
+   "expected": [
+    9,
+    2,
+    241
+   ],
+   "observed": [
+    9,
+    2,
+    241
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "双乙酰列均值",
+   "expected": 2.7458238779128634,
+   "observed": 2.7458238779128634,
+   "tol": 1e-09,
+   "pass": true
+  },
+  {
+   "name": "双乙酰列均值分位(%)",
+   "expected": 93.8,
+   "observed": 93.7759336099585,
+   "tol": 0.5,
+   "pass": true
+  },
+  {
+   "name": "双乙酰列均值 / 阈值",
+   "expected": 9.2,
+   "observed": 9.175685473393028,
+   "tol": 0.1,
+   "pass": true
+  },
+  {
+   "name": "NA 单元格数",
+   "expected": 60,
+   "observed": 60,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "NA 往返全部偏离",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "NA 往返最大偏差",
+   "expected": 0.00093,
+   "observed": 0.000925212520601626,
+   "tol": 0.0001,
+   "pass": true
+  },
+  {
+   "name": "双乙酰 NA 往返值",
+   "expected": 2.746749,
+   "observed": 2.74674909,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "name": "缺陷表均值口径 DES",
+   "expected": [
+    0.18
+   ],
+   "observed": [
+    0.184
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表均值口径 DMS",
+   "expected": [
+    0.67,
+    0.27,
+    0.89,
+    0.1,
+    0.82
+   ],
+   "observed": [
+    0.672,
+    0.2727272727272727,
+    0.8928571428571429,
+    0.1,
+    0.8181818181818182
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表均值口径 H2S",
+   "expected": [
+    0.92,
+    1.0,
+    1.0,
+    0.9,
+    0.91
+   ],
+   "observed": [
+    0.92,
+    1.0,
+    1.0,
+    0.9,
+    0.9090909090909091
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表均值口径 X2.3.butanedione",
+   "expected": [
+    0.45,
+    0.09,
+    0.46,
+    0.8,
+    0.36
+   ],
+   "observed": [
+    0.448,
+    0.09090909090909091,
+    0.4642857142857143,
+    0.8,
+    0.36363636363636365
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表均值口径 X4VG",
+   "expected": [
+    0.06,
+    0,
+    0,
+    0,
+    0
+   ],
+   "observed": [
+    0.064,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表均值口径 acetaldehyde",
+   "expected": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "observed": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表均值口径 SO2.mg.L.",
+   "expected": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "observed": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表中位口径全体",
+   "expected": [
+    0.69,
+    0.62,
+    0.004,
+    0.07
+   ],
+   "observed": [
+    0.692,
+    0.624,
+    0.004,
+    0.072
+   ],
+   "tol": 0.01,
+   "pass": true
+  },
+  {
+   "name": "缺陷表行数",
+   "expected": 9,
+   "observed": 9,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "Q2 模块表多成员模块数（记录，预运行 33）",
+   "expected": 33,
+   "observed": 33,
+   "tol": null,
+   "pass": true,
+   "note": "使用 Q2 正式标签，不要求等于预运行值"
+  }
+ ],
+ "n_multi_module_q2": 33,
+ "n_modules_q2": 161,
+ "composite_r2": {
+  "esters_sum": 0.9387274069569994,
+  "aroma_hops_sum": 0.7770308050825059,
+  "acids_sum": 0.9224859478793156,
+  "sulfur_sum": 0.8182223257524162,
+  "kcalperc": 0.8501186119208703
+ },
+ "diacetyl_na_pils": {
+  "rows": [
+   104,
+   171
+  ],
+  "beer": [
+   119,
+   28
+  ]
+ }
+}

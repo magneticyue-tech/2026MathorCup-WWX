@@ -1,0 +1,67 @@
+{
+ "arm": "T-S5a",
+ "kind": "transfer",
+ "change": "感官层：连续预测不升高",
+ "compare": "迁移指标",
+ "results": {
+  "T-S5a": {
+   "pils_tripel": {
+    "n": 11,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 0.0,
+    "alpha_median_diff": -1.0,
+    "active_frac_base": 1.0,
+    "active_frac_arm": 1.0,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.164,
+    "p_median_arm": 0.046,
+    "p_median_diff": -0.11800000000000001,
+    "n_alpha_changed": 11
+   },
+   "all_pairs": {
+    "n": 5250,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 0.0,
+    "alpha_median_diff": -1.0,
+    "active_frac_base": 0.8531428571428571,
+    "active_frac_arm": 0.8531428571428571,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.09,
+    "p_median_arm": 0.024,
+    "p_median_diff": -0.066,
+    "n_alpha_changed": 4957
+   },
+   "pils_alpha_base": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_alpha_arm": [
+    0.0,
+    0.05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.05,
+    0.0,
+    0.1
+   ]
+  }
+ },
+ "inputs_sha12": {
+  "q3_transfer.npz": "f7eb935e0632",
+  "q3_transfer_mu_cont.npz": "618def231043"
+ },
+ "wall_time_s": 10.790064811706543
+}

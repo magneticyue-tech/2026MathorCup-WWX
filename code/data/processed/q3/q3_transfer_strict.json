@@ -1,0 +1,164 @@
+{
+ "checks": [
+  {
+   "name": "α* 全在网格上",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "主方法原尺度化学违约数",
+   "expected": 0,
+   "observed": 0,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "主方法原尺度感官违约数",
+   "expected": 0,
+   "observed": 0,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "风格对数",
+   "expected": 462,
+   "observed": 462,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "四类比例之和为 1",
+   "expected": 0.0,
+   "observed": 2.220446049250313e-16,
+   "tol": 1e-09,
+   "pass": true
+  },
+  {
+   "name": "T4 两层违约率为 0",
+   "expected": 0,
+   "observed": 0,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "T5 原尺度两层违约为 0",
+   "expected": 0,
+   "observed": 0,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "化学层可完全判定款数",
+   "expected": 9,
+   "observed": 9,
+   "tol": null,
+   "pass": true
+  }
+ ],
+ "n_beers_baseline_differs_from_raw_input": 0,
+ "n_recheck_fail_total": 0,
+ "n_beers_baseline_differs_from_source_input": 0,
+ "n_discontinuous": 790,
+ "pair_summary": {
+  "alpha_star_mean_median": 0.8158333333333334,
+  "frac_t0_chem_viol_median": 1.0,
+  "p_main_median_median": 0.09,
+  "frac_alpha0_mean": 0.019283219819519384,
+  "frac_constraint_active_mean": 0.9773377177570233
+ },
+ "resid_comp": {
+  "esters_sum": {
+   "median_abs": 0.02628460470334787,
+   "max_abs": 0.1845816135349574
+  },
+  "aroma_hops_sum": {
+   "median_abs": 0.0909048808519145,
+   "max_abs": 0.6555721779074289
+  },
+  "acids_sum": {
+   "median_abs": 0.048005989960947466,
+   "max_abs": 0.2941290532232077
+  },
+  "sulfur_sum": {
+   "median_abs": 0.08708531767057809,
+   "max_abs": 0.5427532804028261
+  },
+  "kcalperc": {
+   "median_abs": 0.08119787371208143,
+   "max_abs": 0.7131066382803082
+  }
+ },
+ "pils_tripel": {
+  "summary_median": {
+   "p_src": 0.046,
+   "p_t0": 0.28,
+   "p_t1": 0.254,
+   "p_main": 0.128,
+   "p_fit": 0.128,
+   "p_t5": 0.178,
+   "p_t2": NaN,
+   "d2_src": 279.805394732393,
+   "d2_t0": 168.64156295036253,
+   "d2_main": 202.36362504529336,
+   "d2_t5": 197.1854471016204,
+   "retention": 0.9341076696165194,
+   "alpha_star": 1.0,
+   "alpha_fit": 1.0,
+   "n_active": 6.0,
+   "p_real_tripel_median": 0.269,
+   "d2_real_tripel_median": 185.9145109907065
+  },
+  "violation_rates": {
+   "t0": {
+    "chem_all": 1.0,
+    "sens_all": 0.36363636363636365,
+    "chem_decidable": 1.0,
+    "sens_decidable": 0.3333333333333333,
+    "any_all": 1.0
+   },
+   "t1": {
+    "chem_all": 0.0,
+    "sens_all": 0.2727272727272727,
+    "chem_decidable": 0.0,
+    "sens_decidable": 0.2222222222222222,
+    "any_all": 0.2727272727272727
+   },
+   "t3": {
+    "chem_all": 1.0,
+    "sens_all": 0.36363636363636365,
+    "chem_decidable": 1.0,
+    "sens_decidable": 0.3333333333333333,
+    "any_all": 1.0
+   },
+   "t5": {
+    "chem_all": 0.0,
+    "sens_all": 0.0,
+    "chem_decidable": 0.0,
+    "sens_decidable": 0.0,
+    "any_all": 0.0
+   },
+   "main": {
+    "chem_all": 0.0,
+    "sens_all": 0.0,
+    "chem_decidable": 0.0,
+    "sens_decidable": 0.0,
+    "any_all": 0.0
+   }
+  },
+  "category_counts": {
+   "not_improved": 4,
+   "improved": 4,
+   "reach": 3
+  },
+  "n_alpha1": 8,
+  "n_alpha0": 0,
+  "n_discontinuous": 2,
+  "src_missing_beers": [
+   119,
+   28
+  ]
+ },
+ "wall_time_s": 9.694722414016724
+}

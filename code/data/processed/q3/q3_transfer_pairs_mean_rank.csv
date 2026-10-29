@@ -1,0 +1,2 @@
+﻿src,tgt,n_src,alpha_star_mean,alpha_star_median,alpha_star_q25,alpha_star_q75,frac_alpha1,frac_alpha0,frac_t0_chem_viol,frac_t0_sens_viol,frac_constraint_active,p_main_median,p_t4_median,p_fit_median,alpha_fit_median,frac_ref,frac_improved,frac_unchanged,frac_no_improve,frac_discontinuous,n_src_missing_defect,ref_q25
+Pils/Lager,Tripel,11,0.9181818181818181,1.0,0.925,1.0,0.7272727272727273,0.0,1.0,0.2727272727272727,1.0,0.158,0.046,0.158,1.0,0.5454545454545454,0.2727272727272727,0.0,0.18181818181818182,0.2727272727272727,2,0.1565

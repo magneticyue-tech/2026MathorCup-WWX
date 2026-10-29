@@ -1,0 +1,210 @@
+{
+ "config": {
+  "kind": "famod",
+  "k": 15,
+  "kappa": 5.0
+ },
+ "checks": [
+  {
+   "name": "Pils/Lager 款数",
+   "expected": 11,
+   "observed": 11,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "T0 违反 H2S/MeSH/E-2-nonenal",
+   "expected": [
+    11,
+    11,
+    11
+   ],
+   "observed": [
+    11,
+    11,
+    11
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "T0 违反 DMS",
+   "expected": 10,
+   "observed": 9,
+   "tol": null,
+   "pass": false
+  },
+  {
+   "name": "T0 违反 DES",
+   "expected": 2,
+   "observed": 2,
+   "tol": 1,
+   "pass": true
+  },
+  {
+   "name": "T0 违反 双乙酰",
+   "expected": 3,
+   "observed": 3,
+   "tol": 2,
+   "pass": true
+  },
+  {
+   "name": "有效约束数最小",
+   "expected": 3,
+   "observed": 3,
+   "tol": 1,
+   "pass": true
+  },
+  {
+   "name": "有效约束数最大",
+   "expected": 5,
+   "observed": 4,
+   "tol": 1,
+   "pass": true
+  },
+  {
+   "name": "有效约束数中位",
+   "expected": 4,
+   "observed": 4.0,
+   "tol": 1,
+   "pass": true
+  },
+  {
+   "name": "T3 单元格总数",
+   "expected": 2475,
+   "observed": 2475,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "T3 超出观测范围",
+   "expected": 163,
+   "observed": 163,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "T3 低于下限",
+   "expected": 102,
+   "observed": 102,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "T3 线性列负值",
+   "expected": 1,
+   "observed": 1,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "风格对数",
+   "expected": 462,
+   "observed": 462,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "pair_viol_frac 中位",
+   "expected": 1.0,
+   "observed": 1.0,
+   "tol": 0.02,
+   "pass": true
+  },
+  {
+   "name": "pair_viol_frac 最小",
+   "expected": 0.0,
+   "observed": 0.0,
+   "tol": 0.02,
+   "pass": true
+  },
+  {
+   "name": "pair_viol_frac 最大",
+   "expected": 1.0,
+   "observed": 1.0,
+   "tol": 0.02,
+   "pass": true
+  },
+  {
+   "name": "pair_mean_active 中位",
+   "expected": 2.0,
+   "observed": 2.0,
+   "tol": 0.3,
+   "pass": true
+  },
+  {
+   "name": "src_missing_defect 个数",
+   "expected": 9,
+   "observed": 9,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "src_missing 只在双乙酰",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "Pils/Lager 源缺失 beer",
+   "expected": [
+    28,
+    119
+   ],
+   "observed": [
+    28,
+    119
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "零迁移 α=0 化学精确可行",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "beta ≥ u[idx]",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  }
+ ],
+ "results": {
+  "pils_viol_count": {
+   "acetaldehyde": 0,
+   "DES": 2,
+   "DMS": 9,
+   "H2S": 11,
+   "MeSH": 11,
+   "SO2.mg.L.": 0,
+   "X2.3.butanedione": 3,
+   "X4VG": 0,
+   "X.E..2.nonenal": 11
+  },
+  "pils_n_active": [
+   4,
+   4,
+   4,
+   4,
+   4,
+   3,
+   4,
+   4,
+   4,
+   3,
+   4
+  ],
+  "t3": {
+   "n_cells": 2475,
+   "out_of_range": 163,
+   "below_floor": 102,
+   "linear_negative": 1
+  }
+ },
+ "wall_time_s": 3.6425366401672363
+}

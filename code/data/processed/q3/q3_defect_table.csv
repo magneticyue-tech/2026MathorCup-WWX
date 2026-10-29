@@ -1,0 +1,10 @@
+﻿field,chemical_name,scale,unit,threshold_mean,threshold_median,n_na,n_na_pils,oav_ge1_mean_all,oav_ge1_mean_pils,oav_ge1_mean_tripel,oav_ge1_mean_kriek,oav_ge1_mean_lambic,oav_ge1_median_all,oav_ge1_median_pils,oav_ge1_median_tripel,oav_ge1_median_kriek,oav_ge1_median_lambic
+acetaldehyde,Acetaldehyde,log10,mg/L,50.0,50.0,0,0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+DES,Diethyl sulfide,log10,ug/L,1.2,1.2,0,0,0.184,0.0,0.21428571428571427,0.0,0.0,0.184,0.0,0.21428571428571427,0.0,0.0
+DMS,Dimethyl sulfide,log10,ug/L,17.25,19.0,0,0,0.672,0.2727272727272727,0.8928571428571429,0.1,0.8181818181818182,0.624,0.2727272727272727,0.8928571428571429,0.1,0.8181818181818182
+H2S,Hydrogen sulfide,log10,ug/L,3.5,3.5,0,0,0.92,1.0,1.0,0.9,0.9090909090909091,0.92,1.0,1.0,0.9,0.9090909090909091
+MeSH,Methanethiol,log10,ug/L,,,0,0,,,,,,,,,,
+SO2.mg.L.,Sulfur dioxide,log10,mg/L,15.33333333,11.0,0,0,0.0,0.0,0.0,0.0,0.0,0.004,0.0,0.0,0.0,0.0
+X2.3.butanedione,Diacetyl,linear,mg/L,0.29925,0.09,9,2,0.448,0.09090909090909091,0.4642857142857143,0.8,0.36363636363636365,0.692,0.2727272727272727,0.6428571428571429,1.0,0.7272727272727273
+X4VG,4-vinylguaiacol,log10,mg/L,0.206333333,0.2,0,0,0.064,0.0,0.0,0.0,0.0,0.072,0.0,0.0,0.0,0.0
+X.E..2.nonenal,E-2-nonenal,linear,mg/L,,,0,0,,,,,,,,,,
