@@ -64,7 +64,7 @@ Q3 的敏感性分析（方法论 §6.7）、图、表和交付文件尚未实�
 
 - `code/src/q3/sensitivity.py`：`ARMS`（臂的 id、改动、依赖的上游脚本、比较指标）；`compare_generator(base, arm, bootstrap_indices_all, bootstrap_indices_by_style) -> dict`（对每项 §6.2 标量指标复用 W3 保存的对应啤酒重抽索引，返回基线值、臂值、配对差及其 95% percentile 区间；逐风格指标另返回每风格值，以及宏平均、按全数据样本量加权平均各自的配对差区间）；`compare_transfer(base, arm) -> dict`（α* 中位数、约束起作用比例、P_t 中位数的差值；逐款 α* 变化的款数）。
 - `code/scripts/solve_q3_sensitivity.py`：`--arm <id>`、`--list`、`--smoke`；每个臂写 `code/data/processed/q3/sens/<id>.npz` 与 `<id>.json`；已存在且 `--force` 未给出时跳过。
-- 汇总文件 `code/data/processed/q3/q3_sensitivity.csv`：每臂一行，含基线、改动、各指标的基线值、臂值、配对差及差值 95% 区间、依赖的输入文件 SHA-256 前 12 位。区间使用 W3 的同一啤酒重抽索引，在每次重抽中对基线和敏感性臂配对计算差值。
+- 汇总文件 `code/data/processed/q3/q3_sensitivity.csv`：每臂一行，含基线、改动、各指标的基线值、臂值、配对差及差值 95% 区间、依赖的输入文件 SHA-256 前 12 位。区间使用 W3 的同一啤酒重抽索引，在每次重抽中对基线和敏感性臂配对计算差值。下限比例误差、相关误差与风格内相关误差的差值不报告区间，各指标另列逐重复差值的极差（方法论 §6.7 修订，实现见 `review/2026-10-29-q3-w3-acceptance-a.md` 任务 C2）。
 
 ## 图、表与交付文件
 
