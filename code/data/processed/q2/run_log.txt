@@ -1,0 +1,174 @@
+# Q2 正式运行 2026-10-29T07:01:07  HEAD 52e2cbe35bcdda0f0bfcfb3001c768a3d8d9bb94
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/data.py
+样本 250；候选 225；注释 6；交付维度 49；品评团 63；风格 22
+数据层验收通过
+[返回码 0，0.6s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/graph.py
+节点 231；候选间边 245；注释节点相关边 21；模块 161（多成员 33，覆盖 97，最大 11）；多成员模块来源纯度 0.79
+[返回码 0，1.4s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/association.py
+Top-3 完成：49 维 147 行；Top-1 |r| 中位 0.36（四分位 0.30–0.48）
+[返回码 0，0.9s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/inference.py
+置换 1000 次（seed 0）：q_d 中位 0.228；超过门槛 第1位 47/49，第2位 37，第3位 20；第1位未过门槛：['A_esters_flower', 't2n']
+[返回码 0，2.0s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/stability.py
+bootstrap 1000 次，单位 panel，63 个品评团，seed 0
+    bootstrap 100/1000
+    bootstrap 200/1000
+    bootstrap 300/1000
+    bootstrap 400/1000
+    bootstrap 500/1000
+    bootstrap 600/1000
+    bootstrap 700/1000
+    bootstrap 800/1000
+    bootstrap 900/1000
+    bootstrap 1000/1000
+π^c 按位置 [0.57, 0.36, 0.19]；J_boot 均值 0.269；稳定/中等/不稳定 [np.int64(29), np.int64(43), np.int64(75)]；等级 {'A': 22, 'B': 25, 'C': 2}
+[返回码 0，29.5s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/rationality.py
+附件 8 标签核对 1386 个单元一致；有阈值 Top-3 化合物 26 个；风格内 CI 含 0 40/147；breadth≥5 化合物 {'beta.phellandrene': 6, 'bitterness': 5, 'color.EBC.': 8, 'ethanol..v.v.': 6, 'ethyl_octanoate': 7, 'n.hexanol': 5, 'protein.g.L.': 6}；共变标记 80/147；模块可分假设被推翻的项 0
+[返回码 0，6.0s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/controls_sensitivity.py
+主方法 vs M0：化合物层 Jaccard 0.327，模块层 0.390，Top-1 相同比例 1.00
+主方法 vs M1：化合物层 Jaccard 0.371，模块层 0.390，Top-1 相同比例 1.00
+M0 前 3 含同模块化合物的维度 22/49
+[返回码 0，0.9s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/full_controls.py
+M2 ElasticNet（品评团分组 5 折）...
+风格内选择...
+M3 GBM（Q1 参数，5×5 外层，测试折置换重要度 n_repeats=5）...
+主方法 vs M2：化合物层 Jaccard 0.506，模块层 0.512，Top-1 相同比例 0.63
+主方法 vs M3：化合物层 Jaccard 0.294，模块层 0.300，Top-1 相同比例 0.51
+主方法 vs Within：化合物层 Jaccard 0.290，模块层 0.316，Top-1 相同比例 0.35
+M3 追加行 24（= M3 与主方法 Top-1 不同的维度数）
+[返回码 0，287.6s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/simulation.py
+模拟 6 种设置 × 1000 次（seed 0）；找回率分母为模拟重复数
+   weights  target_r  main_comp_recovery_1  main_comp_recovery_2  main_comp_recovery_3  main_nonplanted_module_share  M1_comp_recovery_1  M1_comp_recovery_2  M1_comp_recovery_3  M1_nonplanted_module_share
+1,0.75,0.5      0.20                  0.44                  0.24                  0.08                          0.71                0.46                0.24                0.08                        0.70
+1,0.75,0.5      0.30                  0.77                  0.53                  0.19                          0.47                0.76                0.41                0.12                        0.52
+1,0.75,0.5      0.45                  0.96                  0.88                  0.57                          0.16                0.95                0.61                0.19                        0.38
+     1,1,1      0.20                  0.40                  0.39                  0.36                          0.58                0.33                0.38                0.37                        0.59
+     1,1,1      0.30                  0.71                  0.70                  0.69                          0.26                0.51                0.56                0.56                        0.41
+     1,1,1      0.45                  0.93                  0.94                  0.92                          0.04                0.68                0.70                0.69                        0.27
+[返回码 0，2.6s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/sensitivity_runs.py
+基线复算与正式结果逐项一致
+[运行] tau_0.5：模块阈值 τ=0.5
+    Jaccard 1.000/1.000；Top-1 改变 0；等级改变 1；26.7s
+[运行] tau_0.7：模块阈值 τ=0.7
+    Jaccard 0.990/0.993；Top-1 改变 0；等级改变 0；26.4s
+[运行] cand_plus_composites：候选加回 5 个综合指标（230）
+    Jaccard 0.863/0.867；Top-1 改变 5；等级改变 1；30.0s
+[运行] cand_plus_internal_std：候选加回内标（226）
+    Jaccard 0.984/0.984；Top-1 改变 0；等级改变 0；26.3s
+[运行] na_lowest：单化合物 NA 最低位并列
+    Jaccard 0.980/0.980；Top-1 改变 0；等级改变 0；26.2s
+[运行] attachment8_conflict：24 款啤酒 80 个冲突单元格改用附件 8；图由替换后的附件 1 逐对重算
+    Jaccard 0.943/0.943；Top-1 改变 1；等级改变 0；26.3s
+[运行] boot_fixed_graph：bootstrap 中固定附件 2 图（与主分析同一组品评团索引）
+    Jaccard 1.000/1.000；Top-1 改变 0；等级改变 0；4.0s
+[运行] boot_beer_unit：bootstrap 单位改为单款啤酒（250 有放回）
+    Jaccard 1.000/1.000；Top-1 改变 0；等级改变 2；25.0s
+[运行] sensory_anchored：39 个有锚维度改用 z 减去本团零点（团内无零点用该维度零点中位数）
+    Jaccard 0.692/0.696；Top-1 改变 6；等级改变 2；26.4s
+[逐对删除] 附件 6 误差 6.66e-16；Top-3/Jaccard/Top-1/等级：不适用
+                   arm  n_dims  n_permutation  n_bootstrap  mean_jaccard_compound  mean_jaccard_module  n_top1_changed  n_grade_changed  pi_c_pos1  pi_c_pos2  pi_c_pos3  n_stable  n_medium  n_unstable  n_A  n_B  n_C
+              baseline      49         1000.0       1000.0                  1.000                1.000             0.0              0.0      0.566      0.357      0.189      29.0      43.0        75.0 22.0 25.0  2.0
+               tau_0.5      49         1000.0       1000.0                  1.000                1.000             0.0              1.0      0.564      0.358      0.191      28.0      44.0        75.0 21.0 26.0  2.0
+               tau_0.7      49         1000.0       1000.0                  0.990                0.993             0.0              0.0      0.567      0.357      0.191      29.0      43.0        75.0 22.0 25.0  2.0
+  cand_plus_composites      49         1000.0       1000.0                  0.863                0.867             5.0              1.0      0.537      0.336      0.198      27.0      40.0        80.0 21.0 26.0  2.0
+cand_plus_internal_std      49         1000.0       1000.0                  0.984                0.984             0.0              0.0      0.566      0.356      0.188      29.0      43.0        75.0 22.0 25.0  2.0
+             na_lowest      49         1000.0       1000.0                  0.980                0.980             0.0              0.0      0.565      0.355      0.182      29.0      42.0        76.0 22.0 25.0  2.0
+  attachment8_conflict      49         1000.0       1000.0                  0.943                0.943             1.0              0.0      0.571      0.364      0.180      29.0      40.0        78.0 22.0 25.0  2.0
+      boot_fixed_graph      49         1000.0       1000.0                  1.000                1.000             0.0              0.0      0.566      0.357      0.189      29.0      43.0        75.0 22.0 25.0  2.0
+        boot_beer_unit      49         1000.0       1000.0                  1.000                1.000             0.0              2.0      0.596      0.374      0.199      29.0      45.0        73.0 22.0 25.0  2.0
+      sensory_anchored      49         1000.0       1000.0                  0.692                0.696             6.0              2.0      0.570      0.321      0.190      28.0      37.0        82.0 22.0 25.0  2.0
+     pairwise_deletion      49            NaN          NaN                    NaN                  NaN             NaN              NaN        NaN        NaN        NaN       NaN       NaN         NaN  NaN  NaN  NaN
+[返回码 0，249.1s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/check_attachment6.py
+附件 2 复算最大误差 1.05e-15；附件 6 44×50 复算最大误差 6.66e-16（阈值 1e-12）
+[返回码 0，1.3s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/advanced_audits.py
+附件 2 复算最大误差 1.05e-15；附件 6 44×50 复算最大误差 6.66e-16（阈值 1e-12）
+C 级维度 ['A_esters_flower', 't2n']
+      dimension  n_all  n_above_zero          top1_all  r_all   top1_above_zero  r_above_zero  r_above_zero_of_top1_all  abs_r_increased
+A_esters_flower    250           205 beta.phellandrene  0.196 beta.phellandrene         0.279                     0.279             True
+            t2n    250           203 beta.phellandrene -0.214            manool         0.236                    -0.169             True
+[返回码 0，1.6s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/extra_figures.py
+图已更新：network_graph、method_comparison、stability_pi_c_hist、module_sizes
+[返回码 0，2.5s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/pipeline_final.py
+图已更新：top1_heatmap
+[返回码 0，2.1s]
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/acceptance.py
+Traceback (most recent call last):
+  File "C:\Users\11600\MathorCupWWX\code\src\q2\acceptance.py", line 181, in <module>
+    main()
+  File "C:\Users\11600\MathorCupWWX\code\src\q2\acceptance.py", line 174, in main
+    (Q / "handoff_modeling.md").write_text(handoff_md(fin, full, sens), encoding="utf-8")
+  File "C:\Users\11600\MathorCupWWX\code\src\q2\acceptance.py", line 64, in handoff_md
+    bad = main[(~main["is_significant"]) | (main["stability"] == "不稳定")]
+  File "C:\Users\11600\anaconda3\envs\mathorcup_new\lib\site-packages\pandas\core\generic.py", line 1574, in __invert__
+    new_data = self._mgr.apply(operator.invert)
+  File "C:\Users\11600\anaconda3\envs\mathorcup_new\lib\site-packages\pandas\core\internals\managers.py", line 361, in apply
+    applied = b.apply(f, **kwargs)
+  File "C:\Users\11600\anaconda3\envs\mathorcup_new\lib\site-packages\pandas\core\internals\blocks.py", line 395, in apply
+    result = func(self.values, **kwargs)
+TypeError: ufunc 'invert' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+[返回码 1，1.8s]
+# Q2 正式运行 2026-10-29T07:11:20  HEAD 52e2cbe35bcdda0f0bfcfb3001c768a3d8d9bb94
+
+$ C:\Users\11600\anaconda3\envs\mathorcup_new\python.exe code/src/q2/acceptance.py
+[通过] top3_results.csv：147 行、49 维、每维 3 行、无 barnyard
+[通过] top3_results_with_sig.csv：147 行、49 维、每维 3 行、无 barnyard
+[通过] final_top3_with_stability.csv：147 行、49 维、每维 3 行、无 barnyard
+[通过] M3 行 24 = M3 与主方法 Top-1 不同的维度数 24
+[通过] M3 行的主方法统计量为缺失并标注不适用
+[通过] 最终表 method 只有 main/M3
+[通过] 图节点 231，候选间边 245，注释节点相关边 21
+[通过] 品评团 63 个
+[通过] 主 bootstrap 1000 次、置换 1000 次
+[通过] bootstrap 结果数组含 1000 次重复
+[通过] 模拟 6 种设置各 1000 次
+[通过] 附件 2 误差 1.05e-15，附件 6 误差 6.66e-16
+[通过] A/B/C 由 is_significant、π^c 独立复算一致
+[通过] is_significant = 超过门槛 且 CI 不含 0
+[记录] 等级 {'A': 22, 'B': 25, 'C': 2}
+[通过] 最终表 origin_paper 与附件 8 逐项一致
+[通过] 最终表 off_flavors 与附件 8 逐项一致
+[通过] 最终表 aging 与附件 8 逐项一致
+[通过] 最终表 threshold_mean 与附件 8 逐项一致
+[通过] 附件 8 标签与 chemical_dictionary.csv 一致（1386 单元）
+[通过] 无阈值项的 OAV 保持缺失
+[通过] 风格内 CI 有序且在 [-1, 1]
+[通过] interpretation 留空
+[通过] stale_hops 标注同 barnyard
+[通过] 敏感性 10 个方案（含逐对删除）各 49 维
+[通过] 敏感性方案置换、bootstrap 均 1000 次
+[通过] 逐对删除的选择指标标为不适用
+[通过] 敏感性汇总无占位符
+[通过] 图 network_graph.png 基于本次结果重绘
+[通过] 图 method_comparison.png 基于本次结果重绘
+[通过] 图 stability_pi_c_hist.png 基于本次结果重绘
+[通过] 图 module_sizes.png 基于本次结果重绘
+[通过] 图 top1_heatmap.png 基于本次结果重绘
+[通过] 附录视图 147 行，六组 {'Aroma': 15, 'Basic': 8, 'Defect': 6, 'Flavour': 15, 'Sour': 2, 'Spice': 3}
+[返回码 0，1.8s]

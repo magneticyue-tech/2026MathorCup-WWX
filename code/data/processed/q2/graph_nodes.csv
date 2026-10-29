@@ -1,232 +1,232 @@
-node,module_id,k_in,is_candidate,is_annotation
-acetaldehyde,32,2.4568448196124297,True,False
-CS2,156,0.0,True,False
-DES,36,0.0,True,False
-DMS,37,0.0,True,False
-ethyl_2.methyl_butyrate,114,0.737056676778286,True,False
-ethyl_acetate,32,2.639982501303132,True,False
-ethyl_decanoate,63,0.85313084169571,True,False
-ethyl_hexanoate,32,2.583480336945317,True,False
-ethyl_isovalerate,114,0.737056676778286,True,False
-ethyl_octanoate,63,0.85313084169571,True,False
-ethyl_propionate,42,0.0,True,False
-H2S,34,0.775228131266335,True,False
-isoamyl_alcohol,31,1.338049027029519,True,False
-isobutanol,31,1.352884612144678,True,False
-isobutyl_acetate,29,2.288235421223538,True,False
-isopentyl_acetate,29,2.425587759960156,True,False
-MeSH,35,0.0,True,False
-octyl_acetate,144,0.0,True,False
-phenethyl_acetate,30,0.0,True,False
-phenethyl_alcohol,159,0.0,True,False
-X4VG,148,0.0,True,False
-SO2.mg.L.,155,0.0,True,False
-acetic_acid.g.L.,124,0.96625558611341,True,False
-ammonia.mg.L.,22,0.0,True,False
-color.EBC.,150,0.788272799657229,True,False
-betaglucan.mg.L.,40,0.0,True,False
-lactic_acid.mg.L.,115,0.0,True,False
-glycerol,31,1.273022099560801,True,False
-iron,122,0.0,True,False
-pH,125,0.0,True,False
-protein.g.L.,150,0.788272799657229,True,False
-bitterness,123,0.0,True,False
-GFS,146,0.0,True,False
-ethanol..v.v.,32,3.003872915577607,True,False
-CO2.PSI.,38,0.0,True,False
-unfermentables,39,0.0,True,False
-X1.propanol,25,1.927662832947535,True,False
-X2.3.butanedione,138,0.663595210809322,True,False
-X3.methylbutanal,142,0.0,True,False
-propylene.glycol,157,0.0,True,False
-propyl.acetate,24,0.606532418561472,True,False
-n.pentanol,25,2.0980002669209252,True,False
-X2.methyl.1.butanol,25,2.300170197124141,True,False
-isopentyl.formate,25,2.145388303237419,True,False
-ethyl.isobutyrate,95,0.0,True,False
-X2.methyltetrahydrofuran.3.one,133,0.0,True,False
-ethyl.butyrate,33,0.0,True,False
-butyl.acetate,126,0.0,True,False
-methylpyrazine,154,0.0,True,False
-furfural,145,0.0,True,False
-ethyl.lactate,158,0.0,True,False
-X3Z.hexenol,132,0.0,True,False
-n.hexanol,29,1.96967688755797,True,False
-styrene,41,0.0,True,False
-X2.furanmethanol,96,0.0,True,False
-X3.methyl.2.hexanol,93,2.218928571104308,True,False
-X3.furanmethanol,93,2.153639081467501,True,False
-X2.acetylfuran,152,0.689502907122979,True,False
-X2.6.dimethyl.pyrazine,153,0.0,True,False
-amyl.acetate,141,0.0,True,False
-ethyl.tiglate,87,0.0,True,False
-benzaldehyde,140,0.0,True,False
-X5.methylfurfural,151,0.617105518200145,True,False
-n.heptanol,76,0.621044838227411,True,False
-X1.octen.3.ol,75,0.639824201650873,True,False
-X3.methylthio.propanol,82,0.0,True,False
-isomaltol,94,0.0,True,False
-X6.methyl.5.hepten.2.one,68,0.0,True,False
-X2.pentyl.furan,80,0.0,True,False
-ethyl.hex..3E..enoate,86,0.600485499061212,True,False
-alpha.phellandrene,48,0.0,True,False
-dehydroxy.cis.linalool.oxide,112,0.0,True,False
-hexyl.acetate,127,0.0,True,False
-isopentyl.butanoate,69,0.0,True,False
-X2.ethyl.1.hexanol,90,0.0,True,False
-beta.phellandrene,47,0.646808415389653,True,False
-limonene,50,0.0,True,False
-eucalyptol,52,0.0,True,False
-benzyl.alcohol,131,0.0,True,False
-ethyl.hex..2E..enoate,64,1.278905552400007,True,False
-phenylacetaldehyde,3,0.0,True,False
-X.E..beta.ocimene,4,0.0,True,False
-prenyl.isobutyrate,119,2.01674460077406,True,False
-ethyl.furoate,151,0.617105518200145,True,False
-ortho.cresol,93,2.1121566960412608,True,False
-ethyl.5.methylhexanoate,86,0.600485499061212,True,False
-X2.acetylpyrrole,152,0.689502907122979,True,False
-isoamyl.lactate,117,0.0,True,False
-n.octanol,93,1.97119620518404,True,False
-cis.linalool.oxide,111,0.0,True,False
-meta.cymenene,51,0.0,True,False
-terpinolene,47,0.646808415389653,True,False
-linalool,43,2.260567616660364,True,False
-nonan.2.ol,118,0.0,True,False
-n.nonanal,53,0.0,True,False
-X2.methyl.benzofuran,49,0.0,True,False
-heptyl.acetate,20,0.0,True,False
-X4.methyl.1.pentanol,92,0.814038485603805,True,False
-neo.allo.ocimene,5,0.0,True,False
-x.methyl.1.octanol,92,0.814038485603805,True,False
-trans.dihydro.beta.terpineol,88,0.0,True,False
-cis.beta.terpineol,7,0.0,True,False
-y.methyl.1.octanol,61,0.0,True,False
-camphor,45,0.0,True,False
-isobutyl.hexanoate,64,1.3015294642520718,True,False
-nerol.oxide,64,1.4129596485616949,True,False
-X.E..2.nonenal,60,0.626570878125078,True,False
-cis.dihydro.beta.terpineol,60,0.626570878125078,True,False
-X4.ethyl.phenol,116,1.46321796840805,True,False
-isoborneol,44,1.4881438959934008,True,False
-ethyl.benzoate,119,1.8885100071527892,True,False
-n.nonanol,76,0.621044838227411,True,False
-terpinen.4.ol,44,1.503320507506266,True,False
-diethyl.succinate,130,0.610338331519888,True,False
-vinyl.caprylate,147,0.0,True,False
-X1.alpha.terpineol,43,1.980294512550004,True,False
-ethyl..E..linalool,44,1.502204307956009,True,False
-ethyl.nicotinate,130,0.610338331519888,True,False
-citronellol,43,1.910891054739746,True,False
-nerol,70,0.0,True,False
-hydroxy.methyl.furfural,106,0.0,True,False
-E.ocimenone,107,0.0,True,False
-cumin.aldehyde,108,0.0,True,False
-ethyl.phenylacetate,119,2.188753050451229,True,False
-isopentyl.hexanoate,65,7.938423262776808,True,False
-geraniol,46,0.0,True,False
-beta.cyclohomocitral,83,0.0,True,False
-E.cinnamaldehyde,21,0.0,True,False
-n.decanol,19,0.0,True,False
-neryl.formate,116,1.450606322471197,True,False
-X4.ethyl.guaiacol,116,1.604387015186881,True,False
-X2.undecanone,11,0.0,True,False
-trans.dihydro.alpha.terpinyl.acetate,65,7.240696308850884,True,False
-terpinen.4.ol.acetate,71,0.0,True,False
-X2.undecanol,73,3.171582886847306,True,False
-delta.terpinyl.acetate,149,0.0,True,False
-X.E.E..2.4.decadienal,139,0.0,True,False
-methyl.geranate,73,3.430467568045518,True,False
-car.3.en.2.one,105,0.78069326829314,True,False
-dimethoxy..E..citral,105,0.78069326829314,True,False
-X2.butyloctanoate,65,7.562299226540345,True,False
-X4.methoxysalicylaldehyde,84,0.0,True,False
-ethyl.hydrocinnamate,85,0.0,True,False
-eugenol,134,0.0,True,False
-gamma.nonalactone,129,0.665397077865724,True,False
-methyl.para.anisate,67,0.0,True,False
-X.E..beta.damascenone,129,0.665397077865724,True,False
-ethyl..9..decenoate,66,0.0,True,False
-vanillin,89,0.0,True,False
-geosmin,54,0.0,True,False
-dodecanal,27,0.0,True,False
-X4.8.alpha.epoxy.caryophyllane,23,0.0,True,False
-E.caryophyllene,135,0.0,True,False
-X.E..alpha.ionone,121,0.0,True,False
-perillyl.acetate,119,1.9056283295186238,True,False
-beta.humulene,1,0.0,True,False
-X2.phenyl.ethyl.butyrate,65,8.042944680578074,True,False
-X.Z..beta.farnesene,65,8.162656627119011,True,False
-pentyl.octanoate,65,8.55060736186479,True,False
-X.E..beta.farnesene,81,0.0,True,False
-X2.methylbutyl.octanoate,65,8.20331287876291,True,False
-alpha.humulene,136,0.0,True,False
-neryl.propanoate,72,2.708307154119876,True,False
-X9.epi..E..caryophyllene,99,0.0,True,False
-ethyl..E..cinnamate,91,0.0,True,False
-linalool.isovalerate,57,0.0,True,False
-alpha.terpinyl.isobutanoate,100,0.0,True,False
-n.dodecanol,97,1.437434918849986,True,False
-germacrene.D,120,0.0,True,False
-X.E..beta.ionone,75,0.639824201650873,True,False
-valencene,8,0.0,True,False
-neryl.isobutanoate,79,0.0,True,False
-E.methyl.isoeugenol,9,0.869216243551411,True,False
-X.Z..dihydro.apofarnesal,10,0.0,True,False
-butylated.hydroxytoluene,9,0.869216243551411,True,False
-X.E..dihydro.apofarnesal,113,0.0,True,False
-Z.nerolidol,137,0.0,True,False
-X.E..ortho.methoxy.cinnamaldehyde,109,0.0,True,False
-alpha.calacorene,72,2.891330815459319,True,False
-E.nerolidol,18,2.268273299220454,True,False
-dihydroisocaryophyllene.epoxide,18,2.201993191642636,True,False
-caryophyllene.alcohol,77,0.0,True,False
-neryl.isovalerate,78,0.0,True,False
-spathulenol,110,0.0,True,False
-caryophyllene.oxide,73,3.5671040779246153,True,False
-humulene.epoxide.II,73,3.484625405978471,True,False
-alloaromadendrene.epoxide,72,3.015885786161377,True,False
-X1.10.di.epi.cubenol,72,2.89914636655036,True,False
-isopropyl.laurate,15,0.0,True,False
-caryophylla.4.12..8.13..dien.5.alpha.ol,72,2.8017750644643757,True,False
-gamma.eudesmol,143,0.0,True,False
-alpha.muurolol,73,3.8327270498193307,True,False
-X1.2.dihydro.8.hydroxy..2E..linalool,65,8.038295977554661,True,False
-tau.cadinol,12,0.0,True,False
-selin.11.en.4.alpha.ol,74,0.0,True,False
-alpha.eudesmol,58,0.0,True,False
-X14.hydroxy.9.epi..E..caryophyllene,26,0.0,True,False
-tau.muurolol,73,3.509476779232205,True,False
-n.tetradecanol,97,1.273802099443388,True,False
-foeniculin,2,0.0,True,False
-cadalene,28,0.0,True,False
-X2.3.dihydro.farnesol,18,2.0291587096534824,True,False
-X2E.6Z.farnesal,16,0.0,True,False
-caryophyllene.acetate,59,0.0,True,False
-X14.hydroxy.alpha.humulene,101,0.0,True,False
-X2Z.6E.farnesal,17,0.0,True,False
-X2Z.6Z.farnesol,104,0.0,True,False
-X2Z.6E.farnesol,18,2.067155718792538,True,False
-ambroxide,102,0.0,True,False
-benzyl.benzoate,103,0.0,True,False
-X2E.6E.methyl.farnesoate,55,0.0,True,False
-ethyl.tetradecanoate,65,7.741505293689109,True,False
-X2.ethylhexylsalicylate,56,0.0,True,False
-isopropyl.tetradecanoate,98,0.0,True,False
-ethyl.pentadecanoate,65,7.599196483025628,True,False
-methyl.hexadecanoate,14,0.0,True,False
-Z.Z.geranyl.linalool,62,0.707174705720264,True,False
-ethyl.hexadecanoate,65,7.064001650591875,True,False
-manool.oxide,13,0.735496780152608,True,False
-X13.epi.manool.oxide,6,0.0,True,False
-isopropyl.hexadecanoate,13,0.735496780152608,True,False
-manool,97,1.2636239225981538,True,False
-ethyl.octadecanoate,62,0.707174705720264,True,False
-ethyl.pentanoate,138,0.663595210809322,True,False
-X2.ethyl.3.methylpyrazine,128,0.0,True,False
-esters_sum,29,2.397352087866348,False,True
-aroma_hops_sum,43,2.403870666481568,False,True
-acids_sum,124,0.96625558611341,False,True
-sulfur_sum,34,0.775228131266335,False,True
-kcalperc,32,2.770903615130446,False,True
-X3.methyl.2.butenal,24,0.606532418561472,False,True
+node,is_candidate,is_annotation,node_type,module_id,module_size,k_in,origin_paper,chemical_name,nearest_candidate,nearest_candidate_rho,is_hub
+acetaldehyde,True,False,单一化合物,119.0,1.0,0.0,Yeast,Acetaldehyde,,,True
+CS2,True,False,单一化合物,158.0,1.0,0.0,Yeast,Carbon disulfide,,,True
+DES,True,False,单一化合物,123.0,1.0,0.0,Yeast,Diethyl sulfide,,,True
+DMS,True,False,单一化合物,113.0,1.0,0.0,Malt,Dimethyl sulfide,,,True
+ethyl_2.methyl_butyrate,True,False,单一化合物,35.0,2.0,0.737056676778286,Others,Ethyl 2-methylbutyrate,,,True
+ethyl_acetate,True,False,单一化合物,118.0,4.0,1.964240975374361,Yeast,Ethyl acetate,,,False
+ethyl_decanoate,True,False,单一化合物,83.0,2.0,0.85313084169571,Yeast,Ethyl decanoate,,,True
+ethyl_hexanoate,True,False,单一化合物,118.0,4.0,2.037312887484944,Yeast,Ethyl hexanoate,,,False
+ethyl_isovalerate,True,False,单一化合物,35.0,2.0,0.737056676778286,Others,Ethyl 3-methylbutyrate,,,False
+ethyl_octanoate,True,False,单一化合物,83.0,2.0,0.85313084169571,Yeast,Ethyl octanoate,,,False
+ethyl_propionate,True,False,单一化合物,127.0,1.0,0.0,Yeast,Ethyl propionate,,,True
+H2S,True,False,单一化合物,121.0,1.0,0.0,Yeast,Hydrogen sulfide,,,True
+isoamyl_alcohol,True,False,单一化合物,117.0,2.0,0.708955769806698,Yeast,Isoamyl alcohol,,,True
+isobutanol,True,False,单一化合物,117.0,2.0,0.708955769806698,Yeast,Isobutanol,,,False
+isobutyl_acetate,True,False,单一化合物,115.0,3.0,1.466187890373551,Yeast,Isobutyl acetate,,,False
+isopentyl_acetate,True,False,单一化合物,115.0,3.0,1.503309835513365,Yeast,Isoamyl acetate,,,True
+MeSH,True,False,单一化合物,122.0,1.0,0.0,Yeast,Methanethiol,,,True
+octyl_acetate,True,False,单一化合物,145.0,1.0,0.0,Yeast,Octyl acetate,,,True
+phenethyl_acetate,True,False,单一化合物,116.0,1.0,0.0,Yeast,Phenethyl acetate,,,True
+phenethyl_alcohol,True,False,单一化合物,161.0,1.0,0.0,Yeast,Phenethyl alcohol,,,True
+X4VG,True,False,单一化合物,149.0,1.0,0.0,Yeast,4-vinylguaiacol,,,True
+SO2.mg.L.,True,False,单一化合物,156.0,1.0,0.0,Yeast,Sulfur dioxide,,,True
+acetic_acid.g.L.,True,False,单一化合物,43.0,1.0,0.0,Wild flora,Acetic acid,,,True
+ammonia.mg.L.,True,False,单一化合物,111.0,1.0,0.0,Malt,Ammonia,,,True
+color.EBC.,True,False,理化指标,151.0,2.0,0.788272799657229,Malt,Color,,,True
+betaglucan.mg.L.,True,False,化合物类,125.0,1.0,0.0,Malt,Betaglucan,,,True
+lactic_acid.mg.L.,True,False,单一化合物,36.0,1.0,0.0,Wild flora,Lactic acid,,,True
+glycerol,True,False,单一化合物,118.0,4.0,1.915283537122134,Yeast,Glycerol,,,False
+iron,True,False,单一化合物,44.0,1.0,0.0,Others,Iron,,,True
+pH,True,False,理化指标,46.0,1.0,0.0,Others,pH,,,True
+protein.g.L.,True,False,化合物类,151.0,2.0,0.788272799657229,Others,Protein,,,False
+bitterness,True,False,理化指标,45.0,1.0,0.0,Hops,Iso-alpha acids,,,True
+GFS,True,False,化合物类,147.0,1.0,0.0,Malt,Sugars,,,True
+ethanol..v.v.,True,False,理化指标,118.0,4.0,2.192614262102309,Yeast,Ethanol,,,True
+CO2.PSI.,True,False,理化指标,124.0,1.0,0.0,Others,Carbon dioxide,,,True
+unfermentables,True,False,化合物类,126.0,1.0,0.0,Malt,Unfermentables,,,True
+X1.propanol,True,False,单一化合物,100.0,4.0,1.927662832947535,Yeast,1-propanol,,,False
+X2.3.butanedione,True,False,单一化合物,139.0,2.0,0.663595210809322,Yeast,Diacetyl,,,True
+X3.methylbutanal,True,False,单一化合物,143.0,1.0,0.0,Malt,3-methylbutanal,,,True
+propylene.glycol,True,False,单一化合物,159.0,1.0,0.0,Others,Propylene glycol,,,True
+propyl.acetate,True,False,单一化合物,102.0,1.0,0.0,Yeast,N-propyl acetate,,,True
+n.pentanol,True,False,单一化合物,100.0,4.0,2.0980002669209252,Yeast,N-pentanol,,,False
+X2.methyl.1.butanol,True,False,单一化合物,100.0,4.0,2.300170197124141,Yeast,2-methyl-1-butanol,,,True
+isopentyl.formate,True,False,单一化合物,100.0,4.0,2.145388303237419,Yeast,Isopentyl formate,,,False
+ethyl.isobutyrate,True,False,单一化合物,64.0,1.0,0.0,Yeast,Ethyl isobutyrate,,,True
+X2.methyltetrahydrofuran.3.one,True,False,单一化合物,134.0,1.0,0.0,Malt,2-methyltetrahydrofuran-3-one,,,True
+ethyl.butyrate,True,False,单一化合物,120.0,1.0,0.0,Yeast,Ethyl butyrate,,,True
+butyl.acetate,True,False,单一化合物,47.0,1.0,0.0,Yeast,Butyl acetate,,,True
+methylpyrazine,True,False,单一化合物,155.0,1.0,0.0,Malt,Methylpyrazine,,,True
+furfural,True,False,单一化合物,146.0,1.0,0.0,Malt,Furfural,,,True
+ethyl.lactate,True,False,单一化合物,160.0,1.0,0.0,Others,Ethyl lactate,,,True
+X3Z.hexenol,True,False,单一化合物,133.0,1.0,0.0,Hops,Cis-3-hexenol,,,True
+n.hexanol,True,False,单一化合物,115.0,3.0,1.3166502549883998,Yeast,N-hexanol,,,False
+styrene,True,False,单一化合物,114.0,1.0,0.0,Yeast,Styrene,,,True
+X2.furanmethanol,True,False,单一化合物,65.0,1.0,0.0,Others,Furfuryl alcohol,,,True
+X3.methyl.2.hexanol,True,False,单一化合物,62.0,4.0,2.218928571104308,Yeast,3-methyl-2-hexanol,,,True
+X3.furanmethanol,True,False,单一化合物,62.0,4.0,2.153639081467501,Malt,3-furanmethanol,,,False
+X2.acetylfuran,True,False,单一化合物,153.0,2.0,0.689502907122979,Malt,2-acetylfuran,,,True
+X2.6.dimethyl.pyrazine,True,False,单一化合物,154.0,1.0,0.0,Malt,"2,6-dimethylpyrazine",,,True
+amyl.acetate,True,False,单一化合物,142.0,1.0,0.0,Yeast,Amyl acetate,,,True
+ethyl.tiglate,True,False,单一化合物,56.0,1.0,0.0,Yeast,Ethyl tiglate,,,True
+benzaldehyde,True,False,单一化合物,141.0,1.0,0.0,Yeast,Benzaldehyde,,,True
+X5.methylfurfural,True,False,单一化合物,152.0,2.0,0.617105518200145,Malt,5-methylfurfural,,,True
+n.heptanol,True,False,单一化合物,96.0,2.0,0.621044838227411,Yeast,N-heptanol,,,True
+X1.octen.3.ol,True,False,单一化合物,95.0,2.0,0.639824201650873,Yeast,1-octen-3-ol,,,True
+X3.methylthio.propanol,True,False,单一化合物,51.0,1.0,0.0,Others,Methionol,,,True
+isomaltol,True,False,单一化合物,63.0,1.0,0.0,Malt,Isomaltol,,,True
+X6.methyl.5.hepten.2.one,True,False,单一化合物,88.0,1.0,0.0,Yeast,Methyl heptenone,,,True
+X2.pentyl.furan,True,False,单一化合物,49.0,1.0,0.0,Malt,2-pentyl furan,,,True
+ethyl.hex..3E..enoate,True,False,单一化合物,55.0,2.0,0.600485499061212,Yeast,Ethyl 3-hexanoate,,,True
+alpha.phellandrene,True,False,单一化合物,25.0,1.0,0.0,Hops,Î±-phellandrene,,,True
+dehydroxy.cis.linalool.oxide,True,False,单一化合物,33.0,1.0,0.0,Hops,Dehydroxy-cis-linalool oxide,,,True
+hexyl.acetate,True,False,单一化合物,128.0,1.0,0.0,Yeast,Hexyl acetate,,,True
+isopentyl.butanoate,True,False,单一化合物,89.0,1.0,0.0,Yeast,Isopentyl butanoate,,,True
+X2.ethyl.1.hexanol,True,False,单一化合物,59.0,1.0,0.0,Yeast,2-ethyl-1-hexanol,,,True
+beta.phellandrene,True,False,单一化合物,24.0,2.0,0.646808415389653,Hops,Beta-phellandrene,,,True
+limonene,True,False,单一化合物,27.0,1.0,0.0,Hops,Limonene,,,True
+eucalyptol,True,False,单一化合物,29.0,1.0,0.0,Hops,Eucalyptol,,,True
+benzyl.alcohol,True,False,单一化合物,132.0,1.0,0.0,Hops,Benzyl alcohol,,,True
+ethyl.hex..2E..enoate,True,False,单一化合物,84.0,3.0,1.278905552400007,Yeast,Ethyl 2-hexenoate,,,False
+phenylacetaldehyde,True,False,单一化合物,3.0,1.0,0.0,Others,Phenylacetaldehyde,,,True
+X.E..beta.ocimene,True,False,单一化合物,4.0,1.0,0.0,Hops,E-Î²-ocimene,,,True
+prenyl.isobutyrate,True,False,单一化合物,40.0,4.0,2.01674460077406,Yeast,Prenyl isobutyrate,,,False
+ethyl.furoate,True,False,单一化合物,152.0,2.0,0.617105518200145,Malt,Ethyl furoate,,,False
+ortho.cresol,True,False,单一化合物,62.0,4.0,2.1121566960412608,Yeast,O-cresol,,,False
+ethyl.5.methylhexanoate,True,False,单一化合物,55.0,2.0,0.600485499061212,Yeast,Ethyl 5-methylhexanoate,,,False
+X2.acetylpyrrole,True,False,单一化合物,153.0,2.0,0.689502907122979,Malt,2-acetylpyrrole,,,False
+isoamyl.lactate,True,False,单一化合物,38.0,1.0,0.0,Wild flora,Isoamyl lactate,,,True
+n.octanol,True,False,单一化合物,62.0,4.0,1.97119620518404,Yeast,N-octanol,,,False
+cis.linalool.oxide,True,False,单一化合物,32.0,1.0,0.0,Hops,Cis-linalool oxide,,,True
+meta.cymenene,True,False,单一化合物,28.0,1.0,0.0,Hops,Meta-cymenene,,,True
+terpinolene,True,False,单一化合物,24.0,2.0,0.646808415389653,Spices,Terpinolene,,,False
+linalool,True,False,单一化合物,19.0,2.0,0.694422993402073,Hops,Linalool,,,True
+nonan.2.ol,True,False,单一化合物,39.0,1.0,0.0,Hops,2-nonanol,,,True
+n.nonanal,True,False,单一化合物,157.0,1.0,0.0,Yeast,N-nonanal,,,True
+X2.methyl.benzofuran,True,False,单一化合物,26.0,1.0,0.0,Malt,2-methyl-benzofuran,,,True
+heptyl.acetate,True,False,单一化合物,109.0,1.0,0.0,Yeast,Heptyl acetate,,,True
+X4.methyl.1.pentanol,True,False,单一化合物,61.0,2.0,0.814038485603805,Yeast,4-methyl-1-pentanol,,,True
+neo.allo.ocimene,True,False,单一化合物,5.0,1.0,0.0,Hops,Neo-allo-ocimene,,,True
+x.methyl.1.octanol,True,False,单一化合物,61.0,2.0,0.814038485603805,Yeast,X-methyl-1-octanol,,,False
+trans.dihydro.beta.terpineol,True,False,单一化合物,57.0,1.0,0.0,Spices,Trans-dihydro-Î²-terpineol,,,True
+cis.beta.terpineol,True,False,单一化合物,7.0,1.0,0.0,Hops,Cis-Î²-terpineol,,,True
+y.methyl.1.octanol,True,False,单一化合物,81.0,1.0,0.0,Yeast,Y-methyl-1-octanol,,,True
+camphor,True,False,单一化合物,22.0,1.0,0.0,Spices,Camphor,,,True
+isobutyl.hexanoate,True,False,单一化合物,84.0,3.0,1.3015294642520718,Yeast,Isobutyl hexanoate,,,False
+nerol.oxide,True,False,单一化合物,84.0,3.0,1.4129596485616949,Hops,Nerol oxide,,,True
+X.E..2.nonenal,True,False,单一化合物,80.0,2.0,0.626570878125078,Others,E-2-nonenal,,,True
+cis.dihydro.beta.terpineol,True,False,单一化合物,80.0,2.0,0.626570878125078,Hops,Cis-dihydro-Î²-terpineol,,,False
+X4.ethyl.phenol,True,False,单一化合物,37.0,3.0,1.46321796840805,Wild flora,4-ethyl-phenol,,,False
+isoborneol,True,False,单一化合物,21.0,3.0,1.4881438959934008,Others,Isoborneol,,,False
+ethyl.benzoate,True,False,单一化合物,40.0,4.0,1.8885100071527892,Yeast,Ethyl benzoate,,,False
+n.nonanol,True,False,单一化合物,96.0,2.0,0.621044838227411,Yeast,N-nonanol,,,False
+terpinen.4.ol,True,False,单一化合物,21.0,3.0,1.503320507506266,Spices,Terpinen-4-ol,,,True
+diethyl.succinate,True,False,单一化合物,131.0,2.0,0.610338331519888,Yeast,Diethyl succinate,,,True
+vinyl.caprylate,True,False,单一化合物,148.0,1.0,0.0,Yeast,Vinyl caprylate,,,True
+X1.alpha.terpineol,True,False,单一化合物,19.0,2.0,0.694422993402073,Hops,Alpha-terpineol,,,False
+ethyl..E..linalool,True,False,单一化合物,21.0,3.0,1.502204307956009,Hops,Ethyl linalool,,,False
+ethyl.nicotinate,True,False,单一化合物,131.0,2.0,0.610338331519888,Others,Ethyl nicotinate,,,False
+citronellol,True,False,单一化合物,20.0,1.0,0.0,Hops,Citronellol,,,True
+nerol,True,False,单一化合物,90.0,1.0,0.0,Hops,Nerol,,,True
+hydroxy.methyl.furfural,True,False,单一化合物,16.0,1.0,0.0,Malt,5-hydroxymethylfurfural,,,True
+E.ocimenone,True,False,单一化合物,17.0,1.0,0.0,Hops,Ocimenone,,,True
+cumin.aldehyde,True,False,单一化合物,18.0,1.0,0.0,Spices,Cumin aldehyde,,,True
+ethyl.phenylacetate,True,False,单一化合物,40.0,4.0,2.188753050451229,Yeast,Ethyl phenylacetate,,,True
+isopentyl.hexanoate,True,False,单一化合物,85.0,11.0,7.938423262776808,Yeast,Isopentyl hexanoate,,,False
+geraniol,True,False,单一化合物,23.0,1.0,0.0,Hops,Geraniol,,,True
+beta.cyclohomocitral,True,False,单一化合物,52.0,1.0,0.0,Hops,Î²-cyclohomocitral,,,True
+E.cinnamaldehyde,True,False,单一化合物,110.0,1.0,0.0,Spices,Cinnamaldehyde,,,True
+n.decanol,True,False,单一化合物,108.0,1.0,0.0,Yeast,N-decanol,,,True
+neryl.formate,True,False,单一化合物,37.0,3.0,1.450606322471197,Hops,Neryl formate,,,False
+X4.ethyl.guaiacol,True,False,单一化合物,37.0,3.0,1.604387015186881,Wild flora,4-ethyl-guaiacol,,,True
+X2.undecanone,True,False,单一化合物,11.0,1.0,0.0,Hops,2-undecanone,,,True
+trans.dihydro.alpha.terpinyl.acetate,True,False,单一化合物,85.0,11.0,7.240696308850884,Hops,Trans-dihydro-Î±-terpinyl acetate,,,False
+terpinen.4.ol.acetate,True,False,单一化合物,91.0,1.0,0.0,Hops,Terpinen-4-ol acetate,,,True
+X2.undecanol,True,False,单一化合物,93.0,6.0,3.171582886847306,Hops,2-undecanol,,,False
+delta.terpinyl.acetate,True,False,单一化合物,150.0,1.0,0.0,Hops,Terpiryl acetate,,,True
+X.E.E..2.4.decadienal,True,False,单一化合物,140.0,1.0,0.0,Others,"E,E-2,4-decadienal",,,True
+methyl.geranate,True,False,单一化合物,93.0,6.0,3.430467568045518,Hops,Methyl geranate,,,False
+car.3.en.2.one,True,False,单一化合物,48.0,2.0,0.78069326829314,Hops,Car-3-en-2-one,,,True
+dimethoxy..E..citral,True,False,单一化合物,48.0,2.0,0.78069326829314,Hops,Dimethoxy-E-citral,,,False
+X2.butyloctanoate,True,False,单一化合物,85.0,11.0,7.562299226540345,Yeast,2-butyl octanoate,,,False
+X4.methoxysalicylaldehyde,True,False,单一化合物,53.0,1.0,0.0,Spices,4-methoxysalicylaldehyde,,,True
+ethyl.hydrocinnamate,True,False,单一化合物,54.0,1.0,0.0,Spices,Ethyl hydrocinnamate,,,True
+eugenol,True,False,单一化合物,135.0,1.0,0.0,Spices,Eugenol,,,True
+gamma.nonalactone,True,False,单一化合物,130.0,2.0,0.665397077865724,Yeast,Gamma-nonalactone,,,True
+methyl.para.anisate,True,False,单一化合物,87.0,1.0,0.0,Spices,Methyl para-anisate,,,True
+X.E..beta.damascenone,True,False,单一化合物,130.0,2.0,0.665397077865724,Hops,E-Î²-damascenone,,,False
+ethyl..9..decenoate,True,False,单一化合物,86.0,1.0,0.0,Yeast,Ethyl 9-decenoate,,,True
+vanillin,True,False,单一化合物,58.0,1.0,0.0,Others,Vanillin,,,True
+geosmin,True,False,单一化合物,75.0,1.0,0.0,Wild flora,Geosmin,,,True
+dodecanal,True,False,单一化合物,103.0,1.0,0.0,Spices,Dodecanal,,,True
+X4.8.alpha.epoxy.caryophyllane,True,False,单一化合物,112.0,1.0,0.0,Hops,"4,8-Î±-epoxy-caryophyllane",,,True
+E.caryophyllene,True,False,单一化合物,136.0,1.0,0.0,Hops,Caryophyllene,,,True
+X.E..alpha.ionone,True,False,单一化合物,42.0,1.0,0.0,Hops,E-Î±-ionone,,,True
+perillyl.acetate,True,False,单一化合物,40.0,4.0,1.9056283295186238,Spices,Perillyl acetate,,,False
+beta.humulene,True,False,单一化合物,1.0,1.0,0.0,Hops,Î²-humulene,,,True
+X2.phenyl.ethyl.butyrate,True,False,单一化合物,85.0,11.0,8.042944680578074,Yeast,2-phenyl ethyl butyrate,,,False
+X.Z..beta.farnesene,True,False,单一化合物,85.0,11.0,8.162656627119011,Hops,Z-Î²-farnesene,,,False
+pentyl.octanoate,True,False,单一化合物,85.0,11.0,8.55060736186479,Yeast,Pentyl octanoate,,,True
+X.E..beta.farnesene,True,False,单一化合物,50.0,1.0,0.0,Hops,E-Î²-farnesene,,,True
+X2.methylbutyl.octanoate,True,False,单一化合物,85.0,11.0,8.20331287876291,Yeast,2-methylbutyl octanoate,,,False
+alpha.humulene,True,False,单一化合物,137.0,1.0,0.0,Hops,Alpha-humulene,,,True
+neryl.propanoate,True,False,单一化合物,92.0,5.0,2.708307154119876,Hops,Neryl propanoate,,,False
+X9.epi..E..caryophyllene,True,False,单一化合物,68.0,1.0,0.0,Hops,9-epi-E-caryophyllene,,,True
+ethyl..E..cinnamate,True,False,单一化合物,60.0,1.0,0.0,Others,Ethyl cinnamate,,,True
+linalool.isovalerate,True,False,单一化合物,74.0,1.0,0.0,Hops,Linalool isovalerate,,,True
+alpha.terpinyl.isobutanoate,True,False,单一化合物,69.0,1.0,0.0,Hops,Î±-terpinyl isobutanoate,,,True
+n.dodecanol,True,False,单一化合物,66.0,3.0,1.437434918849986,Yeast,N-dodecanol,,,True
+germacrene.D,True,False,单一化合物,41.0,1.0,0.0,Hops,Germacrene D,,,True
+X.E..beta.ionone,True,False,单一化合物,95.0,2.0,0.639824201650873,Hops,E-Î²-ionone,,,False
+valencene,True,False,单一化合物,8.0,1.0,0.0,Spices,Valencene,,,True
+neryl.isobutanoate,True,False,单一化合物,99.0,1.0,0.0,Hops,Neryl isobutanoate,,,True
+E.methyl.isoeugenol,True,False,单一化合物,9.0,2.0,0.869216243551411,Spices,Methyl isoeugenol,,,True
+X.Z..dihydro.apofarnesal,True,False,单一化合物,10.0,1.0,0.0,Hops,Z-dihydro-apofarnesal,,,True
+butylated.hydroxytoluene,True,False,单一化合物,9.0,2.0,0.869216243551411,Others,Butylated hydroxytoluene,,,False
+X.E..dihydro.apofarnesal,True,False,单一化合物,34.0,1.0,0.0,Hops,E-dihydro-apofarnesal,,,True
+Z.nerolidol,True,False,单一化合物,138.0,1.0,0.0,Hops,Z-nerolidol,,,True
+X.E..ortho.methoxy.cinnamaldehyde,True,False,单一化合物,30.0,1.0,0.0,Spices,E-ortho-methoxy cinnamaldehyde,,,True
+alpha.calacorene,True,False,单一化合物,92.0,5.0,2.891330815459319,Hops,Î±-calacorene,,,False
+E.nerolidol,True,False,单一化合物,107.0,4.0,2.268273299220454,Hops,E-nerolidol,,,True
+dihydroisocaryophyllene.epoxide,True,False,单一化合物,107.0,4.0,2.201993191642636,Hops,Tobacarol,,,False
+caryophyllene.alcohol,True,False,单一化合物,97.0,1.0,0.0,Hops,Caryophyllene alcohol,,,True
+neryl.isovalerate,True,False,单一化合物,98.0,1.0,0.0,Hops,Neryl isovalerate,,,True
+spathulenol,True,False,单一化合物,31.0,1.0,0.0,Spices,Spathulenol,,,True
+caryophyllene.oxide,True,False,单一化合物,93.0,6.0,3.5671040779246153,Hops,Caryophyllene oxide,,,False
+humulene.epoxide.II,True,False,单一化合物,93.0,6.0,3.484625405978471,Hops,Humulene epoxide II,,,False
+alloaromadendrene.epoxide,True,False,单一化合物,92.0,5.0,3.015885786161377,Hops,Allo-aromadendrene epoxide,,,True
+X1.10.di.epi.cubenol,True,False,单一化合物,92.0,5.0,2.89914636655036,Hops,Epicubenol,,,False
+isopropyl.laurate,True,False,单一化合物,15.0,1.0,0.0,Yeast,Isopropyl laurate,,,True
+caryophylla.4.12..8.13..dien.5.alpha.ol,True,False,单一化合物,92.0,5.0,2.8017750644643757,Hops,"Caryophylla-4,8-dien-5-ol",,,False
+gamma.eudesmol,True,False,单一化合物,144.0,1.0,0.0,Spices,Gamma-eudesmol,,,True
+alpha.muurolol,True,False,单一化合物,93.0,6.0,3.8327270498193307,Hops,Î±-muurolol,,,True
+X1.2.dihydro.8.hydroxy..2E..linalool,True,False,单一化合物,85.0,11.0,8.038295977554661,Hops,"1,2-dihydro-8-hydroxy-2E-linalool",,,False
+tau.cadinol,True,False,单一化合物,12.0,1.0,0.0,Hops,Tau-cadinol,,,True
+selin.11.en.4.alpha.ol,True,False,单一化合物,94.0,1.0,0.0,Hops,Kongol,,,True
+alpha.eudesmol,True,False,单一化合物,78.0,1.0,0.0,Spices,Î±-eudesmol,,,True
+X14.hydroxy.9.epi..E..caryophyllene,True,False,单一化合物,101.0,1.0,0.0,Hops,14-hydroxy-9-epi-(E)-caryophyllene,,,True
+tau.muurolol,True,False,单一化合物,93.0,6.0,3.509476779232205,Hops,Tau-muurolol,,,False
+n.tetradecanol,True,False,单一化合物,66.0,3.0,1.273802099443388,Yeast,N-tetradecanol,,,False
+foeniculin,True,False,单一化合物,2.0,1.0,0.0,Spices,Eoeniculin,,,True
+cadalene,True,False,单一化合物,104.0,1.0,0.0,Hops,Cadalene,,,True
+X2.3.dihydro.farnesol,True,False,单一化合物,107.0,4.0,2.0291587096534824,Hops,"2,3-dihydro-farnesol",,,False
+X2E.6Z.farnesal,True,False,单一化合物,105.0,1.0,0.0,Hops,"E,Z-farnesal",,,True
+caryophyllene.acetate,True,False,单一化合物,79.0,1.0,0.0,Hops,Caryophyllene acetate,,,True
+X14.hydroxy.alpha.humulene,True,False,单一化合物,70.0,1.0,0.0,Hops,14-hydroxy-Î±-humulene,,,True
+X2Z.6E.farnesal,True,False,单一化合物,106.0,1.0,0.0,Hops,"Z,E-farnesal",,,True
+X2Z.6Z.farnesol,True,False,单一化合物,73.0,1.0,0.0,Hops,"Z,Z-farnesol",,,True
+X2Z.6E.farnesol,True,False,单一化合物,107.0,4.0,2.067155718792538,Hops,"Z,E-farnesol",,,False
+ambroxide,True,False,单一化合物,71.0,1.0,0.0,Spices,Ambroxide,,,True
+benzyl.benzoate,True,False,单一化合物,72.0,1.0,0.0,Others,Benzyl benzoate,,,True
+X2E.6E.methyl.farnesoate,True,False,单一化合物,76.0,1.0,0.0,Hops,"2E,6E-methyl farnesoate",,,True
+ethyl.tetradecanoate,True,False,单一化合物,85.0,11.0,7.741505293689109,Yeast,Ethyl tetradecanoate,,,False
+X2.ethylhexylsalicylate,True,False,单一化合物,77.0,1.0,0.0,Others,2-ethylhexyl acrylate,,,True
+isopropyl.tetradecanoate,True,False,单一化合物,67.0,1.0,0.0,Yeast,Isopropyl tetradecanoate,,,True
+ethyl.pentadecanoate,True,False,单一化合物,85.0,11.0,7.599196483025628,Yeast,Ethyl pentadecanoate,,,False
+methyl.hexadecanoate,True,False,单一化合物,14.0,1.0,0.0,Yeast,Methyl hexadecanoate,,,True
+Z.Z.geranyl.linalool,True,False,单一化合物,82.0,2.0,0.707174705720264,Hops,"Z,Z-geranyl linalool",,,True
+ethyl.hexadecanoate,True,False,单一化合物,85.0,11.0,7.064001650591875,Yeast,Ethyl hexadecanoate,,,False
+manool.oxide,True,False,单一化合物,13.0,2.0,0.735496780152608,Spices,Manool oxide,,,True
+X13.epi.manool.oxide,True,False,单一化合物,6.0,1.0,0.0,Spices,13-epi manool oxide,,,True
+isopropyl.hexadecanoate,True,False,单一化合物,13.0,2.0,0.735496780152608,Yeast,Isopropyl hexadecanoate,,,False
+manool,True,False,单一化合物,66.0,3.0,1.2636239225981538,Spices,Manool,,,False
+ethyl.octadecanoate,True,False,单一化合物,82.0,2.0,0.707174705720264,Yeast,Ethyl octadecanoate,,,False
+ethyl.pentanoate,True,False,单一化合物,139.0,2.0,0.663595210809322,Yeast,Ethyl pentanoate,,,False
+X2.ethyl.3.methylpyrazine,True,False,单一化合物,129.0,1.0,0.0,Malt,2-ethyl-3-methylpyrazine,,,True
+esters_sum,False,True,综合指标,,,,,Total ester compounds,isopentyl_acetate,0.922277924446791,False
+aroma_hops_sum,False,True,综合指标,,,,,Total hop aroma compounds,linalool,0.958414990111041,False
+acids_sum,False,True,综合指标,,,,,Total acids,acetic_acid.g.L.,0.96625558611341,False
+sulfur_sum,False,True,综合指标,,,,,Total sulfur compounds,H2S,0.775228131266335,False
+kcalperc,False,True,综合指标,,,,Others,Caloric value,ethanol..v.v.,0.853566697739768,False
+X3.methyl.2.butenal,False,True,内标,,,,Internal standard solution,3-methyl-2-butenal,propyl.acetate,0.606532418561472,False

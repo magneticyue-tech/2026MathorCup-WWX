@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "arm": "boot_fixed_graph",
+  "description": "bootstrap 中固定附件 2 图（与主分析同一组品评团索引）",
+  "n_permutation": 1000,
+  "n_bootstrap": 1000,
+  "seed": 0,
+  "tau": 0.6,
+  "na_scheme": "mean",
+  "n_candidates": 225,
+  "graph_source": "attachment2",
+  "rebuild_graph": false,
+  "boot_unit": "panel",
+  "q_reused_from_baseline": true,
+  "seconds": 4.0
+}

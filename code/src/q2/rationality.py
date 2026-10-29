@@ -1,172 +1,162 @@
 # code/src/q2/rationality.py
-"""Q2 合理性层：49维输出，Fisher CI 真实计算与验证。"""
+"""Q2.4 合理性证据：附件 8 原始标签、OAV、breadth、风格内关联与 bootstrap CI、共变标记、模块可分检验、等级。"""
 import sys
 from pathlib import Path
 
 CURRENT_DIR = Path(__file__).resolve().parent
-if str(CURRENT_DIR) not in sys.path: 
+if str(CURRENT_DIR) not in sys.path:
     sys.path.insert(0, str(CURRENT_DIR))
 
-import re
-import warnings
 import numpy as np
 import pandas as pd
-from scipy.stats import norm
 
-warnings.filterwarnings("ignore")
 import config as C
-from data import load_q2_dataset
+import core
+from data import fill_chem, load_q2_dataset
+from labels import attachment8_labels, check_against_dictionary, transform_kind
 
 
-def _norm_name(name: str) -> str:
-    n = str(name).lower()
-    n = re.sub(r"\.v\.v\.|\.g\.l\.|\.mg\.l\.|\.psi\.", "", n)
-    return re.sub(r"[^a-z0-9]+", "", n)
+def style_design(style):
+    s = pd.Series(style)
+    dummies = pd.get_dummies(s, drop_first=True).to_numpy(float)
+    return np.column_stack([np.ones(len(s)), dummies])
 
 
-def get_thresholds():
-    try:
-        df_thresh = pd.read_excel(C.THRESHOLD_PATH, sheet_name="Sensory thresholds")
-        name_col = [c for c in df_thresh.columns if "name" in str(c).lower() or "compound" in str(c).lower()][0]
-        thresh_col = [c for c in df_thresh.columns if "threshold_mean" in str(c).lower()][0]
-        thresh_dict = {}
-        for _, row in df_thresh.iterrows():
-            raw_name = str(row[name_col]).strip()
-            val = pd.to_numeric(row[thresh_col], errors="coerce")
-            if pd.notna(val) and val > 0: 
-                thresh_dict[_norm_name(raw_name)] = val
-        return thresh_dict
-    except Exception: 
-        return {}
+def _resid(D, M):
+    beta, *_ = np.linalg.lstsq(D, M, rcond=None)
+    return M - D @ beta
 
 
-def attachment8_labels(compounds: list[str]) -> pd.DataFrame:
-    if not C.CHEMICAL_DICT_PATH.exists(): 
-        return pd.DataFrame({"compound": compounds})
-    df_dict = pd.read_csv(C.CHEMICAL_DICT_PATH).rename(columns={"csv1_field": "compound"})
-    cols = ["compound", "chemical_name", "origin_paper", "off_flavors", "aging", "transform_interpretation"]
-    return df_dict[[c for c in cols if c in df_dict.columns]].set_index("compound").reindex(compounds).reset_index()
+def _corr_cols(A, B):
+    A = A - A.mean(0)
+    B = B - B.mean(0)
+    na, nb = np.linalg.norm(A, axis=0), np.linalg.norm(B, axis=0)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        r = (A * B).sum(0) / (na * nb)
+    r[(na < 1e-10) | (nb < 1e-10)] = np.nan
+    return r
 
 
-def calc_style_ci(X_resid, Y_resid, top_compounds):
-    n = len(X_resid)
-    ci_dict = {}
-    for dim, comp in top_compounds:
-        if dim not in Y_resid.columns or comp not in X_resid.columns:
-            ci_dict[(dim, comp)] = np.nan
+def style_within(ds, pairs, n_boot, seed):
+    """固定 (维度, 化合物)：风格残差秩相关的估计值与品评团簇 bootstrap 95% CI。"""
+    comps = sorted({c for _, c in pairs})
+    dims = list(ds.delivery_sensory_cols)
+    ci = [comps.index(c) for _, c in pairs]
+    di = [dims.index(d) for d, _ in pairs]
+    Xraw = ds.chem_raw[comps].to_numpy(float)
+    Yraw = ds.sensory_raw[dims].to_numpy(float)
+
+    def stat(idx):
+        Zx, _ = core.zrank(core.fill_array(Xraw[idx], "mean"))
+        Zy, _ = core.zrank(Yraw[idx])
+        D = style_design(ds.style[idx])
+        return _corr_cols(_resid(D, Zx)[:, ci], _resid(D, Zy)[:, di])
+
+    est = stat(np.arange(len(ds.style)))
+    idx_list = core.bootstrap_indices(ds.panels, n_boot, seed, "panel")
+    boot = np.array([stat(idx) for idx in idx_list])
+    n_nan = np.isnan(boot).sum(0)
+    with np.errstate(invalid="ignore"):
+        lo = np.nanpercentile(boot, 2.5, axis=0)
+        hi = np.nanpercentile(boot, 97.5, axis=0)
+    return est, lo, hi, n_nan
+
+
+def module_split_test(ds, df, mod_map, q1):
+    """§3.2 推翻检验：同模块成员 k 在 S∪{j} 之后的偏 r 是否超过 q_d。"""
+    Zx = ds.X_rank
+    Zy = ds.Y_rank
+    n = len(Zx)
+    out = []
+    for _, row in df.iterrows():
+        g = df[df["dimension"] == row["dimension"]].sort_values("rank")
+        S = g["compound"].tolist()[: int(row["rank"])]
+        mates = [c for c, m in mod_map.items() if m == mod_map[row["compound"]] and c != row["compound"]]
+        if not mates:
+            out.append("")
             continue
-        x, y = X_resid[comp].values, Y_resid[dim].values
-        r = np.corrcoef(x, y)[0, 1]
-        if np.isnan(r) or abs(r) >= 1.0:
-            ci_dict[(dim, comp)] = np.nan
-            continue
-        z = np.arctanh(r)
-        se = 1 / np.sqrt(n - 3)
-        z_crit = norm.ppf(0.975)
-        lower = np.tanh(z - z_crit * se)
-        upper = np.tanh(z + z_crit * se)
-        # 返回是否包含 0（True 表示包含 0，即风格内不显著）
-        ci_dict[(dim, comp)] = bool(lower <= 0 <= upper)
-    return ci_dict
+        Q = np.column_stack([np.ones(n), Zx[S].to_numpy()])
+        H = Q @ np.linalg.pinv(Q)
+        y = Zy[row["dimension"]].to_numpy()
+        ey = y - H @ y
+        E = Zx[mates].to_numpy() - H @ Zx[mates].to_numpy()
+        r = (E.T @ ey) / (np.linalg.norm(E, axis=0) * np.linalg.norm(ey))
+        hit = [f"{c}:{v:.3f}" for c, v in zip(mates, r) if abs(v) > q1[row["dimension"]]]
+        out.append("|".join(hit))
+    return out
 
 
-def run_rationality():
-    print("生成合理性证据表 (49维, 恢复 Fisher CI)...")
+def main(n_boot=C.N_BOOTSTRAP, seed=C.SEED, out_dir=C.Q2_DIR):
     ds = load_q2_dataset()
-    
-    df_base = pd.read_csv(C.Q2_DIR / "final_top3_with_stability.csv")
-    df_base = df_base[df_base["dimension"] != "barnyard"].copy()
-    assert len(df_base) == 147, f"主方法必须是 147 行 (49x3)，实际 {len(df_base)} 行"
+    df = pd.read_csv(C.Q2_DIR / "final_top3_with_stability.csv")
+    core.check_147(df, "final_top3_with_stability")
 
-    comps = df_base["compound"].unique().tolist()
-    df_base = df_base.merge(attachment8_labels(comps), on="compound", how="left")
-    
-    thresh_dict = get_thresholds()
-    trans_map = dict(zip(df_base["compound"], df_base["transform_interpretation"])) if "transform_interpretation" in df_base.columns else {}
-    
-    oav_ratios, thresholds = {}, {}
-    for c in comps:
-        norm_c = _norm_name(c)
-        if norm_c in thresh_dict and c in ds.chem_raw.columns:
-            thresh = thresh_dict[norm_c]
-            thresholds[c] = thresh
-            conc = ds.chem_raw[c]
-            if "log10" in str(trans_map.get(c, "")).lower(): 
-                conc = 10 ** conc
-            oav_ratios[c] = ((conc / thresh) >= 1).mean()
-        else: 
-            thresholds[c], oav_ratios[c] = np.nan, np.nan
+    lab = attachment8_labels(ds.chem_cols)
+    n_checked = check_against_dictionary(lab)
+    df = df.merge(lab.drop(columns=["unit"]).reset_index(), on="compound", how="left", validate="m:1")
 
-    df_base["threshold_mean"] = df_base["compound"].map(thresholds)
-    df_base["oav_ge_1_ratio"] = df_base["compound"].map(oav_ratios)
+    kind = transform_kind(ds.chem_cols)
+    oav, n_oav = {}, {}
+    for c in df["compound"].unique():
+        thr = lab.at[c, "threshold_mean"]
+        if pd.isna(thr) or kind[c] == "uncalibrated":
+            oav[c], n_oav[c] = np.nan, np.nan
+            continue
+        x = ds.chem_raw[c].dropna()
+        conc = 10.0 ** x if kind[c] == "log10" else x
+        oav[c], n_oav[c] = float((conc / thr >= 1).mean()), int(len(x))
+    df["transform"] = df["compound"].map(kind)
+    df["oav_ge_1_ratio"] = df["compound"].map(oav)
+    df["oav_n_beers"] = df["compound"].map(n_oav)
 
-    # 风格内 CI 计算
-    chem = ds.chem_raw
-    if 'tasting_category_fine' in chem.columns:
-        # 【修复】：使用 drop_first=True 避免完全共线
-        dummies = pd.get_dummies(chem['tasting_category_fine'], drop_first=True).values
-        style_dummies = np.column_stack([np.ones(len(chem)), dummies])
-        
-        X_mat_raw, Y_mat_raw = ds.X_rank.values, ds.Y_rank.values
-        beta_X = np.linalg.lstsq(style_dummies, X_mat_raw, rcond=None)[0]
-        beta_Y = np.linalg.lstsq(style_dummies, Y_mat_raw, rcond=None)[0]
-        
-        df_X_resid = pd.DataFrame(X_mat_raw - style_dummies @ beta_X, columns=ds.candidate_cols)
-        df_Y_resid = pd.DataFrame(Y_mat_raw - style_dummies @ beta_Y, columns=ds.Y_rank.columns)
-        
-        top_pairs = list(zip(df_base["dimension"], df_base["compound"]))
-        ci_dict = calc_style_ci(df_X_resid, df_Y_resid, top_pairs)
-        df_base["flag_style_ci0"] = [ci_dict.get((d, c), np.nan) for d, c in top_pairs]
-    else:
-        df_base["flag_style_ci0"] = np.nan
+    breadth = df.groupby("compound")["dimension"].nunique()
+    df["n_dims_top3"] = df["compound"].map(breadth)
 
-    # breadth 计算（严格只算 main）
-    counts = df_base["compound"].value_counts()
-    df_base["n_dims_top3"] = df_base["compound"].map(counts)
-    
-    df_base["flag_breadth5"] = df_base["n_dims_top3"] >= 5
-    df_base["flag_oav_lt1"] = df_base["oav_ge_1_ratio"].notna() & (df_base["oav_ge_1_ratio"] < 1)
-    
-    # 生成 covariation：三者逻辑或
-    df_base["covariation"] = df_base["flag_breadth5"] | df_base["flag_oav_lt1"]
-    df_base.loc[df_base["flag_style_ci0"] == True, "covariation"] = True
+    pairs = list(zip(df["dimension"], df["compound"]))
+    est, lo, hi, n_nan = style_within(ds, pairs, n_boot, seed)
+    df["r_style"] = est
+    df["r_style_ci_lower"] = lo
+    df["r_style_ci_upper"] = hi
+    df["r_style_boot_nan"] = n_nan
+    df["r_style_n_boot"] = n_boot
+    has_ci = np.isfinite(lo) & np.isfinite(hi)
+    if not has_ci.all():
+        print(f"风格内区间缺失 {int((~has_ci).sum())} 项，flag_style_ci0 保留缺失")
+    flag = [bool(l <= 0 <= h) if ok else None for l, h, ok in zip(lo, hi, has_ci)]
+    df["flag_style_ci0"] = pd.array(flag, dtype="boolean")
+    df["flag_style_ci_ordered"] = pd.array(
+        [bool(-1 <= l <= h <= 1) if ok else None for l, h, ok in zip(lo, hi, has_ci)],
+        dtype="boolean")
+    df["flag_breadth5"] = df["n_dims_top3"] >= C.BREADTH_FLAG
+    df["flag_oav_lt1"] = df["oav_ge_1_ratio"] == 0
+    df["covariation"] = (df["flag_style_ci0"] | df["flag_breadth5"].astype("boolean")
+                         | df["flag_oav_lt1"].astype("boolean"))
 
-    # 等级计算
-    def get_grade(row):
-        if row["rank"] == 1:
-            if not row["is_significant"]: return "C"
-            return "A" if row["pi_c"] >= 0.6 else "B"
-        return ""
-        
-    df_base["grade"] = df_base.apply(get_grade, axis=1)
-    df_base["grade"] = df_base["dimension"].map(df_base[df_base["rank"] == 1].set_index("dimension")["grade"].to_dict())
-    
-    df_base["sign"] = np.where(df_base["score"] >= 0, "+", "-")
-    df_base["interpretation"] = ""
-    df_base["method"] = "main"
-    
-    # 严格标注
-    df_base.loc[df_base["dimension"] == "stale_hops", "interpretation"] = "同 barnyard"
+    q1 = df[df["rank"] == 1].set_index("dimension")["q_d"].to_dict()
+    mod_map = dict(zip(ds.candidate_cols, core.modules(
+        ds.corr.loc[ds.candidate_cols, ds.candidate_cols].abs().values, C.TAU_MAIN).astype(int)))
+    df["module_split_members"] = module_split_test(ds, df, mod_map, q1)
 
-    # ==========================================
-    # 缺失的 M0~M3 标识列及 M3 追加行的占位（等待 full_controls.py 接入）
-    # ==========================================
-    # 如果 full_controls 已经生成了对应结果，应该在这里做合并，例如：
-    # for m in ["M0", "M1", "M2", "M3"]:
-    #     df_ctrl = pd.read_csv(C.Q2_DIR / f"{m}_top3.csv")
-    #     # 构建标识列
-    #     df_base[f"in_{m}"] = df_base["compound"].isin(df_ctrl["compound"])
-    #
-    # # 追加 M3 中主方法未选中的 Top-1
-    # df_m3_top1 = pd.read_csv(C.Q2_DIR / "M3_top3.csv")
-    # df_m3_top1 = df_m3_top1[df_m3_top1["rank"] == 1]
-    # merged = df_base[df_base["rank"] == 1].merge(df_m3_top1, on="dimension", suffixes=("_main", "_M3"))
-    # m3_diff = merged[merged["compound_main"] != merged["compound_M3"]]
-    # ... 写入额外行 ...
-    
-    out_path = C.Q2_DIR / "final_top3_with_rationality.csv"
-    df_base.to_csv(out_path, index=False)
-    print(f"✅ 合理性证据表已生成！共 {len(df_base)} 行 (49x3，剔除了 barnyard 独立行)。")
+    df["sign"] = np.where(df["score"] >= 0, "+", "-")
+    df["method"] = "main"
+    df["note"] = np.where(df["dimension"] == "stale_hops", C.STALE_HOPS_NOTE, "")
+    df["interpretation"] = ""
+
+    regrade = {}
+    for dim, g in df[df["rank"] == 1].groupby("dimension"):
+        regrade[dim] = core.grade_from(bool(g["is_significant"].iloc[0]), float(g["pi_c"].iloc[0]))
+    if (df["dimension"].map(regrade) != df["grade"]).any():
+        raise AssertionError("等级复算与 stability 输出不一致")
+
+    core.check_147(df, "final_top3_with_rationality")
+    df.to_csv(Path(out_dir) / "final_top3_with_rationality.csv", index=False)
+    print(f"附件 8 标签核对 {n_checked} 个单元一致；有阈值 Top-3 化合物 "
+          f"{df.loc[df['threshold_mean'].notna(), 'compound'].nunique()} 个；"
+          f"风格内 CI 含 0 {int((df['flag_style_ci0'] == True).sum())}/147；"
+          f"breadth≥5 化合物 {breadth[breadth >= 5].to_dict()}；"
+          f"共变标记 {int((df['covariation'] == True).sum())}/147；"
+          f"模块可分假设被推翻的项 {int((df['module_split_members'] != '').sum())}")
+
 
 if __name__ == "__main__":
-    run_rationality()
+    main()

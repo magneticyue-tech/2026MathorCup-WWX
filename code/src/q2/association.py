@@ -1,5 +1,5 @@
 # code/src/q2/association.py
-"""Q2 关联层：图约束前向选择 (严格 49 维，剔除 barnyard)。"""
+"""Q2.2 图约束前向选择：49 维 × Top-3（barnyard 不单独建模）。"""
 from __future__ import annotations
 
 import sys
@@ -13,116 +13,44 @@ import numpy as np
 import pandas as pd
 
 import config as C
+import core
 from data import load_q2_dataset
+from labels import candidate_type
 
 
-def compute_top3():
-    print("=" * 50)
-    print("计算 Top-3 关键化合物（前向选择）")
-    print("=" * 50)
-
+def main():
     ds = load_q2_dataset()
-    
-    # ================= 新增图验证 =================
-    all_nodes = ds.candidate_cols + ds.annotation_cols
-    if len(all_nodes) != 231:
-        raise ValueError(f"图节点应为 231，实际为 {len(all_nodes)}")
-        
-    # 验证候选节点间的阈值边
-    abs_corr = ds.corr.loc[ds.candidate_cols, ds.candidate_cols].abs()
-    np.fill_diagonal(abs_corr.values, 0.0)
-    edge_count = int((abs_corr.values >= C.TAU_MAIN).sum() / 2)
-    if edge_count != 245:
-        raise ValueError(f"候选节点间阈值边数应为 245，实际为 {edge_count}")
-    print(f"✅ 图验证通过：231 节点，候选间 {edge_count} 条边。")
-    # ==============================================
+    nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
+    a = core.prepare_arm(ds, core.ArmSpec("main"))
+    file_mod = nodes.set_index("node").loc[a.cand, "module_id"].astype(int).values
+    if not (file_mod == a.mod).all():
+        raise AssertionError("graph_nodes.csv 的模块与当前计算不一致，请先运行 graph.py")
+    sel, score, _, _ = core.select_full(a)
 
-    graph_nodes_path = C.Q2_DIR / "graph_nodes.csv"
-    if not graph_nodes_path.exists():
-        raise FileNotFoundError(f"找不到图节点文件：{graph_nodes_path}")
-        
-    df_nodes = pd.read_csv(graph_nodes_path)
-    
-    # 校验模块映射是否覆盖所有候选列
-    node_to_module = dict(zip(df_nodes["node"], df_nodes["module_id"]))
-    missing_nodes = [c for c in ds.candidate_cols if c not in node_to_module]
-    if missing_nodes:
-        raise ValueError(f"graph_nodes.csv 缺失以下候选节点的模块映射：{missing_nodes[:10]}...")
-
-    X_mat = ds.X_rank.values
-    Y_mat = ds.Y_rank.values
-    cand_cols = ds.candidate_cols
-    
-    # 严格 49 维（Y_rank 已在数据层排除了 barnyard）
-    dim_cols = ds.Y_rank.columns.tolist()
-    n = len(ds.sample_ids)
-
-    results = []
-    for d_idx, d_name in enumerate(dim_cols):
-        y = Y_mat[:, ds.Y_rank.columns.get_loc(d_name)]
-        
-        # 第 1 位：边际相关（Spearman）
-        r_1_all = (X_mat.T @ y) / n
-        best_1_idx = np.argmax(np.abs(r_1_all))
-        best_1_node = cand_cols[best_1_idx]
-        
-        selected = [best_1_node]
-        results.append({
-            "dimension": d_name, 
-            "rank": 1, 
-            "compound": best_1_node,
-            "module_id": node_to_module.get(best_1_node, -1),
-            "score_type": "spearman", 
-            "score": r_1_all[best_1_idx]
-        })
-
-        # 第 2、3 位：固定 S 集合的偏相关（Partial Spearman）
-        for rank in [2, 3]:
-            S_indices = [cand_cols.index(s) for s in selected]
-            X_S = np.column_stack([np.ones(n), X_mat[:, S_indices]])
-            
-            # 对 y 和候选 x_j 分别针对 X_S 做回归取残差
-            beta_y, _, _, _ = np.linalg.lstsq(X_S, y, rcond=None)
-            e_y = y - X_S @ beta_y
-            
-            best_score, best_idx, best_r = -1.0, -1, 0.0
-            selected_modules = {node_to_module[s] for s in selected}
-            
-            for j_idx, j_node in enumerate(cand_cols):
-                # 模块约束：确保 Top-3 来自不同模块
-                if node_to_module.get(j_node) in selected_modules:
-                    continue
-                    
-                x_j = X_mat[:, j_idx]
-                beta_j, _, _, _ = np.linalg.lstsq(X_S, x_j, rcond=None)
-                e_j = x_j - X_S @ beta_j
-                
-                # 计算残差的 Pearson 相关即偏相关
-                denom = np.linalg.norm(e_j) * np.linalg.norm(e_y)
-                r_j = np.dot(e_j, e_y) / denom if denom > 1e-12 else 0.0
-                
-                if abs(r_j) > best_score:
-                    best_score, best_idx, best_r = abs(r_j), j_idx, r_j
-            
-            if best_idx != -1:
-                best_node = cand_cols[best_idx]
-                selected.append(best_node)
-                results.append({
-                    "dimension": d_name, 
-                    "rank": rank, 
-                    "compound": best_node,
-                    "module_id": node_to_module.get(best_node, -1),
-                    "score_type": "partial_spearman", 
-                    "score": best_r
-                })
-            else:
-                raise RuntimeError(f"维度 {d_name} 的前向选择在 rank {rank} 失败。")
-
-    df_results = pd.DataFrame(results)
-    assert len(df_results) == 49 * 3, f"期望 147 行，实际 {len(df_results)} 行"
-    df_results.to_csv(C.Q2_DIR / "top3_results.csv", index=False)
-    print(f"✅ Top-3 提取完成！共 {len(dim_cols)} 维，已保存 top3_results.csv (无独立 barnyard)")
+    rows = []
+    for d, dim in enumerate(a.dims):
+        for k in range(3):
+            j = sel[d, k]
+            mates = [c for c, m in zip(a.cand, a.mod) if m == a.mod[j] and c != a.cand[j]]
+            rows.append({
+                "dimension": dim,
+                "rank": k + 1,
+                "compound": a.cand[j],
+                "compound_type": candidate_type(a.cand[j]),
+                "module_id": int(a.mod[j]),
+                "same_module_compounds": "|".join(mates),
+                "score_type": "spearman" if k == 0 else "partial_spearman",
+                "score": float(score[d, k]),
+            })
+    df = pd.DataFrame(rows)
+    core.check_147(df, "top3_results")
+    df.to_csv(C.Q2_DIR / "top3_results.csv", index=False)
+    np.savez_compressed(C.Q2_DIR / "q2_selection.npz", sel=sel, score=score, mod=a.mod,
+                        cand=np.array(a.cand), dims=np.array(a.dims))
+    top1 = np.abs(score[:, 0])
+    print(f"Top-3 完成：{df['dimension'].nunique()} 维 {len(df)} 行；Top-1 |r| 中位 {np.median(top1):.2f}"
+          f"（四分位 {np.quantile(top1, .25):.2f}–{np.quantile(top1, .75):.2f}）")
 
 
 if __name__ == "__main__":
-    compute_top3()
+    main()

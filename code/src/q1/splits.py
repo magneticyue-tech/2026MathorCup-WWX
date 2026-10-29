@@ -1,55 +1,55 @@
+import warnings
+
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import StratifiedGroupKFold, train_test_split
 
-def outer_splits(groups: np.ndarray, style: pd.Series, n_splits=5, n_repeats=5, seed=0) -> list:
-    """
-    T2: 外层交叉验证划分。
-    按 date_group 分组，按风格(style)分层。
-    """
-    splits = []
-    for r in range(n_repeats):
-        sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed + r)
-        fold_splits = list(sgkf.split(np.zeros(len(groups)), style, groups=groups))
-        splits.append(fold_splits)
-    return splits
+from .paths import SEED
 
-def inner_splits(train_idx: np.ndarray, groups: np.ndarray, style: pd.Series, seed: int) -> list:
-    """
-    T2: 内层交叉验证划分。随机种子按工单要求使用 SEED + 100 + r。
-    """
-    inner_groups = groups[train_idx]
-    inner_style = style.iloc[train_idx]
-    
-    sgkf = StratifiedGroupKFold(n_splits=4, shuffle=True, random_state=seed)
-    return list(sgkf.split(np.zeros(len(train_idx)), inner_style, groups=inner_groups))
+_FEW_MEMBERS = "The least populated class in y has only"
 
-def leave_one_style_splits(style: pd.Series) -> list:
-    splits = []
-    unique_styles = style.unique()
-    for s in unique_styles:
-        test_idx = np.where(style == s)[0]
-        train_idx = np.where(style != s)[0]
-        splits.append((train_idx, test_idx))
-    return splits
 
-def paper_split(style: pd.Series, seed=0):
+def _sgkf_split(n_splits, seed, y, groups):
+    cv = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=_FEW_MEMBERS, category=UserWarning)
+        return list(cv.split(np.zeros(len(y)), y, groups))
+
+
+def outer_splits(groups, style, n_splits=5, n_repeats=5, seed=SEED):
+    y = pd.Series(style).to_numpy()
+    return [_sgkf_split(n_splits, seed + r, y, np.asarray(groups)) for r in range(n_repeats)]
+
+
+def inner_splits(train_idx, groups, style, seed, n_splits=4):
+    train_idx = np.asarray(train_idx)
+    y = pd.Series(style).to_numpy()[train_idx]
+    g = np.asarray(groups)[train_idx]
+    return [(train_idx[a], train_idx[b]) for a, b in _sgkf_split(n_splits, seed, y, g)]
+
+
+def leave_one_style_splits(style):
+    s = pd.Series(style).to_numpy()
+    return [(np.where(s != name)[0], np.where(s == name)[0], name) for name in sorted(set(s))]
+
+
+def paper_split(style, seed=SEED):
     idx = np.arange(len(style))
-    train_idx, test_idx = train_test_split(idx, test_size=0.3, random_state=seed, stratify=style)
-    return train_idx, test_idx
+    return tuple(train_test_split(idx, test_size=0.3, random_state=seed, stratify=style))
 
-def split_diagnostics(splits: list, groups: np.ndarray, style: pd.Series) -> dict:
-    """T2: 计算各折大小与分组隔离情况"""
-    diag = []
-    for fold_idx, (train_idx, test_idx) in enumerate(splits):
-        # 验证是否同组跨越了测试集和训练集
-        train_groups = set(groups[train_idx])
-        test_groups = set(groups[test_idx])
-        leaked_groups = train_groups.intersection(test_groups)
-        
-        diag.append({
-            "fold": fold_idx,
-            "test_size": len(test_idx),
-            "leaked_groups_count": len(leaked_groups)
-        })
-    return diag
+
+def split_diagnostics(splits, groups, style) -> dict:
+    groups = np.asarray(groups)
+    n = len(style)
+    sizes, n_groups = [], []
+    for r, rep in enumerate(splits):
+        counts = np.zeros(n, int)
+        for k, (tr, te) in enumerate(rep):
+            counts[te] += 1
+            if set(groups[tr]) & set(groups[te]):
+                raise AssertionError(f"重复 {r} 折 {k}：日期组跨训练集与测试集")
+            sizes.append(int(len(te)))
+            n_groups.append(int(len(np.unique(groups[te]))))
+        if not (counts == 1).all():
+            raise AssertionError(f"重复 {r}：有啤酒不是恰好测试一次")
+    return {"test_sizes": sizes, "test_n_groups": n_groups}

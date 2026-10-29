@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "arm": "cand_plus_composites",
+  "description": "候选加回 5 个综合指标（230）",
+  "n_permutation": 1000,
+  "n_bootstrap": 1000,
+  "seed": 0,
+  "tau": 0.6,
+  "na_scheme": "mean",
+  "n_candidates": 230,
+  "graph_source": "attachment2",
+  "rebuild_graph": true,
+  "boot_unit": "panel",
+  "q_reused_from_baseline": false,
+  "seconds": 30.0
+}

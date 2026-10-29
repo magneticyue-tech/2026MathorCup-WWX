@@ -1,0 +1,20 @@
+{
+ "model_key": "main",
+ "selection_basis": {
+  "success": true
+ },
+ "inputs_sha256_12": {
+  "q1_scores.npz": "a176021255ad",
+  "q1_main_oof.npz": "5e720440a690",
+  "q1_data.npz": "075ed38c4fe3",
+  "q1_metrics.json": "f01c788b0481"
+ },
+ "seed": 0,
+ "meta": {
+  "python": "3.10.22",
+  "numpy": "2.2.6",
+  "pandas": "2.3.3",
+  "scipy": "1.15.3",
+  "sklearn": "1.7.2"
+ }
+}

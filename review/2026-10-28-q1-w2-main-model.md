@@ -2,7 +2,7 @@
 id: 2026-10-28-q1-w2-main-model
 from: modeling
 to: coding
-status: open
+status: ack
 severity: blocker
 refs:
   - review/2026-10-28-q1-w1-data.md
@@ -170,4 +170,46 @@ cd code && $PY -m pytest tests -q
 15. 回报格式：运行命令、耗时、产物路径与 SHA-256 前 12 位、验收项逐条的观测值与通过状态、偏离工单之处。
 
 ## 处理结果
-<!-- [PLACEHOLDER] | Await: coding 回复 ack 并按「通用约定」第 15 条的格式逐项回报 -->
+
+coding 回报（2026-10-28，状态 ack，待 modeling 验收）。
+
+运行命令（仓库根目录，`PY=C:/Users/11600/anaconda3/envs/mathorcup_new/python.exe`）：`$PY code/scripts/solve_q1_main.py --smoke`；`$PY code/scripts/solve_q1_main.py --workers 8`；`cd code && $PY -m pytest tests -q`。
+
+耗时：`wall_time_s` = 8683（约 2.4 小时）；pytest 23 项通过，约 51 秒。
+
+产物：`code/data/processed/q1/q1_main_oof.npz`，SHA-256 前 12 位 `5e720440a690`；`q1_models/` 含 `encoder.joblib` 与 50 个维度模型，被 `.gitignore` 忽略。
+
+`checks`（9 项全部通过）：
+
+| 名称 | 观测值 | 通过 |
+|---|---|---|
+| 外层单元个数 | 25 | 是 |
+| 每次重复每款啤酒恰好测试一次 | 是 | 是 |
+| 同一日期组不跨外层折 | 是 | 是 |
+| `inner_mu[r,k]` 的非 NaN 行等于训练行 | 是 | 是 |
+| `inner_mu` 有限值个数 / 含 inf | 250000 / 否 | 是 |
+| 折外连续 MAE | 0.4726 | 是 |
+| 折外 R² | 0.1842 | 是 |
+| 折外 Spearman | 0.3595 | 是 |
+| 折外 R² 超过 reliability + 0.05 的维度数 | 0 | 是 |
+
+选参记录（25 个外层折；配置记为 max_depth/min_samples_leaf/l2/max_iter/mono）：
+
+| 维度组 | 不同配置数 | mono=True 次数 | 最常选配置及次数 |
+|---|---|---|---|
+| Aroma | 4 | 0 | 2/10/1/100/F，13 |
+| Flavour | 5 | 0 | 2/10/1/100/F，11 |
+| Defect | 6 | 6 | 2/20/1/100/F，10 |
+| Spice | 6 | 0 | 2/20/1/100/F，11 |
+| Sour | 11 | 10 | 2/10/1/100/T，5 |
+| Basic | 6 | 14 | 2/10/0/100/T，9 |
+
+150 次选择的 `max_iter` 全部为 100。全数据重拟合（`final_params`）各组均为 `max_depth=2`、`max_iter=100`，仅 Basic 组 `mono=True`。
+
+偏离工单之处：
+- RMSE/SD 分母为 0 的内层单元（Sour 组 lactic、acetic，6 个外层折与全数据重拟合）按 W9 的约定剔除，记录在 npz 的 `inner_undefined`；见 [2026-10-28-q1-inner-rmse-sd-zero](2026-10-28-q1-inner-rmse-sd-zero.md)，待 modeling 确认。
+- `merge_units` 只在某次重复的 5 折都在场时断言每款啤酒恰好写入一次，以支持工单要求的 2 折合并测试与冒烟运行。
+- 冒烟运行只做结构类检查；数值类检查只在正式运行做。
+- `solve_q1_main.py` 从 `solve_q1_data.py` 导入 `make_check`。
+- `test_no_leakage` 与 `test_merge_inner_rows` 需真实拟合，各约 20–30 秒。
+- 解释器路径与库版本同 W1 回报。
