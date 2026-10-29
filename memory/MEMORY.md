@@ -25,3 +25,4 @@ frontmatter（见 `_TEMPLATE.md`）。本索引列出所有记忆文件，每条
 - [Q1 主模型保留](q1-main-model-retained.md) — RF 等级 MAE 更低但 QWK 更低、网格下边界经扩展检查无改善，主模型与网格不变
 - [差异类指标不做 bootstrap 区间](discrepancy-metrics-no-bootstrap.md) — 经验量之差的绝对值平均与汇总量间的秩相关，重抽分布偏离点估计；只报点估计、重复极差与参照
 - [Q1 划分取自 fold_id](q1-folds-from-fold-id.md) — sklearn 升级后 outer_splits 不复现 Q1 划分，下游读 fold_id；mathorcup 环境须设 MKL_THREADING_LAYER=SEQUENTIAL
+- [感官画像图允许折外预测叠加](portrait-figure-overlay-allowed.md) — 6.4 交付画像可叠加折外预测与观测均分，图注说明两者模型拟合不同；折外验证数值仍单独报告
