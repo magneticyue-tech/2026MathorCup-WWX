@@ -1,0 +1,77 @@
+% !TeX program = xelatex
+% =====================================================================
+%  论文正文草稿 —— 汇编壳
+%  编译：xelatex draft_main.tex   （建议跑两遍以解析交叉引用）
+%
+%  正文按章拆分在 paper/sections/ 下，每个文件独立成章：
+%    ch1_problem.tex     问题重述与分析
+%    ch2_assumptions.tex 模型假设与符号
+%    preprocess.tex      数据预处理（沿用既有内容并补充数据核验表与零点还原表）
+%    ch4_q1.tex          问题一
+%    ch5_q2.tex          问题二
+%    ch6_q3.tex          问题三
+%    ch7_evaluation.tex  模型评价与推广
+%  每章可单独包装成独立文档编译（参考 paper/preprocess.tex 的壳）。
+% =====================================================================
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+
+\graphicspath{{../figures/}}
+\setlength{\parskip}{0.45em}
+\renewcommand{\arraystretch}{1.25}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{\bfseries 啤酒化学数据与感官评分}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本文基于一份含 250 款商用啤酒的化学与感官数据集，完成三项任务：由化学特征预测 50 个感官维度的 0 到 6 等级，找出每个感官维度的关键化合物，以及生成指定风格的化合物谱并完成跨风格迁移。
+
+针对问题一，本文以作者公布的逐品评员原始评分的啤酒均分为训练目标、以均分取整为 0 到 6 级真值，不依赖附件四的标准化换算。
+用浅层梯度提升树逐维拟合化学特征到均分的映射，按 25 个日期组分组的嵌套交叉验证评估，再由内层折外残差构造等级预测分布，以分布中位数为主要输出、分位数切点为第二输出。
+主模型等级平均绝对误差为 0.479，显著低于只知风格的基线 0.527（配对差 $-0.048$，95\% 置信区间 $[-0.062,-0.034]$），二次加权 Kappa 为 0.290，90\% 等级区间覆盖 97.2\%。
+只用附件还原等级的对照端到端平均绝对误差为 0.786，说明标准化换算本身是主要误差来源。
+
+针对问题二，本文以附件二构建化合物共表达图，在阈值 0.6 下用平均连接层次聚类划分模块，再用图约束前向选择逐个取出控制已选化合物后的秩偏相关最强、且分属不同模块的 3 个化合物。
+显著性由置换检验把关，稳定性由 25 个日期组重抽 1,000 次量化。
+49 个维度中 A 级 26 个、B 级 22 个、C 级 1 个，多数维度可靠支持的关键化合物为 1 到 2 个。
+加标实验一致支持酯类作为酯类维度的关键因素，酒花与苦味对照不变，构成独立的因果证据。
+
+针对问题三，本文对化学数据做秩变换，用风格条件潜在高斯模型刻画化合物谱，以因子载荷与共表达模块块描述风格内共变，再经问题一模型给出感官画像。
+跨风格迁移采用潜空间平移，配合化学层缺陷约束的投影与感官层的路径搜索，并做原尺度复查，保证缺陷化合物不恶化。
+问题三的正式结果尚未交付，正文结果以占位方式呈现。
+
+三个问题共享同一批啤酒与化学特征，问题一的折外预测与问题二的共表达模块分别作为问题三感官画像与生成模型的输入，形成完整的方法链条。
+\end{abstract}
+
+\noindent\textbf{关键词：}啤酒风味；感官评分预测；梯度提升树；化合物共表达网络；秩变换；条件生成模型；跨风格迁移
+
+\tableofcontents
+\newpage
+
+\input{sections/ch1_problem.tex}
+\input{sections/ch2_assumptions.tex}
+\input{sections/preprocess.tex}
+\input{sections/ch4_q1.tex}
+\input{sections/ch5_q2.tex}
+\input{sections/ch6_q3.tex}
+\input{sections/ch7_evaluation.tex}
+
+\end{document}
