@@ -51,7 +51,7 @@ Windows PowerShell 中写作 `$env:PYTHONIOENCODING="utf-8"`、`$env:MKL_THREADI
 |---|---|---|
 | `1.csv`–`7.csv`、`3.xlsx`、`8.xlsx` | 赛题附件 1–8 | 全部问题 |
 | `raw_sensory_data_anonymized.csv` | Zenodo 记录 23624915（DOI `10.5281/zenodo.23624915`）中的 `Raw sensory data anonymized.csv`，即附件来源论文发布的逐品评员原始评分（2,197 条，cp1252 编码） | 问题 1 训练目标 x̄、品评日期分组；问题 2、3 经问题 1 产物使用 |
-| `Supplemental Files and Figure source files.xlsx` | Zenodo 记录 10653704（DOI `10.5281/zenodo.10653704`），md5 应为 `52645e38d90aafda272532e19e2fea1c` | 仅问题 1 外部检查 `solve_q1_external.py`；也可用环境变量 `ZENODO_XLSX` 指定其路径 |
+| `Supplemental Files and Figure source files.xlsx` | Zenodo 记录 10653704（DOI `10.5281/zenodo.10653704`），md5 应为 `52645e38d90aafda272532e19e2fea1c` | 问题 1 外部检查 `solve_q1_external.py` 与问题 2 加标实验表 `solve_q2_spike.py`；也可用环境变量 `ZENODO_XLSX` 指定其路径 |
 
 附件 1–8 与 Zenodo 10653704 中 Schreurs et al. (2024, *Nature Communications* 15:2368) 发布的数据一致；原始评分由同一作者在该数据记录的新版本中发布。
 
@@ -74,14 +74,15 @@ sprtMaterial/
 │   └── results/data_audit/            审计输出（运行后生成）
 ├── code/
 │   ├── src/q1/  src/q2/  src/q3/      各问的可导入模块
-│   ├── scripts/                       问题 1、3 的求解、绘图、制表与导出入口
+│   ├── scripts/                       求解、绘图、制表与导出入口（问题 2 的论文图表也在此）
 │   ├── tests/                         单元测试与产物检查（pytest）
 │   └── data/processed/q1|q2|q3/       各问求解产物（运行后生成）
 └── figures/q1|q2|q3/                  论文图表（运行后生成）
 ```
 
 问题 1、3 采用“`src` 模块只定义计算、不读写文件；`scripts` 入口负责读写”的划分：求解脚本 `solve_*` 写 `.npz`/`.json`/`.csv` 到 `code/data/processed/`，图表脚本 `fig_*`/`tab_*` 只读取这些产物，不重新求解。
-问题 2 的各步骤是 `code/src/q2/` 下可直接运行的模块，由 `run_all.py` 统一调度。
+问题 2 的各步骤是 `code/src/q2/` 下可直接运行的模块，由 `run_all.py` 统一调度；问题 2 的论文图表由 `code/scripts/` 中的 `solve_q2_*`、`fig_q2_*`、`tab_q2_*` 在 `run_all.py` 之后生成。
+所有图表数值都从产物文件读取，脚本中不写入任何数据值。
 
 ## 5. 运行顺序与问题间依赖
 
@@ -160,6 +161,11 @@ python experimentalCode/dataAudit/run_data_audit.py
 | 6c | `python code/scripts/solve_q1_external.py` | 步骤 5、Zenodo 工作簿、`8.xlsx` | `q1_external.*` | 数秒 |
 | 6d | `python code/scripts/solve_q1_oav.py --workers 8` | 步骤 3、审计输出 | `q1_oav.*`（可选实验） | 约 5 分钟 |
 | 7 | `python code/scripts/export_q1_scores.py` | 步骤 3–5 | `q1_delivery_scores.*`、`q1_final_scores.csv`、`q1_scores_long.csv` | 数秒 |
+| 8a | `python code/scripts/solve_q1_panels.py` | `4.csv`、步骤 1 | `q1_panels.npz`：对照 C1 的精确并列连边、品评团、组维零点与地板堆积 | 数秒 |
+| 8b | `python code/scripts/solve_q1_spearman.py` | 步骤 2、4a、4c | `q1_spearman.npz`：各模型平均 Spearman 及按日期组 bootstrap 的 95% 区间（2,000 次） | 约 1 分钟 |
+| 8c | `python code/scripts/solve_q1_mscale.py` | 步骤 2、4c | `q1_mscale.npz`：C1 尺度参数 m ∈ [2, 4.5] 的参照还原误差，原始评分直接估计的 m | 数秒 |
+
+步骤 8 只为论文图准备数据，复用正式划分 `fold_id`；`solve_q1_mscale.py` 在 m = 3 时核对与 `q1_twostage.npz` 的参照逐格一致，不一致时以非零退出码结束。
 
 步骤 4a 可用 `--only rf`、`--only chemstyle` 等（取值 `b0 b1 lin10 enet rf chemstyle`）分批运行，最后不带 `--only` 运行一次以合并。
 步骤 6a 可用 `--arm NAME` 单独运行某个臂（`na_median_ind na_native_nan na_floor_ind drop_sum att8 mono_on mono_off alpha`）。
@@ -177,6 +183,17 @@ python experimentalCode/dataAudit/run_data_audit.py
 | `python code/scripts/fig_q1_sensitivity.py` | `fig_q1_sensitivity.pdf`：敏感性臂 |
 | `python code/scripts/fig_q1_stress.py` | `fig_q1_stress.pdf`：压力测试 |
 | `python code/scripts/tab_q1_{metrics,rules,paired,external,report_beers}.py` | 同名 `.csv` 与 `.tex`；`tab_q1_report_beers` 依赖步骤 7 |
+
+论文正文图（依赖步骤 7、8）：
+
+| 命令 | 输出（`figures/q1/`） | 数据来源 |
+|---|---|---|
+| `python code/scripts/fig_q1_panel.py` | `fig_q1_panel.pdf`：品评团与零点三子图 | `q1_panels.npz` |
+| `python code/scripts/fig_q1_performance.py` | `fig_q1_performance.pdf`：模型对比双子图（平均 Spearman 与配对差区间；主模型与 B1 逐维） | `q1_spearman.npz` |
+| `python code/scripts/fig_q1_confusion_anchor.py` | `fig_q1_confusion_anchor.pdf`：有锚 / 无锚单元的等级混淆热力图 | `q1_scores.npz`、`q1_twostage.npz` |
+| `python code/scripts/fig_q1_scores.py` | `fig_q1_scores.pdf`：250 × 50 交付等级热力图（行按风格聚类） | `q1_delivery_scores.npz` |
+| `python code/scripts/fig_q1_radar.py` | `fig_q1_radar.pdf`：代表性啤酒雷达图（预测、真值与外部对照杯等级） | `q1_delivery_scores.npz`、`q1_external.npz` |
+| `python code/scripts/fig_q1_m_sensitivity.py` | `fig_q1_m_sensitivity.pdf`：尺度参数 m 的敏感性 | `q1_mscale.npz` |
 
 ### 6.4 主要结果（供核对）
 
@@ -223,7 +240,28 @@ python code/src/q2/run_all.py
 敏感性方案：`tau_0.5`、`tau_0.7`、`cand_plus_composites`、`cand_plus_internal_std`、`na_lowest`、`attachment8_conflict`、`boot_fixed_graph`、`boot_beer_unit`、`sensory_z`。
 `sensitivity_runs.py` 支持 `--only NAME ...` 与 `--force`；已完成的方案默认跳过。
 
-### 7.3 主要结果（供核对）
+### 7.3 论文图表（`code/scripts/`，在 `run_all.py` 之后运行）
+
+技术路线图 `figures/q2_methodology_flowchart.pdf` 由 `fig_q2_methodology_flowchart.py` 从 TikZ 源文件编译，不在本包内。
+
+| 命令 | 输出（`figures/q2/`） | 数据来源 |
+|---|---|---|
+| `python code/scripts/solve_q2_layout.py` | `code/data/processed/q2/q2_layout.npz`：共表达图 MDS 布局（距离 1−\|ρ\|，种子 0） | 附件 2、`graph_nodes.csv` |
+| `python code/scripts/solve_q2_spike.py` | `code/data/processed/q2/q2_spike.csv`：加标杯与对照杯的同日同品评员配对差及 t 值 | Zenodo 工作簿（md5 校验） |
+| `python code/scripts/fig_q2_recovery.py` | `fig_q2_recovery.pdf`：前向选择与边际选择的找回率对比 | `simulation_recovery_results.csv` |
+| `python code/scripts/fig_q2_network.py` | `fig_q2_network.pdf`：τ=0.6 共表达图（颜色示来源、圈示模块、点大小示模块内连接度） | `q2_layout.npz`、图三表 |
+| `python code/scripts/fig_q2_stability.py` | `fig_q2_stability.pdf`：49 维 × 3 位置 π^c 热力图与三档分布 | `final_top3_with_rationality.csv` |
+| `python code/scripts/fig_q2_jaccard.py` | `fig_q2_jaccard.pdf`：方法间 Jaccard（随机基线按候选数解析计算） | `full_controls_results.csv` |
+| `python code/scripts/fig_q2_oav.py` | `fig_q2_oav.pdf`：Top-3 中有阈值化合物的 OAV≥1 啤酒比例 | `final_top3_with_rationality.csv` |
+| `python code/scripts/tab_q2_recovery.py` | `tab_q2_recovery.{csv,tex}`：植入–还原找回率（按植入顺序） | `simulation_recovery_results.csv` |
+| `python code/scripts/tab_q2_jaccard.py` | `tab_q2_jaccard.{csv,tex}`：主方法与对照的 Jaccard（49 维平均） | `full_controls_results.csv` |
+| `python code/scripts/tab_q2_spike.py` | `tab_q2_spike.{csv,tex}`：加标杯 − 对照杯配对差（括号内为 t 值） | `q2_spike.csv` |
+| `python code/scripts/tab_q2_top3.py` | `tab_q2_top3.{csv,tex}`：全部 49 维 Top-3 完整结果（longtable） | `final_top3_with_rationality.csv` |
+| `python code/scripts/tab_q2_sensitivity.py` | `tab_q2_sensitivity.{csv,tex}`：敏感性运行汇总 | `sensitivity/sensitivity_summary.csv` |
+
+`solve_q2_layout.py` 须在 `fig_q2_network.py` 之前运行，`solve_q2_spike.py` 须在 `tab_q2_spike.py` 之前运行；其余脚本相互独立。
+
+### 7.4 主要结果（供核对）
 
 49 个交付维度（barnyard 与 stale_hops 评分近似重复，barnyard 不单独建模）的 Top-1 等级为 A 级 26 维、B 级 22 维、C 级 1 维。
 Top-1/2/3 的平均 bootstrap 入选频率 π^c 为 0.60 / 0.36 / 0.22。
@@ -265,6 +303,9 @@ Top-1/2/3 的平均 bootstrap 入选频率 π^c 为 0.60 / 0.36 / 0.22。
 | 7 | `python code/scripts/solve_q3_transfer.py --workers 8` | 步骤 4、问题 1、问题 2 | `q3_transfer.*`、`q3_transfer_pils_tripel.csv`、`q3_transfer_defects.csv`、`q3_transfer_pairs.csv` 等 | 约 2 分钟 |
 | 8 | `python code/scripts/solve_q3_sensitivity.py --arm all --workers 5` | 步骤 3、5、7 | `sens/<臂>.json`/`.npz`、`q3_sensitivity.csv` | 约 1 小时 |
 | 9 | `python code/scripts/export_q3_outputs.py` | 步骤 5 | `q3_portraits_long.csv` | 数秒 |
+| 10 | `python code/scripts/solve_q3_pca.py` | 步骤 2、4、5、7 | `q3_pca.npz`/`.json`：潜空间 PCA（只在真实啤酒上拟合）下的真实、生成样本与迁移轨迹投影 | 数秒 |
+
+步骤 10 以相同种子重抽生成样本的潜变量，并核对其反变换与 `q3_synthetic_profiles.npz` 一致、轨迹终点 α* 与 `q3_transfer.npz` 一致，任一不一致时以非零退出码结束。
 
 步骤 3 可用 `--stage gen|metrics|merge` 分阶段运行。
 步骤 8 的 `--arm` 也接受逗号分隔的臂名，`--list` 列出全部臂，`--summary` 只重写汇总表；迁移臂在内部以子进程调用步骤 4、7 的脚本，变体产物带后缀（如 `q3_transfer_strict.json`）。
@@ -286,6 +327,16 @@ Top-1/2/3 的平均 bootstrap 入选频率 π^c 为 0.60 / 0.36 / 0.22。
 | `python code/scripts/fig_q3_pairs.py` | 22 × 22 风格对热图 |
 | `python code/scripts/fig_q3_sensitivity.py` | 敏感性臂相对基线的变化 |
 | `python code/scripts/tab_q3_{select,genval,transfer,pairs,sensitivity}.py` | 同名 `.csv` 与 `.tex` |
+
+论文正文图（依赖步骤 3、5、7、10；技术路线图 `figures/q3_methodology_flowchart.pdf` 由 TikZ 源文件编译，不在本包内）：
+
+| 命令 | 输出（`figures/q3/`） | 数据来源 |
+|---|---|---|
+| `python code/scripts/fig_q3_gen_eval.py` | `fig_q3_gen_eval.pdf`：生成器 C2ST AUC 与潜空间 PCA 双子图 | `q3_genval.json`、`q3_pca.npz` |
+| `python code/scripts/fig_q3_radar.py` | `fig_q3_radar.pdf`：Tripel、Kriek、Lambic 画像雷达图（中位数、10%–90% 带、真实折外预测） | `q3_portraits.npz`、问题 1 折外预测 |
+| `python code/scripts/fig_q3_fingerprint_pair.py` | `fig_q3_fingerprint_pair.pdf`：化学指纹前 10 项与感官指纹 | `q3_fingerprint.csv`、`q3_sensory_fingerprint.csv` |
+| `python code/scripts/fig_q3_transfer.py` | `fig_q3_transfer.pdf`：迁移轨迹、逐款 α* 与目标风格概率、代表款画像三子图 | `q3_pca.npz`、`q3_transfer_pils_tripel.csv`、`q3_transfer_portraits.csv` |
+| `python code/scripts/fig_q3_defect.py` | `fig_q3_defect.pdf`：缺陷不恶化核查表（化学层 OAV 变化与感官层等级） | `q3_transfer_defects.csv` |
 
 ### 8.4 主要结果（供核对）
 

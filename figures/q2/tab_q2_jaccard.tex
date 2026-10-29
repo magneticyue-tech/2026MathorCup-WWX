@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+\centering
+\caption{主方法与对照方法的 Jaccard 系数（49 维平均；随机基线为 225 个候选中两个随机 3 元集合的期望）}\label{tab:q2_jaccard}
+\begin{tabular}{lccc}
+\toprule
+对照 & 化合物层 & 模块层 & Top-1 相同比例 \\
+\midrule
+M0 无图约束边际 & 0.339 & 0.383 & 1.000 \\
+M1 图约束边际 & 0.382 & 0.382 & 1.000 \\
+M2 ElasticNet & 0.573 & 0.573 & 0.755 \\
+M3 GBM 置换重要度 & 0.267 & 0.286 & 0.449 \\
+风格内选择 & 0.259 & 0.298 & 0.408 \\
+随机基线 & 0.008 & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
