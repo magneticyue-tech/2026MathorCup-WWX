@@ -5,12 +5,15 @@
 %
 %  正文按章拆分在 paper/sections/ 下，每个文件独立成章：
 %    ch1_problem.tex     问题重述与分析
-%    ch2_assumptions.tex 模型假设与符号
-%    preprocess.tex      数据预处理（沿用既有内容并补充数据核验表与零点还原表）
-%    ch4_q1.tex          问题一
-%    ch5_q2.tex          问题二
-%    ch6_q3.tex          问题三
-%    ch7_evaluation.tex  模型评价与推广
+%    ch2_assumptions.tex 模型假设与符号说明
+%    preprocess.tex      数据核验与预处理（沿用既有内容并补充数据核验表与零点还原表）
+%    ch4_q1.tex          问题一：50 维感官评分预测
+%    ch5_q2.tex          问题二：基于共表达图的关键化合物识别
+%    ch6_q3.tex          问题三：风格条件生成、感官画像与跨风格迁移
+%    ch7_evaluation.tex  模型评价与改进
+%    ch8_conclusion.tex  结论与建议
+%    references.tex      参考文献
+%    appendix.tex        附录 A--F
 %  每章可单独包装成独立文档编译（参考 paper/preprocess.tex 的壳）。
 % =====================================================================
 \documentclass[12pt,a4paper]{article}
@@ -73,5 +76,8 @@
 \input{sections/ch5_q2.tex}
 \input{sections/ch6_q3.tex}
 \input{sections/ch7_evaluation.tex}
+\input{sections/ch8_conclusion.tex}
+\input{sections/references.tex}
+\input{sections/appendix.tex}
 
 \end{document}
