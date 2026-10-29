@@ -1,5 +1,5 @@
 # code/src/q2/stability.py
-"""Q2.3 品评团簇 bootstrap：每次重建图与模块，计算 π^c、π^m、CI、Jaccard、竞争者与等级。"""
+"""Q2.3 日期组簇 bootstrap：每次重建图与模块，计算 π^c、π^m、CI、Jaccard、竞争者与等级。"""
 import sys
 from pathlib import Path
 
@@ -25,8 +25,10 @@ def main(n_boot=C.N_BOOTSTRAP, seed=C.SEED):
     score = np.array([[score[(dim, k)] for k in (1, 2, 3)] for dim in a.dims])
     q = np.load(C.Q2_DIR / "q2_permutation.npz")["q"]
 
-    print(f"bootstrap {n_boot} 次，单位 {spec.boot_unit}，{len(np.unique(a.panels))} 个品评团，seed {seed}")
-    boot_sel, boot_fix = core.run_bootstrap(a, spec, sel, progress=True)
+    n_groups = len(np.unique(a.groups))
+    print(f"bootstrap {n_boot} 次，单位 {spec.boot_unit}，每次抽取 {n_groups} 个日期组，seed {seed}")
+    boot_sel, boot_fix, n_distinct = core.run_bootstrap(a, spec, sel, progress=True)
+    print(f"各次重复抽到的不同日期组数：最小 {n_distinct.min()}，中位 {np.median(n_distinct):g}，最大 {n_distinct.max()}")
     summ = core.summarize_bootstrap(a, sel, boot_sel, boot_fix)
     table = core.build_table(a, sel, score, q, summ)
 
@@ -36,7 +38,8 @@ def main(n_boot=C.N_BOOTSTRAP, seed=C.SEED):
     core.check_147(out, "final_top3_with_stability")
     out.to_csv(C.Q2_DIR / "final_top3_with_stability.csv", index=False)
     np.savez_compressed(C.Q2_DIR / "q2_bootstrap_main.npz", boot_sel=boot_sel, boot_fix=boot_fix,
-                        sel=sel, mod=a.mod, cand=np.array(a.cand), dims=np.array(a.dims), seed=seed)
+                        sel=sel, mod=a.mod, cand=np.array(a.cand), dims=np.array(a.dims), seed=seed,
+                        n_groups_drawn=n_groups, n_distinct_groups=n_distinct, boot_unit=spec.boot_unit)
 
     r1 = out[out["rank"] == 1]
     pos = out.groupby("rank")["pi_c"].mean()

@@ -10,7 +10,9 @@
   "n_candidates": 225,
   "graph_source": "attachment2",
   "rebuild_graph": true,
-  "boot_unit": "panel",
+  "boot_unit": "date_group",
   "q_reused_from_baseline": false,
-  "seconds": 26.7
+  "n_distinct_groups_min": 11,
+  "n_distinct_groups_max": 21,
+  "seconds": 37.3
 }

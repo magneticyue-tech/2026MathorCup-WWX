@@ -219,13 +219,16 @@ def permutation_thresholds(Zx, Zy, sel, mod, valid, n_perm, seed):
 
 
 # ---------------------------------------------------------------- bootstrap
-def bootstrap_indices(panels, n_boot, seed, unit="panel"):
+def bootstrap_indices(groups, n_boot, seed, unit="date_group"):
+    """簇 bootstrap：每次有放回抽取与簇数相同个簇并拼接其啤酒；unit="beer" 时按单款啤酒重抽。"""
     rng = np.random.default_rng(seed)
-    n = len(panels)
+    n = len(groups)
     if unit == "beer":
         return [rng.integers(0, n, n) for _ in range(n_boot)]
-    labels = np.unique(panels)
-    groups = [np.where(panels == g)[0] for g in labels]
+    if unit != "date_group":
+        raise ValueError(unit)
+    labels = np.unique(groups)
+    groups = [np.where(groups == g)[0] for g in labels]
     out = []
     for _ in range(n_boot):
         pick = rng.integers(0, len(groups), len(groups))
@@ -243,7 +246,7 @@ class ArmSpec:
     chem: pd.DataFrame | None = None
     target: pd.DataFrame | None = None
     graph_source: str = "attachment2"
-    boot_unit: str = "panel"
+    boot_unit: str = "date_group"
     rebuild_graph: bool = True
     n_perm: int = C.N_PERMUTATION
     n_boot: int = C.N_BOOTSTRAP
@@ -263,13 +266,13 @@ class ArmData:
     okx: np.ndarray
     Zy: np.ndarray
     oky: np.ndarray
-    panels: np.ndarray
+    groups: np.ndarray
 
 
 def prepare_arm(ds, spec: ArmSpec) -> ArmData:
     cand = list(spec.candidates or ds.candidate_cols)
     chem = spec.chem if spec.chem is not None else ds.chem_raw
-    Ydf = spec.target if spec.target is not None else ds.sensory_raw[ds.delivery_sensory_cols]
+    Ydf = spec.target if spec.target is not None else ds.xbar[ds.delivery_sensory_cols]
     Xraw = chem[cand].to_numpy(float)
     Yraw = Ydf[ds.delivery_sensory_cols].to_numpy(float)
     if spec.graph_source == "attachment2":
@@ -283,7 +286,7 @@ def prepare_arm(ds, spec: ArmSpec) -> ArmData:
     Zy, oky = zrank(Yraw)
     if not okx.all() or not oky.all():
         raise ValueError("全样本存在常数列")
-    return ArmData(cand, list(ds.delivery_sensory_cols), Xraw, Yraw, corr, mod, Zx, okx, Zy, oky, ds.panels)
+    return ArmData(cand, list(ds.delivery_sensory_cols), Xraw, Yraw, corr, mod, Zx, okx, Zy, oky, ds.date_group)
 
 
 def select_full(a: ArmData):
@@ -293,8 +296,9 @@ def select_full(a: ArmData):
 
 
 def run_bootstrap(a: ArmData, spec: ArmSpec, sel_full, progress=False):
-    """返回每次重复的 Top-3（B×D×3）与固定 Top-3 的得分（B×D×3）。"""
-    idx_list = bootstrap_indices(a.panels, spec.n_boot, spec.seed, spec.boot_unit)
+    """返回每次重复的 Top-3（B×D×3）、固定 Top-3 的得分（B×D×3）与每次抽到的不同日期组数（B）。"""
+    idx_list = bootstrap_indices(a.groups, spec.n_boot, spec.seed, spec.boot_unit)
+    n_distinct = np.array([len(np.unique(a.groups[idx])) for idx in idx_list])
     B, D = len(idx_list), len(a.dims)
     boot_sel = np.zeros((B, D, 3), int)
     boot_fix = np.full((B, D, 3), np.nan)
@@ -312,7 +316,7 @@ def run_bootstrap(a: ArmData, spec: ArmSpec, sel_full, progress=False):
         boot_fix[b] = fixed_stats(Cxx, Cxy, sel_full)
         if progress and (b + 1) % max(1, B // 10) == 0:
             print(f"    bootstrap {b + 1}/{B}", flush=True)
-    return boot_sel, boot_fix
+    return boot_sel, boot_fix, n_distinct
 
 
 def summarize_bootstrap(a: ArmData, sel_full, boot_sel, boot_fix):
@@ -409,10 +413,11 @@ def run_arm(ds, spec: ArmSpec, q_override=None, progress=False):
         q = permutation_thresholds(a.Zx, a.Zy, sel, a.mod, a.okx, spec.n_perm, spec.seed)
     else:
         q = q_override
-    boot_sel, boot_fix = run_bootstrap(a, spec, sel, progress=progress)
+    boot_sel, boot_fix, n_distinct = run_bootstrap(a, spec, sel, progress=progress)
     summ = summarize_bootstrap(a, sel, boot_sel, boot_fix)
     table = build_table(a, sel, score, q, summ)
-    return table, dict(arm=a, sel=sel, score=score, q=q, boot_sel=boot_sel, boot_fix=boot_fix, summ=summ)
+    return table, dict(arm=a, sel=sel, score=score, q=q, boot_sel=boot_sel, boot_fix=boot_fix, summ=summ,
+                       n_distinct=n_distinct)
 
 
 def module_label_map(cand, mod):

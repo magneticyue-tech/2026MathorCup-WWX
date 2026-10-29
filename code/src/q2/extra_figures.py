@@ -105,7 +105,7 @@ def plot_stability_hist():
         ax.hist(df.loc[df["rank"] == k, "pi_c"], bins=bins, alpha=0.6, color=col, label=f"第 {k} 位")
     ax.axvline(C.STABLE_THRESHOLD, color="k", ls="--", lw=1)
     ax.axvline(C.MEDIUM_THRESHOLD, color="k", ls=":", lw=1)
-    ax.set_xlabel("化合物层入选频率 π^c（品评团簇 bootstrap，B=1000）")
+    ax.set_xlabel("化合物层入选频率 π^c（日期组簇 bootstrap，B=1000）")
     ax.set_ylabel("项数")
     ax.legend(frameon=False, fontsize=8)
     fig.tight_layout()

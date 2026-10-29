@@ -38,13 +38,13 @@ def _corr_cols(A, B):
 
 
 def style_within(ds, pairs, n_boot, seed):
-    """固定 (维度, 化合物)：风格残差秩相关的估计值与品评团簇 bootstrap 95% CI。"""
+    """固定 (维度, 化合物)：风格残差秩相关的估计值与日期组簇 bootstrap 95% CI（与主稳定性同一组重抽索引，方法 §4.6）。"""
     comps = sorted({c for _, c in pairs})
     dims = list(ds.delivery_sensory_cols)
     ci = [comps.index(c) for _, c in pairs]
     di = [dims.index(d) for d, _ in pairs]
     Xraw = ds.chem_raw[comps].to_numpy(float)
-    Yraw = ds.sensory_raw[dims].to_numpy(float)
+    Yraw = ds.xbar[dims].to_numpy(float)
 
     def stat(idx):
         Zx, _ = core.zrank(core.fill_array(Xraw[idx], "mean"))
@@ -53,7 +53,7 @@ def style_within(ds, pairs, n_boot, seed):
         return _corr_cols(_resid(D, Zx)[:, ci], _resid(D, Zy)[:, di])
 
     est = stat(np.arange(len(ds.style)))
-    idx_list = core.bootstrap_indices(ds.panels, n_boot, seed, "panel")
+    idx_list = core.bootstrap_indices(ds.date_group, n_boot, seed, "date_group")
     boot = np.array([stat(idx) for idx in idx_list])
     n_nan = np.isnan(boot).sum(0)
     with np.errstate(invalid="ignore"):

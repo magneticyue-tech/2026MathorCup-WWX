@@ -2,7 +2,7 @@
 id: 2026-10-28-q2-statistical-fixes
 from: modeling
 to: coding
-status: ack
+status: resolved
 severity: major
 refs:
   - review/2026-10-28-q2-complete-run.md
@@ -71,3 +71,24 @@ refs:
 - 小样本命令与结果：`C:/Users/11600/anaconda3/envs/mathorcup_new/python.exe code/src/q2/full_controls.py --smoke`（A_malt_all，重复 0 的 5 折，参数逐项一致）；风格内区间 20 次 ×2 次运行逐项相同、147 行、区间有序且在 [−1,1]、flag 与端点一致；`simulation.py --smoke` 每设置 10 次、6 行、比例在 [0,1]；`at_zero` 250×50 与样本逐行一致。小样本文件写入 `_smoke/` 后已删除。
 - 剩余问题：`model/q2_methodology.md` §4.6 的区间定义补写未做（用户限定本次只做代码），由 Modeling 补入。
 
+## 验收（Modeling，2026-10-29）
+
+结论：不通过，退回 Coding。以下各项与方法及本工单不符，须在正式重跑前修正。
+
+1. M3 目标为附件 4 $z$ 的秩（`full_controls.py:90` 取 `ds.Y_rank`，其来源为 `4.csv`），方法 §2.3、§5.2 规定为 `xbar` 的秩。`full_controls.py:57`、`:134` 用推断品评团核对训练/测试不相交，应改为 `date_group`；M2 的 `GroupKFold`（`full_controls.py:101`）同样改用 `date_group`。
+2. 风格内区间的重抽单位为 63 个推断品评团（`rationality.py:56`），方法 §4.6（本次已补写区间定义）与 §5.1 规定为 25 个日期组。
+3. 模拟噪声使用固定常数 `SIM_PANEL_OFFSET_SD=0.15` 和推断品评团（`simulation.py:26`、`:44`）。方法 §7.2 与本工单步骤 3 规定：日期组偏移的方差占比取 `xbar` 的秩在 25 个日期组上的组间方差占比，由 `date_group` 现算。删除该常数。
+4. 零膨胀检查使用由 $z$ 推断的 `at_zero` 掩码（`advanced_audits.py:26`），且未执行“至少 30% 啤酒为 0”的筛选。方法 §6.6 与本工单步骤 4 规定以 `xbar == 0` 判定。按 `xbar`，预运行 C 级的 A_esters_flower、t2n 零值比例为 0.24、0.21，若正式 C 级仍为二者，均不满足筛选条件，应报告“无维度满足条件”，不输出重算结果。
+
+保留项：`core.py` 的 Freedman–Lane 置换、`flag_oav_lt1` 改为“全部啤酒 OAV<1”、`covariation` 的三值逻辑、M3 超参数取自 `q1_main_oof.npz` 的 `chosen_params`。删除信号下限截断正确：低于 −1.81781854 的 1,172 个单元格分布在 15 列，这 15 列都没有下限单元格，原截断把真实低值并列为下限。
+
+## 复验（Modeling，2026-10-29）
+
+结论：通过。§“验收”四项已修正。
+
+1. M2、M3 的感官目标为 `xbar` 的秩，分组为 `date_group`。M3 外层划分改为由 `q1_main_oof.npz` 的 `fold_id` 重建：`mathorcup` 环境（sklearn 1.9.1）调用 `outer_splits` 不能复现 Q1 在 sklearn 1.7.2 下的划分，Q1 产物是权威来源。小样本：5 折参数与 Q1 逐项一致，日期组不相交。
+2. 风格内区间由日期组簇 bootstrap 计算，与主稳定性共用重抽索引（方法 §4.6）。正式：风格内 CI 含 0 的项 42/147。
+3. 模拟噪声的日期组方差占比由 `xbar` 的秩现算，49 维中位数 0.29，删除 `SIM_PANEL_OFFSET_SD`；方法 §7.2 已写明公式。正式 6 种设置各 1000 次。
+4. 零膨胀检查以 `xbar == 0` 判定并执行 30% 筛选。正式 C 级只有 t2n，零值占比 0.212，记为不适用（`zero_inflation_c_grade.csv`）。
+
+命令：`MKL_THREADING_LAYER=SEQUENTIAL` 下以 `mathorcup` 环境运行 `code/src/q2/run_all.py`，15 步返回码均为 0；日志 `code/data/processed/q2/run_log.txt`，清单 `run_manifest.json`（含 `input_checks` 与各日期组大小）。SEED=0。

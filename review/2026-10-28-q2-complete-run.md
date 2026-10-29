@@ -54,3 +54,12 @@ refs:
 - 代码与旧实现的差异：选择、置换、bootstrap 统一由 `code/src/q2/core.py` 在相关矩阵上计算（与残差回归定义逐维一致）；模块只在候选上聚类（161 模块），注释节点不参与聚类；显著性为“超过置换门槛且 bootstrap CI 不含 0”；τ 敏感性从 `controls_sensitivity.py` 移到 `sensitivity_runs.py` 并完整重跑；删除了对信号下限的截断。
 - 待 Modeling：化学解释、`model/q2_methodology.md` §4.6 区间定义、`model/sensitivity_analysis.md` Q2 行。
 
+## 验收（Modeling，2026-10-29）
+
+结论：不通过。三张子工单均退回 Coding，原因见各自 `## 验收`。根本原因是实现仍以附件 4 的 $z$ 与 63 个推断品评团为口径，未按方法 §2.3、§2.4 改为 `xbar` 的秩与 25 个日期组，本工单“当前已知执行注意”第 2 条未执行。
+
+Modeling 本次完成：方法 §4.6 补写风格内区间定义；§2.2、§7.1 明确附件 6 复算使用 $z$，主分析与逐对删除诊断使用 `xbar` 的秩。化学解释与 `model/sensitivity_analysis.md` Q2 行在重跑验收通过后进行。
+
+## 复验（Modeling，2026-10-29）
+
+结论：`q2-statistical-fixes`、`q2-sensitivity-runs` 复验通过并关闭；`q2-final-run-acceptance` 数据验收通过，结果已冻结。剩余事项为 Modeling 依据 `handoff_modeling.md` 撰写化学解释（方法 §6.4），完成后关闭本线程与最终验收线程。Writing 可据冻结结果更新 `paper/main.tex` 中仍按 63 个品评团描述的问题二段落。

@@ -2,18 +2,23 @@ status,check
 通过,top3_results.csv：147 行、49 维、每维 3 行、无 barnyard
 通过,top3_results_with_sig.csv：147 行、49 维、每维 3 行、无 barnyard
 通过,final_top3_with_stability.csv：147 行、49 维、每维 3 行、无 barnyard
-通过,M3 行 24 = M3 与主方法 Top-1 不同的维度数 24
+通过,M3 行 27 = M3 与主方法 Top-1 不同的维度数 27
 通过,M3 行的主方法统计量为缺失并标注不适用
 通过,最终表 method 只有 main/M3
 通过,图节点 231，候选间边 245，注释节点相关边 21
-通过,品评团 63 个
+通过,感官目标为 xbar 的秩；xbar 与 z 逐维 Spearman 中位数按行号 0.969，按 beer 列 -0.010
+通过,日期组 25 个，每组 5–24 款
+通过,主感官目标 Y_rank 与 xbar 的标准化秩逐元素一致
 通过,主 bootstrap 1000 次、置换 1000 次
 通过,bootstrap 结果数组含 1000 次重复
+通过,主 bootstrap 每次抽取 25 个日期组；抽到的不同日期组数 11–21（中位 16）
+记录,零膨胀检查（C 级维度）：t2n 零值占比 0.212，不适用
+通过,运行日志不含 q1_panels、推断团或 legacy_z
 通过,模拟 6 种设置各 1000 次
-通过,附件 2 误差 1.05e-15，附件 6 误差 6.66e-16
+通过,附件 2 误差 2.05e-15，附件 6 误差 6.66e-16
 通过,A/B/C 由 is_significant、π^c 独立复算一致
 通过,is_significant = 超过门槛 且 CI 不含 0
-记录,"等级 {'A': 22, 'B': 25, 'C': 2}"
+记录,"等级 {'A': 26, 'B': 22, 'C': 1}"
 通过,最终表 origin_paper 与附件 8 逐项一致
 通过,最终表 off_flavors 与附件 8 逐项一致
 通过,最终表 aging 与附件 8 逐项一致

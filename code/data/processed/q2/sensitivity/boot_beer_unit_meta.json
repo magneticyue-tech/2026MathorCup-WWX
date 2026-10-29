@@ -12,5 +12,7 @@
   "rebuild_graph": true,
   "boot_unit": "beer",
   "q_reused_from_baseline": true,
-  "seconds": 25.0
+  "n_distinct_groups_min": 24,
+  "n_distinct_groups_max": 25,
+  "seconds": 32.1
 }

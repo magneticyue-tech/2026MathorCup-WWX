@@ -21,7 +21,7 @@ import pandas as pd
 import config as C
 import core
 from check_attachment6 import match_attachment6, pairwise_marginal
-from data import anchored_reference_target, attachment8_conflict_chem, load_q2_dataset
+from data import attachment8_conflict_chem, load_q2_dataset
 
 NA_TEXT = "不适用：逐对删除各系数样本集合不同，不能形成统一相关矩阵，不定义完整选择流程"
 
@@ -31,7 +31,6 @@ def arm_specs(ds, n_perm, n_boot):
     comp = [c for c in ds.chem_cols if c in base or c in C.COMPOSITE_COLS]
     istd = [c for c in ds.chem_cols if c in base or c == C.INTERNAL_STANDARD_COL]
     chem8, log8 = attachment8_conflict_chem(ds)
-    target, anchored = anchored_reference_target(ds)
     kw = dict(n_perm=n_perm, n_boot=n_boot)
     return [
         (core.ArmSpec("tau_0.5", tau=0.5, **kw), "模块阈值 τ=0.5", {}),
@@ -41,12 +40,10 @@ def arm_specs(ds, n_perm, n_boot):
         (core.ArmSpec("na_lowest", na_scheme="lowest", **kw), "单化合物 NA 最低位并列", {}),
         (core.ArmSpec("attachment8_conflict", chem=chem8, graph_source="recompute", **kw),
          "24 款啤酒 80 个冲突单元格改用附件 8；图由替换后的附件 1 逐对重算", {"replacements": log8}),
-        (core.ArmSpec("boot_fixed_graph", rebuild_graph=False, **kw), "bootstrap 中固定附件 2 图（与主分析同一组品评团索引）",
+        (core.ArmSpec("boot_fixed_graph", rebuild_graph=False, **kw), "bootstrap 中固定附件 2 图（与主分析同一组日期组索引）",
          {"reuse_q": True}),
         (core.ArmSpec("boot_beer_unit", boot_unit="beer", **kw), "bootstrap 单位改为单款啤酒（250 有放回）", {"reuse_q": True}),
-        (core.ArmSpec("sensory_anchored", target=target, **kw),
-         f"{len(anchored)} 个有锚维度改用 z 减去本团零点（团内无零点用该维度零点中位数）",
-         {"anchored": anchored}),
+        (core.ArmSpec("sensory_z", target=ds.z, **kw), "感官目标改用附件 4 的 z 的秩（49 维，按行号与 x̄ 对齐）", {}),
     ]
 
 
@@ -91,7 +88,7 @@ def run(n_perm, n_boot, out_dir, force=False, only=None):
         print("基线复算与正式结果逐项一致")
     base.to_csv(out_dir / "baseline_table.csv", index=False)
 
-    summary = [summarize("baseline", "正式基线（τ=0.6，225 候选，列均值，附件 1，重建图，品评团）",
+    summary = [summarize("baseline", "正式基线（τ=0.6，225 候选，列均值，附件 1，重建图，日期组，x̄ 的秩）",
                          base, core.compare_tables(base, base, base_mod), n_perm, n_boot)]
     for spec, desc, extra in arm_specs(ds, n_perm, n_boot):
         if only and spec.name not in only:
@@ -115,8 +112,6 @@ def run(n_perm, n_boot, out_dir, force=False, only=None):
             cmp.to_csv(out_dir / f"{spec.name}_compare.csv", index=False)
             if "replacements" in extra:
                 extra["replacements"].to_csv(out_dir / "attachment8_replacements.csv", index=False)
-            if "anchored" in extra:
-                pd.Series(extra["anchored"], name="dimension").to_csv(out_dir / "anchored_dims.csv", index=False)
             s = summarize(spec.name, desc, table, cmp, n_perm, n_boot)
             summary.append(s)
             meta = {"status": "ok", "arm": spec.name, "description": desc, "n_permutation": n_perm,
@@ -124,6 +119,8 @@ def run(n_perm, n_boot, out_dir, force=False, only=None):
                     "n_candidates": len(ex["arm"].cand), "graph_source": spec.graph_source,
                     "rebuild_graph": spec.rebuild_graph, "boot_unit": spec.boot_unit,
                     "q_reused_from_baseline": bool(extra.get("reuse_q")),
+                    "n_distinct_groups_min": int(ex["n_distinct"].min()),
+                    "n_distinct_groups_max": int(ex["n_distinct"].max()),
                     "seconds": round(time.time() - t0, 1)}
             meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
             print(f"    Jaccard {s['mean_jaccard_compound']:.3f}/{s['mean_jaccard_module']:.3f}；Top-1 改变 "
@@ -135,11 +132,11 @@ def run(n_perm, n_boot, out_dir, force=False, only=None):
 
     if not only or "pairwise_deletion" in only:
         a6, chem6, sens6 = match_attachment6(ds)
-        R6, _ = pairwise_marginal(ds.chem_raw[chem6], ds.sensory_raw[sens6])
+        R6, _ = pairwise_marginal(ds.chem_raw[chem6], ds.z[sens6])
         err6 = float(np.nanmax(np.abs(R6.to_numpy() - a6.to_numpy(float))))
         if err6 > 1e-12:
             raise AssertionError(f"逐对删除复现附件 6 误差 {err6:.2e}")
-        R, N = pairwise_marginal(ds.chem_raw[ds.candidate_cols], ds.sensory_raw[ds.delivery_sensory_cols])
+        R, N = pairwise_marginal(ds.chem_raw[ds.candidate_cols], ds.xbar[ds.delivery_sensory_cols])
         _, Cxy = core.corr_mats(a0.Zx, a0.okx, a0.Zy, a0.oky)
         long = R.stack().rename("rho_pairwise").reset_index()
         long.columns = ["compound", "dimension", "rho_pairwise"]
@@ -147,7 +144,7 @@ def run(n_perm, n_boot, out_dir, force=False, only=None):
         long["rho_mean_fill"] = Cxy.ravel()
         long.to_csv(out_dir / "pairwise_deletion_marginal.csv", index=False)
         summary.append({
-            "arm": "pairwise_deletion", "description": "逐对删除：只作边际 Spearman 诊断",
+            "arm": "pairwise_deletion", "description": "逐对删除：只作边际 Spearman 诊断（感官列为 x̄；附件 6 复算取 z）",
             "n_dims": int(long["dimension"].nunique()), "n_permutation": np.nan, "n_bootstrap": np.nan,
             "mean_jaccard_compound": np.nan, "mean_jaccard_module": np.nan, "n_top1_changed": np.nan,
             "n_grade_changed": np.nan, "grade_changed_dims": "",

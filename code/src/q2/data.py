@@ -1,5 +1,5 @@
 # code/src/q2/data.py
-"""Q2 数据层：候选集合、样本对齐、品评团、NA 与秩。"""
+"""Q2 数据层：候选集合、样本对齐、感官目标 x̄、日期组、NA 与秩。"""
 
 from __future__ import annotations
 
@@ -17,7 +17,6 @@ import numpy as np
 import pandas as pd
 
 import config as C
-from src.q1.panels import at_zero_mask, infer_panels, panel_zeros
 
 ID_COLS = ("beer", "beer_id", "tasting_category_fine")
 
@@ -26,14 +25,17 @@ ID_COLS = ("beer", "beer_id", "tasting_category_fine")
 class Q2Dataset:
     """Q2 主流程所需的数据包。
 
-    - chem_raw：附件 1 的 231 个化学列原值（含 NA），行按附件 1/4 的 beer 对齐。
-    - sensory_raw：附件 4 的 50 个感官列；Y_rank 只含 49 个交付维度（无 barnyard）。
-    - panels：问题 1 §2.4 的 k=3 推断品评团（63 个，含单例）。
+    - chem_raw：附件 1 的 231 个化学列原值（含 NA），行序同附件 1/4。
+    - xbar：问题 1 `q1_data.npz` 的原始评分均值（250 × 50），行号 beer_row 与附件 1/4 行序一致；
+      Y_rank 为其中 49 个交付维度（无 barnyard）的标准化秩，是主感官目标（方法 §2.3）。
+    - z：附件 4 的 50 个标准化感官列，只用于感官目标敏感性臂与附件 6 复算（方法 §7.1、§7.3）。
+    - date_group：问题 1 §2.4 的 25 个日期组，bootstrap 与分组 CV 的单位（方法 §2.4）。
     """
 
     chem_raw: pd.DataFrame
     corr: pd.DataFrame
-    sensory_raw: pd.DataFrame
+    xbar: pd.DataFrame
+    z: pd.DataFrame
     sample_ids: pd.Index
     chem_cols: list[str]
     candidate_cols: list[str]
@@ -42,7 +44,6 @@ class Q2Dataset:
     delivery_sensory_cols: list[str]
     excluded_sensory_cols: list[str]
     style: np.ndarray
-    panels: np.ndarray
     date_group: np.ndarray
     X_rank: pd.DataFrame
     Y_rank: pd.DataFrame
@@ -70,6 +71,53 @@ def rank_standardize(df: pd.DataFrame) -> pd.DataFrame:
     return (ranks - ranks.mean(axis=0)) / sd
 
 
+def _median_dim_spearman(A: np.ndarray, B: np.ndarray) -> float:
+    ra = pd.DataFrame(A).rank().to_numpy()
+    rb = pd.DataFrame(B).rank().to_numpy()
+    return float(np.median([np.corrcoef(ra[:, d], rb[:, d])[0, 1] for d in range(A.shape[1])]))
+
+
+def load_q1_inputs(chem: pd.DataFrame, z: pd.DataFrame) -> tuple[pd.DataFrame, np.ndarray]:
+    """读取问题 1 W1 产物的 xbar 与 date_group，并执行最终验收工单“输入口径”的运行前断言。"""
+    q1 = np.load(C.Q1_DATA_NPZ, allow_pickle=False)
+    for k in ("beer_row", "beer", "xbar", "date_group", "dims"):
+        if k not in q1.files:
+            raise KeyError(f"q1_data.npz 缺少键 {k}")
+    if not (q1["beer_row"] == np.arange(1, 251)).all():
+        raise ValueError("q1_data.npz 的 beer_row 应恰为 1..250")
+    if not (q1["beer"] == chem["beer"].values).all():
+        raise ValueError("q1_data.npz 的 beer 与附件 1 行序不一致")
+    if list(q1["dims"]) != list(z.columns) or q1["xbar"].shape != (250, 50):
+        raise ValueError("q1_data.npz 的 xbar 维度或形状与附件 4 不一致")
+    date_group = q1["date_group"].astype(int)
+    if date_group.shape != (250,) or set(np.unique(date_group)) != set(range(C.N_DATE_GROUPS_EXPECTED)):
+        raise ValueError(f"date_group 取值应恰为 0..{C.N_DATE_GROUPS_EXPECTED - 1}")
+    xbar = pd.DataFrame(q1["xbar"].astype(float), index=z.index, columns=z.columns)
+    if xbar.isna().any().any():
+        raise ValueError("xbar 含 NA")
+    rho_row = _median_dim_spearman(xbar.to_numpy(), z.to_numpy())
+    order = np.argsort(chem["beer"].to_numpy())
+    rho_beer = _median_dim_spearman(xbar.to_numpy(), z.to_numpy()[order])
+    if rho_row < 0.95 or rho_beer > 0.1:
+        raise ValueError(f"xbar 与 z 对齐检查失败：按行号 {rho_row:.3f}（应 ≥0.95），按 beer 列 {rho_beer:.3f}（应 ≤0.1）")
+    return xbar, date_group
+
+
+def input_checks() -> dict:
+    """运行记录用：输入断言的数值与各日期组大小。"""
+    chem = pd.read_csv(C.CHEM_PATH)
+    sens = pd.read_csv(C.SENSORY_PATH)
+    z = sens[[c for c in sens.columns if c not in ID_COLS]].astype(float)
+    xbar, date_group = load_q1_inputs(chem, z)
+    order = np.argsort(chem["beer"].to_numpy())
+    return {
+        "xbar_z_median_spearman_by_row": _median_dim_spearman(xbar.to_numpy(), z.to_numpy()),
+        "xbar_z_median_spearman_by_beer": _median_dim_spearman(xbar.to_numpy(), z.to_numpy()[order]),
+        "n_date_groups": int(len(np.unique(date_group))),
+        "date_group_sizes": {int(g): int(n) for g, n in enumerate(np.bincount(date_group))},
+    }
+
+
 def load_q2_dataset(verbose: bool = False) -> Q2Dataset:
     chem = pd.read_csv(C.CHEM_PATH)
     sens = pd.read_csv(C.SENSORY_PATH)
@@ -86,7 +134,7 @@ def load_q2_dataset(verbose: bool = False) -> Q2Dataset:
     if len(chem_cols) != 231 or len(sens_cols) != 50:
         raise ValueError(f"化学列 {len(chem_cols)}（应 231），感官列 {len(sens_cols)}（应 50）")
     chem_raw = chem[chem_cols].astype(float).set_axis(ids, axis=0)
-    sens_raw = sens[sens_cols].astype(float).set_axis(ids, axis=0)
+    z = sens[sens_cols].astype(float).set_axis(ids, axis=0)
 
     corr = pd.read_csv(C.CORR_PATH, index_col=0)
     if corr.shape != (231, 231):
@@ -104,29 +152,23 @@ def load_q2_dataset(verbose: bool = False) -> Q2Dataset:
     if len(delivery) != C.SENSORY_DELIVERY_EXPECTED or "stale_hops" not in delivery:
         raise ValueError(f"交付维度应为 49 且含 stale_hops，实际 {len(delivery)}")
 
-    panels = infer_panels(sens_raw.reset_index(drop=True), k=3)
-    n_panels = len(np.unique(panels))
-    if n_panels != C.N_PANELS_EXPECTED:
-        raise ValueError(f"品评团应为 {C.N_PANELS_EXPECTED}，实际 {n_panels}")
-
     style = chem["tasting_category_fine"].astype(str).values
     if len(np.unique(style)) != C.N_STYLES_EXPECTED:
         raise ValueError(f"风格应为 {C.N_STYLES_EXPECTED} 个")
 
-    q1 = np.load(C.Q1_DATA_NPZ, allow_pickle=False)
-    if not (q1["beer"] == chem["beer"].values).all():
-        raise ValueError("Q1 q1_data.npz 的 beer 顺序与附件 1 不一致")
-    date_group = q1["date_group"].astype(int)
+    xbar, date_group = load_q1_inputs(chem, z)
 
     X_rank = rank_standardize(fill_chem(chem_raw[candidates], "mean"))
-    Y_rank = rank_standardize(sens_raw[delivery])
+    Y_rank = rank_standardize(xbar[delivery])
     if verbose:
-        print(f"样本 {len(ids)}；候选 {len(candidates)}；注释 {len(annotation)}；"
-              f"交付维度 {len(delivery)}；品评团 {n_panels}；风格 {len(np.unique(style))}")
+        sizes = np.bincount(date_group)
+        print(f"样本 {len(ids)}；候选 {len(candidates)}；注释 {len(annotation)}；交付维度 {len(delivery)}；"
+              f"日期组 {len(sizes)}（每组 {sizes.min()}–{sizes.max()} 款）；风格 {len(np.unique(style))}")
     return Q2Dataset(
         chem_raw=chem_raw,
         corr=corr,
-        sensory_raw=sens_raw,
+        xbar=xbar,
+        z=z,
         sample_ids=ids,
         chem_cols=chem_cols,
         candidate_cols=candidates,
@@ -135,32 +177,10 @@ def load_q2_dataset(verbose: bool = False) -> Q2Dataset:
         delivery_sensory_cols=delivery,
         excluded_sensory_cols=excluded,
         style=style,
-        panels=panels,
         date_group=date_group,
         X_rank=X_rank,
         Y_rank=Y_rank,
     )
-
-
-def panel_zero_table(ds: Q2Dataset) -> tuple[pd.DataFrame, np.ndarray]:
-    """问题 1 的名单零点（团 × 维度）与 at_zero 掩码（250 × 50，列序同附件 4）。"""
-    Z = ds.sensory_raw.reset_index(drop=True)
-    zeros = panel_zeros(Z, ds.panels)
-    mask = at_zero_mask(Z, ds.panels, zeros)
-    return zeros, mask
-
-
-def anchored_reference_target(ds: Q2Dataset) -> tuple[pd.DataFrame, list[str]]:
-    """有锚维度改用 z 减去本团零点；团内无零点时用该维度各团零点的中位数。"""
-    zeros, _ = panel_zero_table(ds)
-    anchored = [d for d in ds.delivery_sensory_cols if zeros[d].notna().any()]
-    if len(anchored) != C.N_ANCHORED_EXPECTED:
-        raise ValueError(f"有锚交付维度应为 {C.N_ANCHORED_EXPECTED}，实际 {len(anchored)}")
-    Y = ds.sensory_raw[ds.delivery_sensory_cols].copy()
-    for d in anchored:
-        z0 = pd.Series(ds.panels).map(zeros[d]).fillna(zeros[d].median()).values
-        Y[d] = Y[d].values - z0
-    return Y, anchored
 
 
 def attachment8_conflict_chem(ds: Q2Dataset) -> tuple[pd.DataFrame, pd.DataFrame]:

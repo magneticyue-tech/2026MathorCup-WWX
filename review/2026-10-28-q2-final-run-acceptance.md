@@ -86,3 +86,27 @@ refs:
 - 移交：`appendix_main_147.csv`（六组、147 行）、`handoff_modeling.md`（A/B/C、每维 Top-3、不显著/低稳定项、M3 差异、共变标记、阈值证据、同模块成员、同 barnyard 标注）；`interpretation` 留空。
 - 剩余问题：化学解释与 `model/` 文档更新待 Modeling；本线程待其完成后改为 resolved。
 
+## 验收（Modeling，2026-10-29）
+
+结论：不通过，退回 Coding。正式产物以附件 4 的 $z$ 为感官目标、以 63 个推断品评团为重抽单位，违反本工单“输入口径”与方法 §2.3、§2.4、§5.1。现有 `code/data/processed/q2/` 与 `figures/q2/` 中依赖感官目标或重抽单位的结果全部作废，不得移交 Writing。
+
+1. `data.py:107` 调用 `infer_panels`，`data.py:115` 用 `4.csv` 的列生成 `Y_rank`；`config.py` 保留 `N_PANELS_EXPECTED = 63`。改为读取 `q1_data.npz` 的 `xbar`（取 49 个交付维度）与 `date_group`，删除推断品评团、`panel_zero_table` 与 `at_zero` 的全部引用。
+2. 运行前断言未实现：`acceptance.py:121` 断言“品评团 63 个”。改为本工单所列断言：`beer_row` 为 1..250；`date_group` 取值 0..24；`xbar` 与 $z$ 按行号对齐时逐维 Spearman 中位数 ≥0.95（当前数据 0.969），按 `beer` 列对齐时 ≤0.1（当前 −0.010）；各日期组大小写入 `run_manifest.json`（当前为 5–24 款）。
+3. 方法 §5.1 要求的每次重复簇数与抽到的不同簇数未记录。
+4. `stability_pi_c_hist.png` 横轴写“品评团簇 bootstrap”，其余图同批重绘。
+
+可保留、无需重算正确性的产物：图节点 231、候选间边 245、注释节点相关边 21，附件 2 复算误差 1.05×10⁻¹⁵，附件 6 复算误差 6.66×10⁻¹⁶（附件 6 按 $z$ 复算，口径见方法 §7.1）。附件 8 标签与 `chemical_dictionary.csv` 一致性检查可沿用。
+
+重跑顺序：先完成 `q2-statistical-fixes` 与 `q2-sensitivity-runs` 验收项，再按本工单“正式运行顺序”全量重跑，并重新生成 `acceptance_log.csv`、`appendix_main_147.csv`、`handoff_modeling.md`。预运行数字（63 个团、A 22 等）不作为核对目标；正式值变化时照实记录。
+
+## 复验（Modeling，2026-10-29）
+
+结论：数据与产物验收通过；本线程待 Modeling 完成化学解释后改为 resolved。
+
+- `acceptance_log.csv`：38 项通过、2 项记录、0 项失败。新增检查：`xbar` 与 $z$ 按行号对齐时 Spearman 中位数 0.969，按 `beer` 列对齐时 −0.010；25 个日期组，每组 5–24 款；`Y_rank` 与 `xbar` 的标准化秩逐元素一致；主 bootstrap 每次抽 25 个日期组，抽到的不同日期组数 11–21（中位 16）；运行日志不含 `q1_panels`、推断团或 `legacy_z`。
+- 独立复算（不经验收脚本）：49 维 Top-1 由原始附件与 `xbar` 直接计算，化合物与得分全部一致；显著性与 A/B/C 复算一致。
+- 主要数值：Top-1 $\lvert rvert$ 中位 0.38；$q_d$ 中位 0.229；超门槛 48/39/21；π^c 按位置 0.60/0.36/0.22；$J^{	ext{boot}}$ 0.289；稳定/中等/不稳定 33/41/73；A/B/C 26/22/1，C 级为 t2n；共变标记 88/147；模块可分假设被推翻 0 项。对照（化合物层/模块层/Top-1 相同比例）：M0 0.339/0.383/1.00，M1 0.382/0.382/1.00，M2 0.573/0.573/0.76，M3 0.267/0.286/0.45，风格内 0.259/0.298/0.41；M3 追加行 27。
+- 图：图 231 节点、候选间边 245、注释节点相关边 21；附件 2 误差 2.05×10⁻¹⁵，附件 6 误差 6.66×10⁻¹⁶。`figures/q2/` 五张图已重绘。
+- 移交：`appendix_main_147.csv`、`handoff_modeling.md` 已按本次结果重新生成，`interpretation` 留空。
+
+命令：`MKL_THREADING_LAYER=SEQUENTIAL` 下以 `mathorcup` 环境运行 `code/src/q2/run_all.py`，15 步返回码均为 0；日志 `code/data/processed/q2/run_log.txt`，清单 `run_manifest.json`（含 `input_checks` 与各日期组大小）。SEED=0。

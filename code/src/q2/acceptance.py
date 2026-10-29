@@ -17,7 +17,7 @@ import pandas as pd
 import config as C
 import core
 from check_attachment6 import check_att6
-from data import load_q2_dataset
+from data import input_checks, load_q2_dataset
 from labels import attachment8_labels, check_against_dictionary
 from src.q1.data import DIM_GROUPS
 
@@ -118,13 +118,34 @@ def main():
     n_cc = int((edges["edge_type"] == "candidate-candidate").sum())
     _ok(len(nodes) == 231 and n_cc == 245,
         f"图节点 {len(nodes)}，候选间边 {n_cc}，注释节点相关边 {int((edges['edge_type'] == 'annotation').sum())}", log)
-    _ok(len(np.unique(ds.panels)) == 63, "品评团 63 个", log)
+    chk = input_checks()
+    _ok(chk["xbar_z_median_spearman_by_row"] >= 0.95 and chk["xbar_z_median_spearman_by_beer"] <= 0.1,
+        f"感官目标为 xbar 的秩；xbar 与 z 逐维 Spearman 中位数按行号 {chk['xbar_z_median_spearman_by_row']:.3f}，"
+        f"按 beer 列 {chk['xbar_z_median_spearman_by_beer']:.3f}", log)
+    sizes = chk["date_group_sizes"]
+    _ok(chk["n_date_groups"] == C.N_DATE_GROUPS_EXPECTED and len(np.unique(ds.date_group)) == C.N_DATE_GROUPS_EXPECTED,
+        f"日期组 {chk['n_date_groups']} 个，每组 {min(sizes.values())}–{max(sizes.values())} 款", log)
+    _ok(np.allclose(ds.Y_rank.to_numpy(), core.zrank(ds.xbar[ds.delivery_sensory_cols].to_numpy())[0]),
+        "主感官目标 Y_rank 与 xbar 的标准化秩逐元素一致", log)
     stab = pd.read_csv(Q / "final_top3_with_stability.csv")
     sig = pd.read_csv(Q / "top3_results_with_sig.csv")
     _ok((stab["n_bootstrap"] == C.N_BOOTSTRAP).all() and (sig["n_permutation"] == C.N_PERMUTATION).all(),
         f"主 bootstrap {C.N_BOOTSTRAP} 次、置换 {C.N_PERMUTATION} 次", log)
     boot = np.load(Q / "q2_bootstrap_main.npz")
     _ok(boot["boot_sel"].shape[0] == C.N_BOOTSTRAP, "bootstrap 结果数组含 1000 次重复", log)
+    nd = boot["n_distinct_groups"]
+    _ok(str(boot["boot_unit"]) == "date_group" and int(boot["n_groups_drawn"]) == C.N_DATE_GROUPS_EXPECTED
+        and len(nd) == C.N_BOOTSTRAP,
+        f"主 bootstrap 每次抽取 {int(boot['n_groups_drawn'])} 个日期组；抽到的不同日期组数 "
+        f"{nd.min()}–{nd.max()}（中位 {np.median(nd):g}）", log)
+    zi = pd.read_csv(Q / "zero_inflation_c_grade.csv")
+    log.append(("记录", "零膨胀检查（C 级维度）：" + "；".join(
+        f"{r.dimension} 零值占比 {r.zero_share:.3f}{'，已重算' if r.eligible else '，不适用'}" for r in zi.itertuples())
+        if len(zi) else "零膨胀检查：无 C 级维度"))
+    run_log = (Q / "run_log.txt").read_text(encoding="utf-8") if (Q / "run_log.txt").exists() else ""
+    banned = ("q1_panels", "品评团", "legacy_z")
+    _ok(not any(b in run_log for b in banned),
+        "运行日志不含 q1_panels、推断团或 legacy_z", log)
     sim = pd.read_csv(Q / "simulation_recovery_results.csv")
     _ok(len(sim) == 6 and (sim["n_sim"] == C.N_SIMULATION).all(), "模拟 6 种设置各 1000 次", log)
     acc = check_att6(verbose=False)

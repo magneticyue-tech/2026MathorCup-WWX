@@ -94,7 +94,8 @@ def check_att6(verbose=True):
     R2 = core.pairwise_spearman(ds.chem_raw.to_numpy(float))
     err2 = float(np.nanmax(np.abs(R2 - ds.corr.to_numpy())))
     a6, chem, sens = match_attachment6(ds)
-    R6, N6 = pairwise_marginal(ds.chem_raw[chem], ds.sensory_raw[sens])
+    # 附件 6 由附件 4 的 z 计算，复算取 z（方法 §7.1）。
+    R6, N6 = pairwise_marginal(ds.chem_raw[chem], ds.z[sens])
     err6 = float(np.nanmax(np.abs(R6.to_numpy() - a6.to_numpy(float))))
     if verbose:
         print(f"附件 2 复算最大误差 {err2:.2e}；附件 6 44×50 复算最大误差 {err6:.2e}（阈值 {TOL:g}）")

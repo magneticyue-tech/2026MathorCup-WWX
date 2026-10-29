@@ -1,3 +1,2 @@
-dimension,n_all,n_above_zero,top1_all,r_all,top1_above_zero,r_above_zero,r_above_zero_of_top1_all,abs_r_increased
-A_esters_flower,250,205,beta.phellandrene,0.19576360124693204,beta.phellandrene,0.27935594968021676,0.27935594968021676,True
-t2n,250,203,beta.phellandrene,-0.2140081562157678,manool,0.23587239193060772,-0.16851337340407926,True
+dimension,n_all,zero_share,eligible,top1_all,r_all,n_above_zero,top1_above_zero,r_above_zero,r_above_zero_of_top1_all,abs_r_increased,note
+t2n,250,0.212,False,beta.phellandrene,-0.21196086549149362,,,,,,不适用：x̄=0 的啤酒占比 0.212 < 0.3，不满足方法 §6.6 的检查条件

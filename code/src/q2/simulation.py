@@ -18,12 +18,23 @@ import core
 from data import load_q2_dataset
 
 
+def date_group_share(ds) -> float:
+    """x̄ 的秩在 25 个日期组上的组间方差占比，取 49 个交付维度的中位数（方法 §7.2）。"""
+    Y = ds.Y_rank.to_numpy()
+    g = ds.date_group
+    means = np.stack([Y[g == k].mean(axis=0) for k in np.unique(g)])
+    sizes = np.bincount(g)[:, None]
+    share = (sizes * means**2).sum(axis=0) / (Y**2).sum(axis=0)
+    return float(np.median(share))
+
+
 def simulate(ds, n_sim, seed):
     a = core.prepare_arm(ds, core.ArmSpec("main"))
     X, mod, n = a.Zx, a.mod, a.Zx.shape[0]
     Cxx = X.T @ X / n
     valid = np.ones(X.shape[1], bool)
-    pan = np.unique(ds.panels, return_inverse=True)[1]
+    grp = np.unique(ds.date_group, return_inverse=True)[1]
+    share = date_group_share(ds)
     rows = []
     for w in C.SIM_WEIGHTS:
         w = np.asarray(w)
@@ -41,7 +52,8 @@ def simulate(ds, n_sim, seed):
                 S = X[:, js] @ w
                 S = (S - S.mean()) / S.std()
                 k = min(0.99, target / np.corrcoef(S, X[:, js[0]])[0, 1])
-                e = rng.normal(0, 1, n) + rng.normal(0, C.SIM_PANEL_OFFSET_SD, pan.max() + 1)[pan]
+                e = (np.sqrt(share) * rng.normal(0, 1, grp.max() + 1)[grp]
+                     + np.sqrt(1 - share) * rng.normal(0, 1, n))
                 e = (e - e.mean()) / e.std()
                 ry, _ = core.zrank((k * S + np.sqrt(1 - k**2) * e)[:, None])
                 Cxy = X.T @ ry / n
@@ -53,7 +65,7 @@ def simulate(ds, n_sim, seed):
                     mhit[m][i] = [mod[j] in set(mod[s]) for j in js]
                     other[m][i] = np.mean([mod[j] not in set(mod[js]) for j in s])
             row = {"weights": ",".join(f"{x:g}" for x in w), "target_r": target, "n_sim": n_sim,
-                   "seed": seed, "observed_r1_median": float(np.median(r_obs))}
+                   "seed": seed, "date_group_share": share, "observed_r1_median": float(np.median(r_obs))}
             for m in ("main", "M1"):
                 for k in range(3):
                     row[f"{m}_comp_recovery_{k + 1}"] = hit[m][:, k].mean()

@@ -35,13 +35,16 @@ from rationality import style_design  # noqa: E402
 from src.q1.data import DIM_GROUPS  # noqa: E402
 from src.q1.features import monotone_cst  # noqa: E402
 from src.q1.model import PARAM_KEYS, make_hgb  # noqa: E402
-from src.q1.splits import outer_splits  # noqa: E402
 
 DIM_TO_GROUP = {d: g for g, ds_ in DIM_GROUPS.items() for d in ds_}
 
 
 def q1_m3_setup(ds):
-    """读取 Q1 的外层划分与逐折组内参数，并核对划分与 q1_main_oof.npz 一致。"""
+    """读取 Q1 的外层划分与逐折组内参数。
+
+    外层划分直接由 q1_main_oof.npz 的 fold_id 重建，不调用 outer_splits 重算：
+    StratifiedGroupKFold 的打乱随 sklearn 版本变化，Q1 正式产物是权威来源。
+    """
     z = np.load(C.Q1_MAIN_OOF_NPZ, allow_pickle=False)
     chosen = json.loads(str(z["chosen_params"]))
     fold_id = z["fold_id"]
@@ -49,13 +52,15 @@ def q1_m3_setup(ds):
     style = q1d["style"]
     if not (style == ds.style).all():
         raise ValueError("Q1 style 与附件 1 不一致")
-    splits = outer_splits(ds.date_group, style, n_splits=C.M3_N_SPLITS, n_repeats=C.M3_N_REPEATS_SPLIT)
+    if fold_id.shape != (C.M3_N_REPEATS_SPLIT, 250) or set(np.unique(fold_id)) != set(range(C.M3_N_SPLITS)):
+        raise ValueError(f"Q1 fold_id 应为 {C.M3_N_REPEATS_SPLIT}×250，取值 0..{C.M3_N_SPLITS - 1}")
+    idx = np.arange(fold_id.shape[1])
+    splits = [[(idx[fold_id[r] != k], idx[fold_id[r] == k]) for k in range(C.M3_N_SPLITS)]
+              for r in range(C.M3_N_REPEATS_SPLIT)]
     for r, rep in enumerate(splits):
         for k, (tr, te) in enumerate(rep):
-            if not (fold_id[r, te] == k).all():
-                raise AssertionError(f"外层划分与 Q1 fold_id 不一致：重复 {r} 折 {k}")
-            if set(ds.panels[tr]) & set(ds.panels[te]):
-                raise AssertionError(f"重复 {r} 折 {k}：品评团跨训练/测试")
+            if set(ds.date_group[tr]) & set(ds.date_group[te]):
+                raise AssertionError(f"重复 {r} 折 {k}：日期组跨训练/测试")
             for g in DIM_GROUPS:
                 if f"{r}_{k}_{g}" not in chosen:
                     raise KeyError(f"Q1 chosen_params 缺少 {r}_{k}_{g}")
@@ -97,8 +102,8 @@ def run_m3(ds, dims, repeats, folds, n_jobs):
     return imp, pd.DataFrame(recs)
 
 
-def run_m2(a, panels):
-    cv = list(GroupKFold(n_splits=C.ENET_N_SPLITS).split(a.Zx, groups=panels))
+def run_m2(a, groups):
+    cv = list(GroupKFold(n_splits=C.ENET_N_SPLITS).split(a.Zx, groups=groups))
     coef = np.zeros((len(a.cand), len(a.dims)))
     alphas = []
     with warnings.catch_warnings():
@@ -131,10 +136,10 @@ def smoke(ds):
         for p in PARAM_KEYS:
             assert rr[f"param_{p}"] == best[p]
         tr, te = splits[0][rr["fold"]]
-        assert not set(ds.panels[tr]) & set(ds.panels[te])
+        assert not set(ds.date_group[tr]) & set(ds.date_group[te])
     C.SMOKE_DIR.mkdir(exist_ok=True)
     recs.to_csv(C.SMOKE_DIR / "m3_smoke_records.csv", index=False)
-    print(f"M3 小样本：维度 {dim}，组 {group}，{imp.shape[1]} 折重要度记录，参数与 Q1 逐项一致，品评团不相交")
+    print(f"M3 小样本：维度 {dim}，组 {group}，{imp.shape[1]} 折重要度记录，参数与 Q1 逐项一致，日期组不相交")
 
 
 def main(n_jobs=16):
@@ -147,8 +152,8 @@ def main(n_jobs=16):
     ctrl = pd.read_csv(C.Q2_DIR / "controls_sensitivity_results.csv").set_index("dimension")
     _, Cxy = core.corr_mats(a.Zx, a.okx, a.Zy, a.oky)
 
-    print("M2 ElasticNet（品评团分组 5 折）...", flush=True)
-    coef, alphas = run_m2(a, ds.panels)
+    print("M2 ElasticNet（日期组分组 5 折）...", flush=True)
+    coef, alphas = run_m2(a, ds.date_group)
     m2 = core.ranked_select(coef, a.mod, a.okx, tie=Cxy)
     print("风格内选择...", flush=True)
     wsel, wscore = run_within(ds, a)

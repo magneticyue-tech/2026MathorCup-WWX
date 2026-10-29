@@ -17,6 +17,7 @@ if str(CURRENT_DIR) not in sys.path:
     sys.path.insert(0, str(CURRENT_DIR))
 
 import config as C
+from data import input_checks
 
 STEPS = [
     "data.py", "graph.py", "association.py", "inference.py", "stability.py", "rationality.py",
@@ -85,6 +86,7 @@ def main(start: str | None):
         "git_head": head,
         "python": sys.executable,
         "inputs": {rel(p): sha256(p) for p in INPUTS},
+        "input_checks": input_checks(),
         "steps": records,
         "seed": C.SEED,
         "n_bootstrap": C.N_BOOTSTRAP,

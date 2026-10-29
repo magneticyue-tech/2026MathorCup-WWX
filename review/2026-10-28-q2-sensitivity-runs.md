@@ -2,7 +2,7 @@
 id: 2026-10-28-q2-sensitivity-runs
 from: modeling
 to: coding
-status: ack
+status: resolved
 severity: major
 refs:
   - review/2026-10-28-q2-complete-run.md
@@ -56,3 +56,21 @@ refs:
 - 输出：`code/data/processed/q2/sensitivity/`（`<方案>_table.csv`、`<方案>_compare.csv`、`<方案>_meta.json`、`sensitivity_summary.csv`）。
 - 剩余问题：`model/sensitivity_analysis.md` 的 Q2 行未改（用户限定本次只做代码），数值由 Modeling 从 `sensitivity_summary.csv` 填入。
 
+## 验收（Modeling，2026-10-29）
+
+结论：不通过，退回 Coding。
+
+1. 全部方案继承了错误的基线：感官目标为附件 4 的 $z$，bootstrap 单位为 63 个推断品评团（`run_manifest.json` 各方案 `boot_unit: "panel"`）。基线须改为 `xbar` 的秩与 25 个日期组后，全部方案重跑。
+2. `sensory_anchored` 方案实现为“$z$ 减本团零点”，只覆盖 39 个维度（`data.py` 中的 `anchored_reference_target`）。方法 §7.3 与本工单第 7 项规定，对照臂为附件 4 $z$ 的秩、49 个维度，且不使用减去本团零点的参考评分。改为 $z$ 的秩，删除 `anchored_dims.csv` 与 `N_ANCHORED_EXPECTED`。
+3. bootstrap 单位方案的基线臂应为日期组簇，对照臂为单款啤酒；`boot_fixed_graph` 与基线共用日期组重抽索引。
+4. 逐对删除：边际系数的感官列取 `xbar` 的秩；附件 6 复算另取 $z$（方法 §2.2、§7.1，本次已明确）。
+
+`model/sensitivity_analysis.md` 的 Q2 行在重跑并验收后由 Modeling 填入。现有 `sensitivity_summary.csv` 的数值不得引用。
+
+## 复验（Modeling，2026-10-29）
+
+结论：通过。全部方案以 `xbar` 的秩与 25 个日期组为基线重跑，各 1000 次置换与 1000 次 bootstrap；敏感性入口复算的基线与正式结果逐项一致。`sensory_anchored` 改为 `sensory_z`（附件 4 $z$ 的秩，49 维），删除 `anchored_reference_target`、`anchored_dims.csv` 与 `N_ANCHORED_EXPECTED`。逐对删除的边际系数取 `xbar`，附件 6 复算取 $z$，误差 6.66×10⁻¹⁶。
+
+结果（化合物层/模块层 Jaccard；Top-1 改变数；等级改变）：τ=0.5 0.980/0.980，0，0；τ=0.7 1.000/1.000，0，0；加回综合指标 0.871/0.871，3，2；加回内标 1.000/1.000，0，0；NA 最低位 0.980/0.980，0，0；附件 8 冲突 0.963/0.963，0，1；固定图 1.000/1.000，0，0；单款啤酒 1.000/1.000，0，1；$z$ 的秩 0.531/0.569，12，10。`model/sensitivity_analysis.md` 的 Q2 行已按上述正式值填写。
+
+命令：`MKL_THREADING_LAYER=SEQUENTIAL` 下以 `mathorcup` 环境运行 `code/src/q2/run_all.py`，15 步返回码均为 0；日志 `code/data/processed/q2/run_log.txt`，清单 `run_manifest.json`（含 `input_checks` 与各日期组大小）。SEED=0。
