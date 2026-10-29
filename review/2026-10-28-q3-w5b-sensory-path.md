@@ -10,7 +10,8 @@ refs:
   - review/2026-10-28-q3-w5a-chem-transfer.md
   - model/q3_methodology.md
   - experimentalCode/q3_methodology_checks.py
-  - code/data/processed/q2/final_top3_with_stability.csv
+  - code/data/processed/q2/final_top3_with_rationality.csv
+  - code/data/processed/q2/full_controls_results.csv
 ---
 
 ## 前置条件（未满足时不得开始）
@@ -56,7 +57,7 @@ Q3 缺少感官层路径搜索、α*、α_fit、同约束对照（T4、T5、T2�
 - `retention(u_b, mu_s, u_new, mu_t)`：Spearman。
 - `change_amount(u_b, u_new, C)`：马氏平方范数；`n_changed_cols(x_src, x_new, tol=1e-9)`。
 - `category(p_new, p_src, alpha_star, ref_q25)`：按下列顺序判定，先满足者为准：p_new ≥ ref_q25 为 reach；否则 p_new − p_src ≥ 0.05 为 improved；否则 alpha_star = 0 为 kept；其余为 not_improved。四类代码写成常量。
-- `failure_reason(...)`：对 kept 与 not_improved，返回 `first_infeasible` 点违反的感官维度，以及这些维度的 Q2 Top-3 化合物迁移前后的原尺度取值与潜变量变化。Q2 Top-3 读 `final_top3_with_stability.csv`：先打印列名，按维度列与化合物列取数；维度名与 Q1 的 `DIMS` 对不上时写 NaN 并给出原因，不自行映射。
+- `failure_reason(...)`：对 kept 与 not_improved，返回 `first_infeasible` 点违反的感官维度，以及这些维度的 Q2 Top-3 化合物迁移前后的原尺度取值与潜变量变化。Q2 输入按方法论 §7 取合并 Top-3、风格内 Top-3 与共变标记：合并 Top-3 读 `final_top3_with_rationality.csv` 中 `method == "main"` 的行，取 `dimension`、`rank`、`compound`、`sign`、`covariation`（不读 `method == "M3"` 的对照行）；风格内 Top-3 读 `full_controls_results.csv` 的 `Within_top3`（以 `|` 分隔，按名次排列）。两表均为 Q2 冻结产物（49 维，无 barnyard）；维度名与 Q1 的 `DIMS` 对不上时写 NaN 并给出原因，不自行映射。
 
 ### T4 对照与对象
 
