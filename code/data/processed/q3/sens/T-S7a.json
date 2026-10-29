@@ -1,0 +1,166 @@
+{
+ "arm": "T-S7a",
+ "kind": "transfer",
+ "change": "G-S6 生成器（NA 最低位）重跑迁移，11 款",
+ "compare": "迁移指标",
+ "results": {
+  "T-S7a": {
+   "pils_tripel": {
+    "n": 11,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 1.0,
+    "active_frac_arm": 1.0,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.164,
+    "p_median_arm": 0.176,
+    "p_median_diff": 0.011999999999999983,
+    "n_alpha_changed": 1
+   },
+   "pils_alpha_base": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_alpha_arm": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.55,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_rows": [
+    {
+     "beer": 124,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "improved",
+     "category_base": "improved",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 81,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DES|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DES|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 218,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 96,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X2.3.butanedione|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 230,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 185,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "improved",
+     "category_base": "improved",
+     "active_cols_arm": "H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 139,
+     "alpha_star_arm": 0.85,
+     "alpha_star_base": 0.85,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 209,
+     "alpha_star_arm": 0.55,
+     "alpha_star_base": 0.6,
+     "category_arm": "not_improved",
+     "category_base": "not_improved",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 119,
+     "alpha_star_arm": 0.65,
+     "alpha_star_base": 0.65,
+     "category_arm": "not_improved",
+     "category_base": "not_improved",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": true
+    },
+    {
+     "beer": 90,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 28,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": true
+    }
+   ]
+  }
+ },
+ "inputs_sha12": {
+  "q3_transfer.npz": "f7eb935e0632",
+  "q3_transfer_na_floor.npz": "c8fa1762975f"
+ },
+ "wall_time_s": 13.28757119178772
+}

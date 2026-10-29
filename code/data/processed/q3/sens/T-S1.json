@@ -1,0 +1,180 @@
+{
+ "arm": "T-S1",
+ "kind": "transfer",
+ "change": "综合指标只用岭回归预测",
+ "compare": "迁移指标",
+ "results": {
+  "T-S1": {
+   "pils_tripel": {
+    "n": 11,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 1.0,
+    "active_frac_arm": 1.0,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.164,
+    "p_median_arm": 0.164,
+    "p_median_diff": 0.0,
+    "n_alpha_changed": 0
+   },
+   "all_pairs": {
+    "n": 5250,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 0.8531428571428571,
+    "active_frac_arm": 0.8527619047619047,
+    "active_frac_diff": -0.0003809523809523707,
+    "p_median_base": 0.09,
+    "p_median_arm": 0.09,
+    "p_median_diff": 0.0,
+    "n_alpha_changed": 80
+   },
+   "pils_alpha_base": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_alpha_arm": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_rows": [
+    {
+     "beer": 124,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "improved",
+     "category_base": "improved",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 81,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DES|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DES|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 218,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 96,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 230,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 185,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "improved",
+     "category_base": "improved",
+     "active_cols_arm": "H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 139,
+     "alpha_star_arm": 0.85,
+     "alpha_star_base": 0.85,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 209,
+     "alpha_star_arm": 0.6,
+     "alpha_star_base": 0.6,
+     "category_arm": "not_improved",
+     "category_base": "not_improved",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 119,
+     "alpha_star_arm": 0.65,
+     "alpha_star_base": 0.65,
+     "category_arm": "not_improved",
+     "category_base": "not_improved",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": true
+    },
+    {
+     "beer": 90,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": false
+    },
+    {
+     "beer": 28,
+     "alpha_star_arm": 1.0,
+     "alpha_star_base": 1.0,
+     "category_arm": "reach",
+     "category_base": "reach",
+     "active_cols_arm": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "active_cols_base": "DMS|H2S|MeSH|X.E..2.nonenal",
+     "src_missing_diacetyl_base": true
+    }
+   ],
+   "pils_sens_pred_change_after": 0.0014854326458474422
+  }
+ },
+ "inputs_sha12": {
+  "q3_transfer.npz": "f7eb935e0632",
+  "q3_transfer_ridge.npz": "294ce23f91d0"
+ },
+ "wall_time_s": 10.905412435531616
+}

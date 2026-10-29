@@ -1,0 +1,263 @@
+{
+ "checks": {
+  "mu_no_nan": true,
+  "pi_sum_max_err": 1.1102230246251565e-16,
+  "pi_tilde_sum_max_err": 1.609823385706477e-14,
+  "n_styles": 22
+ },
+ "weak_dims": [
+  "A_malt_all",
+  "A_hops_tropical",
+  "A_hops_woody",
+  "A_esters_ethac",
+  "A_esters_fruity",
+  "F_hops_citrus",
+  "F_hops_tropical",
+  "F_hops_woody",
+  "F_esters_isoaa",
+  "F_esters_flower",
+  "F_esters_fruity",
+  "metallic",
+  "stale_hops",
+  "t2n",
+  "orange",
+  "coriander",
+  "clove",
+  "barnyard",
+  "overall"
+ ],
+ "Tripel": {
+  "fingerprint_top10": [
+   {
+    "compound": "ethanol..v.v.",
+    "delta": 1.3190311472808,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "isopentyl_acetate",
+    "delta": 1.0702504442731433,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "X4.ethyl.guaiacol",
+    "delta": -0.9143042956100572,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ethyl.furoate",
+    "delta": -0.8412500683765952,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "color.EBC.",
+    "delta": -0.8122264704599933,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "H2S",
+    "delta": 0.8117133280812898,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "isoamyl_alcohol",
+    "delta": 0.7861206776423183,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ethyl_octanoate",
+    "delta": 0.7311330491632093,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "acetaldehyde",
+    "delta": 0.6833985584468216,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ortho.cresol",
+    "delta": -0.6615190354587245,
+    "ci_covers_zero": false
+   }
+  ],
+  "sensory_top5": [
+   [
+    "alcohol",
+    0.8832159937186376
+   ],
+   [
+    "co2",
+    0.7531490820177434
+   ],
+   [
+    "F_esters_ethac",
+    0.6642542375791621
+   ],
+   [
+    "body",
+    0.6194450806765194
+   ],
+   [
+    "A_hops_all",
+    0.6189646164234938
+   ]
+  ]
+ },
+ "Kriek": {
+  "fingerprint_top10": [
+   {
+    "compound": "lactic_acid.mg.L.",
+    "delta": 1.8064213696929428,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ethyl.furoate",
+    "delta": 1.6618868636409614,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ethyl.benzoate",
+    "delta": 1.6430254002509959,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "X4.ethyl.phenol",
+    "delta": 1.6012417658805331,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "benzyl.alcohol",
+    "delta": 1.5069282693054848,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "X.E..beta.ocimene",
+    "delta": 1.4174240402617477,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ethyl_isovalerate",
+    "delta": 1.4025554623246876,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "eugenol",
+    "delta": 1.3588512943512285,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "X.E..alpha.ionone",
+    "delta": 1.3236371219282221,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "bitterness",
+    "delta": -1.311720272914307,
+    "ci_covers_zero": false
+   }
+  ],
+  "sensory_top5": [
+   [
+    "lactic",
+    2.1669624159565757
+   ],
+   [
+    "A_esters_fruity",
+    1.858191824346482
+   ],
+   [
+    "F_esters_fruity",
+    1.5617953413466008
+   ],
+   [
+    "acetic",
+    1.4668656752755531
+   ],
+   [
+    "acidity",
+    1.4526521040133988
+   ]
+  ]
+ },
+ "Lambic": {
+  "fingerprint_top10": [
+   {
+    "compound": "pH",
+    "delta": -2.276410037392089,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "lactic_acid.mg.L.",
+    "delta": 1.8142004323120107,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ethyl_isovalerate",
+    "delta": 1.7080390424237948,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "ethyl.phenylacetate",
+    "delta": 1.5648151329031756,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "neryl.formate",
+    "delta": 1.4731719023640621,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "butyl.acetate",
+    "delta": 1.3704404855230945,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "X3.furanmethanol",
+    "delta": 1.3282069369402871,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "bitterness",
+    "delta": -1.3076823004140783,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "acetic_acid.g.L.",
+    "delta": 1.2086534850950075,
+    "ci_covers_zero": false
+   },
+   {
+    "compound": "isomaltol",
+    "delta": 1.106187146163722,
+    "ci_covers_zero": false
+   }
+  ],
+  "sensory_top5": [
+   [
+    "lactic",
+    2.7790794650084
+   ],
+   [
+    "acetic",
+    2.17701708389065
+   ],
+   [
+    "acidity",
+    1.7498485687157672
+   ],
+   [
+    "F_malt_bread",
+    -0.8369466269443001
+   ],
+   [
+    "bitternes",
+    -0.7861275907738408
+   ]
+  ]
+ },
+ "wall_time_s": 65.14597702026367,
+ "config": {
+  "kind": "famod",
+  "k": 15,
+  "kappa": 5.0
+ }
+}

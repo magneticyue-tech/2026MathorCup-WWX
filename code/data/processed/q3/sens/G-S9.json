@@ -1,0 +1,20 @@
+{
+ "arm": "G-S9",
+ "kind": "portrait",
+ "change": "内标：从经验分布独立抽取",
+ "compare": "画像",
+ "results": {
+  "G-S9": {
+   "portrait": {
+    "median_spearman_q50": 0.9999039615846338,
+    "min_spearman_q50": 0.9993277310924369,
+    "mean_abs_diff_q50": 0.0016337306008794338,
+    "max_abs_diff_q50": 0.030995660333507313
+   }
+  }
+ },
+ "inputs_sha12": {
+  "q3_portraits.npz": "145aeac980e1"
+ },
+ "wall_time_s": 7.666845321655273
+}

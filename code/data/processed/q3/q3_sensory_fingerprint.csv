@@ -1,0 +1,1101 @@
+﻿style,dim,deviation_sd,abs_rank,note,weak_dim
+Amber,A_malt_all,0.05511769458901103,41,,True
+Amber,A_malt_grain,-0.11154684623855371,26,,False
+Amber,A_malt_bread,0.33362670458589455,3,,False
+Amber,A_malt_cara,0.21098030435614856,12,,False
+Amber,A_malt_burn,-0.07046926444888371,37,,False
+Amber,A_hops_all,0.10813250469154091,28,,False
+Amber,A_hops_citrus,0.17639321858151516,16,,False
+Amber,A_hops_tropical,0.12575066637721882,22,,True
+Amber,A_hops_noble,0.1120491255609791,25,,False
+Amber,A_hops_woody,0.20227132900103062,14,,True
+Amber,A_esters_all,0.0837733775918791,31,,False
+Amber,A_esters_ethac,0.14234174536652788,20,,True
+Amber,A_esters_isoaa,0.16529650859484032,18,,False
+Amber,A_esters_flower,-0.03923068373773132,45,,False
+Amber,A_esters_fruity,-0.0275232484045659,46,,True
+Amber,F_malt_all,0.07636274388499051,34,,False
+Amber,F_malt_grain,-0.20938341985651598,13,,False
+Amber,F_malt_bread,0.2564778681662589,7,,False
+Amber,F_malt_cara,0.11024468401702012,27,,False
+Amber,F_malt_burn,0.09525300674097008,29,,False
+Amber,F_hops_all,0.18546610516886752,15,,False
+Amber,F_hops_citrus,0.11723865755152672,24,,True
+Amber,F_hops_tropical,0.08003265589883131,32,,True
+Amber,F_hops_noble,0.2813962680897676,6,,False
+Amber,F_hops_woody,0.23699370732526295,9,,True
+Amber,F_esters_all,-0.12081897542241955,23,,False
+Amber,F_esters_ethac,0.06739918275253177,38,,False
+Amber,F_esters_isoaa,-0.05000690334452805,42,,True
+Amber,F_esters_flower,-0.21867542056325245,11,,True
+Amber,F_esters_fruity,-0.2469857108346253,8,,True
+Amber,acidity,-0.08783415657405397,30,,False
+Amber,bitternes,0.3487713121803627,2,,False
+Amber,sweetness,-0.17150054703721376,17,,False
+Amber,X4vg,0.49963767763017214,1,,False
+Amber,diacetyl,-0.2949316976885042,5,,False
+Amber,dms,0.07705823968411116,33,,False
+Amber,metallic,0.06208719188831661,40,,True
+Amber,stale_hops,-0.008313642716456767,49,,True
+Amber,t2n,0.13909258155824436,21,,True
+Amber,orange,-0.0736939047847693,35,,True
+Amber,coriander,0.015778154714711355,48,,True
+Amber,clove,-0.06693735195207653,39,,True
+Amber,lactic,-0.049388151222948484,43,,False
+Amber,acetic,-0.0717311867194997,36,,False
+Amber,barnyard,-0.016517223950544065,47,同 stale_hops,True
+Amber,alcohol,0.23485968083856576,10,,False
+Amber,aftertaste,0.0033986434953511896,50,,False
+Amber,body,0.15935455282887476,19,,False
+Amber,co2,0.31375626600815526,4,,False
+Amber,overall,0.04915906761919168,44,,True
+Blond,A_malt_all,-0.43906584147130123,10,,True
+Blond,A_malt_grain,-0.44804371526929593,9,,False
+Blond,A_malt_bread,-0.20044523051906668,27,,False
+Blond,A_malt_cara,-0.5396474914272196,4,,False
+Blond,A_malt_burn,-0.30395963425279376,17,,False
+Blond,A_hops_all,0.5153433816216558,5,,False
+Blond,A_hops_citrus,0.49171729437892897,7,,False
+Blond,A_hops_tropical,0.11818364074724443,39,,True
+Blond,A_hops_noble,0.4065914706910547,12,,False
+Blond,A_hops_woody,-0.2410357896284789,24,,True
+Blond,A_esters_all,-0.2168709391614405,25,,False
+Blond,A_esters_ethac,0.09929091738970237,42,,True
+Blond,A_esters_isoaa,0.25122608670228147,21,,False
+Blond,A_esters_flower,-0.09627444856002122,43,,False
+Blond,A_esters_fruity,-0.28618986531564206,18,,True
+Blond,F_malt_all,-0.2646345204032832,20,,False
+Blond,F_malt_grain,-0.18744384262214586,29,,False
+Blond,F_malt_bread,-0.15326419505957609,35,,False
+Blond,F_malt_cara,-0.4810947037987667,8,,False
+Blond,F_malt_burn,-0.24212472071588567,23,,False
+Blond,F_hops_all,0.18222754506994457,30,,False
+Blond,F_hops_citrus,0.570948203118875,2,,True
+Blond,F_hops_tropical,0.09249181472116003,45,,True
+Blond,F_hops_noble,0.10443540099076938,41,,False
+Blond,F_hops_woody,-0.13938007374955952,37,,True
+Blond,F_esters_all,-0.3982104423935833,13,,False
+Blond,F_esters_ethac,-0.06930510979589463,48,,False
+Blond,F_esters_isoaa,0.040397264238076255,50,,True
+Blond,F_esters_flower,-0.3353541200627993,15,,True
+Blond,F_esters_fruity,-0.562024321522636,3,,True
+Blond,acidity,-0.09295218317527908,44,,False
+Blond,bitternes,0.3408135026285759,14,,False
+Blond,sweetness,-0.1879638069759054,28,,False
+Blond,X4vg,0.7485499112033392,1,,False
+Blond,diacetyl,-0.10801534643513244,40,,False
+Blond,dms,0.40756937617211086,11,,False
+Blond,metallic,0.4936675252075919,6,,True
+Blond,stale_hops,-0.14484264075550454,36,,True
+Blond,t2n,0.15859073071894958,34,,True
+Blond,orange,-0.1592868972192193,33,,True
+Blond,coriander,0.1803739409208219,31,,True
+Blond,clove,-0.2812494508319129,19,,True
+Blond,lactic,-0.07999986634604288,46,,False
+Blond,acetic,-0.0717311867194997,47,,False
+Blond,barnyard,-0.12521355805400794,38,同 stale_hops,True
+Blond,alcohol,-0.06045597780699074,49,,False
+Blond,aftertaste,-0.24296959539783292,22,,False
+Blond,body,-0.1747478896602362,32,,False
+Blond,co2,0.2081034664447837,26,,False
+Blond,overall,0.3162688779847799,16,,True
+Brett/cofermented,A_malt_all,-0.16512561816740914,34,,True
+Brett/cofermented,A_malt_grain,-0.2547965369749768,26,,False
+Brett/cofermented,A_malt_bread,-0.15964857278852043,35,,False
+Brett/cofermented,A_malt_cara,-0.1668264260411459,33,,False
+Brett/cofermented,A_malt_burn,0.10907752552608933,39,,False
+Brett/cofermented,A_hops_all,0.6553089925994499,7,,False
+Brett/cofermented,A_hops_citrus,0.6204397025547363,9,,False
+Brett/cofermented,A_hops_tropical,0.23538282252636694,27,,True
+Brett/cofermented,A_hops_noble,0.7960274101559704,5,,False
+Brett/cofermented,A_hops_woody,0.42529009034919685,16,,True
+Brett/cofermented,A_esters_all,-0.3931976297178275,21,,False
+Brett/cofermented,A_esters_ethac,-0.2955499028229241,24,,True
+Brett/cofermented,A_esters_isoaa,-0.4016060984796234,19,,False
+Brett/cofermented,A_esters_flower,-0.21903434250629164,29,,False
+Brett/cofermented,A_esters_fruity,-0.06097573275204625,43,,True
+Brett/cofermented,F_malt_all,0.02157002736775588,46,,False
+Brett/cofermented,F_malt_grain,-0.1251305540754945,36,,False
+Brett/cofermented,F_malt_bread,0.0017403767828031804,50,,False
+Brett/cofermented,F_malt_cara,-0.19647872861007049,32,,False
+Brett/cofermented,F_malt_burn,0.20367564882754918,31,,False
+Brett/cofermented,F_hops_all,0.8295842929772983,3,,False
+Brett/cofermented,F_hops_citrus,0.5426525420486804,11,,True
+Brett/cofermented,F_hops_tropical,0.12178274335686375,37,,True
+Brett/cofermented,F_hops_noble,0.8723976688230963,1,,False
+Brett/cofermented,F_hops_woody,0.7022803408686518,6,,True
+Brett/cofermented,F_esters_all,-0.40801533479778734,18,,False
+Brett/cofermented,F_esters_ethac,-0.2755131724974861,25,,False
+Brett/cofermented,F_esters_isoaa,-0.42755500839729965,15,,True
+Brett/cofermented,F_esters_flower,-0.09979624546592691,40,,True
+Brett/cofermented,F_esters_fruity,-0.41034564472238083,17,,True
+Brett/cofermented,acidity,0.024771473241819712,44,,False
+Brett/cofermented,bitternes,0.8581250688124226,2,,False
+Brett/cofermented,sweetness,-0.618689707345947,10,,False
+Brett/cofermented,X4vg,-0.09597844350212713,41,,False
+Brett/cofermented,diacetyl,-0.34623084579220526,22,,False
+Brett/cofermented,dms,0.21660301113439712,30,,False
+Brett/cofermented,metallic,-0.6248723745427955,8,,True
+Brett/cofermented,stale_hops,0.4709150818982938,13,,True
+Brett/cofermented,t2n,-0.5393416500022938,12,,True
+Brett/cofermented,orange,-0.01366173931265309,47,,True
+Brett/cofermented,coriander,-0.022928375922292854,45,,True
+Brett/cofermented,clove,-0.11098446149875388,38,,True
+Brett/cofermented,lactic,0.005073410143573225,48,,False
+Brett/cofermented,acetic,0.0727486274358505,42,,False
+Brett/cofermented,barnyard,0.4689117501808419,14,同 stale_hops,True
+Brett/cofermented,alcohol,0.33270488925280983,23,,False
+Brett/cofermented,aftertaste,0.8217738832506761,4,,False
+Brett/cofermented,body,0.23455246169150976,28,,False
+Brett/cofermented,co2,0.3970071354199041,20,,False
+Brett/cofermented,overall,0.004064309503686686,49,,True
+Brown,A_malt_all,0.9532996101175356,3,,True
+Brown,A_malt_grain,0.2406295267446443,24,,False
+Brown,A_malt_bread,0.5887801768029969,6,,False
+Brown,A_malt_cara,0.8924070072184797,4,,False
+Brown,A_malt_burn,0.3763178143006804,12,,False
+Brown,A_hops_all,0.0647576147338246,43,,False
+Brown,A_hops_citrus,-0.2632589734363537,20,,False
+Brown,A_hops_tropical,-0.017963980028461314,48,,True
+Brown,A_hops_noble,0.16166499919603872,30,,False
+Brown,A_hops_woody,-0.029228256778030093,47,,True
+Brown,A_esters_all,0.13477347913069276,38,,False
+Brown,A_esters_ethac,0.3934263495941793,10,,True
+Brown,A_esters_isoaa,0.14458272804634956,35,,False
+Brown,A_esters_flower,-0.09938944473019058,41,,False
+Brown,A_esters_fruity,-0.29806476432776075,18,,True
+Brown,F_malt_all,1.18891848361863,1,,False
+Brown,F_malt_grain,0.13963817516077762,37,,False
+Brown,F_malt_bread,0.8317899653970521,5,,False
+Brown,F_malt_cara,1.031005443848911,2,,False
+Brown,F_malt_burn,0.5521768485200597,7,,False
+Brown,F_hops_all,0.20689201999710197,28,,False
+Brown,F_hops_citrus,-0.31430249703545926,17,,True
+Brown,F_hops_tropical,-0.06321999842193088,44,,True
+Brown,F_hops_noble,0.27340905287825157,19,,False
+Brown,F_hops_woody,0.14701796578881918,31,,True
+Brown,F_esters_all,0.1161831338585218,39,,False
+Brown,F_esters_ethac,0.38797087866999735,11,,False
+Brown,F_esters_isoaa,-0.06758295136644875,42,,True
+Brown,F_esters_flower,-0.2116798642073861,26,,True
+Brown,F_esters_fruity,-0.3349402750162826,15,,True
+Brown,acidity,-0.14051733127013497,36,,False
+Brown,bitternes,0.2529766768454304,22,,False
+Brown,sweetness,-0.10070372274888108,40,,False
+Brown,X4vg,0.21143680652572014,27,,False
+Brown,diacetyl,0.14608950893070632,34,,False
+Brown,dms,0.14639715467431746,32,,False
+Brown,metallic,0.3639714384562687,13,,True
+Brown,stale_hops,-0.2513067525358406,23,,True
+Brown,t2n,0.22388405915092188,25,,True
+Brown,orange,-0.16518817424040144,29,,True
+Brown,coriander,-0.14629498009339875,33,,True
+Brown,clove,-0.00779973871992884,49,,True
+Brown,lactic,-0.06081840250713753,45,,False
+Brown,acetic,-0.05202241940321582,46,,False
+Brown,barnyard,-0.2560847700089614,21,同 stale_hops,True
+Brown,alcohol,0.5209011409583505,8,,False
+Brown,aftertaste,-0.0009840414160157203,50,,False
+Brown,body,0.46880076056458625,9,,False
+Brown,co2,0.33394237579644526,16,,False
+Brown,overall,0.33868586891527636,14,,True
+Brut,A_malt_all,-0.1833606068109273,25,,True
+Brut,A_malt_grain,0.5029347408267072,5,,False
+Brut,A_malt_bread,0.34547195116689494,13,,False
+Brut,A_malt_cara,-0.32622393933208604,15,,False
+Brut,A_malt_burn,-0.15311015612942006,27,,False
+Brut,A_hops_all,0.2632373011074782,21,,False
+Brut,A_hops_citrus,0.07550739632667597,38,,False
+Brut,A_hops_tropical,0.07738944724204147,37,,True
+Brut,A_hops_noble,0.36764590032408684,10,,False
+Brut,A_hops_woody,0.43566953979451567,7,,True
+Brut,A_esters_all,0.11460134994412066,34,,False
+Brut,A_esters_ethac,0.31768878714541593,16,,True
+Brut,A_esters_isoaa,0.12295518586711152,33,,False
+Brut,A_esters_flower,0.04671540232517394,41,,False
+Brut,A_esters_fruity,0.09981019484673041,35,,True
+Brut,F_malt_all,0.08317819897002698,36,,False
+Brut,F_malt_grain,0.6246298519257957,3,,False
+Brut,F_malt_bread,0.2685600274994077,20,,False
+Brut,F_malt_cara,-0.17406464853584494,26,,False
+Brut,F_malt_burn,0.006284309137141064,50,,False
+Brut,F_hops_all,0.4113934718061808,9,,False
+Brut,F_hops_citrus,-0.010089977102054754,49,,True
+Brut,F_hops_tropical,0.013316365076264125,48,,True
+Brut,F_hops_noble,0.5151100695175744,4,,False
+Brut,F_hops_woody,0.2517589499556112,22,,True
+Brut,F_esters_all,0.13406495035468696,31,,False
+Brut,F_esters_ethac,0.35414500249934877,12,,False
+Brut,F_esters_isoaa,0.04401373762080959,43,,True
+Brut,F_esters_flower,0.2803872164860686,19,,True
+Brut,F_esters_fruity,0.21073357005315232,24,,True
+Brut,acidity,0.03359148242151477,46,,False
+Brut,bitternes,-0.13682973894967235,30,,False
+Brut,sweetness,-0.14128334633491765,29,,False
+Brut,X4vg,-0.06199121768540834,39,,False
+Brut,diacetyl,-0.12384663649945005,32,,False
+Brut,dms,0.8918301400959092,1,,False
+Brut,metallic,0.036478519382919905,45,,True
+Brut,stale_hops,-0.31441457975863857,17,,True
+Brut,t2n,-0.0393233585366571,44,,True
+Brut,orange,0.01907814073701146,47,,True
+Brut,coriander,-0.14336159424726858,28,,True
+Brut,clove,0.30367564979747713,18,,True
+Brut,lactic,0.04586174440173002,42,,False
+Brut,acetic,0.04730377493237546,40,,False
+Brut,barnyard,-0.2489763799686749,23,同 stale_hops,True
+Brut,alcohol,0.5000343812948801,6,,False
+Brut,aftertaste,0.3563694091618495,11,,False
+Brut,body,0.6814131604441293,2,,False
+Brut,co2,0.33891774508529005,14,,False
+Brut,overall,0.4304419428446738,8,,True
+Christmas,A_malt_all,1.0208022639981247,4,,True
+Christmas,A_malt_grain,0.3636018299878933,17,,False
+Christmas,A_malt_bread,0.6169803754386265,9,,False
+Christmas,A_malt_cara,1.02625143581534,3,,False
+Christmas,A_malt_burn,0.4131271085632572,15,,False
+Christmas,A_hops_all,0.18464166944329707,29,,False
+Christmas,A_hops_citrus,-0.011024957838957208,50,,False
+Christmas,A_hops_tropical,0.08416865564993918,40,,True
+Christmas,A_hops_noble,0.14035436899607018,33,,False
+Christmas,A_hops_woody,0.25929564484817574,23,,True
+Christmas,A_esters_all,0.4478682255359384,14,,False
+Christmas,A_esters_ethac,0.6755938803330098,8,,True
+Christmas,A_esters_isoaa,0.19561169114850296,27,,False
+Christmas,A_esters_flower,0.10627100846444587,37,,False
+Christmas,A_esters_fruity,-0.015268457171532183,48,,True
+Christmas,F_malt_all,1.150135563185707,1,,False
+Christmas,F_malt_grain,0.12871957058454375,35,,False
+Christmas,F_malt_bread,0.7161226117385905,7,,False
+Christmas,F_malt_cara,1.1106417127786605,2,,False
+Christmas,F_malt_burn,0.49307138661856703,12,,False
+Christmas,F_hops_all,0.39811068032949504,16,,False
+Christmas,F_hops_citrus,-0.1611147668393469,30,,True
+Christmas,F_hops_tropical,0.0639835929629207,43,,True
+Christmas,F_hops_noble,0.3266157809129585,20,,False
+Christmas,F_hops_woody,0.3486841798401218,19,,True
+Christmas,F_esters_all,0.53023436219905,11,,False
+Christmas,F_esters_ethac,0.5646933857788883,10,,False
+Christmas,F_esters_isoaa,0.1349347196742294,34,,True
+Christmas,F_esters_flower,0.014167418428398202,49,,True
+Christmas,F_esters_fruity,0.09926173690879064,38,,True
+Christmas,acidity,-0.14522491168499352,32,,False
+Christmas,bitternes,0.3159821832634653,22,,False
+Christmas,sweetness,0.06491146777427811,42,,False
+Christmas,X4vg,0.15114498839073107,31,,False
+Christmas,diacetyl,-0.08852112571704608,39,,False
+Christmas,dms,-0.18738643141416877,28,,False
+Christmas,metallic,0.06953949976723928,41,,True
+Christmas,stale_hops,-0.05890286035971915,44,,True
+Christmas,t2n,-0.23612518086027132,25,,True
+Christmas,orange,0.119568752173889,36,,True
+Christmas,coriander,0.053100621590742976,46,,True
+Christmas,clove,0.32065510375198497,21,,True
+Christmas,lactic,-0.049886254596046856,47,,False
+Christmas,acetic,-0.05525284325336712,45,,False
+Christmas,barnyard,-0.21212315872482287,26,同 stale_hops,True
+Christmas,alcohol,0.8851294456370852,6,,False
+Christmas,aftertaste,0.25439955987789736,24,,False
+Christmas,body,0.8964782533249838,5,,False
+Christmas,co2,0.4675641704499613,13,,False
+Christmas,overall,0.3606496901332429,18,,True
+Dubbel,A_malt_all,1.0429925795926622,2,,True
+Dubbel,A_malt_grain,0.26283783469421396,12,,False
+Dubbel,A_malt_bread,0.5099523756260533,8,,False
+Dubbel,A_malt_cara,0.9157262428281786,4,,False
+Dubbel,A_malt_burn,0.3991476422811886,9,,False
+Dubbel,A_hops_all,-0.06973131922775053,40,,False
+Dubbel,A_hops_citrus,-0.1825231315005583,17,,False
+Dubbel,A_hops_tropical,-0.1799842071605424,19,,True
+Dubbel,A_hops_noble,0.007679668630919714,48,,False
+Dubbel,A_hops_woody,0.14487147594001737,25,,True
+Dubbel,A_esters_all,0.21066505898758794,13,,False
+Dubbel,A_esters_ethac,0.17882630267527627,21,,True
+Dubbel,A_esters_isoaa,0.13021468047916576,29,,False
+Dubbel,A_esters_flower,-0.002002340922140365,50,,False
+Dubbel,A_esters_fruity,-0.38258289838476783,11,,True
+Dubbel,F_malt_all,1.254191294981524,1,,False
+Dubbel,F_malt_grain,0.11790159559777773,32,,False
+Dubbel,F_malt_bread,0.6259607590443543,6,,False
+Dubbel,F_malt_cara,0.9916079026525862,3,,False
+Dubbel,F_malt_burn,0.5774222926221221,7,,False
+Dubbel,F_hops_all,0.017718277647861876,46,,False
+Dubbel,F_hops_citrus,-0.19683668199313167,15,,True
+Dubbel,F_hops_tropical,-0.15117942774098647,24,,True
+Dubbel,F_hops_noble,0.0071825378549755315,49,,False
+Dubbel,F_hops_woody,0.21029933233465867,14,,True
+Dubbel,F_esters_all,0.14056650008755478,27,,False
+Dubbel,F_esters_ethac,0.19265955881478405,16,,False
+Dubbel,F_esters_isoaa,0.0718337793188987,39,,True
+Dubbel,F_esters_flower,0.037495744507715346,44,,True
+Dubbel,F_esters_fruity,-0.3832220744043727,10,,True
+Dubbel,acidity,-0.11571781817423778,33,,False
+Dubbel,bitternes,0.17288487147049292,22,,False
+Dubbel,sweetness,-0.07896845179386423,38,,False
+Dubbel,X4vg,0.1810486891699231,18,,False
+Dubbel,diacetyl,-0.011917398427976535,47,,False
+Dubbel,dms,0.06349056922162574,41,,False
+Dubbel,metallic,0.7400864313263082,5,,True
+Dubbel,stale_hops,-0.08619660332011513,36,,True
+Dubbel,t2n,0.035553030787192276,45,,True
+Dubbel,orange,-0.14482117305136175,26,,True
+Dubbel,coriander,-0.09611993275172058,34,,True
+Dubbel,clove,-0.13249531938476472,28,,True
+Dubbel,lactic,-0.054896966034338066,42,,False
+Dubbel,acetic,-0.05184498832550358,43,,False
+Dubbel,barnyard,-0.07942106718233247,37,同 stale_hops,True
+Dubbel,alcohol,0.1791910520576912,20,,False
+Dubbel,aftertaste,-0.12670504856767617,31,,False
+Dubbel,body,0.12741698560318976,30,,False
+Dubbel,co2,0.17037032156217233,23,,False
+Dubbel,overall,0.09124576170288873,35,,True
+Faro,A_malt_all,0.0807509790087204,42,,True
+Faro,A_malt_grain,0.11382140772115067,40,,False
+Faro,A_malt_bread,-0.38376876005101895,17,,False
+Faro,A_malt_cara,0.14454676241663994,37,,False
+Faro,A_malt_burn,-0.20112179298153415,33,,False
+Faro,A_hops_all,-0.548762241467092,8,,False
+Faro,A_hops_citrus,-0.3073389220513826,24,,False
+Faro,A_hops_tropical,-0.22422598898854793,30,,True
+Faro,A_hops_noble,-0.4490565084705702,15,,False
+Faro,A_hops_woody,0.00037260962799238746,50,,True
+Faro,A_esters_all,-0.20755206142575908,32,,False
+Faro,A_esters_ethac,-0.3411937743976235,20,,True
+Faro,A_esters_isoaa,-0.13461378791239184,38,,False
+Faro,A_esters_flower,-0.507166100279044,11,,False
+Faro,A_esters_fruity,0.13313953770714523,39,,True
+Faro,F_malt_all,-0.16796301274572278,35,,False
+Faro,F_malt_grain,0.04875311355395725,46,,False
+Faro,F_malt_bread,-0.45152850048265164,14,,False
+Faro,F_malt_cara,-0.06456763613629156,43,,False
+Faro,F_malt_burn,-0.283037787123524,27,,False
+Faro,F_hops_all,-0.7084168482454982,1,,False
+Faro,F_hops_citrus,-0.2195197689100392,31,,True
+Faro,F_hops_tropical,-0.1955702927337292,34,,True
+Faro,F_hops_noble,-0.6697772744115212,3,,False
+Faro,F_hops_woody,-0.3559830490501693,19,,True
+Faro,F_esters_all,0.05951671610790282,45,,False
+Faro,F_esters_ethac,-0.3224338829678591,22,,False
+Faro,F_esters_isoaa,0.0621763221917352,44,,True
+Faro,F_esters_flower,-0.016939043590335493,48,,True
+Faro,F_esters_fruity,0.324875600316368,21,,True
+Faro,acidity,0.49208527302650734,13,,False
+Faro,bitternes,-0.6408832983602959,4,,False
+Faro,sweetness,0.5134625096336238,10,,False
+Faro,X4vg,-0.5200259733896369,9,,False
+Faro,diacetyl,0.6796582778185247,2,,False
+Faro,dms,-0.28787210311342787,26,,False
+Faro,metallic,-0.23520824800066994,28,,True
+Faro,stale_hops,0.02545686204262613,47,,True
+Faro,t2n,0.37939140700665547,18,,True
+Faro,orange,-0.08991633655373012,41,,True
+Faro,coriander,-0.16352351989336025,36,,True
+Faro,clove,-0.31833731526193326,23,,True
+Faro,lactic,0.5571936728023257,7,,False
+Faro,acetic,0.4933674574356116,12,,False
+Faro,barnyard,0.016015609664747753,49,同 stale_hops,True
+Faro,alcohol,-0.5972182939442012,6,,False
+Faro,aftertaste,-0.3006200910488971,25,,False
+Faro,body,-0.4045701166088117,16,,False
+Faro,co2,-0.6062198869123053,5,,False
+Faro,overall,-0.2273903238862869,29,,True
+Flanders old brown,A_malt_all,0.389651417456524,19,,True
+Flanders old brown,A_malt_grain,0.0772722925172086,43,,False
+Flanders old brown,A_malt_bread,-0.1381440031978461,35,,False
+Flanders old brown,A_malt_cara,0.509858745606983,10,,False
+Flanders old brown,A_malt_burn,0.0807552241169139,42,,False
+Flanders old brown,A_hops_all,-0.7402937113990646,4,,False
+Flanders old brown,A_hops_citrus,-0.5518699717291119,7,,False
+Flanders old brown,A_hops_tropical,-0.3371290739410854,22,,True
+Flanders old brown,A_hops_noble,-0.546342289335581,8,,False
+Flanders old brown,A_hops_woody,-0.2753776978535812,26,,True
+Flanders old brown,A_esters_all,0.18147796084726117,32,,False
+Flanders old brown,A_esters_ethac,0.1106015011629597,37,,True
+Flanders old brown,A_esters_isoaa,-0.09672710904074085,39,,False
+Flanders old brown,A_esters_flower,-0.059284684639952116,46,,False
+Flanders old brown,A_esters_fruity,0.2557756297688652,28,,True
+Flanders old brown,F_malt_all,-0.033490588108994176,49,,False
+Flanders old brown,F_malt_grain,-0.029037603373833796,50,,False
+Flanders old brown,F_malt_bread,-0.2963222920108996,24,,False
+Flanders old brown,F_malt_cara,0.2902469788877631,25,,False
+Flanders old brown,F_malt_burn,-0.04864211245746554,48,,False
+Flanders old brown,F_hops_all,-0.8075905303163349,1,,False
+Flanders old brown,F_hops_citrus,-0.41327468074547735,18,,True
+Flanders old brown,F_hops_tropical,-0.2638006959459105,27,,True
+Flanders old brown,F_hops_noble,-0.7559997416807589,2,,False
+Flanders old brown,F_hops_woody,-0.34994780676298,21,,True
+Flanders old brown,F_esters_all,0.18982355378544344,30,,False
+Flanders old brown,F_esters_ethac,0.0896996977819419,40,,False
+Flanders old brown,F_esters_isoaa,-0.051101074721930706,47,,True
+Flanders old brown,F_esters_flower,-0.1794047976469331,33,,True
+Flanders old brown,F_esters_fruity,0.47050813282267,15,,True
+Flanders old brown,acidity,0.4703709631734075,16,,False
+Flanders old brown,bitternes,-0.6685614434957072,5,,False
+Flanders old brown,sweetness,0.48683121962361703,13,,False
+Flanders old brown,X4vg,-0.4962697737732293,12,,False
+Flanders old brown,diacetyl,0.747968647555152,3,,False
+Flanders old brown,dms,-0.5202164879905657,9,,False
+Flanders old brown,metallic,0.1256595008704779,36,,True
+Flanders old brown,stale_hops,0.06871220060927846,45,,True
+Flanders old brown,t2n,0.08657883773213051,41,,True
+Flanders old brown,orange,-0.0987653707894887,38,,True
+Flanders old brown,coriander,-0.22300815072507185,29,,True
+Flanders old brown,clove,-0.18556261332493457,31,,True
+Flanders old brown,lactic,0.5047564091186275,11,,False
+Flanders old brown,acetic,0.5740175075212118,6,,False
+Flanders old brown,barnyard,0.0736273874970686,44,同 stale_hops,True
+Flanders old brown,alcohol,-0.43201198500166194,17,,False
+Flanders old brown,aftertaste,-0.38558940114256,20,,False
+Flanders old brown,body,-0.33319951810700277,23,,False
+Flanders old brown,co2,-0.474636262255589,14,,False
+Flanders old brown,overall,-0.1706111303735099,34,,True
+Fruitbeer,A_malt_all,-0.19985074242725143,39,,True
+Fruitbeer,A_malt_grain,-0.1243261268526354,42,,False
+Fruitbeer,A_malt_bread,-0.7913438999661903,24,,False
+Fruitbeer,A_malt_cara,0.08007665046157017,46,,False
+Fruitbeer,A_malt_burn,-0.24431711349728397,38,,False
+Fruitbeer,A_hops_all,-0.6945051204761823,28,,False
+Fruitbeer,A_hops_citrus,-0.45255721597920756,35,,False
+Fruitbeer,A_hops_tropical,0.48757482940733315,33,,True
+Fruitbeer,A_hops_noble,-1.2799598799476475,9,,False
+Fruitbeer,A_hops_woody,-0.28728303345334005,37,,True
+Fruitbeer,A_esters_all,0.8550476858886237,23,,False
+Fruitbeer,A_esters_ethac,-1.2932085336297943,8,,True
+Fruitbeer,A_esters_isoaa,1.0247306395076392,18,,False
+Fruitbeer,A_esters_flower,0.9073113917645393,22,,False
+Fruitbeer,A_esters_fruity,1.5938815859426323,3,,True
+Fruitbeer,F_malt_all,-0.7029431936159392,27,,False
+Fruitbeer,F_malt_grain,-0.13660795739374038,41,,False
+Fruitbeer,F_malt_bread,-1.1801198893834652,13,,False
+Fruitbeer,F_malt_cara,-0.0660493527231524,47,,False
+Fruitbeer,F_malt_burn,-0.4542260905968342,34,,False
+Fruitbeer,F_hops_all,-1.1150647117313148,15,,False
+Fruitbeer,F_hops_citrus,-0.0932396133315115,44,,True
+Fruitbeer,F_hops_tropical,0.9218543835090895,21,,True
+Fruitbeer,F_hops_noble,-1.5305315484550803,4,,False
+Fruitbeer,F_hops_woody,-0.6043894100289431,31,,True
+Fruitbeer,F_esters_all,0.9395749469358072,20,,False
+Fruitbeer,F_esters_ethac,-0.99263367468015,19,,False
+Fruitbeer,F_esters_isoaa,1.2567476943948532,12,,True
+Fruitbeer,F_esters_flower,1.4130600103089488,5,,True
+Fruitbeer,F_esters_fruity,1.976826551733669,2,,True
+Fruitbeer,acidity,0.7213735795848558,26,,False
+Fruitbeer,bitternes,-1.375275559658145,6,,False
+Fruitbeer,sweetness,2.1111941052284626,1,,False
+Fruitbeer,X4vg,-0.611655887423247,30,,False
+Fruitbeer,diacetyl,-0.08625745966206172,45,,False
+Fruitbeer,dms,-0.5624389129074926,32,,False
+Fruitbeer,metallic,-0.6383014169256978,29,,True
+Fruitbeer,stale_hops,-0.01616006215555693,49,,True
+Fruitbeer,t2n,0.3984588349546441,36,,True
+Fruitbeer,orange,-0.006121352903196176,50,,True
+Fruitbeer,coriander,-0.1058316935663584,43,,True
+Fruitbeer,clove,-0.057729856886684694,48,,True
+Fruitbeer,lactic,1.1204867315873699,14,,False
+Fruitbeer,acetic,0.7820655505672284,25,,False
+Fruitbeer,barnyard,-0.15769595511928172,40,同 stale_hops,True
+Fruitbeer,alcohol,-1.2641821834567608,10,,False
+Fruitbeer,aftertaste,-1.0356296525563098,16,,False
+Fruitbeer,body,-1.0353605902061118,17,,False
+Fruitbeer,co2,-1.2932668737957516,7,,False
+Fruitbeer,overall,-1.2599340146765055,11,,True
+Hoppy,A_malt_all,-0.20503727129650126,31,,True
+Hoppy,A_malt_grain,-0.4590615122402343,20,,False
+Hoppy,A_malt_bread,-0.014847599044774312,46,,False
+Hoppy,A_malt_cara,-0.23910375043343363,29,,False
+Hoppy,A_malt_burn,0.22925124151366552,30,,False
+Hoppy,A_hops_all,1.3698172087057272,6,,False
+Hoppy,A_hops_citrus,1.4076667758890349,3,,False
+Hoppy,A_hops_tropical,1.2676456066815422,7,,True
+Hoppy,A_hops_noble,1.1718660521170583,9,,False
+Hoppy,A_hops_woody,0.6296418070401605,15,,True
+Hoppy,A_esters_all,-0.02811212671007762,44,,False
+Hoppy,A_esters_ethac,0.09782429571561653,37,,True
+Hoppy,A_esters_isoaa,-0.10038146809759153,36,,False
+Hoppy,A_esters_flower,0.3105243687273929,26,,False
+Hoppy,A_esters_fruity,-0.00023137135405561747,50,,True
+Hoppy,F_malt_all,0.006762432497281203,47,,False
+Hoppy,F_malt_grain,-0.6444473261383387,14,,False
+Hoppy,F_malt_bread,0.0035599544934313593,48,,False
+Hoppy,F_malt_cara,-0.12206483536199848,35,,False
+Hoppy,F_malt_burn,0.18079098175208416,33,,False
+Hoppy,F_hops_all,1.5612027870726315,1,,False
+Hoppy,F_hops_citrus,1.388704590007423,4,,True
+Hoppy,F_hops_tropical,1.423033562982769,2,,True
+Hoppy,F_hops_noble,1.187930523915735,8,,False
+Hoppy,F_hops_woody,1.036986236372822,11,,True
+Hoppy,F_esters_all,-0.12617551733416402,34,,False
+Hoppy,F_esters_ethac,-0.0031320826886928666,49,,False
+Hoppy,F_esters_isoaa,-0.06577121303603707,40,,True
+Hoppy,F_esters_flower,0.058632929398447484,42,,True
+Hoppy,F_esters_fruity,-0.29094347226638645,27,,True
+Hoppy,acidity,-0.06756786878698294,39,,False
+Hoppy,bitternes,1.3862169153439743,5,,False
+Hoppy,sweetness,-0.2844103588693331,28,,False
+Hoppy,X4vg,0.059313878077639944,41,,False
+Hoppy,diacetyl,-0.5987064792195839,17,,False
+Hoppy,dms,-0.3296160147041621,25,,False
+Hoppy,metallic,-0.7044095727759979,12,,True
+Hoppy,stale_hops,0.5976106789003475,18,,True
+Hoppy,t2n,-0.6910795969403285,13,,True
+Hoppy,orange,0.18511680500128014,32,,True
+Hoppy,coriander,0.6148144344473376,16,,True
+Hoppy,clove,-0.021378260255292783,45,,True
+Hoppy,lactic,-0.037704581994164134,43,,False
+Hoppy,acetic,-0.0717311867194997,38,,False
+Hoppy,barnyard,0.49154691490600727,19,同 stale_hops,True
+Hoppy,alcohol,0.448985650625237,22,,False
+Hoppy,aftertaste,1.1285969007139653,10,,False
+Hoppy,body,0.3934606279301646,24,,False
+Hoppy,co2,0.45477935770740924,21,,False
+Hoppy,overall,0.4473660309385351,23,,True
+Kriek,A_malt_all,-0.5084418358034782,22,,True
+Kriek,A_malt_grain,-0.41345909051715696,29,,False
+Kriek,A_malt_bread,-0.4582560257564494,27,,False
+Kriek,A_malt_cara,-0.4825662935514305,24,,False
+Kriek,A_malt_burn,-0.06185970386938772,47,,False
+Kriek,A_hops_all,-0.9435589188640372,9,,False
+Kriek,A_hops_citrus,-0.49007522020659905,23,,False
+Kriek,A_hops_tropical,-0.3627100921498365,31,,True
+Kriek,A_hops_noble,-0.6883016773335604,16,,False
+Kriek,A_hops_woody,-0.17206072996820204,39,,True
+Kriek,A_esters_all,0.5136571581678713,21,,False
+Kriek,A_esters_ethac,0.09638195112274645,44,,True
+Kriek,A_esters_isoaa,0.11420114574847892,43,,False
+Kriek,A_esters_flower,1.26186240398976,6,,False
+Kriek,A_esters_fruity,1.858191824346482,2,,True
+Kriek,F_malt_all,-0.6774029272295843,17,,False
+Kriek,F_malt_grain,-0.4229625460463704,28,,False
+Kriek,F_malt_bread,-0.760763831411719,13,,False
+Kriek,F_malt_cara,-0.41294427495512737,30,,False
+Kriek,F_malt_burn,-0.3147731164020929,34,,False
+Kriek,F_hops_all,-0.9806621010483978,8,,False
+Kriek,F_hops_citrus,-0.48254251341592946,25,,True
+Kriek,F_hops_tropical,-0.32100542913327473,33,,True
+Kriek,F_hops_noble,-0.9092194650758078,10,,False
+Kriek,F_hops_woody,-0.6470403628151601,18,,True
+Kriek,F_esters_all,0.29846045393636633,36,,False
+Kriek,F_esters_ethac,0.30688224991126356,35,,False
+Kriek,F_esters_isoaa,-0.09001970547840851,46,,True
+Kriek,F_esters_flower,0.8245445395062144,11,,True
+Kriek,F_esters_fruity,1.5617953413466008,3,,True
+Kriek,acidity,1.4526521040133988,5,,False
+Kriek,bitternes,-1.102226290092725,7,,False
+Kriek,sweetness,0.28656695483885136,37,,False
+Kriek,X4vg,-0.6974192288442698,14,,False
+Kriek,diacetyl,-0.4632870640830977,26,,False
+Kriek,dms,-0.6915834318287729,15,,False
+Kriek,metallic,-0.1456492055824608,40,,True
+Kriek,stale_hops,-0.13736077391973397,41,,True
+Kriek,t2n,-0.3486623621842127,32,,True
+Kriek,orange,-0.0278002443788525,49,,True
+Kriek,coriander,-0.09031495943285808,45,,True
+Kriek,clove,-0.026674040033570354,50,,True
+Kriek,lactic,2.1669624159565757,1,,False
+Kriek,acetic,1.4668656752755531,4,,False
+Kriek,barnyard,-0.11729579219309352,42,同 stale_hops,True
+Kriek,alcohol,-0.5670279946003383,19,,False
+Kriek,aftertaste,0.06138145303131765,48,,False
+Kriek,body,-0.5239450280784022,20,,False
+Kriek,co2,-0.7824979972635026,12,,False
+Kriek,overall,-0.19519454439450415,38,,True
+Lambic,A_malt_all,-0.40305157404606096,22,,True
+Lambic,A_malt_grain,-0.1507271955646394,41,,False
+Lambic,A_malt_bread,-0.5680838569196578,13,,False
+Lambic,A_malt_cara,-0.5674316311320082,14,,False
+Lambic,A_malt_burn,-0.3154381586263703,27,,False
+Lambic,A_hops_all,-0.34212462525486914,24,,False
+Lambic,A_hops_citrus,-0.31394439053066464,28,,False
+Lambic,A_hops_tropical,-0.4163087600720249,20,,True
+Lambic,A_hops_noble,-0.1360788150154544,42,,False
+Lambic,A_hops_woody,0.08059084038210187,45,,True
+Lambic,A_esters_all,-0.20957804266464095,36,,False
+Lambic,A_esters_ethac,-0.16876745454441197,38,,True
+Lambic,A_esters_isoaa,-0.4855662593083211,16,,False
+Lambic,A_esters_flower,-0.23753333120293438,33,,False
+Lambic,A_esters_fruity,0.23110615956973385,34,,True
+Lambic,F_malt_all,-0.5157905087587428,15,,False
+Lambic,F_malt_grain,-0.2710943032406922,30,,False
+Lambic,F_malt_bread,-0.8369466269443001,4,,False
+Lambic,F_malt_cara,-0.6423177443397976,8,,False
+Lambic,F_malt_burn,-0.4268830170093738,19,,False
+Lambic,F_hops_all,-0.665059215709027,7,,False
+Lambic,F_hops_citrus,-0.18630078576917708,37,,True
+Lambic,F_hops_tropical,-0.31001273641036753,29,,True
+Lambic,F_hops_noble,-0.43179660332033576,18,,False
+Lambic,F_hops_woody,-0.575708673657738,12,,True
+Lambic,F_esters_all,-0.15273580324921063,40,,False
+Lambic,F_esters_ethac,-0.15888017130314488,39,,False
+Lambic,F_esters_isoaa,-0.21073319860158082,35,,True
+Lambic,F_esters_flower,0.0034816656628761256,50,,True
+Lambic,F_esters_fruity,0.33493318193821,25,,True
+Lambic,acidity,1.7498485687157672,3,,False
+Lambic,bitternes,-0.7861275907738408,5,,False
+Lambic,sweetness,-0.03652642765095208,49,,False
+Lambic,X4vg,-0.703413120041833,6,,False
+Lambic,diacetyl,0.3183334420661506,26,,False
+Lambic,dms,-0.4462558152931638,17,,False
+Lambic,metallic,-0.08457400109516892,44,,True
+Lambic,stale_hops,0.6259682110476911,10,,True
+Lambic,t2n,0.0963758576723108,43,,True
+Lambic,orange,0.07354781971377161,47,,True
+Lambic,coriander,-0.08007408977706847,46,,True
+Lambic,clove,-0.25623066210159173,32,,True
+Lambic,lactic,2.7790794650084,1,,False
+Lambic,acetic,2.17701708389065,2,,False
+Lambic,barnyard,0.6345234809835048,9,同 stale_hops,True
+Lambic,alcohol,-0.5787976934376183,11,,False
+Lambic,aftertaste,0.25988433932531674,31,,False
+Lambic,body,-0.3715881271680048,23,,False
+Lambic,co2,-0.40808550849013403,21,,False
+Lambic,overall,0.044874114521018096,48,,True
+Low/No alcohol,A_malt_all,-0.08276920580454267,40,,True
+Low/No alcohol,A_malt_grain,0.6168272360215792,19,,False
+Low/No alcohol,A_malt_bread,-0.07198955382835413,41,,False
+Low/No alcohol,A_malt_cara,-0.6018560940413721,20,,False
+Low/No alcohol,A_malt_burn,-0.32903761041183677,32,,False
+Low/No alcohol,A_hops_all,-1.153466993746051,11,,False
+Low/No alcohol,A_hops_citrus,-0.3519683168782499,29,,False
+Low/No alcohol,A_hops_tropical,-0.3784173809575104,26,,True
+Low/No alcohol,A_hops_noble,-1.414244239570782,9,,False
+Low/No alcohol,A_hops_woody,-0.5727829154208822,21,,True
+Low/No alcohol,A_esters_all,-1.7313077509913293,4,,False
+Low/No alcohol,A_esters_ethac,-1.561890187063821,6,,True
+Low/No alcohol,A_esters_isoaa,-0.8100907380960435,16,,False
+Low/No alcohol,A_esters_flower,-0.4831564046139127,23,,False
+Low/No alcohol,A_esters_fruity,-0.24684845837554364,35,,True
+Low/No alcohol,F_malt_all,-0.0706279353096798,42,,False
+Low/No alcohol,F_malt_grain,0.8517687465330281,14,,False
+Low/No alcohol,F_malt_bread,0.016103571080931665,48,,False
+Low/No alcohol,F_malt_cara,-0.49840988638526396,22,,False
+Low/No alcohol,F_malt_burn,-0.34137406595067155,30,,False
+Low/No alcohol,F_hops_all,-0.9802766670994457,12,,False
+Low/No alcohol,F_hops_citrus,-0.001039575029109167,50,,True
+Low/No alcohol,F_hops_tropical,-0.3921457900591196,24,,True
+Low/No alcohol,F_hops_noble,-0.834497382512228,15,,False
+Low/No alcohol,F_hops_woody,-0.3587103688856903,28,,True
+Low/No alcohol,F_esters_all,-1.4662269924164362,7,,False
+Low/No alcohol,F_esters_ethac,-1.391311507405172,10,,False
+Low/No alcohol,F_esters_isoaa,-0.381936394814486,25,,True
+Low/No alcohol,F_esters_flower,-0.00983129561285679,49,,True
+Low/No alcohol,F_esters_fruity,-0.05743797495157442,43,,True
+Low/No alcohol,acidity,-0.02186829774959509,46,,False
+Low/No alcohol,bitternes,-0.900430033944981,13,,False
+Low/No alcohol,sweetness,0.2935666378574784,34,,False
+Low/No alcohol,X4vg,-0.13146154763434223,39,,False
+Low/No alcohol,diacetyl,0.371525089677899,27,,False
+Low/No alcohol,dms,-0.20052667259584303,37,,False
+Low/No alcohol,metallic,-0.32305259751619225,33,,True
+Low/No alcohol,stale_hops,-0.33390025729039763,31,,True
+Low/No alcohol,t2n,0.8021073799181674,17,,True
+Low/No alcohol,orange,0.6598340968995706,18,,True
+Low/No alcohol,coriander,0.21949936833637182,36,,True
+Low/No alcohol,clove,-0.03145486205433098,45,,True
+Low/No alcohol,lactic,-0.03760815227975181,44,,False
+Low/No alcohol,acetic,-0.019305365746052277,47,,False
+Low/No alcohol,barnyard,-0.1726554060302946,38,同 stale_hops,True
+Low/No alcohol,alcohol,-1.783379340743919,1,,False
+Low/No alcohol,aftertaste,-1.646972508454089,5,,False
+Low/No alcohol,body,-1.7440663791329163,3,,False
+Low/No alcohol,co2,-1.4303138477977602,8,,False
+Low/No alcohol,overall,-1.7487741414817057,2,,True
+Pils/Lager,A_malt_all,-0.6231501091104761,19,,True
+Pils/Lager,A_malt_grain,-0.170238978324621,40,,False
+Pils/Lager,A_malt_bread,-0.6514322070679328,17,,False
+Pils/Lager,A_malt_cara,-0.7448707523526998,14,,False
+Pils/Lager,A_malt_burn,-0.29106948964879303,36,,False
+Pils/Lager,A_hops_all,-0.5977050760898168,22,,False
+Pils/Lager,A_hops_citrus,-0.050124688168056104,46,,False
+Pils/Lager,A_hops_tropical,-0.3399226826648174,33,,True
+Pils/Lager,A_hops_noble,-0.6037507018754985,20,,False
+Pils/Lager,A_hops_woody,-0.4388302031087872,28,,True
+Pils/Lager,A_esters_all,-1.5240880267583012,1,,False
+Pils/Lager,A_esters_ethac,-0.8077239721345606,11,,True
+Pils/Lager,A_esters_isoaa,-0.7795020692672106,13,,False
+Pils/Lager,A_esters_flower,-1.126847019226489,7,,False
+Pils/Lager,A_esters_fruity,-0.4708699421568758,26,,True
+Pils/Lager,F_malt_all,-0.4495978330536729,27,,False
+Pils/Lager,F_malt_grain,0.24218442188986808,38,,False
+Pils/Lager,F_malt_bread,-0.6910750150929145,16,,False
+Pils/Lager,F_malt_cara,-0.7086391898384772,15,,False
+Pils/Lager,F_malt_burn,-0.42580422641039883,29,,False
+Pils/Lager,F_hops_all,-0.5461501651248313,25,,False
+Pils/Lager,F_hops_citrus,0.13733539137145837,42,,True
+Pils/Lager,F_hops_tropical,-0.4136384587412119,30,,True
+Pils/Lager,F_hops_noble,-0.5554487600611214,24,,False
+Pils/Lager,F_hops_woody,-0.2996670510012016,35,,True
+Pils/Lager,F_esters_all,-1.5018313700417338,2,,False
+Pils/Lager,F_esters_ethac,-0.9648145801661105,10,,False
+Pils/Lager,F_esters_isoaa,-0.6314554646439446,18,,True
+Pils/Lager,F_esters_flower,-0.5979606251355558,21,,True
+Pils/Lager,F_esters_fruity,-0.5674626382737953,23,,True
+Pils/Lager,acidity,-0.06003822340099774,44,,False
+Pils/Lager,bitternes,-0.2728261083740575,37,,False
+Pils/Lager,sweetness,-0.12748256664618934,43,,False
+Pils/Lager,X4vg,-0.1460041321236359,41,,False
+Pils/Lager,diacetyl,0.3012254968417509,34,,False
+Pils/Lager,dms,1.2596678792548641,5,,False
+Pils/Lager,metallic,0.03183029500650634,48,,True
+Pils/Lager,stale_hops,0.19841330080974745,39,,True
+Pils/Lager,t2n,1.2786361552009395,3,,True
+Pils/Lager,orange,0.022240448499394945,49,,True
+Pils/Lager,coriander,-0.014505167007026787,50,,True
+Pils/Lager,clove,-0.3902122681986388,32,,True
+Pils/Lager,lactic,-0.058224935324603655,45,,False
+Pils/Lager,acetic,-0.05000426688406831,47,,False
+Pils/Lager,barnyard,0.3938121122219729,31,同 stale_hops,True
+Pils/Lager,alcohol,-0.978125901141209,8,,False
+Pils/Lager,aftertaste,-0.9746556962089503,9,,False
+Pils/Lager,body,-1.1498298757983316,6,,False
+Pils/Lager,co2,-0.7942921693216671,12,,False
+Pils/Lager,overall,-1.2596733946108611,4,,True
+Saison,A_malt_all,-0.6152795956550887,14,,True
+Saison,A_malt_grain,-0.6087253451674617,15,,False
+Saison,A_malt_bread,-0.3845122730541887,26,,False
+Saison,A_malt_cara,-0.7422973754906127,8,,False
+Saison,A_malt_burn,-0.149515924691475,43,,False
+Saison,A_hops_all,0.9422081477371776,3,,False
+Saison,A_hops_citrus,1.4608892877732957,1,,False
+Saison,A_hops_tropical,0.5765573745470479,16,,True
+Saison,A_hops_noble,0.8274211902152774,5,,False
+Saison,A_hops_woody,0.6195799046509931,13,,True
+Saison,A_esters_all,-0.42488390556587385,24,,False
+Saison,A_esters_ethac,-0.23659646995418093,33,,True
+Saison,A_esters_isoaa,-0.20793876676737072,37,,False
+Saison,A_esters_flower,-0.1579555565810183,40,,False
+Saison,A_esters_fruity,-0.20436155476739717,38,,True
+Saison,F_malt_all,-0.365531969932437,28,,False
+Saison,F_malt_grain,-0.5223644279464782,19,,False
+Saison,F_malt_bread,-0.33330424601569825,29,,False
+Saison,F_malt_cara,-0.4610927305566122,22,,False
+Saison,F_malt_burn,-0.0950266597048859,45,,False
+Saison,F_hops_all,0.9049116059629237,4,,False
+Saison,F_hops_citrus,1.3356992433894956,2,,True
+Saison,F_hops_tropical,0.6899972268625548,11,,True
+Saison,F_hops_noble,0.7365916749172045,9,,False
+Saison,F_hops_woody,0.4922847441378682,21,,True
+Saison,F_esters_all,-0.5690169937046136,17,,False
+Saison,F_esters_ethac,-0.31925267146087316,31,,False
+Saison,F_esters_isoaa,-0.15070712294125269,42,,True
+Saison,F_esters_flower,-0.21666209458799826,34,,True
+Saison,F_esters_fruity,-0.4124637459417137,25,,True
+Saison,acidity,-0.027137417806560083,50,,False
+Saison,bitternes,0.8023948516315081,6,,False
+Saison,sweetness,-0.5177993395695083,20,,False
+Saison,X4vg,0.5584010046918334,18,,False
+Saison,diacetyl,-0.42898469632514913,23,,False
+Saison,dms,0.20308049630110425,39,,False
+Saison,metallic,-0.37220395456802735,27,,True
+Saison,stale_hops,0.7578183649600144,7,,True
+Saison,t2n,-0.7160962431892682,10,,True
+Saison,orange,-0.0493840723706582,48,,True
+Saison,coriander,0.2101132335242392,36,,True
+Saison,clove,-0.21313973536251216,35,,True
+Saison,lactic,-0.02763761880469363,49,,False
+Saison,acetic,-0.05525284325336712,47,,False
+Saison,barnyard,0.6229327940264008,12,同 stale_hops,True
+Saison,alcohol,-0.11011056486259813,44,,False
+Saison,aftertaste,0.3197664548204201,30,,False
+Saison,body,-0.3064153445519653,32,,False
+Saison,co2,0.1546141857700462,41,,False
+Saison,overall,-0.08639727866526797,46,,True
+Scotch,A_malt_all,0.9041661217040928,4,,True
+Scotch,A_malt_grain,0.886975007865437,6,,False
+Scotch,A_malt_bread,0.819939054482244,7,,False
+Scotch,A_malt_cara,1.0156399314753108,2,,False
+Scotch,A_malt_burn,0.34179139295145866,17,,False
+Scotch,A_hops_all,-0.11908451953396042,33,,False
+Scotch,A_hops_citrus,-0.32846145610048494,19,,False
+Scotch,A_hops_tropical,-0.05942197383964857,39,,True
+Scotch,A_hops_noble,0.005088741968428736,50,,False
+Scotch,A_hops_woody,-0.2288271900430505,27,,True
+Scotch,A_esters_all,0.20501407236069408,28,,False
+Scotch,A_esters_ethac,0.18436406607794759,30,,True
+Scotch,A_esters_isoaa,0.23218615316183513,25,,False
+Scotch,A_esters_flower,0.009664974080130949,48,,False
+Scotch,A_esters_fruity,-0.08375374522596864,37,,True
+Scotch,F_malt_all,1.0194354085798463,1,,False
+Scotch,F_malt_grain,0.33835197675770073,18,,False
+Scotch,F_malt_bread,0.9110352393159052,3,,False
+Scotch,F_malt_cara,0.8974756987887555,5,,False
+Scotch,F_malt_burn,0.46653834944676403,10,,False
+Scotch,F_hops_all,0.3248632056635233,20,,False
+Scotch,F_hops_citrus,-0.22964846585277784,26,,True
+Scotch,F_hops_tropical,-0.021369630974725433,47,,True
+Scotch,F_hops_noble,0.4605591104761956,11,,False
+Scotch,F_hops_woody,0.255785584665014,24,,True
+Scotch,F_esters_all,0.3495387255960349,16,,False
+Scotch,F_esters_ethac,0.2878224414648763,23,,False
+Scotch,F_esters_isoaa,0.3605051689004175,15,,True
+Scotch,F_esters_flower,-0.029435609464098126,46,,True
+Scotch,F_esters_fruity,0.005793891618555653,49,,True
+Scotch,acidity,-0.13535010937704092,32,,False
+Scotch,bitternes,0.31626497776266865,21,,False
+Scotch,sweetness,0.19291578560876982,29,,False
+Scotch,X4vg,0.15283924805876298,31,,False
+Scotch,diacetyl,0.3613110565330304,14,,False
+Scotch,dms,0.037662000858516086,44,,False
+Scotch,metallic,-0.10224482448435561,35,,True
+Scotch,stale_hops,-0.3727213112208374,13,,True
+Scotch,t2n,0.11201996473129647,34,,True
+Scotch,orange,-0.03986737248568268,43,,True
+Scotch,coriander,-0.03281847174052359,45,,True
+Scotch,clove,0.05335654641622306,41,,True
+Scotch,lactic,-0.04646284444792535,42,,False
+Scotch,acetic,-0.05525284325336712,40,,False
+Scotch,barnyard,-0.43443250759506974,12,同 stale_hops,True
+Scotch,alcohol,0.4833260578034401,9,,False
+Scotch,aftertaste,0.30631669228325126,22,,False
+Scotch,body,0.6556402176893071,8,,False
+Scotch,co2,0.0705714893134382,38,,False
+Scotch,overall,0.09895923020418618,36,,True
+Stout/Porter,A_malt_all,1.9796718654811365,4,,True
+Stout/Porter,A_malt_grain,0.15363742812594822,30,,False
+Stout/Porter,A_malt_bread,1.2067406168430035,7,,False
+Stout/Porter,A_malt_cara,1.26233749707439,6,,False
+Stout/Porter,A_malt_burn,2.6436284477099075,2,,False
+Stout/Porter,A_hops_all,0.20996070942892878,25,,False
+Stout/Porter,A_hops_citrus,-0.14487866645259925,32,,False
+Stout/Porter,A_hops_tropical,-0.03555790963029181,46,,True
+Stout/Porter,A_hops_noble,0.21223187542349448,24,,False
+Stout/Porter,A_hops_woody,0.2218009718539238,23,,True
+Stout/Porter,A_esters_all,4.9600343088766936e-05,50,,False
+Stout/Porter,A_esters_ethac,0.17883328942611998,27,,True
+Stout/Porter,A_esters_isoaa,-0.11109971520211663,34,,False
+Stout/Porter,A_esters_flower,-0.054135917801190196,42,,False
+Stout/Porter,A_esters_fruity,-0.3286244410486357,19,,True
+Stout/Porter,F_malt_all,2.0748600894346487,3,,False
+Stout/Porter,F_malt_grain,-0.12390737978082648,33,,False
+Stout/Porter,F_malt_bread,1.1767951729867714,8,,False
+Stout/Porter,F_malt_cara,1.5058024676438795,5,,False
+Stout/Porter,F_malt_burn,2.8448223102647905,1,,False
+Stout/Porter,F_hops_all,0.5326134107480767,12,,False
+Stout/Porter,F_hops_citrus,-0.3510036383040077,18,,True
+Stout/Porter,F_hops_tropical,-0.027809175290259388,47,,True
+Stout/Porter,F_hops_noble,0.478862011294805,15,,False
+Stout/Porter,F_hops_woody,0.7265015984226065,10,,True
+Stout/Porter,F_esters_all,0.0498686849432376,44,,False
+Stout/Porter,F_esters_ethac,0.2523753197451406,21,,False
+Stout/Porter,F_esters_isoaa,-0.07629260933716653,39,,True
+Stout/Porter,F_esters_flower,-0.17086193201700003,28,,True
+Stout/Porter,F_esters_fruity,-0.3852421733738487,17,,True
+Stout/Porter,acidity,-0.10837652825691077,35,,False
+Stout/Porter,bitternes,0.5510649311483773,11,,False
+Stout/Porter,sweetness,-0.18849773375703113,26,,False
+Stout/Porter,X4vg,-0.05775019119399456,40,,False
+Stout/Porter,diacetyl,-0.415250516500046,16,,False
+Stout/Porter,dms,-0.015131288852487644,49,,False
+Stout/Porter,metallic,-0.10186901119121985,36,,True
+Stout/Porter,stale_hops,-0.0831415794922733,38,,True
+Stout/Porter,t2n,-0.32600899968990915,20,,True
+Stout/Porter,orange,-0.09081794075984856,37,,True
+Stout/Porter,coriander,-0.015269384042303689,48,,True
+Stout/Porter,clove,0.1535285874491211,31,,True
+Stout/Porter,lactic,-0.050083550596951396,43,,False
+Stout/Porter,acetic,-0.0559564419970066,41,,False
+Stout/Porter,barnyard,-0.2463079896543401,22,同 stale_hops,True
+Stout/Porter,alcohol,0.5201387814974943,13,,False
+Stout/Porter,aftertaste,0.5108951870859119,14,,False
+Stout/Porter,body,0.93800329570432,9,,False
+Stout/Porter,co2,0.1669985537319835,29,,False
+Stout/Porter,overall,-0.03781171450117865,45,,True
+Strong ale,A_malt_all,1.527118601916646,5,,True
+Strong ale,A_malt_grain,0.5441036194407393,20,,False
+Strong ale,A_malt_bread,1.0833629453966453,11,,False
+Strong ale,A_malt_cara,1.4870243439385904,6,,False
+Strong ale,A_malt_burn,0.7700436105643091,15,,False
+Strong ale,A_hops_all,0.3755748467089294,28,,False
+Strong ale,A_hops_citrus,0.07265725018723947,45,,False
+Strong ale,A_hops_tropical,0.09969522265264492,44,,True
+Strong ale,A_hops_noble,0.23844854702884913,35,,False
+Strong ale,A_hops_woody,0.3047086977059552,30,,True
+Strong ale,A_esters_all,0.8900167064102699,13,,False
+Strong ale,A_esters_ethac,1.359047781467153,8,,True
+Strong ale,A_esters_isoaa,0.4109410573384793,27,,False
+Strong ale,A_esters_flower,0.3483624202466209,29,,False
+Strong ale,A_esters_fruity,-0.21002858241460728,37,,True
+Strong ale,F_malt_all,1.7358290888902093,1,,False
+Strong ale,F_malt_grain,0.47197790477330986,23,,False
+Strong ale,F_malt_bread,1.1343874795270072,10,,False
+Strong ale,F_malt_cara,1.6748012484399657,3,,False
+Strong ale,F_malt_burn,1.033387087014097,12,,False
+Strong ale,F_hops_all,0.5612578162472011,19,,False
+Strong ale,F_hops_citrus,-0.13404665007057526,42,,True
+Strong ale,F_hops_tropical,0.13216335367634985,43,,True
+Strong ale,F_hops_noble,0.5840938009713927,18,,False
+Strong ale,F_hops_woody,0.7412609725851279,16,,True
+Strong ale,F_esters_all,1.2549162599531716,9,,False
+Strong ale,F_esters_ethac,1.6535627176052163,4,,False
+Strong ale,F_esters_isoaa,0.4293704643077599,26,,True
+Strong ale,F_esters_flower,0.06735423712501834,47,,True
+Strong ale,F_esters_fruity,0.3001905464818929,31,,True
+Strong ale,acidity,-0.17802891617037775,38,,False
+Strong ale,bitternes,0.45534600008068654,25,,False
+Strong ale,sweetness,0.24073750374174321,34,,False
+Strong ale,X4vg,0.25478185593896285,32,,False
+Strong ale,diacetyl,0.1369189512864074,41,,False
+Strong ale,dms,0.24210245826406515,33,,False
+Strong ale,metallic,0.4693805878425,24,,True
+Strong ale,stale_hops,-0.1446536418070867,40,,True
+Strong ale,t2n,-0.06819824717213707,46,,True
+Strong ale,orange,-0.15322139042229296,39,,True
+Strong ale,coriander,-0.03359435778869542,50,,True
+Strong ale,clove,0.7108794841275692,17,,True
+Strong ale,lactic,-0.056005315701554884,48,,False
+Strong ale,acetic,-0.05525284325336712,49,,False
+Strong ale,barnyard,-0.2139644493727001,36,同 stale_hops,True
+Strong ale,alcohol,1.6778763627939985,2,,False
+Strong ale,aftertaste,0.5439463520309356,21,,False
+Strong ale,body,1.3893017514150618,7,,False
+Strong ale,co2,0.847605338835734,14,,False
+Strong ale,overall,0.5115923864629265,22,,True
+Tripel,A_malt_all,-0.08321914359504676,39,,True
+Tripel,A_malt_grain,-0.3258568197126707,17,,False
+Tripel,A_malt_bread,0.12508237345951928,37,,False
+Tripel,A_malt_cara,-0.16603215216218117,28,,False
+Tripel,A_malt_burn,-0.13489653496415585,34,,False
+Tripel,A_hops_all,0.6189646164234938,5,,False
+Tripel,A_hops_citrus,0.4024786465629671,14,,False
+Tripel,A_hops_tropical,0.22341593048928327,23,,True
+Tripel,A_hops_noble,0.47399001222415055,11,,False
+Tripel,A_hops_woody,-0.05737760369783233,41,,True
+Tripel,A_esters_all,0.29165787017826916,19,,False
+Tripel,A_esters_ethac,0.46419873836440323,12,,True
+Tripel,A_esters_isoaa,0.28870262356991905,20,,False
+Tripel,A_esters_flower,0.2188580112017949,24,,False
+Tripel,A_esters_fruity,-0.14076677430433163,30,,True
+Tripel,F_malt_all,0.2154799475621806,25,,False
+Tripel,F_malt_grain,0.11771966943589973,38,,False
+Tripel,F_malt_bread,0.2593975479549224,21,,False
+Tripel,F_malt_cara,0.12924101220551748,35,,False
+Tripel,F_malt_burn,0.020258252810174977,47,,False
+Tripel,F_hops_all,0.6093570900045756,7,,False
+Tripel,F_hops_citrus,0.25889491841770434,22,,True
+Tripel,F_hops_tropical,0.1353566726185684,31,,True
+Tripel,F_hops_noble,0.4633489863219199,13,,False
+Tripel,F_hops_woody,-0.01115218908160166,50,,True
+Tripel,F_esters_all,0.3724018891390823,16,,False
+Tripel,F_esters_ethac,0.6642542375791621,3,,False
+Tripel,F_esters_isoaa,0.2968470646039747,18,,True
+Tripel,F_esters_flower,-0.016690644922164304,48,,True
+Tripel,F_esters_fruity,-0.1280149115620498,36,,True
+Tripel,acidity,-0.13516521769949924,32,,False
+Tripel,bitternes,0.5246153033641209,9,,False
+Tripel,sweetness,-0.04753152411874814,44,,False
+Tripel,X4vg,0.5326646884992241,8,,False
+Tripel,diacetyl,-0.06798474007025011,40,,False
+Tripel,dms,0.3908128918053829,15,,False
+Tripel,metallic,0.4795172629740656,10,,True
+Tripel,stale_hops,-0.02033548064199389,46,,True
+Tripel,t2n,-0.13506860402510099,33,,True
+Tripel,orange,-0.1444731083870938,29,,True
+Tripel,coriander,0.18836466369065777,27,,True
+Tripel,clove,0.02049608103674197,45,,True
+Tripel,lactic,-0.049821155056954905,43,,False
+Tripel,acetic,-0.05525284325336712,42,,False
+Tripel,barnyard,-0.016356362639089343,49,同 stale_hops,True
+Tripel,alcohol,0.8832159937186376,1,,False
+Tripel,aftertaste,0.18957103986579643,26,,False
+Tripel,body,0.6194450806765194,4,,False
+Tripel,co2,0.7531490820177434,2,,False
+Tripel,overall,0.6146555024623335,6,,True
+West Flanders ale,A_malt_all,0.509590592305891,12,,True
+West Flanders ale,A_malt_grain,0.11917290379451648,39,,False
+West Flanders ale,A_malt_bread,0.016832890060486196,48,,False
+West Flanders ale,A_malt_cara,0.5729135384850439,8,,False
+West Flanders ale,A_malt_burn,0.16328430785333384,32,,False
+West Flanders ale,A_hops_all,-0.6464295788879193,7,,False
+West Flanders ale,A_hops_citrus,-0.42875197009055827,15,,False
+West Flanders ale,A_hops_tropical,-0.3957689199945607,19,,True
+West Flanders ale,A_hops_noble,-0.5454909642094352,11,,False
+West Flanders ale,A_hops_woody,-0.23226285895698148,27,,True
+West Flanders ale,A_esters_all,0.1190692715417081,40,,False
+West Flanders ale,A_esters_ethac,0.17535439721702778,31,,True
+West Flanders ale,A_esters_isoaa,-0.1870190605781873,29,,False
+West Flanders ale,A_esters_flower,-0.1489201788966987,35,,False
+West Flanders ale,A_esters_fruity,0.34666155263276516,20,,True
+West Flanders ale,F_malt_all,0.17681606873398864,30,,False
+West Flanders ale,F_malt_grain,0.12712605316674716,38,,False
+West Flanders ale,F_malt_bread,-0.15846536778934098,33,,False
+West Flanders ale,F_malt_cara,0.4358401532000869,14,,False
+West Flanders ale,F_malt_burn,0.02405759611842663,47,,False
+West Flanders ale,F_hops_all,-0.6643286444458849,5,,False
+West Flanders ale,F_hops_citrus,-0.4143125975260348,17,,True
+West Flanders ale,F_hops_tropical,-0.32545775262215837,21,,True
+West Flanders ale,F_hops_noble,-0.5517160012576272,10,,False
+West Flanders ale,F_hops_woody,-0.30592793965120435,23,,True
+West Flanders ale,F_esters_all,0.23248186907790866,26,,False
+West Flanders ale,F_esters_ethac,0.05296403014143921,44,,False
+West Flanders ale,F_esters_isoaa,-0.004624349496800279,49,,True
+West Flanders ale,F_esters_flower,0.043758751304838965,45,,True
+West Flanders ale,F_esters_fruity,0.4004752245275749,18,,True
+West Flanders ale,acidity,0.9242088816026158,3,,False
+West Flanders ale,bitternes,-0.6464734901525461,6,,False
+West Flanders ale,sweetness,0.4373998685341463,13,,False
+West Flanders ale,X4vg,-0.5564616435690278,9,,False
+West Flanders ale,diacetyl,0.7229910936058306,4,,False
+West Flanders ale,dms,-0.41462536164926456,16,,False
+West Flanders ale,metallic,0.09481907936546839,42,,True
+West Flanders ale,stale_hops,-0.13175189721232916,37,,True
+West Flanders ale,t2n,0.2519761325341853,25,,True
+West Flanders ale,orange,0.15498386149999643,34,,True
+West Flanders ale,coriander,-0.13842701499375148,36,,True
+West Flanders ale,clove,-0.0948323988685897,41,,True
+West Flanders ale,lactic,1.5438593570455104,1,,False
+West Flanders ale,acetic,1.0659148324796297,2,,False
+West Flanders ale,barnyard,-0.20326105133643582,28,同 stale_hops,True
+West Flanders ale,alcohol,-0.31977600988729293,22,,False
+West Flanders ale,aftertaste,0.00318626762778316,50,,False
+West Flanders ale,body,-0.0841293230845353,43,,False
+West Flanders ale,co2,-0.2953613687491087,24,,False
+West Flanders ale,overall,-0.029887955407764982,46,,True
+Wheat,A_malt_all,-0.9222677651108405,6,,True
+Wheat,A_malt_grain,-0.6348478419137926,15,,False
+Wheat,A_malt_bread,-0.4907930227939567,20,,False
+Wheat,A_malt_cara,-0.7647377274057258,9,,False
+Wheat,A_malt_burn,-0.43595682111151035,21,,False
+Wheat,A_hops_all,0.2913147485525207,26,,False
+Wheat,A_hops_citrus,1.1045746399918552,5,,False
+Wheat,A_hops_tropical,0.2661097528440134,30,,True
+Wheat,A_hops_noble,0.22062396474270293,36,,False
+Wheat,A_hops_woody,0.006829828671450616,50,,True
+Wheat,A_esters_all,-0.27974557325279925,27,,False
+Wheat,A_esters_ethac,-0.4073186072168719,22,,True
+Wheat,A_esters_isoaa,-0.01636969616873712,48,,False
+Wheat,A_esters_flower,0.09698625110428101,43,,False
+Wheat,A_esters_fruity,0.2526368359543823,33,,True
+Wheat,F_malt_all,-0.6626670553190606,13,,False
+Wheat,F_malt_grain,-0.26611006013891253,29,,False
+Wheat,F_malt_bread,-0.7319586422816592,10,,False
+Wheat,F_malt_cara,-0.66780765973531,12,,False
+Wheat,F_malt_burn,-0.35566080073608924,24,,False
+Wheat,F_hops_all,-0.2017587336997362,37,,False
+Wheat,F_hops_citrus,0.5994175379706361,16,,True
+Wheat,F_hops_tropical,0.03459817771107941,46,,True
+Wheat,F_hops_noble,-0.2736955844664274,28,,False
+Wheat,F_hops_woody,-0.12918117655825553,41,,True
+Wheat,F_esters_all,-0.5263255593058714,18,,False
+Wheat,F_esters_ethac,-0.37767503236897326,23,,False
+Wheat,F_esters_isoaa,0.013946885360405503,49,,True
+Wheat,F_esters_flower,0.18903415268697069,39,,True
+Wheat,F_esters_fruity,0.23047294543360272,34,,True
+Wheat,acidity,-0.03384900763269596,47,,False
+Wheat,bitternes,-0.22297495618561042,35,,False
+Wheat,sweetness,-0.20059347050636164,38,,False
+Wheat,X4vg,1.4917375413853442,4,,False
+Wheat,diacetyl,-0.25526488149527005,32,,False
+Wheat,dms,0.9019374335435895,7,,False
+Wheat,metallic,0.6573877380975843,14,,True
+Wheat,stale_hops,0.3532654802042102,25,,True
+Wheat,t2n,-0.26584355382611935,31,,True
+Wheat,orange,1.5681415919557173,2,,True
+Wheat,coriander,2.0038898420427085,1,,True
+Wheat,clove,1.5004349497533978,3,,True
+Wheat,lactic,-0.04794237429930739,45,,False
+Wheat,acetic,-0.0717311867194997,44,,False
+Wheat,barnyard,0.5112343341956059,19,同 stale_hops,True
+Wheat,alcohol,-0.5417170463456188,17,,False
+Wheat,aftertaste,-0.8802061354158931,8,,False
+Wheat,body,-0.6830734286071113,11,,False
+Wheat,co2,0.1073489197837194,42,,False
+Wheat,overall,-0.1652672739858604,40,,True

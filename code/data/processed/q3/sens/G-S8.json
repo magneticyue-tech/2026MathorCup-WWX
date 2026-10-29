@@ -1,0 +1,78 @@
+{
+ "arm": "G-S8",
+ "kind": "portrait",
+ "change": "Q1 删除四个 _sum 特征的对照模型",
+ "compare": "画像与 α*",
+ "results": {
+  "G-S8": {
+   "portrait": {
+    "median_spearman_q50": 0.9996158463385355,
+    "min_spearman_q50": 0.9979831932773109,
+    "mean_abs_diff_q50": 0.006251632933735688,
+    "max_abs_diff_q50": 0.3902443453759221
+   },
+   "transfer": {
+    "pils_tripel": {
+     "n": 11,
+     "alpha_median_base": 1.0,
+     "alpha_median_arm": 1.0,
+     "alpha_median_diff": 0.0,
+     "active_frac_base": 1.0,
+     "active_frac_arm": 1.0,
+     "active_frac_diff": 0.0,
+     "p_median_base": 0.164,
+     "p_median_arm": 0.162,
+     "p_median_diff": -0.0020000000000000018,
+     "n_alpha_changed": 1
+    },
+    "all_pairs": {
+     "n": 5250,
+     "alpha_median_base": 1.0,
+     "alpha_median_arm": 1.0,
+     "alpha_median_diff": 0.0,
+     "active_frac_base": 0.8531428571428571,
+     "active_frac_arm": 0.8525714285714285,
+     "active_frac_diff": -0.0005714285714285561,
+     "p_median_base": 0.09,
+     "p_median_arm": 0.09,
+     "p_median_diff": 0.0,
+     "n_alpha_changed": 1140
+    },
+    "pils_alpha_base": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.85,
+     0.6,
+     0.65,
+     1.0,
+     1.0
+    ],
+    "pils_alpha_arm": [
+     1.0,
+     1.0,
+     1.0,
+     0.95,
+     1.0,
+     1.0,
+     0.85,
+     0.6,
+     0.65,
+     1.0,
+     1.0
+    ]
+   },
+   "note": "残差池与切点沿用 Q1 主模型 final_resid/final_qcuts；q1_drop_sum_final.json 未提供对照模型残差",
+   "n_input_columns": 227
+  }
+ },
+ "inputs_sha12": {
+  "q3_portraits.npz": "145aeac980e1",
+  "q3_transfer_drop_sum.npz": "cf43c41317a7",
+  "q1_drop_sum_final.json": "e646141fba2e"
+ },
+ "wall_time_s": 16.821710348129272
+}

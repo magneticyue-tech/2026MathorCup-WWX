@@ -1,0 +1,67 @@
+{
+ "arm": "T-S3",
+ "kind": "transfer",
+ "change": "阈值口径：中位",
+ "compare": "迁移指标",
+ "results": {
+  "T-S3": {
+   "pils_tripel": {
+    "n": 11,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 1.0,
+    "active_frac_arm": 1.0,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.164,
+    "p_median_arm": 0.166,
+    "p_median_diff": 0.0020000000000000018,
+    "n_alpha_changed": 2
+   },
+   "all_pairs": {
+    "n": 5250,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 0.8531428571428571,
+    "active_frac_arm": 0.8630476190476191,
+    "active_frac_diff": 0.009904761904761972,
+    "p_median_base": 0.09,
+    "p_median_arm": 0.09,
+    "p_median_diff": 0.0,
+    "n_alpha_changed": 121
+   },
+   "pils_alpha_base": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_alpha_arm": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.55,
+    0.7,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "inputs_sha12": {
+  "q3_transfer.npz": "f7eb935e0632",
+  "q3_transfer_median.npz": "e1f6c11eb276"
+ },
+ "wall_time_s": 15.468451499938965
+}

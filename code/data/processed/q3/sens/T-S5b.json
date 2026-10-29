@@ -1,0 +1,67 @@
+{
+ "arm": "T-S5b",
+ "kind": "transfer",
+ "change": "不设感官层",
+ "compare": "迁移指标",
+ "results": {
+  "T-S5b": {
+   "pils_tripel": {
+    "n": 11,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 1.0,
+    "active_frac_arm": 1.0,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.164,
+    "p_median_arm": 0.164,
+    "p_median_diff": 0.0,
+    "n_alpha_changed": 3
+   },
+   "all_pairs": {
+    "n": 5250,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 0.8531428571428571,
+    "active_frac_arm": 0.8531428571428571,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.09,
+    "p_median_arm": 0.116,
+    "p_median_diff": 0.02600000000000001,
+    "n_alpha_changed": 2014
+   },
+   "pils_alpha_base": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_alpha_arm": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "inputs_sha12": {
+  "q3_transfer.npz": "f7eb935e0632",
+  "q3_transfer_none.npz": "2fdb2a7ca671"
+ },
+ "wall_time_s": 10.814427137374878
+}

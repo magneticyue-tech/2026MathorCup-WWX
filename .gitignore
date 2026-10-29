@@ -30,3 +30,7 @@ __pycache__/
 Thumbs.db
 .vscode/*
 !.vscode/settings.json
+
+code/data/processed/q3/_smoke/
+code/data/processed/q3/_chunks/
+code/data/processed/q3/q3_transfer_chem_*.npz

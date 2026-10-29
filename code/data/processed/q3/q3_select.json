@@ -1,0 +1,104 @@
+{
+ "final_config": {
+  "kind": "famod",
+  "k": 15,
+  "kappa": 5.0
+ },
+ "chosen_freq": {
+  "{\"k\": 10, \"kappa\": 2.0, \"kind\": \"famod\"}": 24,
+  "{\"k\": 10, \"kappa\": 5.0, \"kind\": \"famod\"}": 1
+ },
+ "k_range": [
+  10,
+  10
+ ],
+ "kappa_range": [
+  2.0,
+  5.0
+ ],
+ "small_L_vs_kappa_final": {
+  "('famod', 15, 0.0)": -275.8087152696482,
+  "('famod', 15, 1.0)": -259.1964073363285,
+  "('famod', 15, 2.0)": -254.4987079234196,
+  "('famod', 15, 5.0)": -253.8656712852584,
+  "('famod', 15, 10.0)": -257.48932522555396,
+  "('famod', 15, 20.0)": -262.00116233019105
+ },
+ "inner_excluded": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "checks": [
+  {
+   "name": "外层训练集 Faro 款数范围",
+   "expected": [
+    2,
+    3
+   ],
+   "observed": [
+    2,
+    3
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "外层训练集 Brut 款数范围",
+   "expected": [
+    3,
+    4
+   ],
+   "observed": [
+    3,
+    4
+   ],
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "内层训练集 Faro ≥1 且 Brut ≥2",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "内层训练集恰 1 款 Faro 的个数",
+   "expected": 30,
+   "observed": 30,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "inner_excluded 全为 0",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  }
+ ],
+ "wall_time_s": 32.89928603172302
+}
