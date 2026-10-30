@@ -17,7 +17,7 @@ def main():
     rows = plotstyle.load_json(args.src / "q1_stress.json")["per_style"]
     rows = sorted(rows, key=lambda e: e["mae_median"])
     p = plotstyle.PALETTE
-    fig, ax = plt.subplots(figsize=(7.0, 2.8))
+    fig, ax = plt.subplots(figsize=(9.0, 3.6))
     for yi, e in enumerate(rows):
         ax.scatter(
             yi,
@@ -29,16 +29,22 @@ def main():
         )
         ax.scatter(yi, e["b0_mae"], marker="_", s=60, color=p["ctrl"])
         ax.scatter(yi, e["b1_mae"], marker="x", s=16, color=p["warn"])
-    ax.scatter([], [], color=p["main"], label="主模型")
-    ax.scatter([], [], marker="_", color=p["ctrl"], label="B0")
-    ax.scatter([], [], marker="x", color=p["warn"], label="B1")
+    ax.scatter([], [], color=p["main"], label=plotstyle.MODEL_LABELS["main"])
+    ax.scatter([], [], marker="_", color=p["ctrl"], label=plotstyle.MODEL_LABELS["b0"])
+    ax.scatter([], [], marker="x", color=p["warn"], label=plotstyle.MODEL_LABELS["b1"])
+    ax.scatter(
+        [],
+        [],
+        facecolors="none",
+        edgecolors=p["main"],
+        label="啤酒数不超过 5 的风格",
+    )
     ax.set_xticks(range(len(rows)))
     ax.set_xticklabels(
-        [f"{e['style']}（{e['n']}）" for e in rows], rotation=60, ha="right", fontsize=6
+        [f"{e['style']}（n={e['n']}）" for e in rows], rotation=65, ha="right", fontsize=9
     )
     ax.set_ylabel("留一风格等级 MAE")
-    ax.legend(fontsize=7, frameon=False, ncol=3)
-    ax.set_title("留一风格压力测试；空心点为款数不超过 5 的风格，只作定性解读", fontsize=8)
+    ax.legend(fontsize=9, frameon=False, ncol=2, loc="upper center", bbox_to_anchor=(0.5, 1.14))
     print(plotstyle.save(fig, args.out, "fig_q1_stress.pdf"))
 
 

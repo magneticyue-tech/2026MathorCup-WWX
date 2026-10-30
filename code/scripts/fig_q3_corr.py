@@ -15,20 +15,21 @@ def main():
     apply()
     m = load_json("q3_genval.json")["metrics"]
     gens = list(GEN_LABELS)
-    fig, axes = plt.subplots(1, 3, figsize=(12, 3.6))
+    fig, axes = plt.subplots(1, 3, figsize=(14, 4.8))
     g1 = m["G1.corr_err"]["estimate"]
-    bars(axes[0], m, "corr_err", gens, g1, f"G1 抽样误差水平 {g1:.3f}")
+    bars(axes[0], m, "corr_err", gens, g1, f"复制真实样本的抽样误差水平 {g1:.3f}")
     axes[0].set_ylabel("Spearman 矩阵逐元素绝对差均值")
-    axes[0].set_title("相关误差")
+    axes[0].set_title("(a) 相关误差", loc="left", fontsize=11)
     g1w = m["G1.wcorr_err"]["estimate"]
-    bars(axes[1], m, "wcorr_err", gens, g1w, f"G1 抽样误差水平 {g1w:.3f}")
-    axes[1].set_title("风格内相关误差")
+    bars(axes[1], m, "wcorr_err", gens, g1w, f"复制真实样本的抽样误差水平 {g1w:.3f}")
+    axes[1].set_ylabel("风格内 Spearman 矩阵逐元素绝对差均值")
+    axes[1].set_title("(b) 风格内相关误差", loc="left", fontsize=11)
     rr = m["real.real_module_rho"]["estimate"]
-    bars(axes[2], m, "module_rho", gens, rr, f"真实留出 {rr:.3f}")
-    axes[2].set_ylabel("Q2 模块内化合物对平均 Spearman")
-    axes[2].set_title("模块内 ρ")
+    bars(axes[2], m, "module_rho", gens, rr, f"真实留出啤酒 {rr:.3f}")
+    axes[2].set_ylabel("问题二模块内化合物对平均 Spearman")
+    axes[2].set_title("(c) 模块内平均 Spearman", loc="left", fontsize=11)
     for ax in axes:
-        ax.tick_params(axis="x", labelsize=8)
+        ax.tick_params(axis="x", labelsize=9)
     axes[2].axhline(rr - 0.10, ls=":", color=PALETTE["warn"], lw=1)
     fig.tight_layout()
     save(fig, FIG_DIR, "fig_q3_corr.pdf")

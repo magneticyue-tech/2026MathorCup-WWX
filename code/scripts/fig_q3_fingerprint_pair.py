@@ -7,6 +7,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from matplotlib.patches import Patch  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.q3.config import NAMED_STYLES  # noqa: E402
@@ -19,7 +20,7 @@ def main():
     apply()
     chem = pd.read_csv(PROCESSED_DIR / "q3_fingerprint.csv")
     sens = pd.read_csv(PROCESSED_DIR / "q3_sensory_fingerprint.csv")
-    fig, axes = plt.subplots(len(NAMED_STYLES), 2, figsize=(12, 3.3 * len(NAMED_STYLES)))
+    fig, axes = plt.subplots(len(NAMED_STYLES), 2, figsize=(14, 3.5 * len(NAMED_STYLES)))
     for row, st in zip(axes, NAMED_STYLES):
         c = chem[(chem["style"] == st) & (chem["rank"] <= TOP)].sort_values("rank", ascending=False)
         y = np.arange(len(c))
@@ -36,12 +37,10 @@ def main():
             lw=0.8,
         )
         ax.set_yticks(y)
-        ax.set_yticklabels(c["compound"], fontsize=6.5)
+        ax.set_yticklabels(c["compound"], fontsize=9)
         ax.axvline(0, color="#444444", lw=0.6)
         n = int(c["n_style"].iloc[0])
-        ax.set_title(
-            f"{st}（{n} 款）化学指纹前 {TOP} 项：潜空间均值偏移 δ（90% bootstrap 区间）", fontsize=8
-        )
+        ax.set_title(f"{st}（{n} 款啤酒）", fontsize=10, loc="left")
         ax.grid(axis="y", visible=False)
 
         s = (
@@ -57,15 +56,24 @@ def main():
             if weak:
                 ax.barh(yi, v, color="none", edgecolor="#222222", hatch="///", lw=0)
         ax.set_yticks(y)
-        ax.set_yticklabels(s["dim"], fontsize=6.5)
+        ax.set_yticklabels(s["dim"], fontsize=9)
         ax.axvline(0, color="#444444", lw=0.6)
-        ax.set_title(
-            f"{st} 感官指纹前 {TOP} 维：生成画像中位数相对全体的偏移（单位：维度 SD）", fontsize=8
-        )
+        ax.set_title(f"{st}", fontsize=10, loc="left")
         ax.grid(axis="y", visible=False)
-    axes[-1, 0].set_xlabel("δ（正为高于全体，灰色为区间含 0）")
-    axes[-1, 1].set_xlabel("偏移 / SD（斜线为问题一未优于 B1 的弱维度，只作定性参考）")
-    fig.tight_layout()
+    axes[-1, 0].set_xlabel("标准化潜空间偏移 δ（正为高于全体风格均值）", fontsize=9)
+    axes[-1, 1].set_xlabel(
+        "偏移 / 标准差（斜线为浅层梯度提升树未优于风格收缩均值的维度）", fontsize=9
+    )
+    handles = [Patch(facecolor=PALETTE["neutral"], label="bootstrap 90% 区间含 0")]
+    fig.legend(
+        handles=handles,
+        loc="lower center",
+        ncol=1,
+        frameon=False,
+        fontsize=9,
+        bbox_to_anchor=(0.5, -0.01),
+    )
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
     print(save(fig, FIG_DIR, "fig_q3_fingerprint_pair.pdf"))
 
 

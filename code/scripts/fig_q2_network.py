@@ -83,7 +83,7 @@ def main():
                 *pts.T, s=40, facecolor="white", edgecolor=ORIGIN_COLORS[o], marker="s", zorder=3
             )
     for h in mods.loc[mods["size"] >= 3, "hub"]:
-        ax.text(*pos[h], h, fontsize=6.5, ha="left", va="bottom", zorder=4)
+        ax.text(*pos[h], h, fontsize=8.5, ha="left", va="bottom", zorder=4)
     ax.scatter(
         [],
         [],
@@ -94,14 +94,8 @@ def main():
         label="注释节点（综合指标）",
     )
     for k in (0, 2, 5):
-        ax.scatter([], [], s=12 + 18 * k, color="#aaaaaa", label=f"加权模块内连接度 {k}")
-    ax.legend(loc="upper right", fontsize=7.5, frameon=False, ncol=2)
-    n_multi = int((mods["size"] > 1).sum())
-    ax.set_title(
-        f"化合物共表达图（τ={tau:g}：{len(edges)} 条 |ρ|≥{tau:g} 的边，虚线为负相关；"
-        f"{len(mods)} 个模块，其中多成员 {n_multi} 个以灰色圈示；MDS 距离 1−|ρ|）",
-        fontsize=8.5,
-    )
+        ax.scatter([], [], s=12 + 18 * k, color="#aaaaaa", label=f"模块内加权连接度 {k}")
+    ax.legend(loc="upper right", fontsize=9, frameon=False, ncol=2)
     ax.set_axis_off()
     fig.tight_layout()
     print(plotstyle.save(fig, C.FIGURES, "fig_q2_network.pdf"))

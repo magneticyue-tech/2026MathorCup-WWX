@@ -47,7 +47,7 @@ def main():
     rows = pick_rows(style, ext_rows)
 
     ang = np.linspace(0, 2 * np.pi, len(order), endpoint=False)
-    fig, axes = plt.subplots(2, 3, figsize=(13, 11), subplot_kw={"projection": "polar"})
+    fig, axes = plt.subplots(2, 3, figsize=(15, 13), subplot_kw={"projection": "polar"})
     for ax, r in zip(axes.ravel(), rows):
         i = r - 1
         ax.fill_between(
@@ -67,7 +67,7 @@ def main():
             color=p["better"],
             lw=1.1,
             ls="--",
-            label="真值等级 G",
+            label="实测等级",
         )
         if r in ext_rows:
             k = ext_rows.index(r)
@@ -79,32 +79,54 @@ def main():
                 marker="D",
                 color=p["accent"],
                 zorder=5,
-                label="外部对照杯等级",
+                label="外部加标实验对照杯等级",
             )
-        err = np.abs(s["G_hat"][i] - d["G"][i])
         tag = ""
         if r in ext_rows:
             tag = f"（外部检查底酒 {int(e['beer_codes'][ext_rows.index(r)])}）"
-        ax.set_title(
-            f"第 {r} 行 · {style[i]}{tag}\n"
-            f"等级 MAE {err.mean():.2f}，完全一致 {(err == 0).mean():.0%}",
-            fontsize=8,
-            pad=14,
+        ax.text(
+            0.5,
+            -0.26,
+            f"第 {r} 行 · {style[i]}{tag}",
+            transform=ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=11,
+            clip_on=False,
         )
         ax.set_ylim(0, 6)
         ax.set_yticks(range(0, 7, 2))
         ax.set_xticks(ang)
-        ax.set_xticklabels([dims[j] for j in order], fontsize=4.2)
-        ax.tick_params(axis="y", labelsize=6)
+        ax.set_xticklabels([])
+        for j, theta in zip(order, ang):
+            deg = np.degrees(theta)
+            if deg <= 90:
+                rot, ha = deg, "left"
+            elif deg <= 270:
+                rot, ha = deg - 180, "right"
+            else:
+                rot, ha = deg - 360, "left"
+            ax.text(
+                theta,
+                6.55,
+                dims[j],
+                rotation=rot,
+                rotation_mode="anchor",
+                ha=ha,
+                va="center",
+                fontsize=8,
+                clip_on=False,
+            )
+        ax.set_rlabel_position(22.5)
+        ax.tick_params(axis="y", labelsize=9)
     handles, labels = [], []
     for ax in axes.ravel():
         for h, lab in zip(*ax.get_legend_handles_labels()):
             if lab not in labels:
                 handles.append(h)
                 labels.append(lab)
-    fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False, fontsize=8)
-    fig.suptitle("代表性啤酒的 50 维感官画像：预测等级（交付，折外）与真值等级叠加", fontsize=10)
-    fig.tight_layout(rect=(0, 0.04, 1, 0.97), h_pad=3.5)
+    fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False, fontsize=9)
+    fig.subplots_adjust(left=0.05, right=0.96, top=0.92, bottom=0.13, wspace=0.7, hspace=0.5)
     print(plotstyle.save(fig, args.out, "fig_q1_radar.pdf"))
 
 

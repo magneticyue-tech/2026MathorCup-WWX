@@ -5,12 +5,12 @@ from ..q1.plotstyle import PALETTE, apply, save
 from .paths import FIG_DIR, PROCESSED_DIR
 
 GEN_LABELS = {
-    "main": "主模型",
-    "pure_fa": "纯因子",
-    "G0": "G0 无风格",
-    "G1": "G1 复制",
-    "G2": "G2 独立边际",
-    "G3": "G3 风格内插值",
+    "main": "以风格为条件的潜在高斯模型",
+    "pure_fa": "纯因子模型",
+    "G0": "无风格条件模型",
+    "G1": "复制真实样本",
+    "G2": "逐列独立生成",
+    "G3": "风格内插值",
 }
 
 

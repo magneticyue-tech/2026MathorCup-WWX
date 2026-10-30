@@ -27,8 +27,12 @@ def main():
     anchored = plotstyle.load_npz(args.src / "q1_twostage.npz")["I_te"].astype(bool)
     R = Gh.shape[0]
 
-    fig, axes = plt.subplots(1, 2, figsize=(9.0, 3.9), constrained_layout=True)
-    for ax, mask, name in ((axes[0], anchored, "有锚单元"), (axes[1], ~anchored, "无锚单元")):
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.8), constrained_layout=True)
+    panels = (
+        (axes[0], anchored, "(a) 有零点参照的单元"),
+        (axes[1], ~anchored, "(b) 无零点参照的单元"),
+    )
+    for ax, mask, title in panels:
         cm = confusion(G[None], Gh, mask)
         rows = cm.sum(1, keepdims=True)
         share = np.divide(cm, rows, out=np.zeros_like(cm), where=rows > 0)
@@ -42,21 +46,26 @@ def main():
                         f"{share[i, j]:.2f}\n{cm[i, j] / R:.0f}",
                         ha="center",
                         va="center",
-                        fontsize=5.5,
+                        fontsize=8,
                         color="white" if share[i, j] > 0.6 else "#222222",
                     )
-        err = np.abs(np.broadcast_to(G[None], Gh.shape) - Gh)[mask]
-        ax.set_title(
-            f"{name}：每次重复 {mask.sum() / R:.0f} 格；等级 MAE {err.mean():.3f}，"
-            f"完全一致 {(err == 0).mean():.1%}",
-            fontsize=8,
-        )
-        ax.set_xlabel("预测等级（主模型，分布中位数）")
-        ax.set_ylabel("真值等级 G")
+        ax.set_title(title, fontsize=11, loc="left")
+        ax.set_xlabel("预测等级（浅层梯度提升树，分布中位数）", fontsize=9)
+        ax.set_ylabel("实测等级", fontsize=9)
         ax.set_xticks(range(N_GRADES))
         ax.set_yticks(range(N_GRADES))
+        ax.set_xticks(np.arange(-0.5, N_GRADES, 1), minor=True)
+        ax.set_yticks(np.arange(-0.5, N_GRADES, 1), minor=True)
+        ax.tick_params(labelsize=9)
+        ax.tick_params(which="minor", length=0)
         ax.grid(False)
-    fig.colorbar(im, ax=axes, shrink=0.8, label="行内比例（格内第二行为每次重复的格数）")
+        ax.grid(which="minor", color="#dddddd", linewidth=0.8)
+    cbar = fig.colorbar(im, ax=axes, shrink=0.85)
+    cbar.set_label(
+        "颜色：行内比例（单元格上行）；每次重复的平均单元数（下行）",
+        fontsize=9,
+    )
+    cbar.ax.tick_params(labelsize=9)
     print(plotstyle.save(fig, args.out, "fig_q1_confusion_anchor.pdf"))
 
 

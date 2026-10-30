@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib.colors import TwoSlopeNorm  # noqa: E402
-from matplotlib.patches import Rectangle  # noqa: E402
+from matplotlib.lines import Line2D  # noqa: E402
+from matplotlib.patches import Patch, Rectangle  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.q3.plotting import FIG_DIR, PROCESSED_DIR, apply, save  # noqa: E402
@@ -35,7 +36,7 @@ def main():
     act = grid(chem, beers, ci, "active").astype(bool)
     oav_a = grid(chem, beers, ci, "oav_after")
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5.6), gridspec_kw={"width_ratios": [9, 6]})
+    fig, axes = plt.subplots(1, 2, figsize=(20, 8.6), gridspec_kw={"width_ratios": [9, 6]})
     ax = axes[0]
     lim = float(np.nanmax(np.abs(ratio.to_numpy()))) or 1.0
     norm = TwoSlopeNorm(vcenter=0, vmin=-lim, vmax=lim)
@@ -45,24 +46,22 @@ def main():
     im = ax.imshow(shown, cmap=cmap, norm=norm, aspect="auto")
     for r in range(len(beers)):
         for c in range(len(ci)):
-            mark = "✓" if ok_c.iat[r, c] else "✗"
+            mark = "√" if ok_c.iat[r, c] else "×"
             if np.isnan(ratio.iat[r, c]):
                 txt = f"{mark}\nΔ{raw.iat[r, c]:+.2f}"
             else:
                 txt = f"{mark}\nOAV {oav_a.iat[r, c]:.2f}"
-            ax.text(c, r, txt, ha="center", va="center", fontsize=5.5, fontfamily="DejaVu Sans")
+            ax.text(c, r, txt, ha="center", va="center", fontsize=8, fontfamily="DejaVu Sans")
             if act.iat[r, c]:
                 ax.add_patch(Rectangle((c - 0.5, r - 0.5), 1, 1, fill=False, ec="black", lw=1.4))
-    ax.set_xticks(range(len(ci)), ci, rotation=30, ha="right", fontsize=7)
-    ax.set_yticks(range(len(beers)), [str(b) for b in beers], fontsize=7)
+    ax.set_xticks(range(len(ci)), ci, rotation=30, ha="right", fontsize=9)
+    ax.set_yticks(range(len(beers)), [str(b) for b in beers], fontsize=9)
     ax.set_ylabel("源啤酒编号（Pils/Lager）")
     ax.grid(False)
-    ax.set_title(
-        f"化学层 {len(ci)} 个缺陷项：色块为 $\\log_{{10}}$(迁移后 OAV / 迁移前 OAV)；"
-        "灰色为无阈值项（格内为原尺度变化量）；粗框为约束起作用",
-        fontsize=8,
-    )
-    fig.colorbar(im, ax=ax, shrink=0.75, label=r"$\log_{10}$ OAV 变化（红色升高）")
+    ax.set_title(f"(a) 化学层 {len(ci)} 个缺陷项", fontsize=11, loc="left")
+    cb = fig.colorbar(im, ax=ax, shrink=0.75)
+    cb.set_label("气味活度值 OAV 变化的 log10（红为升高）", fontsize=9)
+    cb.ax.tick_params(labelsize=9)
 
     ax = axes[1]
     gb = grid(sens, beers, si, "before").astype(int)
@@ -75,25 +74,35 @@ def main():
             ax.text(
                 c,
                 r,
-                f"{'✓' if ok_s.iat[r, c] else '✗'}\n{gb.iat[r, c]}→{ga.iat[r, c]}",
+                f"{'√' if ok_s.iat[r, c] else '×'}\n{gb.iat[r, c]}→{ga.iat[r, c]}",
                 ha="center",
                 va="center",
-                fontsize=6,
+                fontsize=8,
                 fontfamily="DejaVu Sans",
             )
-    ax.set_xticks(range(len(si)), si, rotation=30, ha="right", fontsize=7)
-    ax.set_yticks(range(len(beers)), [str(b) for b in beers], fontsize=7)
+    ax.set_xticks(range(len(si)), si, rotation=30, ha="right", fontsize=9)
+    ax.set_yticks(range(len(beers)), [str(b) for b in beers], fontsize=9)
+    ax.set_ylabel("源啤酒编号（Pils/Lager）")
     ax.grid(False)
-    ax.set_title(f"感官层 {len(si)} 个缺陷维度：问题一预测等级（迁移前→后）", fontsize=8)
-    fig.colorbar(im2, ax=ax, shrink=0.75, label="等级变化", ticks=[-2, -1, 0, 1, 2])
-    n_ok = int(ok_c.to_numpy().sum() + ok_s.to_numpy().sum())
-    n_all = ok_c.size + ok_s.size
-    fig.suptitle(
-        f"缺陷不恶化核查表（{len(beers)} 款 Pils/Lager → Tripel，"
-        f"主方法 α* 终点原尺度复查：{n_ok}/{n_all} 格满足约束）",
-        fontsize=9.5,
+    ax.set_title(f"(b) 感官层 {len(si)} 个缺陷维度", fontsize=11, loc="left")
+    cb = fig.colorbar(im2, ax=ax, shrink=0.75, ticks=[-2, -1, 0, 1, 2])
+    cb.set_label("浅层梯度提升树预测等级变化（迁移前→后）", fontsize=9)
+    cb.ax.tick_params(labelsize=9)
+    handles = [
+        Patch(facecolor="#dddddd", label="无阈值项（单元内为原尺度变化量）"),
+        Rectangle((0, 0), 1, 1, fill=False, ec="black", lw=1.4, label="粗框：约束起作用"),
+        Line2D([], [], marker="$√$", linestyle="none", label="原尺度复查通过"),
+        Line2D([], [], marker="$×$", linestyle="none", label="原尺度复查未通过"),
+    ]
+    fig.legend(
+        handles=handles,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 0.0),
+        ncol=4,
+        fontsize=9,
+        frameon=False,
     )
-    fig.tight_layout(rect=(0, 0, 1, 0.94))
+    fig.tight_layout(rect=(0, 0.06, 1, 1))
     print(save(fig, FIG_DIR, "fig_q3_defect.pdf"))
 
 

@@ -20,10 +20,10 @@ def main():
     colors = [
         plotstyle.PALETTE["accent"] if a == "alpha" else plotstyle.PALETTE["main"] for a in names
     ]
-    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.8), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(9.6, 3.8), sharey=True)
     for ax, key, xlab in (
-        (axes[0], "mae", "等级 MAE 配对差（臂减主设定）"),
-        (axes[1], "qwk", "QWK 配对差（臂减主设定）"),
+        (axes[0], "mae", "等级 MAE 配对差（敏感性臂减主设定）"),
+        (axes[1], "qwk", "二次加权 Kappa 配对差（敏感性臂减主设定）"),
     ):
         plotstyle.forest(
             ax,
@@ -37,7 +37,7 @@ def main():
     xmax = axes[1].get_xlim()[1]
     for yi, a in zip(range(len(names))[::-1], names):
         axes[1].text(
-            xmax, yi, f" 交付变化 {arms[a]['changed_delivered']:.1%}", va="center", fontsize=6
+            xmax, yi, f" 交付变化 {arms[a]['changed_delivered']:.1%}", va="center", fontsize=9
         )
     print(plotstyle.save(fig, args.out, "fig_q1_sensitivity.pdf"))
 
