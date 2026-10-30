@@ -1,0 +1,361 @@
+{
+ "grid": {
+  "max_depth": [
+   1,
+   2,
+   3
+  ],
+  "min_samples_leaf": [
+   10,
+   20,
+   40
+  ],
+  "max_iter": [
+   10,
+   25,
+   50,
+   100,
+   200
+  ]
+ },
+ "best_by_iter": {
+  "Aroma": {
+   "10": 1.0082969633232,
+   "25": 0.9948791062961458,
+   "50": 0.9912787261235436,
+   "100": 0.9960712245394877,
+   "200": 1.011224410597124
+  },
+  "Flavour": {
+   "10": 0.9972802169246267,
+   "25": 0.971113521747321,
+   "50": 0.9620295909645465,
+   "100": 0.9626450638409336,
+   "200": 0.9686454453403858
+  },
+  "Defect": {
+   "10": 0.9964598403519384,
+   "25": 0.9850522611920404,
+   "50": 0.9820616293425525,
+   "100": 0.9832330847568823,
+   "200": 0.9905181081809715
+  },
+  "Spice": {
+   "10": 0.9822238212629358,
+   "25": 0.96714022373061,
+   "50": 0.977472651033932,
+   "100": 0.9988844665318541,
+   "200": 1.0365528403123345
+  },
+  "Sour": {
+   "10": 1.341602924176375,
+   "25": 1.0584691046869061,
+   "50": 0.9272902810478261,
+   "100": 0.9181673838962588,
+   "200": 0.9571928184787748
+  },
+  "Basic": {
+   "10": 0.9184683196440406,
+   "25": 0.8336821174962955,
+   "50": 0.8022579778626412,
+   "100": 0.7980343964701386,
+   "200": 0.8002339875704431
+  }
+ },
+ "best_by_depth": {
+  "Aroma": {
+   "1": 0.9920416768851433,
+   "2": 0.994443146853509,
+   "3": 0.9964914858022796
+  },
+  "Flavour": {
+   "1": 0.9628718107029954,
+   "2": 0.9628735204426496,
+   "3": 0.9654048478231667
+  },
+  "Defect": {
+   "1": 0.9834183259016738,
+   "2": 0.982326190784758,
+   "3": 0.9831134085021708
+  },
+  "Spice": {
+   "1": 0.9662674636888726,
+   "2": 0.9712321969173898,
+   "3": 0.9734749298807243
+  },
+  "Sour": {
+   "1": 0.8990503132301144,
+   "2": 0.9374470138862432,
+   "3": 0.951589068128393
+  },
+  "Basic": {
+   "1": 0.8003524546510599,
+   "2": 0.7993522909252421,
+   "3": 0.8061238136840363
+  }
+ },
+ "chosen": {
+  "Aroma": [
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   }
+  ],
+  "Flavour": [
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 100,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   }
+  ],
+  "Defect": [
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 100,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 20,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 25,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 40,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 100,
+    "mono": false
+   }
+  ],
+  "Spice": [
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 25,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 20,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 25,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 25,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 20,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 25,
+    "mono": false
+   }
+  ],
+  "Sour": [
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 20,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 100,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 100,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 50,
+    "mono": false
+   }
+  ],
+  "Basic": [
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 100,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "max_iter": 100,
+    "mono": false
+   },
+   {
+    "max_depth": 3,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 50,
+    "mono": false
+   },
+   {
+    "max_depth": 1,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 200,
+    "mono": false
+   },
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 10,
+    "learning_rate": 0.05,
+    "l2_regularization": 0.0,
+    "max_iter": 100,
+    "mono": false
+   }
+  ]
+ },
+ "outer_extended": {
+  "mae": 0.4731781992478024,
+  "r2": 0.1918237969900169,
+  "rho": 0.332715357888405
+ },
+ "outer_main_r0": {
+  "mae": 0.4733469332909172,
+  "r2": 0.18349307823679348,
+  "rho": 0.3517457250476994
+ }
+}

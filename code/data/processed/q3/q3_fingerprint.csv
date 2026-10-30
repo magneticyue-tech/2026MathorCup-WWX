@@ -1,0 +1,221 @@
+﻿style,rank,compound,delta,delta_lo,delta_hi,ci_covers_zero,q2_module,same_module,origin_paper,off_flavors,aging,floor_frac_style,n_style,small_style_shrunk
+Amber,1,X.E..beta.damascenone,0.7791592753435354,0.5399264703324173,1.0164545564456486,False,108,gamma.nonalactone,Hops,,increase,0.0,12,False
+Amber,2,X3.methyl.2.hexanol,-0.7478144249124022,-1.0303413941955146,-0.44318656213448965,False,43,X3.furanmethanol|ortho.cresol|n.octanol,Yeast,,,0.0,12,False
+Amber,3,X2.furanmethanol,-0.675480182009076,-1.0476770769005286,-0.3302100059200614,False,42,,Others,,increase,0.08333333333333333,12,False
+Amber,4,phenylacetaldehyde,0.6714450501817089,0.3594427515998334,0.9751433253201357,False,67,,Others,,increase,0.0,12,False
+Amber,5,X4.ethyl.guaiacol,-0.6526961875025817,-0.9426107878836638,-0.39649284772508775,False,85,X4.ethyl.phenol|neryl.formate,Wild flora,,,0.0,12,False
+Amber,6,ethyl.nicotinate,0.6347919830700581,0.4200438610200998,0.8328441708890935,False,87,diethyl.succinate,Others,,increase,0.0,12,False
+Amber,7,ethyl.5.methylhexanoate,-0.6190408526868796,-0.805954399584109,-0.44048169978612545,False,56,ethyl.hex..3E..enoate,Yeast,,,0.0,12,False
+Amber,8,butyl.acetate,-0.6116833445327617,-0.8645434978212564,-0.36552194286482814,False,36,,Yeast,,,0.08333333333333333,12,False
+Amber,9,benzyl.benzoate,-0.593994756422872,-0.8732331251192318,-0.3090605447943037,False,152,,Others,,,0.25,12,False
+Amber,10,ethyl.isobutyrate,0.5871381503731021,0.2866538072532494,0.867954603450392,False,33,,Yeast,,,0.0,12,False
+Blond,1,protein.g.L.,-1.0225710722635224,-1.205112297743582,-0.836251468840453,False,19,color.EBC.,Others,,,0.0,31,False
+Blond,2,ethyl.furoate,-1.014297486312392,-1.2260816579926361,-0.7761530903808763,False,49,X5.methylfurfural,Malt,,,0.41935483870967744,31,False
+Blond,3,phenethyl_alcohol,-0.8456213029388843,-1.1743065507898753,-0.5345574405826986,False,14,,Yeast,,,0.03225806451612903,31,False
+Blond,4,ethyl_isovalerate,-0.818791230886601,-1.0679262099658038,-0.5781339067691196,False,4,ethyl_2.methyl_butyrate,Others,,increase,0.6129032258064516,31,False
+Blond,5,X4VG,0.7601705676861481,0.4024932996344326,1.151554612885525,False,15,,Yeast,,,0.41935483870967744,31,False
+Blond,6,X2.acetylfuran,-0.7055943383057357,-0.9501132765972361,-0.4436114248998628,False,44,X2.acetylpyrrole,Malt,,,0.06451612903225806,31,False
+Blond,7,X2.6.dimethyl.pyrazine,-0.6843809735690596,-0.867371076961915,-0.49695652167117116,False,45,,Malt,,,0.6774193548387096,31,False
+Blond,8,H2S,0.6603107793631369,0.4104707401142824,0.8970938362593397,False,8,,Yeast,"sulfidic, rotten eggs",,0.0,31,False
+Blond,9,prenyl.isobutyrate,-0.6383960161346023,-0.9456190930696178,-0.3416673131270327,False,69,ethyl.benzoate|ethyl.phenylacetate|perillyl.acetate,Yeast,,,0.06451612903225806,31,False
+Blond,10,delta.terpinyl.acetate,0.6345817416772552,0.3422121929040985,0.8901960630187571,False,102,,Hops,,,0.06451612903225806,31,False
+Brett/cofermented,1,isobutyl_acetate,-1.1046389732114703,-1.3818635167977835,-0.824940983651247,False,10,isopentyl_acetate|n.hexanol,Yeast,,,0.16666666666666666,6,False
+Brett/cofermented,2,X4.ethyl.guaiacol,0.9365827803234135,0.7187911544606767,1.1331410723893023,False,85,X4.ethyl.phenol|neryl.formate,Wild flora,,,0.0,6,False
+Brett/cofermented,3,bitterness,0.9013835320402052,0.6879182224425916,1.1477463002986703,False,24,,Hops,,,0.0,6,False
+Brett/cofermented,4,ethyl_isovalerate,0.8616162529651288,0.5512829535245384,1.171840805646827,False,4,ethyl_2.methyl_butyrate,Others,,increase,0.0,6,False
+Brett/cofermented,5,vinyl.caprylate,-0.8128356498704924,-1.0917164482813124,-0.46578995576948984,False,88,,Yeast,,,0.16666666666666666,6,False
+Brett/cofermented,6,unfermentables,-0.7401789562069779,-1.0053824278912218,-0.47497548452273414,False,27,,Malt,,,0.0,6,False
+Brett/cofermented,7,cis.dihydro.beta.terpineol,0.7362173232177284,0.2085025943497525,1.229943210774652,False,84,X.E..2.nonenal,Hops,,,0.3333333333333333,6,False
+Brett/cofermented,8,phenethyl_acetate,-0.7180921507181288,-0.9706731447512706,-0.4867228356347705,False,13,,Yeast,,,0.0,6,False
+Brett/cofermented,9,humulene.epoxide.II,0.7089929272385528,0.491720305981328,0.8991210278618269,False,101,X2.undecanol|methyl.geranate|caryophyllene.oxide|alpha.muurolol|tau.muurolol,Hops,,,0.0,6,False
+Brett/cofermented,10,delta.terpinyl.acetate,-0.7021235168040026,-0.9830920902763071,-0.4149875710021963,False,102,,Hops,,,0.16666666666666666,6,False
+Brown,1,color.EBC.,1.2867558177329446,1.016499471429878,1.5900671570477087,False,19,protein.g.L.,Malt,,,0.0,12,False
+Brown,2,pH,0.7166483653651647,0.3127405078132678,1.1076134924782892,False,23,,Others,,,0.0,12,False
+Brown,3,betaglucan.mg.L.,0.7069085916227658,0.305652384862596,1.10047984545077,False,20,,Malt,,,0.0,12,False
+Brown,4,X2.6.dimethyl.pyrazine,0.6615067619176322,0.3268856337036683,0.959787749897866,False,45,,Malt,,,0.08333333333333333,12,False
+Brown,5,dehydroxy.cis.linalool.oxide,-0.6268500461197207,-0.8299670482994633,-0.4039013914933375,False,58,,Hops,,,0.8333333333333334,12,False
+Brown,6,SO2.mg.L.,-0.5802238976862452,-0.770062352447745,-0.3974473346361574,False,16,,Yeast,Burnt matches,,0.0,12,False
+Brown,7,neryl.formate,-0.5733598174411854,-0.9087575772050581,-0.20034992196934312,False,85,X4.ethyl.phenol|X4.ethyl.guaiacol,Hops,,,0.3333333333333333,12,False
+Brown,8,methyl.geranate,-0.5533963049180152,-0.8957848869093539,-0.16537523084836006,False,101,X2.undecanol|caryophyllene.oxide|humulene.epoxide.II|alpha.muurolol|tau.muurolol,Hops,,,0.16666666666666666,12,False
+Brown,9,X2Z.6E.farnesol,0.538203438237769,0.19833823618630275,0.9289612376124075,False,134,E.nerolidol|dihydroisocaryophyllene.epoxide|X2.3.dihydro.farnesol,Hops,,,0.0,12,False
+Brown,10,X2.acetylpyrrole,0.5307019796453468,0.29675079163286383,0.7489383467612971,False,44,X2.acetylfuran,Malt,,,0.0,12,False
+Brut,1,color.EBC.,-1.3639632187611042,-1.7901002449783476,-0.9213713728399388,False,19,protein.g.L.,Malt,,,0.0,4,True
+Brut,2,ethanol..v.v.,1.09408151121324,0.7613107168204301,1.5530950451227234,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,4,True
+Brut,3,isoamyl_alcohol,1.0573311763130795,0.5872159520391502,1.5439591796801555,False,9,isobutanol,Yeast,,,0.0,4,True
+Brut,4,bitterness,-1.0558679310631465,-1.8146194694810023,-0.4012646076609471,False,24,,Hops,,,0.5,4,True
+Brut,5,CO2.PSI.,-0.7952894974192208,-0.7952894974192208,-0.7952894974192208,False,26,,Others,,,1.0,4,True
+Brut,6,pH,-0.7607147723736903,-1.114732073525554,-0.40235307855265345,False,23,,Others,,,0.0,4,True
+Brut,7,Z.nerolidol,0.7533869051910747,0.5608867379626936,1.0521100902933134,False,132,,Hops,,,0.0,4,True
+Brut,8,delta.terpinyl.acetate,-0.7212759938853512,-1.0611175256938856,-0.38486310579352956,False,102,,Hops,,,0.25,4,True
+Brut,9,tau.cadinol,-0.7195337767684828,-0.9130774289670802,-0.5259901245698854,False,140,,Hops,,,0.75,4,True
+Brut,10,ethyl_isovalerate,0.6876291643075918,0.46040834437729217,0.9336749684255791,False,4,ethyl_2.methyl_butyrate,Others,,increase,0.0,4,True
+Christmas,1,color.EBC.,1.1253795310083101,0.7171812369234928,1.4967535049341338,False,19,protein.g.L.,Malt,,,0.0,9,False
+Christmas,2,ethanol..v.v.,0.9645987527281207,0.5119770940230077,1.3737028458874914,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,9,False
+Christmas,3,n.hexanol,0.685223576229036,0.48870129143883523,0.8839815172693092,False,10,isobutyl_acetate|isopentyl_acetate,Yeast,,,0.0,9,False
+Christmas,4,cis.beta.terpineol,0.6822440344937386,0.20987439209771216,1.1988002274183158,False,81,,Hops,,,0.3333333333333333,9,False
+Christmas,5,pH,0.680871871705737,0.21051200274149262,1.1071927024970616,False,23,,Others,,,0.0,9,False
+Christmas,6,X5.methylfurfural,0.6506327122695323,0.2740672276667076,0.9732792873917373,False,49,ethyl.furoate,Malt,,,0.0,9,False
+Christmas,7,eugenol,0.591154475087547,0.16428184520928504,0.944444603757946,False,107,,Spices,,,0.0,9,False
+Christmas,8,Z.nerolidol,0.5700844940923853,0.2606846704841413,0.8926081193645997,False,132,,Hops,,,0.0,9,False
+Christmas,9,n.octanol,-0.5405122581131186,-0.9316854868515865,-0.1418203678250328,False,43,X3.methyl.2.hexanol|X3.furanmethanol|ortho.cresol,Yeast,,,0.0,9,False
+Christmas,10,propyl.acetate,0.5330253219650016,0.3125026555146075,0.765628526751139,False,32,,Yeast,,,0.0,9,False
+Dubbel,1,color.EBC.,1.4497588720309276,1.183626765740521,1.7410110807591217,False,19,protein.g.L.,Malt,,,0.0,10,False
+Dubbel,2,pH,1.00386235536023,0.604411369120908,1.4507844581037552,False,23,,Others,,,0.0,10,False
+Dubbel,3,betaglucan.mg.L.,0.7560914790830722,0.4439823020414838,1.0945370914429347,False,20,,Malt,,,0.0,10,False
+Dubbel,4,ethyl_isovalerate,-0.7312057918363456,-0.9375434356609885,-0.45935096530765995,False,4,ethyl_2.methyl_butyrate,Others,,increase,0.6,10,False
+Dubbel,5,X2.acetylfuran,0.67352043949055,0.37125022952540515,0.9591251233704627,False,44,X2.acetylpyrrole,Malt,,,0.0,10,False
+Dubbel,6,Z.Z.geranyl.linalool,0.6562764733897385,0.4127147442382068,0.9438188400411632,False,157,ethyl.octadecanoate,Hops,,,0.0,10,False
+Dubbel,7,isobutyl_acetate,0.6176636237016512,0.246332093474073,1.0036270297020473,False,10,isopentyl_acetate|n.hexanol,Yeast,,,0.0,10,False
+Dubbel,8,neryl.formate,-0.5580489894230057,-0.9141638007047871,-0.17802701710092303,False,85,X4.ethyl.phenol|X4.ethyl.guaiacol,Hops,,,0.3,10,False
+Dubbel,9,X5.methylfurfural,0.5350561608007094,0.3120873456502449,0.7829074641219204,False,49,ethyl.furoate,Malt,,,0.0,10,False
+Dubbel,10,X1.propanol,-0.5204274485583464,-0.928209099547962,-0.1022214385083599,False,28,n.pentanol|X2.methyl.1.butanol|isopentyl.formate,Yeast,,,0.2,10,False
+Faro,1,pH,-1.1653382546696673,-1.43391938420943,-0.8967571251299047,False,23,,Others,,,0.0,3,True
+Faro,2,n.hexanol,-0.9621902867904759,-1.0396434326927255,-0.8847371408882264,False,10,isobutyl_acetate|isopentyl_acetate,Yeast,,,0.0,3,True
+Faro,3,ethyl.furoate,0.8726203790111907,0.801285992624358,0.9439547653980235,False,49,X5.methylfurfural,Malt,,,0.0,3,True
+Faro,4,neryl.formate,0.8630607647835882,0.5798115213011477,1.1463100082660285,False,85,X4.ethyl.phenol|X4.ethyl.guaiacol,Hops,,,0.0,3,True
+Faro,5,ethyl.phenylacetate,0.8520159619017187,0.7814867200129265,0.9225452037905106,False,69,prenyl.isobutyrate|ethyl.benzoate|perillyl.acetate,Yeast,,,0.0,3,True
+Faro,6,butyl.acetate,0.8333015730183564,0.6302852361473825,1.03631790988933,False,36,,Yeast,,,0.0,3,True
+Faro,7,lactic_acid.mg.L.,0.8309686239581473,0.7088314968742236,0.9531057510420708,False,21,,Wild flora,,,0.0,3,True
+Faro,8,ethanol..v.v.,-0.8073901943029331,-0.9797403554181832,-0.635040033187683,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,3,True
+Faro,9,GFS,0.8061400032985679,0.5828211301900746,1.0294588764070611,False,25,,Malt,,,0.0,3,True
+Faro,10,humulene.epoxide.II,-0.7675166951797231,-0.8852120030793247,-0.6498213872801216,False,101,X2.undecanol|methyl.geranate|caryophyllene.oxide|alpha.muurolol|tau.muurolol,Hops,,,0.6666666666666666,3,True
+Flanders old brown,1,color.EBC.,1.058820871710858,0.855629470012518,1.233553343255443,False,19,protein.g.L.,Malt,,,0.0,5,True
+Flanders old brown,2,pH,-1.0299448217976421,-1.1536916304932445,-0.8946354367417435,False,23,,Others,,,0.0,5,True
+Flanders old brown,3,bitterness,-0.883750859103639,-1.215589824099734,-0.5851947460818634,False,24,,Hops,,,0.0,5,True
+Flanders old brown,4,DMS,-0.8650709810219325,-1.1868248301666442,-0.5495590992209598,False,3,,Malt,"cooked vegetables, onion, garlic, corn, black currant, sulfidic, cabbage, tinned tomato, baked beans",increase,0.0,5,True
+Flanders old brown,5,prenyl.isobutyrate,0.8309539517108679,0.7178983398478137,0.9722495068178568,False,69,ethyl.benzoate|ethyl.phenylacetate|perillyl.acetate,Yeast,,,0.0,5,True
+Flanders old brown,6,X.E..alpha.ionone,0.7880822557175649,0.5270086495792222,1.0200373564981573,False,116,,Hops,,,0.0,5,True
+Flanders old brown,7,lactic_acid.mg.L.,0.7661745927802067,0.40954755837143175,1.1094172245111549,False,21,,Wild flora,,,0.0,5,True
+Flanders old brown,8,X5.methylfurfural,0.7625516706345061,0.47065002001075973,0.9741230846998323,False,49,ethyl.furoate,Malt,,,0.0,5,True
+Flanders old brown,9,acetic_acid.g.L.,0.7384024281429042,0.5303572892368149,0.9362981433545725,False,17,,Wild flora,,,0.0,5,True
+Flanders old brown,10,ethanol..v.v.,-0.7106541086962044,-1.0291199526403747,-0.37162191777205705,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,5,True
+Fruitbeer,1,ethanol..v.v.,-1.8237930364747632,-2.003030944949392,-1.5757766195102068,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,8,False
+Fruitbeer,2,dehydroxy.cis.linalool.oxide,1.710212569321209,1.5348215765119704,1.894870956355529,False,58,,Hops,,,0.0,8,False
+Fruitbeer,3,ethyl_decanoate,-1.6309077104341558,-1.8590768897368042,-1.4373026357063454,False,6,ethyl_octanoate,Yeast,,decrease,0.125,8,False
+Fruitbeer,4,X.E..beta.ionone,1.6117759831573326,1.4297800560877074,1.7833316654992033,False,51,X1.octen.3.ol,Hops,,,0.0,8,False
+Fruitbeer,5,protein.g.L.,1.5891388622355145,1.1851631333085024,1.9945216410562359,False,19,color.EBC.,Others,,,0.0,8,False
+Fruitbeer,6,X.E..alpha.ionone,1.5272650715879559,1.2943521540874654,1.731276528694263,False,116,,Hops,,,0.0,8,False
+Fruitbeer,7,pH,-1.4551584931429147,-1.6935601619477962,-1.2483291403516437,False,23,,Others,,,0.0,8,False
+Fruitbeer,8,isopentyl_acetate,-1.425515466499682,-1.6864496321097022,-1.1637713870658757,False,10,isobutyl_acetate|n.hexanol,Yeast,,decrease,0.0,8,False
+Fruitbeer,9,GFS,1.35641741048333,0.9803420639399635,1.7061912741926764,False,25,,Malt,,,0.0,8,False
+Fruitbeer,10,X4.ethyl.guaiacol,1.339677146202174,0.9048019958884986,1.744105213296819,False,85,X4.ethyl.phenol|neryl.formate,Wild flora,,,0.0,8,False
+Hoppy,1,bitterness,1.4027823496028864,1.046965251088178,1.7732513165624504,False,24,,Hops,,,0.0,17,False
+Hoppy,2,isopentyl.butanoate,1.3087244417713797,1.0446940951241748,1.553319905201432,False,60,,Yeast,,,0.0,17,False
+Hoppy,3,cis.dihydro.beta.terpineol,1.3047512611258387,0.7733746672705186,1.861887011836302,False,84,X.E..2.nonenal,Hops,,,0.35294117647058826,17,False
+Hoppy,4,methyl.geranate,1.2897063340931227,0.970282924455677,1.5975170443094902,False,101,X2.undecanol|caryophyllene.oxide|humulene.epoxide.II|alpha.muurolol|tau.muurolol,Hops,,,0.0,17,False
+Hoppy,5,tau.cadinol,1.1922083028141728,0.8713909473129392,1.5072917431663704,False,140,,Hops,,,0.0,17,False
+Hoppy,6,X1.octen.3.ol,1.1797389380976844,0.8620322507871575,1.5060704354998742,False,51,X.E..beta.ionone,Yeast,,,0.0,17,False
+Hoppy,7,X6.methyl.5.hepten.2.one,1.0890892873886608,0.529563106097196,1.6599346654410647,False,54,,Yeast,,,0.47058823529411764,17,False
+Hoppy,8,geosmin,1.0817034383910138,0.7899482293520147,1.35295284579041,False,112,,Wild flora,,,0.058823529411764705,17,False
+Hoppy,9,X2.undecanone,1.0165072921851408,0.6342424882001466,1.367667942078646,False,99,,Hops,,,0.058823529411764705,17,False
+Hoppy,10,geraniol,1.0027167214499357,0.7484172262549349,1.2313131998901563,False,95,,Hops,,decrease,0.0,17,False
+Kriek,1,lactic_acid.mg.L.,1.8064213696929428,1.4987908778018655,2.136331491769355,False,21,,Wild flora,,,0.0,10,False
+Kriek,2,ethyl.furoate,1.6618868636409614,1.372758779473269,1.925237068635663,False,49,X5.methylfurfural,Malt,,,0.0,10,False
+Kriek,3,ethyl.benzoate,1.6430254002509959,1.365252903963638,1.8863336644452569,False,69,prenyl.isobutyrate|ethyl.phenylacetate|perillyl.acetate,Yeast,,,0.0,10,False
+Kriek,4,X4.ethyl.phenol,1.6012417658805331,1.30166426282134,1.8834868057105112,False,85,neryl.formate|X4.ethyl.guaiacol,Wild flora,,,0.0,10,False
+Kriek,5,benzyl.alcohol,1.5069282693054848,1.3938240650936613,1.6598744109714323,False,65,,Hops,,,0.0,10,False
+Kriek,6,X.E..beta.ocimene,1.4174240402617477,1.129189685930547,1.6594318637797465,False,68,,Hops,,,0.0,10,False
+Kriek,7,ethyl_isovalerate,1.4025554623246876,1.0564868032826873,1.7684818408747245,False,4,ethyl_2.methyl_butyrate,Others,,increase,0.0,10,False
+Kriek,8,eugenol,1.3588512943512285,1.1947140248701695,1.519797885821216,False,107,,Spices,,,0.0,10,False
+Kriek,9,X.E..alpha.ionone,1.3236371219282221,1.173314119131891,1.4680508662586804,False,116,,Hops,,,0.0,10,False
+Kriek,10,bitterness,-1.311720272914307,-1.5523275176583349,-1.0600165493501141,False,24,,Hops,,,0.0,10,False
+Lambic,1,pH,-2.276410037392089,-2.540540567451097,-2.03676746964412,False,23,,Others,,,0.09090909090909091,11,False
+Lambic,2,lactic_acid.mg.L.,1.8142004323120107,1.6190288423051598,2.003873677192189,False,21,,Wild flora,,,0.0,11,False
+Lambic,3,ethyl_isovalerate,1.7080390424237948,1.2719162374828714,2.1227809156252544,False,4,ethyl_2.methyl_butyrate,Others,,increase,0.0,11,False
+Lambic,4,ethyl.phenylacetate,1.5648151329031756,1.300175466511458,1.8748449799956342,False,69,prenyl.isobutyrate|ethyl.benzoate|perillyl.acetate,Yeast,,,0.0,11,False
+Lambic,5,neryl.formate,1.4731719023640621,1.3233481668288092,1.6433857019599931,False,85,X4.ethyl.phenol|X4.ethyl.guaiacol,Hops,,,0.0,11,False
+Lambic,6,butyl.acetate,1.3704404855230945,1.220282184683782,1.5347942188371584,False,36,,Yeast,,,0.0,11,False
+Lambic,7,X3.furanmethanol,1.3282069369402871,1.0684357861595104,1.6221638442076038,False,43,X3.methyl.2.hexanol|ortho.cresol|n.octanol,Malt,,,0.0,11,False
+Lambic,8,bitterness,-1.3076823004140783,-1.5301841235398357,-1.0745903234119278,False,24,,Hops,,,0.0,11,False
+Lambic,9,acetic_acid.g.L.,1.2086534850950075,0.9655618046793903,1.4597728178525597,False,17,,Wild flora,,,0.0,11,False
+Lambic,10,isomaltol,1.106187146163722,0.6871289592687707,1.5013252905308774,False,53,,Malt,,,0.0,11,False
+Low/No alcohol,1,ethanol..v.v.,-2.3601973214503897,-2.63540941647775,-2.0655550286443556,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.125,8,False
+Low/No alcohol,2,lactic_acid.mg.L.,-1.9324787717790017,-2.2620339953356416,-1.5745767795837096,False,21,,Wild flora,,,0.125,8,False
+Low/No alcohol,3,ethyl_octanoate,-1.6886201281027726,-1.9052370104383893,-1.4922131648684476,False,6,ethyl_decanoate,Yeast,,decrease,0.125,8,False
+Low/No alcohol,4,ethyl.phenylacetate,-1.6712958386244767,-1.930693909271221,-1.423581476908995,False,69,prenyl.isobutyrate|ethyl.benzoate|perillyl.acetate,Yeast,,,0.125,8,False
+Low/No alcohol,5,DMS,-1.5515173197918357,-1.8073939033852606,-1.3110809319497507,False,3,,Malt,"cooked vegetables, onion, garlic, corn, black currant, sulfidic, cabbage, tinned tomato, baked beans",increase,0.125,8,False
+Low/No alcohol,6,isobutyl_acetate,-1.550214944677013,-1.8842385923643374,-1.188276378161254,False,10,isopentyl_acetate|n.hexanol,Yeast,,,0.625,8,False
+Low/No alcohol,7,X.E..2.nonenal,-1.4864345996930475,-1.7638545263123122,-1.2076740705323223,False,84,cis.dihydro.beta.terpineol,Others,,increase,0.125,8,False
+Low/No alcohol,8,ethyl.butyrate,-1.3776185385715687,-1.8237725313058981,-0.80963294731017,False,35,,Yeast,,,0.125,8,False
+Low/No alcohol,9,MeSH,-1.3554675515663717,-1.7472766471478411,-0.9288669501552134,False,11,,Yeast,"putrefaction, drains, rotting vegetables, estery",,0.125,8,False
+Low/No alcohol,10,isoamyl_alcohol,-1.3263576403962845,-1.536750624588768,-1.0708854725186046,False,9,isobutanol,Yeast,,,0.0,8,False
+Pils/Lager,1,color.EBC.,-2.2452377567005994,-2.523055215993712,-1.977969240829791,False,19,protein.g.L.,Malt,,,0.0,11,False
+Pils/Lager,2,lactic_acid.mg.L.,-1.6223953688297656,-1.8354950344619434,-1.4021411778901913,False,21,,Wild flora,,,0.0,11,False
+Pils/Lager,3,ethyl_acetate,-1.3808540435065475,-1.469410138609919,-1.2954550925387118,False,5,ethyl_hexanoate|glycerol|ethanol..v.v.,Yeast,,decrease,0.0,11,False
+Pils/Lager,4,germacrene.D,-1.3294652791577461,-1.4917000593814818,-1.1417429515340791,False,126,,Hops,,,0.7272727272727273,11,False
+Pils/Lager,5,linalool,-1.2461528540575317,-1.4759473228360875,-0.9961492393414916,False,73,X1.alpha.terpineol,Hops,,decrease,0.0,11,False
+Pils/Lager,6,eugenol,-1.1290124670336843,-1.3252248363626824,-0.9140269293996652,False,107,,Spices,,,0.0,11,False
+Pils/Lager,7,styrene,-1.1006829525202606,-1.2409916984816185,-0.9688147449379477,False,41,,Yeast,,,0.0,11,False
+Pils/Lager,8,x.methyl.1.octanol,1.0665276139304003,0.8103729396716544,1.2871596045918794,False,78,X4.methyl.1.pentanol,Yeast,,,0.0,11,False
+Pils/Lager,9,n.hexanol,-1.0388482043718457,-1.1734524934635002,-0.879989342234971,False,10,isobutyl_acetate|isopentyl_acetate,Yeast,,,0.0,11,False
+Pils/Lager,10,alpha.humulene,-1.0316399929705826,-1.2500815574508224,-0.8039148981954776,False,119,,Hops,,,0.0,11,False
+Saison,1,X6.methyl.5.hepten.2.one,1.4308881373699185,0.8990168376319503,1.9788035816971172,False,54,,Yeast,,,0.2,10,False
+Saison,2,cis.dihydro.beta.terpineol,1.1220656065471701,0.6142044511572818,1.6307441062593704,False,84,X.E..2.nonenal,Hops,,,0.3,10,False
+Saison,3,y.methyl.1.octanol,1.0408884837185515,0.661776286588791,1.3839952879010713,False,82,,Yeast,,,0.1,10,False
+Saison,4,color.EBC.,-0.9523792350803043,-1.310836701753433,-0.6083515448462679,False,19,protein.g.L.,Malt,,,0.0,10,False
+Saison,5,nerol.oxide,0.9328347773614102,0.6429242555199242,1.2314821784116596,False,66,ethyl.hex..2E..enoate|isobutyl.hexanoate,Hops,,,0.0,10,False
+Saison,6,X1.octen.3.ol,0.9320320244992644,0.7412351514621349,1.1460747532296733,False,51,X.E..beta.ionone,Yeast,,,0.0,10,False
+Saison,7,methyl.geranate,0.9076996621930961,0.6246063217836524,1.1774932945812642,False,101,X2.undecanol|caryophyllene.oxide|humulene.epoxide.II|alpha.muurolol|tau.muurolol,Hops,,,0.0,10,False
+Saison,8,delta.terpinyl.acetate,0.89040154427378,0.6051400196038694,1.2020873274006931,False,102,,Hops,,,0.0,10,False
+Saison,9,terpinen.4.ol.acetate,0.8653174282791326,0.6545220252673475,1.0881451286133026,False,100,,Hops,,,0.0,10,False
+Saison,10,bitterness,0.8555468796067682,0.37714005954679825,1.2630064846135864,False,24,,Hops,,,0.0,10,False
+Scotch,1,color.EBC.,0.9082398792134694,0.7676460737687469,1.0594001587484014,False,19,protein.g.L.,Malt,,,0.0,5,True
+Scotch,2,nerol,-0.7247572158787098,-0.9147420641803089,-0.391037273059902,False,90,,Hops,,,0.0,5,True
+Scotch,3,ethyl_2.methyl_butyrate,-0.7049109930396333,-0.7049109930396333,-0.7049109930396333,False,4,ethyl_isovalerate,Others,,increase,1.0,5,True
+Scotch,4,phenethyl_alcohol,0.6919647276339874,0.5106852812567171,0.8932399101373036,False,14,,Yeast,,,0.0,5,True
+Scotch,5,glycerol,0.6905160469611149,0.39188656030038227,1.0296843760387515,False,5,ethyl_acetate|ethyl_hexanoate|ethanol..v.v.,Yeast,,,0.0,5,True
+Scotch,6,X4.ethyl.guaiacol,-0.6678212569101133,-1.1685171107784857,-0.10368926284725327,False,85,X4.ethyl.phenol|neryl.formate,Wild flora,,,0.2,5,True
+Scotch,7,n.nonanol,-0.651713483929973,-0.953911977111049,-0.349514990748897,False,50,n.heptanol,Yeast,,,0.0,5,True
+Scotch,8,DES,-0.6501102614087061,-0.9167384659763844,-0.3821245116685811,False,2,,Yeast,rotting vegetables,,0.4,5,True
+Scotch,9,nerol.oxide,-0.649882788471681,-0.8732463338746179,-0.4209821403376618,False,66,ethyl.hex..2E..enoate|isobutyl.hexanoate,Hops,,,0.2,5,True
+Scotch,10,GFS,0.6348783472053104,0.45555312539817944,0.8419120942858918,False,25,,Malt,,,0.0,5,True
+Stout/Porter,1,color.EBC.,2.819450684418379,2.4808568482155273,3.1176472493006293,False,19,protein.g.L.,Malt,,,0.0,13,False
+Stout/Porter,2,pH,1.9871230850312402,1.6495083259073082,2.3095749552327223,False,23,,Others,,,0.0,13,False
+Stout/Porter,3,ethyl.furoate,1.1064043923118785,0.7575068506310905,1.4838477154699306,False,49,X5.methylfurfural,Malt,,,0.0,13,False
+Stout/Porter,4,methylpyrazine,1.0886810746436215,0.8665271404863351,1.2796133165700747,False,37,,Malt,,,0.0,13,False
+Stout/Porter,5,X2.6.dimethyl.pyrazine,0.9471467697083068,0.5272721676972275,1.3907935085245975,False,45,,Malt,,,0.07692307692307693,13,False
+Stout/Porter,6,X2.acetylfuran,0.836019322874393,0.5314944181119128,1.1887462343133508,False,44,X2.acetylpyrrole,Malt,,,0.0,13,False
+Stout/Porter,7,DES,0.8264000589877468,0.49676382666184976,1.1850039963256973,False,2,,Yeast,rotting vegetables,,0.0,13,False
+Stout/Porter,8,MeSH,0.7580571450242255,0.2583627516452417,1.2293024381286197,False,11,,Yeast,"putrefaction, drains, rotting vegetables, estery",,0.0,13,False
+Stout/Porter,9,bitterness,0.7121278565418966,0.4209382029964441,0.9780378286054447,False,24,,Hops,,,0.0,13,False
+Stout/Porter,10,ethyl.octadecanoate,0.705262204073308,0.2724466688483279,1.1529248318597787,False,157,Z.Z.geranyl.linalool,Yeast,,,0.07692307692307693,13,False
+Strong ale,1,ethanol..v.v.,2.154667620978865,1.9004229773747876,2.4331116848501764,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,18,False
+Strong ale,2,acetaldehyde,1.5071947136934436,1.2606450196893602,1.7449580594089993,False,0,,Yeast,"pungent, rotten-apples, green apple",increase,0.0,18,False
+Strong ale,3,color.EBC.,1.3245578709535606,0.954036766667949,1.6946000130920844,False,19,protein.g.L.,Malt,,,0.0,18,False
+Strong ale,4,isobutyl_acetate,1.17966572614887,0.7943169100657851,1.5752140092973792,False,10,isopentyl_acetate|n.hexanol,Yeast,,,0.0,18,False
+Strong ale,5,ethyl.butyrate,1.0647035368697124,0.8807544792761159,1.277926631227158,False,35,,Yeast,,,0.0,18,False
+Strong ale,6,isobutanol,0.984128817575015,0.5738098179611022,1.3987561776910473,False,9,isoamyl_alcohol,Yeast,,increase,0.05555555555555555,18,False
+Strong ale,7,ethyl_octanoate,0.7856068751975261,0.45502606846982707,1.103379931970033,False,6,ethyl_decanoate,Yeast,,decrease,0.0,18,False
+Strong ale,8,ethyl.hexadecanoate,0.7404025128914072,0.5053241368158878,0.9528116277606492,False,94,isopentyl.hexanoate|trans.dihydro.alpha.terpinyl.acetate|X2.butyloctanoate|X2.phenyl.ethyl.butyrate|X.Z..beta.farnesene|pentyl.octanoate|X2.methylbutyl.octanoate|X1.2.dihydro.8.hydroxy..2E..linalool|ethyl.tetradecanoate|ethyl.pentadecanoate,Yeast,,,0.0,18,False
+Strong ale,9,H2S,0.7368023789310962,0.44386236335734175,1.0463618157983163,False,8,,Yeast,"sulfidic, rotten eggs",,0.0,18,False
+Strong ale,10,X3.methyl.2.hexanol,-0.7356296365949963,-1.077508682596443,-0.42885576066782904,False,43,X3.furanmethanol|ortho.cresol|n.octanol,Yeast,,,0.05555555555555555,18,False
+Tripel,1,ethanol..v.v.,1.3190311472808,1.1438869144184114,1.5006866626157804,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,28,False
+Tripel,2,isopentyl_acetate,1.0702504442731433,0.7130329460598924,1.3674985817783079,False,10,isobutyl_acetate|n.hexanol,Yeast,,decrease,0.0,28,False
+Tripel,3,X4.ethyl.guaiacol,-0.9143042956100572,-1.2310523128056983,-0.5538751082383323,False,85,X4.ethyl.phenol|neryl.formate,Wild flora,,,0.03571428571428571,28,False
+Tripel,4,ethyl.furoate,-0.8412500683765952,-1.0652722796952876,-0.6058698019996914,False,49,X5.methylfurfural,Malt,,,0.32142857142857145,28,False
+Tripel,5,color.EBC.,-0.8122264704599933,-1.077346528981815,-0.5520702819170423,False,19,protein.g.L.,Malt,,,0.0,28,False
+Tripel,6,H2S,0.8117133280812898,0.5608256216062933,1.078715803329654,False,8,,Yeast,"sulfidic, rotten eggs",,0.0,28,False
+Tripel,7,isoamyl_alcohol,0.7861206776423183,0.5825239698308828,1.0070270597798394,False,9,isobutanol,Yeast,,,0.0,28,False
+Tripel,8,ethyl_octanoate,0.7311330491632093,0.43541690508476516,1.0201595654166458,False,6,ethyl_decanoate,Yeast,,decrease,0.0,28,False
+Tripel,9,acetaldehyde,0.6833985584468216,0.4875069870191621,0.879530251212602,False,0,,Yeast,"pungent, rotten-apples, green apple",increase,0.0,28,False
+Tripel,10,ortho.cresol,-0.6615190354587245,-0.9018182378485918,-0.42762871695105664,False,43,X3.methyl.2.hexanol|X3.furanmethanol|n.octanol,Yeast,,,0.03571428571428571,28,False
+West Flanders ale,1,lactic_acid.mg.L.,1.3426395209197464,1.1035461771212556,1.6501270100310166,False,21,,Wild flora,,,0.0,7,False
+West Flanders ale,2,pH,-1.243027973338784,-1.3785876850017078,-1.104217779529259,False,23,,Others,,,0.0,7,False
+West Flanders ale,3,acetic_acid.g.L.,1.1924231899284232,0.7957217044077082,1.5679912710855546,False,17,,Wild flora,,,0.0,7,False
+West Flanders ale,4,color.EBC.,1.1297751776512794,1.0028923074221578,1.24515306770845,False,19,protein.g.L.,Malt,,,0.0,7,False
+West Flanders ale,5,isoamyl.lactate,1.1261518479399533,0.8087915134673893,1.41541311820311,False,70,,Wild flora,,,0.0,7,False
+West Flanders ale,6,prenyl.isobutyrate,1.1123671671986382,0.8552636809436178,1.3983615023915503,False,69,ethyl.benzoate|ethyl.phenylacetate|perillyl.acetate,Yeast,,,0.0,7,False
+West Flanders ale,7,bitterness,-1.014866265673995,-1.2763885738835452,-0.7525512673303582,False,24,,Hops,,,0.0,7,False
+West Flanders ale,8,iron,0.9580321060495444,0.7465498636487103,1.1636830433305159,False,22,,Others,,,0.0,7,False
+West Flanders ale,9,X5.methylfurfural,0.9482791497340649,0.742229095738899,1.1194359432020726,False,49,ethyl.furoate,Malt,,,0.0,7,False
+West Flanders ale,10,DMS,-0.9430451650829674,-1.2106273276428303,-0.6197729934237417,False,3,,Malt,"cooked vegetables, onion, garlic, corn, black currant, sulfidic, cabbage, tinned tomato, baked beans",increase,0.0,7,False
+Wheat,1,color.EBC.,-2.0364274887752636,-2.5990266650467047,-1.4789618209270123,False,19,protein.g.L.,Malt,,,0.08333333333333333,12,False
+Wheat,2,limonene,1.692282463665688,1.1692812182512908,2.2148692432977493,False,63,,Hops,,,0.16666666666666666,12,False
+Wheat,3,camphor,1.4045225087303328,1.0970543826094263,1.6743589108052286,False,83,,Spices,,,0.0,12,False
+Wheat,4,X4VG,1.3900062987607287,1.121872480958633,1.6903797159472869,False,15,,Yeast,,,0.0,12,False
+Wheat,5,ethyl..E..linalool,1.2840063160386295,1.0138521123682873,1.5195433376484713,False,86,isoborneol|terpinen.4.ol,Hops,,,0.0,12,False
+Wheat,6,beta.phellandrene,1.1798939615706798,0.8018483729662838,1.5433832735401471,False,62,terpinolene,Hops,,,0.0,12,False
+Wheat,7,linalool,1.175225046857024,0.8542562921142862,1.4256576312500182,False,73,X1.alpha.terpineol,Hops,,decrease,0.0,12,False
+Wheat,8,bitterness,-1.1566006807860918,-1.3458150128098652,-0.9579799678351674,False,24,,Hops,,,0.0,12,False
+Wheat,9,ethyl.furoate,-1.1377908506472045,-1.3994929142096677,-0.8029771508467511,False,49,X5.methylfurfural,Malt,,,0.6666666666666666,12,False
+Wheat,10,ethanol..v.v.,-1.098449562085975,-1.3775600123196747,-0.7858200898243494,False,5,ethyl_acetate|ethyl_hexanoate|glycerol,Yeast,,,0.0,12,False

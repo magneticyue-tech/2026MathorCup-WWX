@@ -1,9 +1,0 @@
-Q1 Mapping Workorder Execution Log
-=====================================
-Environment: Python 3.10.22 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:15:38) [MSC v.1942 64 bit (AMD64)], scikit-learn 1.7.2
-Seed: 0
-Actual I=1 Coverage: 19160 / 62500 (30.7%)
-Mean QWK (Optimized): 0.3158
-Mean QWK (Direct Linear): 0.2995
-Winning Method: QWK_optimized
-Excluded Dims (Undefined): {'3.0': ['clove', 'acetic', 'coriander', 'lactic'], '2.5': ['clove', 'acetic', 'coriander', 'lactic'], 'cap': ['acetic', 'coriander', 'lactic']}

@@ -1,0 +1,56 @@
+{
+ "config": {
+  "kind": "famod",
+  "k": 15,
+  "kappa": 5.0
+ },
+ "checks": [
+  {
+   "name": "零迁移 α=0 化学精确可行",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "beta ≥ u[idx]",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  }
+ ],
+ "results": {
+  "pils_viol_count": {
+   "acetaldehyde": 0,
+   "DES": 2,
+   "DMS": 9,
+   "H2S": 11,
+   "MeSH": 11,
+   "SO2.mg.L.": 0,
+   "X2.3.butanedione": 3,
+   "X4VG": 0,
+   "X.E..2.nonenal": 11
+  },
+  "pils_n_active": [
+   4,
+   4,
+   4,
+   4,
+   4,
+   3,
+   4,
+   4,
+   4,
+   3,
+   4
+  ],
+  "t3": {
+   "n_cells": 2475,
+   "out_of_range": 163,
+   "below_floor": 102,
+   "linear_negative": 1
+  }
+ },
+ "wall_time_s": 3.6858842372894287
+}

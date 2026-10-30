@@ -33,3 +33,4 @@
 - 用朴素的名词短语说明创建或更改了什么。不使用卖点式括号和为可读性而做的铺陈。
 - 平实陈述结果。
 - 使用 NASA NPR 1450.10DNASA Correspondence Management and Communications Standards and Style。
+- 在问题或分歧产生的地方将其解决，而不是重复引用或打补丁。

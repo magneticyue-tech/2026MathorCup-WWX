@@ -5,12 +5,10 @@
 %
 %  正文位于 sections/preprocess.tex，仅含 \section 起的内容，
 %  可原样 \input 到正式论文中，无需改动。
-%  图件由 src/dataAudit 与 preprocess_figures.py 生成，
-%  存放于 ../results/figures/。
+%  方法流程图由 code/scripts/fig_prep_methodology_flowchart.py 生成。
 % =====================================================================
 \documentclass[11pt,a4paper]{ctexart}
 
-\usepackage[UTF8,scheme=chinese]{ctex}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -21,7 +19,7 @@
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
 
 \geometry{left=2.6cm,right=2.6cm,top=2.6cm,bottom=2.4cm}
-\graphicspath{{../results/figures/}}
+\graphicspath{{../figures/}}
 \setlength{\parskip}{0.45em}
 \renewcommand{\arraystretch}{1.25}
 
@@ -30,16 +28,15 @@
 % 并入正式论文时，把 sections/preprocess.tex 里的 \section 计数
 % 与标题改为所需章节号即可；此处仅为独立编译对齐编号。
 
-\title{\bfseries 2026 年 MathorCup 数学应用挑战赛（A 题）\\[3pt]
-啤酒酿造化合物分析与风味预测\\[8pt]
-\large 第五章\ 数据预处理}
+\title{\bfseries 啤酒化学数据与感官评分\\[8pt]
+\large 数据预处理}
 \author{}
 \date{}
 
 \begin{document}
 \maketitle
 
-\setcounter{section}{4}
+\setcounter{section}{2}
 \input{sections/preprocess.tex}
 
 \end{document}

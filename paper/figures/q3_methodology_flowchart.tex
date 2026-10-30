@@ -1,0 +1,63 @@
+% 问题三方法：风格条件生成、感官画像与双层约束迁移。
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage[UTF8,fontset=windows]{ctex}
+\usepackage{amsmath}
+\setmainfont{Times New Roman}
+\input{flowchart_style.tex}
+\begin{document}
+\begin{tikzpicture}[fc]
+\path[use as bounding box] (0,0) rectangle (158,168);
+\sidelabel{0}{28}{输\\入\\与\\表\\示}
+\node[io,text width=44mm,h=23mm] (x) at (9,0) {\bt{化学谱与风格}%
+250款、22种细分风格；225个单体化合物生成列\\
+共同下限视为未检出状态；综合指标另行派生};
+\node[box,text width=44mm,h=23mm] (rank) at (60,0) {\bt{逐列秩变换}%
+把不同尺度映入潜在高斯空间；并列下限单独处理\\
+生成后用经验分位数映回发布尺度};
+\node[io,text width=44mm,h=23mm] (up) at (111,0) {\bt{上游模型}%
+问题一的纯化学感官预测与等级分布\\
+问题二的化合物共表达模块};
+\sidelabel{32}{54}{条\\件\\生\\成}
+\node[key,text width=95mm,h=18mm] (gen) at (9,32) {\bt{风格条件潜在高斯模型}%
+各风格均值向总体均值收缩；风格内共享协方差＝共同因子＋按共表达模块分块的残差\\
+在给定风格下抽样，反变换为完整化合物谱};
+\node[box,text width=44mm,h=18mm] (tune) at (111,32) {\bt{训练折内选参}%
+因子数、均值收缩与协方差结构由留出啤酒的潜空间评分选择};
+\bus{x,rank,up}{gen,tune}{29}{26}{140.5}
+\sidelabel{59}{91}{生\\成\\核\\验}
+\node[box,text width=44mm,h=27mm] (fit) at (9,59) {\bt{保真度}%
+分类器区分生成谱与留出真实谱：整体、附风格条件、逐风格\\
+比较下限比例及化合物相关结构};
+\node[box,text width=44mm,h=27mm] (novel) at (60,59) {\bt{新颖性与可用性}%
+生成谱到最近训练啤酒的距离及近复制率\\
+用生成谱训练风格分类器，再预测留出真实啤酒};
+\node[box,text width=44mm,h=27mm] (ctrl) at (111,59) {\bt{对照生成器}%
+无风格条件、逐列独立生成：检验风格和共变作用\\
+复制真实啤酒、风格内插值：检验新颖性};
+\bus{gen,tune}{fit,novel,ctrl}{55.5}{32.5}{134.5}
+\sidelabel{98}{120}{画\\像\\与\\指\\纹}
+\node[box,text width=69.5mm,h=18mm] (profile) at (9,98) {\bt{感官画像}%
+每种风格生成1000个化合物谱，送入问题一的化学模型，汇总50维预测评分与等级\\
+用同一训练折的模型比较留出真实啤酒};
+\node[box,text width=69.5mm,h=18mm] (finger) at (85.5,98) {\bt{风味指纹}%
+列出相对全体最偏离的化合物和感官维度\\
+只描述模型分布，不将关联解释为化合物因果效应};
+\bus{fit,novel,ctrl}{profile,finger}{94.5}{45.25}{121.75}
+\sidelabel{128}{168}{跨\\风\\格\\迁\\移}
+\node[box,text width=32mm,h=24mm] (move) at (9,128) {\bt{1 潜空间平移}%
+按源风格到目标风格的均值差移动，保留单款啤酒的风格内偏离};
+\node[key,text width=32mm,h=24mm] (project) at (47,128) {\bt{2 化学约束投影}%
+9个缺陷化合物：已超阈不得增加，未超阈不得越阈；无阈值不得增加};
+\node[key,text width=32mm,h=24mm] (path) at (85,128) {\bt{3 感官约束搜索}%
+沿源谱到投影终点的路径，取6个缺陷感官预测等级均不升高的最大可行步长};
+\node[box,text width=32mm,h=24mm] (check) at (123,128) {\bt{4 原尺度复查}%
+逐列复核两层约束，再评估目标风格程度、改动量与保留的个体特征};
+\draw[edge] (move.east) -- (project.west);
+\draw[edge] (project.east) -- (path.west);
+\draw[edge] (path.east) -- (check.west);
+\bus{profile,finger}{move}{124.5}{26}{121.75}
+\node[io,text width=146mm,h=9mm] (out) at (9,158) {\bt{交付与对照}%
+逐款报告Pils/Lager到Tripel的迁移；汇总全部有序风格对，并与原谱不变、直接截断和检索替代比较。};
+\bus{move,project,path,check}{out}{154.5}{26}{140.5}
+\end{tikzpicture}
+\end{document}

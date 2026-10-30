@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "arm": "boot_beer_unit",
+  "description": "bootstrap 单位改为单款啤酒（250 有放回）",
+  "n_permutation": 1000,
+  "n_bootstrap": 1000,
+  "seed": 0,
+  "tau": 0.6,
+  "na_scheme": "mean",
+  "n_candidates": 225,
+  "graph_source": "attachment2",
+  "rebuild_graph": true,
+  "boot_unit": "beer",
+  "q_reused_from_baseline": true,
+  "n_distinct_groups_min": 24,
+  "n_distinct_groups_max": 25,
+  "seconds": 32.1
+}

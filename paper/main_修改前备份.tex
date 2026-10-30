@@ -1,0 +1,1147 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{2em}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\renewcommand{\contentsname}{\centerline{\Large\bfseries 目录}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftdotsep}{1.2}
+\setlength{\cftsecnumwidth}{2.5em}
+\setlength{\cftsubsecnumwidth}{3em}
+\setlength{\cftsubsubsecnumwidth}{4em}
+\setcounter{tocdepth}{3}
+\titleformat{\section}[hang]
+{\centering\Large\bfseries}
+{\thesection}{1em}{}
+\titleformat{\subsection}[hang]
+{\large\bfseries}
+{\thesubsection}{1em}{}
+\usepackage{placeins}   % \FloatBarrier：阻止图片跨节浮动
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+
+% ==========【正文开始】==========
+\begin{document}
+
+\title{MathorCup竞赛论文题目}
+\author{}
+\date{}
+\maketitle
+
+\section*{摘要}
+
+啤酒作为广受喜爱的发酵饮品，以麦芽、水、啤酒花为主要原料经酵母发酵制成。化合物组成直接决定啤酒香气、口感特征与发酵表现。本文基于商用啤酒风味代谢数据集，以啤酒化学成分与感官风味评分为研究对象，结合Pearson相关系数分析、语义化缺失值填充、零点校准与浅层梯度提升树开展多输出回归研究，实现感官指标预测。结果表明该方案可有效挖掘化学成分与风味的内在联系，为啤酒风味定量调控提供支撑。
+
+针对问题一，本文先按列均值填补缺失，并依据评分间的精确并列关系反推出 63 个"品评团"；再用浅层梯度提升树（HistGBR）逐维度预测标准化评分，最后经等级映射换算为 0–6 分。模型采用按品评团分组的嵌套交叉验证，避免同一品评团的信息同时进入训练集与测试集。
+
+针对问题二，为找出每个感官维度的关键化合物，本文以相关系数构建化合物共表达图，用层次聚类划分共表达模块；再采用图约束的前向选择逐个取出 Top-3——每选一个先剔除其影响，且不重复选同模块化合物，从源头避免冗余。显著性由置换检验把关，稳定性由按品评团的 1000 次 bootstrap 给出入选频率，并结合气味阈值与加标实验作化学合理性说明。
+
+针对问题三，本文提出风格条件高斯生成模型：先将化学数据做秩变换转为正态得分，用因子分析 + 模块化协方差刻画化合物间的共同变化，按风格设定均值、共享协方差进行抽样生成。跨风格迁移采用最优传输平移，再以缺陷阈值和感官预测等级为约束作投影修正，沿路径搜索最大可行迁移强度，确保缺陷维度不恶化。
+
+\textbf{关键词：}浅层梯度提升树；Pearson相关系数；零点校准；缺失值填充；多输出回归；风味预测
+\tableofcontents
+\newpage
+%==================== 问题背景和问题重述 ====================
+\section{问题背景和问题重述}
+\subsection{问题背景}
+啤酒是以麦芽、水作为主要原料，添加啤酒花，经酵母发酵得到的低酒精度发酵饮品。啤酒风味、香气、口感品质很大程度由各类酿造化合物、酵母代谢产物决定。本次赛题提供包含226款啤酒的实测数据集，包含大量风味化合物丰度、理化指标、人工感官评分等多源数据，数据存在真实缺失值、噪声、异常值，需要从化合物层面挖掘和预测啤酒感官风味特征。
+
+\subsection{问题重述}
+基于附件1‑8提供的商用啤酒风味代谢数据集，需要完成三项任务：
+\begin{itemize}
+    \item \textbf{问题一（数据缺失条件下的感官评分）：}以1.csv化合物数据作为基础，给出3.xlsx定义的Aroma与Flavour两套，合计约40个感官维度的0‑6分制分级评分预测结果。
+    \item \textbf{问题二（化合物‑风味分析）：}利用2.csv化合物相关矩阵构建化合物共表达图，结合1.csv特征，得到每一个感官维度对应的Top‑3关键化合物；使用bootstrap重采样入选频率或者不同建模结果之间Jaccard系数完成稳定性量化，并从化学酿造角度论证结果合理性。
+    \item \textbf{问题三（风味与“风味指纹”生成）：}以tasting\_category\_fine作为啤酒风格标签，训练风格条件生成模型，给定指定啤酒风格（Tripel、Kriek、Lambic等）生成合理化合物谱并得到对应感官画像；同时实现跨风格迁移任务，例如将Pils/Lager的化合物谱迁移至Tripel风格，并且保证DMS、Diacetyl、4VG、trans‑2‑nonenal、Stale hops等缺陷化合物指标不能恶化。
+\end{itemize}
+%==================== 问题分析 ====================
+\section{问题分析}
+\subsection{问题一分析}
+本任务属于高维多输出回归预测任务。数据集存在NA缺失值、部分化合物经过对数变换（负值代表原始浓度小于1），需要先对缺失数据进行处理。输入为大量化合物丰度、理化参数，输出是约40个独立感官维度的0‑6离散评分。难点在于高维特征冗余、样本数量有限、人工感官本身带有主观噪声，可以选择梯度提升树等适合表格回归的模型，逐个感官维度训练模型，最后将预测结果映射至0‑6分区间。
+
+\subsection{问题二分析}
+本任务分为三个子步骤：构建化合物共表达网络、筛选Top‑3关键化合物、稳定性与化学合理性论证。首先利用化合物之间皮尔逊相关系数搭建共表达图；其次通过特征重要性、网络中心性等方法挖掘每个感官维度最关键3种化合物；稳定性评估可以通过多次bootstrap重采样，统计化合物进入Top‑3的频次，或者对比不同特征筛选方案，利用Jaccard相似系数衡量结果一致性；最后结合啤酒发酵、风味物质的专业知识，解释为什么这些化合物会影响对应感官体验。
+
+\subsection{问题三分析}
+本任务属于条件生成与约束型风格迁移任务。一方面，以啤酒细分风格标签作为条件，训练生成模型，输出符合该风格的全套化合物谱，进一步得到感官画像；另一方面跨风格迁移存在硬性约束：DMS、双乙酰等缺陷类化合物不能变差，不能单纯无约束生成。难点在于不同细分风格样本数量不均衡，生成结果需要落在合理的化合物数值范围，同时满足缺陷指标约束条件。
+
+%==================== 模型假设 ====================
+\section{模型假设}
+\begin{itemize}
+    \item[H1] 数据集中缺失值属于随机缺失（MAR），缺失不会带来系统性偏差。
+    \item[H2] 化合物与感官风味之间存在稳定可学习的映射关系，短期环境扰动不会改变内在关联。
+    \item[H3] 皮尔逊相关系数可以合理刻画化合物之间共表达关联关系。
+    \item[H4] 啤酒细分风格标签tasting\_category\_fine标签准确，可以作为条件生成模型监督信号。
+    \item[H5] 缺陷化合物“不恶化”定义为迁移之后缺陷指标不能高于原始样本缺陷水平。
+    \item[H6] 化合物对数变换逻辑统一，参赛者可以正确还原浓度量级关系。
+\end{itemize}
+
+%==================== 符号说明 ====================
+\section{符号说明}
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c p{7cm}}
+        \toprule
+        符号 & 含义 \\
+        \midrule
+        $X$ & 啤酒样本化合物与理化特征矩阵 \\
+        $y_i$ & 第$i$个感官维度的人工感官评分 \\
+        $G$ & 化合物共表达网络图 \\
+        $S_k$ & 第$k$次Bootstrap重采样得到的Top‑3化合物集合 \\
+        $J(A,B)$ & 集合A与集合B之间Jaccard相似系数 \\
+        $C_s$ & 风格$s$对应的条件生成模型 \\
+        $D$ & 缺陷化合物集合（DMS、Diacetyl等） \\
+        \bottomrule
+    \end{tabular}
+    \caption{符号说明}
+\end{table}
+
+%==================== 数据预处理 ====================
+% ===== 图片占位命令：只保留一次！删掉别处重复的\newcommand{\figph} =====
+\newcommand{\figph}[2][0.85\textwidth]{%
+\fbox{\begin{minipage}[c][#1][c]{0.92\linewidth}
+\centering\small\color{gray} #2\[2pt]（出图后替换为 \texttt{\textbackslash includegraphics}）
+\end{minipage}}}
+
+%=================================================================
+\section{数据预处理}
+
+\subsection{数据集概况}
+
+本文所用数据为商用啤酒风味代谢物实测数据集，共含 8 个附件，覆盖
+250 款啤酒的化学组成、感官品评结果及二者的相关结构。各附件的规模、
+内容及其在本文中承担的角色汇总于表~\ref{tab:data_overview}。
+
+\begin{table}[htbp]
+\centering
+\caption{附件数据总体概况}
+\label{tab:data_overview}
+\begin{tabular}{cp{2.4cm}p{5.0cm}p{3.4cm}}
+\hline
+附件 & 规模 & 内容 & 本文角色 \\
+\hline
+1 & $250\times 231$ & 啤酒--化合物丰度矩阵，含类别汇总列与单化合物列，部分列经对数变换 & 主特征矩阵 $X_b$ \\
+2 & $231\times 231$ & 化合物间 Pearson 相关方阵 & 共表达结构先验 \\
+3 & 10 个 sheet & 0--6 分制人工感官评分卡，定义香气、风味、缺陷、香料与酸啤共 50 个维度 & 目标维度定义 \\
+4 & $250\times 50$ & 品评小组标准化均值 $z_{bd}\in[-2.15,\,6.17]$，均为非整数 & 回归标签 $z$ \\
+5 & $50\times 50$ & 感官属性间相关方阵 & 感官冗余分析 \\
+6 & $46\times 50$ & 化学指标与感官属性的交叉相关阵 & 归因交叉验证 \\
+7 & $250\times 187$ & 标准化感官属性评分（含 NA） & 辅助信息 \\
+8 & 多 sheet & 气味阈值、化合物来源与缺陷标记 & OAV 特征构造 \\
+\hline
+\end{tabular}
+\end{table}
+
+由表~\ref{tab:data_overview} 可见，本题的数据缺陷集中体现在两处：其一，
+附件 1 的化学特征中存在 9 列共 73 个缺失值，构成\textbf{缺失值问题}；
+其二，附件 4 仅提供标准化后的连续评分 $z_{bd}$，原始 0--6 分未给出，
+且标准化过程掩盖了不同品评场次的主观打分习惯差异，使部分维度出现
+系统性偏高或偏低的极端取值，构成\textbf{尺度性异常问题}。
+
+据此，本文的预处理沿"先补全、再校准"的因果链展开：
+\begin{itemize}
+\item 第一步，对附件 1 的缺失值作语义化填充，获得完整的输入矩阵 $X_b$；
+\item 第二步，以 $X_b$ 为输入、附件 4 的 $z_{bd}$ 为输出训练浅层梯度
+提升树 $f_d$，学习化学成分与标准化评分之间的映射规律，并据此
+对缺失评分作出推测，得到全部样本在 50 个维度上的标准化评分；
+\item 第三步，通过品评场次聚类与评分零点校准，消除评分者主观尺度
+差异，再将校准后的 $z$ 映射回 0--6 分（还原模型见第~4 节）。
+\end{itemize}
+
+\subsection{缺失值填充}
+
+\noindent\textbf{(1) 缺失模式诊断。}
+对附件 1 逐列统计缺失率，发现缺失值仅集中于 9 个单化合物列，共 73 处，
+整体缺失率很低，且缺失列均为痕量挥发性化合物。结合色谱检测原理，此类
+缺失的成因并非"未测量"，而是\textbf{浓度低于仪器检出限（LOD）}，即缺失
+本身携带"含量极低"的信息，属于非随机缺失（MNAR）。一个重要佐证是：
+多个化合物列（如 \texttt{CS2} 列）出现大量完全相同的底值，说明数据提供方
+已对部分低于检出限的观测统一赋以下限值。各列缺失情况如图~\ref{fig:na}
+所示。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fig_na_bar.png}
+\caption{各化学特征缺失NA数量统计柱状图}
+\label{fig:na}
+\end{figure}
+
+\noindent\textbf{(2) 填充策略。}
+基于 MNAR 的判断，摒弃均值插补等会破坏"低于检出限"语义的方法，采用
+"零值填充加缺失指示"的组合策略：
+\begin{equation}
+\tilde x_{bj}=
+\left\{
+\begin{array}{ll}
+x_{bj}, & x_{bj}\ \mbox{非缺失},\\[2pt]
+0, & x_{bj}\ \mbox{缺失},
+\end{array}
+\right.
+\qquad
+\delta_{bj}=
+\left\{
+\begin{array}{ll}
+1, & x_{bj}\ \mbox{缺失},\\[2pt]
+0, & \mbox{其他},
+\end{array}
+\right.
+\end{equation}
+即将单化合物缺失值编码为 0（对应"检出限以下"的化学解读），同时为每个
+含缺失的列新增一个 0/1 缺失指示变量 $\delta_{bj}$，由后续树模型自行学习
+"填充零值"与"真实零值"是否应区别对待，避免人为假设引入偏差。特别地，
+\texttt{aroma\_hops\_sum} 为聚合衍生列，其缺失不具备"浓度低"的语义，故
+保留为缺失状态，交由 HistGradientBoostingRegressor 的原生缺失分裂机制
+处理。最终输入特征由 231 个化学列与 8 个缺失指示列构成。
+\noindent\textbf{(3) 评分缺失的模型化推测。}
+附件 4 中部分啤酒--维度组合无有效评分。本文不对其作简单插值，而是将其
+纳入第一问的预测框架：以完整化的 $X_b$ 为输入、已有 $z_{bd}$ 为监督
+信号，对 50 个感官维度逐一训练浅层梯度提升树
+\begin{equation}
+\hat z_{bd}=f_d(X_b),\qquad d=1,2,\dots,50,
+\end{equation}
+利用模型学得的"化学成分--感官评分"规律反推缺失评分，从而获得全部
+250 款啤酒在 50 个维度上的标准化评分估计。该做法将缺失值处理与预测
+建模统一于同一框架，保证了补全值与化学证据的一致性。
+
+\subsection{异常值检测与处理}
+
+\noindent\textbf{(1) 评分异常的来源分析。}
+附件 4 的 $z_{bd}$ 为跨品评场次混合标准化的结果。不同场次的品评团打分
+习惯存在系统差异：部分评审团倾向给出极端分，评分跨度大；部分评审团
+倾向保守打分，评分集中于中段。混合标准化之后，前者在 $z$ 轴上表现为
+极端高值（最大达 6.17，远超标准正态变量的常规取值范围），后者则被
+压缩于零点附近。二者均属于\textbf{尺度性异常}而非测量错误，不应简单
+剔除。
+
+\noindent\textbf{(2) 异常识别。}
+采用两条互补证据定位异常：
+\begin{itemize}
+\item \textbf{地板值检验}：若某维度内多款啤酒的 $z$ 取完全相同的最小值
+（如 \texttt{aroma\_acetaldehyde} 列大量重复出现同一最低值），则该
+并列最低值对应"全体品评员打 0 分"的地板。据此可推断品评场次
+$g(b)$（两款啤酒在至少 3 个维度上 $z$ 完全相同即归为同一场次），
+并得到各场次在维度 $d$ 上的零点 $z_{0,gd}$；
+\item \textbf{分布尾部检验}：对各维度分别以 $|z|>3$ 准则与箱线图
+$1.5\times\mathrm{IQR}$ 准则双重筛查极端评分，定位打分习惯极端的
+场次。
+\end{itemize}
+典型维度的异常表现如图~\ref{fig:outlier} 所示。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}{0.48\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/fig2a_hist.png}
+\caption{某维度 z 值直方图（左侧地板堆积与右侧极端高值）}
+\label{fig:outlier_a}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.48\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/fig2b_zero.png}
+\caption{各推断场次零点散点图（横轴为场次编号，纵轴为 $z_{0,gd}$）}
+\label{fig:outlier_b}
+\end{subfigure}
+\caption{附件 4 评分异常的两种典型表现：(a) 地板堆积与极端值；(b) 场次零点差异}
+\label{fig:outlier}
+\end{figure}
+
+\noindent\textbf{(3) 异常的处理：零点校准而非剔除。}
+极端评分携带真实的主观尺度信息，正确的处理是消除场次间的尺度差异。
+设场次 $g$ 在维度 $d$ 上的零点为 $z_{0,gd}$，即全体品评员均打 0 分时的
+$z$ 取值；记各场次零点的中位数为 $\tilde z_{0,d}$，零点到均值的距离为
+\begin{equation}
+r_d=-\tilde z_{0,d},
+\end{equation}
+则同一基准下的校准评分为
+\begin{equation}
+z^{\mathrm{cal}}_{bd}=z_{bd}-z_{0,g(b)d},
+\end{equation}
+即减去本场次零点后，所有评分均以"零分"为共同原点，从而消除"偏好
+极端分"与"偏好保守分"两类评审团的主观习惯差异。
+
+对于能够通过地板值检验定位零点的 39 个维度，采用代表性品评员尺度模型
+完成 $z$ 到 0--6 分的还原：
+\begin{equation}
+\hat{\bar x}_{bd}=\min\Bigl(6,\max\Bigl(0,
+m\cdot\frac{r_d}{1+r_d^{2}}\bigl(\hat z_{bd}-\tilde z_{0,d}\bigr)\Bigr)\Bigr),
+\qquad m\approx 3,
+\end{equation}
+其中尺度参数 $m=E[x^{2}]/E[x]$ 表征品评员打分的离散程度，另取
+$m=2.5$ 与 $m=\min(4,\mathrm{cap}_d)$ 进行敏感性分析，以检验还原结果
+对该假设的稳健性。
+
+对于无法定位零点的 11 个维度（多数啤酒均落在 2--4 分的常规维度，不存在
+"全员打 0"的地板），改用约定标度 C-mid：
+\begin{equation}
+\hat{\bar x}_{bd}=3+3\cdot\frac{\hat z_{bd}}{M_d},
+\qquad M_d=\max_{b}\bigl|\hat z_{bd}\bigr|\ \mbox{（训练折内）},
+\end{equation}
+该式将维度均值锚定于 3 分并按最大偏离拉伸至 $[0,6]$。由此得到的评分
+\textbf{仅保留排序信息}，其绝对数值不作定量解释，本文在结果报告中对
+这 11 个维度予以明确标注。
+
+\noindent\textbf{(4) 处理效果检验。}
+零点校准后，各场次在同一维度上的评分分布应趋于一致。以校准前后的
+场次间评分均值极差为检验指标，校准后极差显著
+下降，说明尺度性异常已被有效消除，剩余差异可归因于啤酒品质的真实
+区别。校准后的评分经四舍五入取整，得到 0--6 分制的分级结果
+$\hat G_{bd}$，并同时报告各分值的预测概率 $p_{bdk}$ 与 90\% 预测区间。
+
+\subsection{预处理小结}
+
+本节建立了一套适配啤酒风味数据特性的完整预处理体系，依次完成缺失值语义化填充、评分缺失模型预测、主观尺度异常识别与零点校准，解决了数据非随机缺失、品评场次打分偏差、评分尺度不统一三大核心问题。本文整体数据预处理逻辑清晰、步骤递进，完整流程框架如图~\ref{fig:flowchart} 所示。
+
+经过上述清洗与校准，最终输出标准化、无偏差、可建模的特征矩阵 $X_b$
+与统一基准下的感官评分标签 $z^{\mathrm{cal}}_{bd}$，为后续高维感官回归
+预测模型提供了高质量、高可靠性的输入数据。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fig_flow.png}
+\caption{数据预处理整体技术流程图}
+\label{fig:flowchart}
+\end{figure}
+\FloatBarrier            % 到此为止，图片不得浮动到下一节
+%=================================================================
+\section{问题一模型的建立与求解}
+
+\subsection{问题分析}
+
+问题一要求用附件~1 的化学数据，给出 250 款啤酒在 50 个感官维度上
+的 0--6 分。难点是两处缺失：一是化学数据里有 73 个 NA；二是
+附件~4 只给了标准化后的品评小组均值 $z$（范围 $-2.15$ 到 6.17，
+全是小数），原始的 0--6 分没有公开——标准化把``0 分在哪里''和
+``一分有多大''都抹掉了。
+
+于是整个问题变成两步：先学会``化学成分 $\to z$''（回归问题），
+再把 $z$ 换算回 0--6 分（尺度还原问题）。换算的钥匙藏在数据里：
+当一场品评会的全体成员都给某款啤酒打 0 分时，$z$ 会落在一个只由
+``当天出席了哪些人''决定的最低值上。抓住这些并列的最低值，就能
+反推出品评团和评分零点，把丢失的尺子找回来。全流程见
+图~\ref{fig:q1_flow}。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/q1_methodology_flowchart.pdf}
+  \caption{问题一技术路线（虚线框为数据与交付物，实线框为处理步骤）}
+  \label{fig:q1_flow}
+\end{figure}
+\FloatBarrier            % 到此为止，图4 不得浮动到 6.2
+
+\subsection{模型建立}
+
+\subsubsection{数据基础：缺失值处理与品评团推断}
+
+\textbf{化学 NA。}73 个 NA 只占全部化学单元的 0.126\%，却分布在
+63 款啤酒上，整行删除会损失 25.2\% 的样本，得不偿失
+（图~\ref{fig:q1_missing}）。附件~8 在其中 60 个位置记录为 0，
+说明这些 NA 是``含量低到测不出''而非漏测。主做法与同源文献
+（Schreurs et al., 2024, \textit{Nat.\ Commun.}）一致：按列均值
+填充，且均值只在交叉验证的训练折内计算，不碰测试数据。另备两个
+对照口径（保留 NaN 交给树模型自己处理；编码到列最低位并加缺失
+标记）做敏感性检验。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\textwidth]{figures/fig_missing.png}
+  \caption{化学数据缺失分布（9 列共 73 个 NA）}
+  \label{fig:q1_missing}
+\end{figure}
+
+\textbf{品评团推断。}附件~4 的标准化可以拆成两部分：
+\begin{equation}
+  z_{bd}=\underbrace{c_d(A_b)}_{\text{名单零点}}
+  +\underbrace{s_{bd}}_{\text{打分项}\,\ge 0},
+\end{equation}
+名单零点只取决于当天出席的品评员是谁，与啤酒无关；打分项非负，
+只有全员打 0 时才等于 0。这带来一个可检验的推论：\textbf{同一批
+品评员打分、且全员打 0 的两款啤酒，$z$ 值会一模一样}。据此规则
+——两款啤酒在至少 3 个维度上 $z$ 精确相等（9 位小数）就判为同
+一个品评团——推断出 41 个多啤酒团（覆盖 228 款，风格纯度 0.84）
+和 22 个单例。一个有力的旁证：文献记录的 12 款重复品评啤酒恰好
+全部落在单例里，随机发生的概率约 $7\times10^{-15}$。
+
+\textbf{零点识别。}品评团零点取团内``至少出现两次的最小 $z$''
+（出现两次才能确认是全员打 0 的地板，而不是碰巧的最低分）。
+2{,}050 个团$\times$维度单元中识别出 607 个零点，再剔除可疑者
+（还原后负分超过 5\% 的）余 605 个，覆盖 30.9\% 的评分单元
+（图~\ref{fig:q1_panel}）；body、overall 等 10 个``人人都会打分''
+的维度天然没有零点。
+
+%\begin{figure}[htbp]
+ % \centering
+ % \includegraphics[width=0.9\textwidth]{figures/q1_panel.pdf}
+  %\caption{品评团与零点：(a) 精确并列连边得到的品评团；
+  %  (b) 典型维度的 $z$ 地板值堆积；(c) 零点覆盖情况}
+  %\label{fig:q1_panel}
+%\end{figure}
+
+\subsubsection{连续预测：化学成分 $\to z$}
+
+每个维度训练一个浅层梯度提升树 $\hat z_{bd}=f_d(X_b)$。选树模型
+的理由很直接：同源文献中树集成的测试 $R^2$ 达 0.21--0.22，而
+Lasso 只有 0.05、普通线性回归 $-4.13$（231 个特征对 250 个样本，
+线性模型直接过拟合）；而且树只看特征的大小顺序，不怕数据经过了
+未知的变换。超参数在 6 个维度组内共享、由内层交叉验证挑选，避免
+逐维调参把噪声当规律。
+
+三个加强项由嵌套交叉验证决定去留：(i) 化学常识的单调约束——
+酒精越多``酒精感''不会降，共 6 对；(ii) 零膨胀处理——acetic 等
+10 个维度超三成啤酒打 0 分，先判断``是不是 0''再回归``是多少''；
+(iii) OAV 特征——按``浓度/气味阈值''对酯类、硫化物、酚类求和，
+这是树自己造不出来的跨列特征。主模型不使用风格标签，``只看风格
+猜均分''的收缩风格均值作为必须打败的基线。
+
+\subsubsection{等级映射：$z\to$ 0--6 分}
+
+\textbf{参照怎么来。}零点找回了``0 分的位置''，还差``一分有多大''。
+设一位代表性品评员，其打分分布满足尺度参数 $m=E[x^2]/E[x]$
+（对 0--6 整数分恒有 $1\le m\le6$），即可解出换算式：
+\begin{equation}
+  x^*_{bd}=m\,\frac{r_d}{1+r_d^2}\bigl(z_{bd}-z_{0,g(b)d}\bigr),
+  \qquad m=3 .
+\end{equation}
+$m$ 取标度中点 3；由 92 个外部验证评分直接算出的 $m$ 中位数为
+3.24，支持这一取值（敏感性取 2.5 与 4）。零点可用的单元
+（30.9\%）按此式得局部参照 $A$；其余单元将训练折 $z$ 的最小、
+最大值对应到 0、6，线性映射得 $L$；两者拼成混合参照 $R$。
+
+\textbf{预测怎么映。}化学模型给出 $\hat z$ 后，比较两种映射：
+直接线性取整，以及以 QWK（二次加权一致性）为目标逐维拟合 6 个
+切点。切点只在训练集的内层折外预测上拟合，绝不碰测试折；按 5 次
+重复的平均 QWK 选出胜者，最终输出 0--6 等级、各档概率与 90\%
+区间。
+
+\subsection{模型求解}
+
+按流程图的泳道顺序执行：
+
+\textbf{Step 1（数据基础）}训练折内均值填充；精确并列连边推断
+63 个品评团；识别并筛选 605 个有效零点。
+
+\textbf{Step 2（连续预测）}外层 StratifiedGroupKFold（5 折
+$\times$5 次，按品评团分组、按风格分层——同团啤酒必须整团移动，
+否则模型会``背答案''），内层 4 折调参。分组后风格基线 $R^2$ 从
+0.181 降到 0.115，证明同团啤酒确实共享信息，分组是必要的。
+
+\textbf{Step 3（对照模型）}同一划分上跑齐基线：B0 均值、B1 收缩
+风格均值、线性回归、ElasticNet、随机森林、文献流程复现 B2，以及
+B3——用 Zenodo 新公开的真实原始评分（2{,}197 行，按啤酒$\times$
+维度聚合）直接训练，检验化学模型预测真实 0--6 分的水平。运行前
+声明：主模型须平均 Spearman 超过 B1、bootstrap 置信区间下界大于
+0、且过半维度胜出；真实评分公开于赛题设计之后，只作预先声明的
+对照，不反过来改主模型。
+
+\textbf{Step 4（等级映射选型）}汇合外层测试折，按 50 维平均 QWK
+在两种映射中取优。
+
+\textbf{Step 5（结果应用）}250 款评分用 5 次折外预测取平均后经
+选定映射输出（折外预测和新啤酒处于同样的信息状态：只知化学、
+不知评分）；另用全部数据重新拟合一套模型，供新啤酒预测和问题三
+调用。
+
+\subsection{结果分析}
+
+\subsubsection{预测性能}
+
+主模型 50 维平均 Spearman 为 [值]，超过风格基线 B1（置信区间
+下界 $>0$，[N]/50 维胜出），达到成功标准；$R^2$ 与文献 GBR
+（0.21）同水平（图~\ref{fig:q1_performance}）。值得一提的是
+可靠性上限：12 人品评小组理论上可支撑 $R^2$ 中位数 0.79，远高于
+实际的 0.21——说明预测的瓶颈不在品评噪声，而在化学数据本身能
+解释感官的限度。
+
+%\begin{figure}[htbp]
+ % \centering
+ % \includegraphics[width=0.9\textwidth]{figures/q1_performance.pdf}
+ % \caption{模型对比：(a) 各模型平均 Spearman 与配对差置信区间；
+ %   (b) 主模型与 B1 的逐维对比}
+ % \label{fig:q1_performance}
+%\end{figure}
+
+\subsubsection{等级映射与交付}
+
+两种映射的 QWK 分别为 [值] 与 [值]，选定 [胜出者]。预测等级对
+参照的混淆集中在对角线附近，$\pm1$ 准确率 [值]，没有跨档大错；
+有锚单元的误差明显小于无锚单元，印证``零点找得回的维度还原可靠''。
+交付结果见图~\ref{fig:q1_delivery}：(a) 混淆热力图显示对角线集中，
+(b) 250 款 $\times$ 50 维交付评分热力图按风格聚类，(c) 代表性啤酒的
+感官画像叠加了同款啤酒的参照等级。
+
+%\begin{figure}[htbp]
+%  \centering
+%  \includegraphics[width=0.98\textwidth]{figures/q1_delivery.pdf}
+%  \caption{问题一交付结果：(a) 预测等级混淆热力图（左：有锚单元，右：无锚单元）；(b) 250 款 $\times$ 50 维交付评分热力图（行按风格聚类）；(c) 代表性啤酒感官画像（预测等级与参照等级叠加，含外部检查用的啤酒 64 与 223）}
+%  \label{fig:q1_delivery}
+%\end{figure}
+
+\subsubsection{外部检查}
+
+公开验证数据里的两款基础啤酒，经化学数据比对唯一锁定为本数据集
+的啤酒 64 与 223（匹配距离 0.07 和 0.06，次优候选远在 0.42 和
+9.08 之外），自带 92 个真实的 0--6 原始评分。把这两款啤酒的折外
+预测按选定映射转成等级，与实测均值对照：预运行中有锚维度平均
+误差 $-0.47$ 分，无锚维度 MAE 约 0.5 分，且两款啤酒谁高谁低在
+8 个属性中 7 个方向一致——``化学 $\to z\to$ 0--6''整条链路在
+外部数据上方向正确。
+
+\subsubsection{敏感性分析}
+
+三类扰动逐一检验（图~\ref{fig:q1_sensitivity}）：
+(i) NA 的三种口径（均值填充 / 保留 NaN / 最低位编码）——排序类
+结论完全不变，因为秩指标不依赖填充方式；
+(ii) 尺度参数 $m$ 取 2.5、3、4——$m$ 从 3 变到 4 时约 22\% 的
+有锚等级变动一档，故 0--6 数值以 $m=3$ 为准并附区间说明；
+(iii) 无锚维度换用 C-mid 与 C-quantile 两种约定——数值随约定
+改变，证实这些维度的 0--6 分只应作排序解读，论文中已明确标注。
+
+%\begin{figure}[htbp]
+ % \centering
+  %\includegraphics[width=0.78\textwidth]{figures/q1_m_sensitivity.pdf}
+ % \caption{尺度参数 $m$ 的敏感性（还原误差随 $m$ 变化，
+   % 叠加外部评分直接估计的 $m$ 分布）}
+  %\label{fig:q1_sensitivity}
+%\end{figure}
+
+\begin{table}[htbp]
+  \centering\small
+  \caption{问题一核心指标汇总}
+  \label{tab:q1_summary}
+  \begin{tabular}{lccccc}
+    \toprule
+    对象 & Spearman & $R^2$ & QWK & MAE & $\pm1$ 准确率 \\
+    \midrule
+    主模型（全体） & [--] & [--] & [--] & [--] & [--] \\
+    主模型（有锚 $I{=}1$） & --- & --- & [--] & [--] & [--] \\
+    主模型（无锚 $I{=}0$） & --- & --- & [--] & [--] & [--] \\
+    基线 B1（风格均值） & [--] & 0.115 & --- & --- & --- \\
+    B3（真实评分直训） & [--] & [--] & --- & [--] & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{小结}
+
+问题一的结论归为三点。第一，化学数据确实能预测感官排序，主模型
+显著优于``只看风格猜均分''的基线，预测瓶颈在化学信息的解释限度
+而非品评噪声。第二，从并列地板值反推品评团和零点的方法行得通：
+零点找得回的维度（约三成单元）还原可靠，找不回的维度只保留排序
+信息并如实标注。第三，外部真实评分验证了整条链路方向正确。最终
+交付 250 款 $\times$ 50 维的 0--6 等级、各档概率与 90\% 区间；
+品评团与零点表供问题二使用，全数据重拟合的模型供问题三调用。
+%================= 问题一 end =================
+
+
+%=================================================================
+\section{问题二模型的建立与求解}
+
+\subsection{问题分析}
+
+问题二要求利用附件~2 构建化合物共表达图，结合附件~1 的化学特征给出
+每个感官维度的 Top-3 关键化合物，并论证其稳定性与化学合理性。
+核心难点有三：其一，化合物间强共变（附件~2 中 $|\rho|\ge0.5$ 的边达
+597 条），若直接按边际相关取前 3，同一信息会以多个高度相关化合物的
+形式重复入选；其二，250 款啤酒分属 63 个品评团，同团样本共享评分
+零点且多为同一风格，稳定性检验必须以品评团为单位；其三，关键化合物
+为关联性结论，须以数据证据（显著性、入选频率、方法间一致性）与酿造
+化学机理（来源、气味阈值、加标实验）双线论证。
+
+据此确定技术路线：以附件~2 构建共表达图并划分模块，实现冗余控制；
+在图约束下以偏秩相关前向选择逐位确定 Top-3；以品评团簇 bootstrap
+入选频率与多方法 Jaccard 系数量化稳定性；以附件~8 标签、OAV 阈值
+证据与外部加标实验完成化学合理性论证。流程如图~\ref{fig:q2_flow}。
+
+%\begin{figure}[H]
+ % \centering
+ % \includegraphics[width=0.92\textwidth]{figures/q2_flowchart.pdf}
+ % \caption{问题二技术路线}
+ % \label{fig:q2_flow}
+%\end{figure}
+
+\subsection{模型建立}
+
+\subsubsection{候选集合与秩变换}
+
+候选集合 $\mathcal C$ 为附件~1 的 231 列扣除 5 个综合指标与 1 个
+内标，$|\mathcal C|=225$。综合指标由其他化合物计算得到，各自几乎是
+某一成分的副本（如 \verb|aroma_hops_sum| 与 linalool 的
+$|\rho|=0.96$），保留将使同一信息两次入选；内标反映测量过程而非
+啤酒组成。二者仍作为图的注释节点保留。理化指标（pH、IBU、color 等）
+保留为候选，它们是 acidity、bitterness 等维度最直接的解释量。
+
+全部关联基于秩：157 个信号列的变换方式未知，秩不受单调变换影响；
+附件~2 本身为 Spearman 矩阵，关联与图同度量；检出下限的并列底值
+自然成为并列秩。化学 NA 按列均值填充，仅作计算占位；感官目标取
+附件~4 标准化均值 $z_{bd}$ 的秩，与问题一 0--6 评分互为单调变换，
+结论不依赖换算假设。
+
+\subsubsection{共表达图与模块}
+
+共表达图 $G_\tau$ 以 231 列为节点，边权 $w_{jk}=|\rho_{jk}|$，
+$|\rho_{jk}|\ge\tau$ 时连边，符号作边属性。取无符号权重：
+$|\rho|\ge0.5$ 的 597 条边中仅 13 条为负，且负相关在冗余意义上与
+正相关等价。模块由相异度 $1-|\rho|$ 上的平均连接层次聚类在高度
+$1-\tau$ 处切割得到，保证模块内平均相关不低于 $\tau$；相比之下，
+连通分量会被弱链串联（$\tau=0.6$ 时最大分量含 96 个化合物），
+Louvain 需另选分辨率参数且随种子变化，偏相关网络因附件~2 非半正定
+（5 个负特征值）不可行。
+
+阈值主值取 $\tau=0.6$，为候选间 $|\rho|$ 的 99\% 分位：此时 245
+条边构成 33 个多成员模块，来源纯度 0.79，bootstrap 下模块划分 ARI
+中位 0.76，均优于 $\tau=0.5$（纯度 0.70、ARI 0.66）；$\tau=0.7$
+时模块仅覆盖 65 个化合物，冗余控制范围过窄。
+模块约束设定：同模块化合物在 250 款啤酒上无法被数据区分为不同的
+关键因素，故每模块在 $T_d$ 中至多一席，其余成员作为同模块化合物
+随入选者一并报告。
+
+\subsubsection{图约束前向选择}
+
+对维度 $d$，第 1 位取边际秩关联最强者：
+\begin{equation}
+  t_{d1}=\arg\max_{j\in\mathcal C}\,|r_{jd}|,\qquad
+  r_{jd}=\tfrac1n\tilde x_j^\top\tilde y_d .
+\end{equation}
+第 $k$ 位（$k=2,3$）记已选集合 $S$，$H_S$ 为向
+$\mathrm{span}\{\mathbf 1,\tilde x_s:s\in S\}$ 的投影，
+\begin{equation}
+  r_{jd\mid S}=\frac{e_j^\top e_y}{\|e_j\|\,\|e_y\|},\qquad
+  e_y=(I-H_S)\tilde y_d,\ e_j=(I-H_S)\tilde x_j,
+\end{equation}
+\begin{equation}
+  t_{dk}=\arg\max_{j\in\mathcal C,\;M(j)\notin M(S)}\,|r_{jd\mid S}| .
+\end{equation}
+偏秩相关衡量化合物在已选者之外还能解释多少维度排序；模块约束
+$M(j)\notin M(S)$ 排除与已选者同模块的冗余化合物。
+
+显著性门槛 $q_d$ 取 $\max_j|r_{jd}|$ 置换零分布（打乱 $\tilde y_d$
+1{,}000 次，每次在 225 个候选上取最大值）的 95\% 分位，控制维度内
+多重比较；第 2、3 位用 Freedman--Lane 置换。入选项同时满足得分超过
+$q_d$ 且品评团簇 bootstrap 的 95\% CI 不含 0 时记为显著。
+由此定义维度等级：A 级（Top-1 显著且入选频率 $\pi^c\ge0.6$）、
+B 级（Top-1 显著）、C 级（Top-1 不显著，记为未找到可靠关键化合物）。
+
+\subsubsection{稳定性度量模型}
+
+稳定性从两个正交方向量化。
+\textbf{数据扰动}：以品评团为单位有放回抽取 63 个团，每次重算相关
+矩阵、重建模块、重跑选择，$B=1{,}000$；记化合物层入选频率
+$\pi^c_{jd}$、模块层频率 $\pi^m_{jd}$ 与 bootstrap Jaccard 均值
+$J^{\mathrm{boot}}_d$，分档为稳定（$\pi^c\ge0.6$）、中等
+（$[1/3,0.6)$）、不稳定（$<1/3$）。
+\textbf{方法扰动}：与四个对照方法比较 Top-3 的 Jaccard 系数
+$J(A,B)=|A\cap B|/|A\cup B|$——M0 无图约束边际选择、M1 图约束
+边际选择、M2 秩上 ElasticNet、M3 梯度提升树置换重要度，另加风格内
+分析（对 22 个风格指示变量取残差后重跑选择），随机 3 元集合的
+Jaccard 期望 0.008 作为参照基线。
+
+\subsection{模型求解}
+
+求解流程为确定性算法，全程种子固定：
+
+\textbf{Step 1} 构图与模块：读入附件~2，复算验收（与附件~1 逐对
+Spearman 最大差 $6.7\times10^{-16}$），层次聚类切割得模块表、
+节点表（含模块内连接度 $k^{\mathrm{in}}_j$ 与枢纽）与边表。
+
+\textbf{Step 2} 选择规则验证：在真实化学矩阵上随机植入 3 个异模块
+化合物、按秩线性组合加噪声生成伪维度，每设置 200 次，比较前向与
+边际选择的找回率（表~\ref{tab:recovery}）。前向选择在效应量
+$r\ge0.3$ 时全面占优；观测数据 49 维 Top-1 的 $|r|$ 中位数 0.36，
+处于该区间，确定前向选择为主方法。模拟仅使用化学矩阵与人工目标。
+
+\begin{table}[!htbp]
+  \centering\small
+  \caption{植入--还原实验找回率（按植入顺序）}
+  \label{tab:recovery}
+  \begin{tabular}{cccc}
+  \toprule
+   植入权重 & 首位化合物 $r$ & 边际选择 & 前向选择 \\
+   \midrule
+    1,0.75,0.5 & 0.30 & 0.76, 0.37, 0.12 & 0.77, 0.48, 0.20 \\
+    1,0.75,0.5 & 0.45 & 0.96, 0.61, 0.20 & 0.97, 0.88, 0.58 \\
+    1,1,1 & 0.30 & 0.46, 0.61, 0.54 & 0.72, 0.67, 0.69 \\
+    1,1,1 & 0.45 & 0.70, 0.71, 0.78 & 0.94, 0.96, 0.94 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+%\begin{figure}[H]
+%  \centering
+ % \includegraphics[width=0.8\textwidth]{figures/q2_recovery.pdf}
+ % \caption{两种选择规则的找回率对比}
+ % \label{fig:q2_recovery}
+%\end{figure}
+
+\textbf{Step 3} 主运行：对 49 个维度执行前向选择与置换检验，产出
+Top-3、选择得分、显著性与维度等级。
+
+\textbf{Step 4} 稳定性运行：$B=1{,}000$ 品评团簇 bootstrap 与
+五个对照方法，产出 $\pi^c$、$\pi^m$、$J^{\mathrm{boot}}$ 与方法间
+Jaccard。
+
+\textbf{Step 5} 化学证据汇总：关联附件~8 的来源、缺陷与老化标签；
+对有阈值的化合物计算 OAV$\ge1$ 的啤酒比例；标注共变标记（风格内
+CI 含 0、进入 $\ge5$ 个维度、或全部啤酒 OAV$<1$）；逐项撰写机理
+解释并核对入选符号。
+
+\textbf{Step 6} 敏感性运行：$\tau\in\{0.5,0.7\}$、候选集加回排除
+列、NA 两种对照口径、固定附件~2 构图、按单款啤酒重抽、39 个有锚
+维度改用减零点评分，共 7 组，各报告与基线的 Jaccard 及 Top-1 改变
+维度数。
+
+\subsection{结果分析}
+
+\subsubsection{共表达图结构}
+
+$\tau=0.6$ 下 245 条边构成 33 个多成员模块，覆盖 97 个化合物，
+代表性模块与酿造学知识吻合：ethanol--ethyl acetate--ethyl hexanoate--glycerol（发酵强度轴）、
+isoamyl acetate--isobutyl acetate--n-hexanol（乙酸酯类）、
+ethyl octanoate--ethyl decanoate（中链脂肪酸乙酯）、
+color--protein（麦芽轴）、linalool--$\alpha$-terpineol（酒花
+萜类）。模块的来源纯度 0.79，即强共变主要发生在同一酿造来源的
+化合物之间，图~\ref{fig:q2_network} 中同色节点聚为同圈的格局
+直观反映了这一点。
+
+%\begin{figure}[H]
+ % \centering
+  %\includegraphics[width=0.85\textwidth]{figures/q2_network.pdf}
+ % \caption{化合物共表达图（$\tau=0.6$，MDS 布局；颜色示来源，
+ %  圈示模块，节点大小示模块内连接度）}
+ % \label{fig:q2_network}
+%\end{figure}
+
+\subsubsection{Top-3 识别结果}
+
+49 个维度中，Top-1 显著 47 个，第 2、3 位显著分别为 37、20 个；
+置换门槛 $q_d$ 中位数 0.227，Top-1 的 $|r|$ 中位数 0.36。
+代表性结果与酿造化学一致：bitterness 的 Top-1 为 IBU，acidity 为
+pH，esters\_all 为 isoamyl acetate，body 为 ethanol（同模块含
+glycerol）。A\_esters\_flower 与 t2n 两维 Top-1 未超门槛，列为
+C 级。全部 49 维的 Top-3、得分、CI 与等级见附录
+表~\ref{tab:q2_top3_full}。
+
+风格内分析显示：147 个入选项中 98\% 在风格内保持同号，其中 18 项
+风格内 $|r^{(s)}|<0.1$——如 lactic acid $\to$ lactic（合并
+0.45，风格内 $-0.00$）、pH $\to$ acidity（$-0.50$，$-0.09$），
+其关联来自酸啤风格与其他风格之间的配方差异，已标注共变标记；
+风格内 Top-3 作为次要输出交付问题三。
+
+\subsubsection{稳定性结果}
+
+品评团簇 bootstrap 下，按位置的化合物层入选频率为 0.56、0.35、
+0.19，模块层为 0.62、0.40、0.21；$J^{\mathrm{boot}}$ 均值 0.267，
+为随机基线 0.008 的 33 倍。147 个入选项中稳定 28 项、中等 41 项、
+不稳定 78 项（图~\ref{fig:q2_stability}）。结合植入实验的找回率
+标尺（真实效应 $r\approx0.3$、排第 3 位的化合物在 0.2--0.7 的
+重复中被找回），结论为：在 250 款啤酒的样本量下，多数维度可靠支持
+的关键化合物为 1 个、至多 2 个，第 3 位以报告为主。模块层频率高于
+化合物层的差值即同模块化合物间的轮换，印证了模块不可分设定。
+
+%\begin{figure}[H]
+ % \centering
+ % \includegraphics[width=0.9\textwidth]{figures/q2_stability.pdf}
+ % \caption{稳定性结果：(a) 49 维 $\times$ 3 位置的 $\pi^c$ 热力图；
+  %  (b) 入选项稳定性分档}
+ % \label{fig:q2_stability}
+%\end{figure}
+
+方法间 Jaccard 见表~\ref{tab:jaccard} 与图~\ref{fig:q2_jaccard}。
+线性族方法与主方法 Top-1 完全一致（M0、M1 为 1.00，M2 为 0.63），
+表明第 1 位结论对估计方式不敏感；M0 有 22/49 维的前 3 含同模块
+冗余（如 A\_malt\_all 的 color 与 protein），正是图约束消除的
+对象。M3 允许非线性后 Top-1 一致比例降至 0.37（如 metallic 的
+M3 Top-1 为 iron），此类维度并列报告两法结果并各附化学解释。
+
+\begin{table}[!htbp]
+  \centering\small
+  \caption{主方法与对照方法的 Jaccard 系数（49 维平均）}
+  \label{tab:jaccard}
+  \begin{tabular}{lccc}
+    \toprule
+    对照 & 化合物层 & 模块层 & Top-1 相同比例 \\
+    \midrule
+    M0 无图约束边际 & 0.327 & 0.390 & 1.00 \\
+    M1 图约束边际 & 0.371 & 0.390 & 1.00 \\
+    M2 ElasticNet & 0.498 & 0.510 & 0.63 \\
+    M3 GBM 置换重要度 & 0.227 & 0.227 & 0.37 \\
+    风格内 & 0.290 & 0.316 & 0.35 \\
+    随机基线 & 0.008 & --- & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+%\begin{figure}[H]
+  %\centering
+  %\includegraphics[width=0.75\textwidth]{figures/q2_jaccard.pdf}
+ % \caption{方法间 Jaccard 对比（虚线为随机基线）}
+ % \label{fig:q2_jaccard}
+%\end{figure}
+
+\subsubsection{化学合理性结果}
+
+有阈值的 26 个入选化合物中，ethanol（0.98）、linalool（0.98）、
+citronellol（0.92）、IBU（0.86）、isoamyl acetate（0.84）、
+geraniol（0.76）、DMS（0.67）、ethyl acetate（0.66）、acetic
+acid（0.62）在多数啤酒中 OAV$\ge1$，其感官作用有直接的浓度基础
+（图~\ref{fig:q2_oav}）；acetaldehyde、ethyl decanoate、furfural
+等 5 个化合物在全部啤酒中 OAV$<1$，标为共变标记，其入选反映与
+未测或同模块化合物的共变，亚阈值酯类的加和效应亦为已知现象。
+进入 $\ge5$ 个维度 Top-3 的 color、ethanol、protein 等 7 个候选
+标记工艺与风格强度轴。
+
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=0.85\textwidth]{figures/q2_oav.pdf}
+ % \caption{Top-3 化合物中有阈值者的 OAV$\ge1$ 啤酒比例}
+% \label{fig:q2_oav}
+%\end{figure}
+
+外部加标实验提供因果方向的核验（表~\ref{tab:spike}）：七种化合物
+混合加标在三组底酒中均显著提高 Esters（配对差 0.90--1.31，
+$t\ge2.9$），支持酯类作为 esters\_all 关键因素；未加入酒花化合物
+时 Hops 与 Bitterness 不变（$|t|\le0.9$），构成阴性对照，排除
+加标杯整体抬分的可能；Fullness 在无乙醇组同样提高，表明 glycerol
+等同模块成分足以产生醇厚感。
+
+\begin{table}[!htbp]
+  \centering\small
+  \caption{加标杯$-$对照杯配对差（括号内为 $t$ 值）}
+  \label{tab:spike}
+  \begin{tabular}{lccc}
+    \toprule
+    属性 & Blond 含乙醇 $n{=}20$ & Blond 无乙醇 $n{=}13$ & NABLAB $n{=}13$ \\
+    \midrule
+    Esters & 0.90 (4.7) & 1.08 (2.9) & 1.31 (5.0) \\
+    Fullness & 1.30 (6.3) & 1.31 (3.0) & 1.38 (4.8) \\
+    Alcohol warming & 1.10 (4.2) & 0.92 (4.4) & 0.08 (0.6) \\
+    Sweetness & 1.15 (4.4) & 0.69 (2.0) & 1.00 (3.1) \\
+    Hops & $-0.15$ ($-0.5$) & 0.00 (0.0) & $-0.08$ ($-0.2$) \\
+    Bitterness & 0.05 (0.2) & $-0.15$ ($-0.6$) & $-0.31$ ($-0.9$) \\
+    Malt & 0.45 (2.0) & $-0.23$ ($-1.0$) & 0.00 (0.0) \\
+    Overall & 1.05 (2.8) & 1.15 (3.6) & 1.08 (3.5) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{敏感性结果}
+
+七组敏感性运行中，Top-3 与基线的化合物层 Jaccard 均值、Top-1
+改变维度数汇总于附录表~\ref{tab:q2_sens_full}。化合物层入选频率
+在 $\tau\in\{0.5,0.6,0.7\}$ 下完全相同，阈值仅影响模块层解读；
+NA 口径与 bootstrap 单位的扰动均未改变 A 级维度的 Top-1。
+结论对建模选择稳健。
+
+问题二最终向问题三交付三项结果：模块表（同模块化合物在生成时应
+一起变化，综合指标由成分推导）、风格内 Top-3，以及缺陷维度
+（DMS、4VG、diacetyl、t2n、stale hops）的关键化合物清单。
+%================= 问题二 end =================
+%=================================================================
+\section{问题三模型构建与求解}
+
+\subsection{条件生成模型原理}
+
+\subsubsection{问题分析与建模思路}
+
+问题三要求以 \verb|tasting_category_fine| 为风格标签学习条件生成
+模型：给定风格生成合理的化合物谱并给出感官画像，再把一种风格的
+化合物谱迁移为另一种风格，且缺陷化合物不恶化。
+
+困难在于数据形态：250 款啤酒、22 个风格（各 3--31 款）、225 个
+生成列，样本远少于维度。深度生成模型（VAE、GAN、扩散模型）在这个
+量级上无法可靠训练；逐风格单独估计协方差也不可行（最大风格仅 31
+款）。另一方面，数据分析显示风格只解释每列方差的约四分之一
+（$\eta^2$ 中位数 0.250），其余四分之三是风格内变化，且这部分
+变化有低维结构（前 10 个主成分解释 50\%）。因此生成器必须同时
+刻画``风格均值''与``风格内共变''，并让全部风格共享一套协方差。
+总体流程见图~\ref{fig:q3_flow}。
+
+%\begin{figure}[htbp]
+ % \centering
+ % \includegraphics[width=0.92\textwidth]{figures/q3_flowchart.pdf}
+  %\caption{问题三技术路线}
+  %\label{fig:q3_flow}
+%\end{figure}
+
+\subsubsection{秩变换与潜空间}
+
+生成不在原尺度上进行。原因有三：157 个信号列的变换方式未知；
+156 列存在``未检出''下限（共 7{,}592 个单元格），连续分布会生成
+低于下限的假浓度；个别线性列有数千倍的极端值，会主导协方差。
+处理办法是逐列秩变换：把每列观测按名次映到标准正态分位数上，
+得到潜变量 $u_{bj}=\phi_j(x_{bj})$；并列的下限块映为截断正态的
+条件期望，反变换 $Q_j$ 把下限的整段概率映回下限值。这样生成谱中
+``未检出''仍是离散状态，极端值不再失衡，且结果不受任何单调变换
+影响。
+
+\subsubsection{生成模型}
+
+在潜空间中假设同风格样本服从多元正态：
+\begin{equation}
+  u\mid s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad
+  \Sigma_W=\Lambda\Lambda^\top+\Psi_M .
+\end{equation}
+三个部件各有分工：
+(i) \textbf{风格均值收缩} $\hat\mu_s=(n_s\bar u_s+\kappa\bar u)/(n_s+\kappa)$，
+小样本风格（如仅 3 款的 Faro）的均值向全局收缩，避免过拟合；
+(ii) \textbf{因子结构} $\Lambda\Lambda^\top$（$k$ 个共同因子）刻画
+化合物间的低维共变；
+(iii) \textbf{模块块} $\Psi_M$ 按问题二的共表达模块保留块内残余
+相关——纯因子模型会把强相关化合物对的相关从真实的 0.724 衰减到
+0.633，加模块块后恢复到 0.680，同时呼应问题二``同模块化合物应
+一起变化''的要求。
+
+超参数 $(k,\kappa)$ 与协方差结构按留出啤酒的潜空间评分在嵌套
+划分中选择，预运行选中 $k=15$、$\kappa=2$、因子$+$模块块
+（表~\ref{tab:q3_score}）。生成时抽 $u\sim\mathcal N(\hat\mu_s,
+\hat\Sigma_W)$，反变换得化合物谱；5 个综合指标不单独生成，由
+岭回归从生成列派生（交叉验证 $R^2$ 为 0.78--0.94），内标取训练
+中位数。
+
+\begin{table}[htbp]
+  \centering\small
+  \caption{协方差结构与超参数的留出评分（nat/款，节选）}
+  \label{tab:q3_score}
+  \begin{tabular}{lcccc}
+    \toprule
+    协方差结构 & $\kappa=1$ & $\kappa=2$ & $\kappa=5$ & $\kappa=10$ \\
+    \midrule
+    对角 & --- & $-297.3$ & $-298.6$ & $-302.2$ \\
+    Ledoit--Wolf & --- & $-267.1$ & $-266.6$ & $-269.2$ \\
+    纯因子 $k=15$ & $-246.0$ & $-244.9$ & $-245.3$ & $-248.5$ \\
+    因子$+$模块块 $k=15$ & $-241.9$ & $\mathbf{-240.7}$ & $-240.8$ & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{生成质量验证}
+
+验证按风格分层的 5 折留出进行，秩变换、均值、协方差、模块全部在
+训练折内估计。设五个对照生成器定位主模型：G0（不分风格）、
+G1（原样复制训练啤酒）、G2（逐列独立抽取，破坏共变）、G3（风格内
+插值）、纯因子（去掉模块块）。核心指标与预运行结果见
+表~\ref{tab:q3_gen} 与图~\ref{fig:q3_gen_eval}。
+
+\begin{table}[htbp]
+  \centering\small
+  \caption{生成器评价（预运行；括号内数值因样本依赖不可比）}
+  \label{tab:q3_gen}
+  \begin{tabular}{lcccccc}
+    \toprule
+    生成器 & C2ST AUC & DCR 比 & TRTS & TSTR & 下限误差 & 模块内 $\rho$ \\
+    \midrule
+    主模型 & 0.510 & 1.11 & 0.662 & 0.486 & 0.020 & 0.680 \\
+    纯因子 & 0.482 & 1.10 & 0.664 & 0.504 & 0.020 & 0.633 \\
+    G0 无风格 & 0.579 & 1.14 & 0.080 & 0.096 & 0.020 & 0.685 \\
+    G1 复制 & (0.261) & 0 & (1.000) & 0.516 & 0.016 & 0.734 \\
+    G2 独立边际 & 0.651 & 1.21 & (0.988) & 0.526 & 0.015 & 0.248 \\
+    G3 插值 & (0.332) & 0.32 & (0.994) & 0.544 & 0.026 & 0.731 \\
+    真实留出 & --- & 1 & 0.540 & --- & --- & 0.724 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+读法一目了然：主模型的 C2ST AUC 为 0.510，判别器几乎分不出生成
+样本与真实啤酒；去掉风格条件（G0，0.579）或破坏化合物共变
+（G2，0.651）后立刻可分，说明两个部件都在起作用。DCR 比 1.11
+表明生成样本不是训练啤酒的翻版（G3 插值仅 0.32，贴着训练样本）；
+TSTR 0.486 接近真实参照 0.540，而 G0 仅 0.096，证实风格条件携带
+了真实的风格信息。
+
+%\begin{figure}[htbp]
+ % \centering
+ % \includegraphics[width=0.9\textwidth]{figures/q3_gen_eval.pdf}
+  %\caption{生成器对比：(a) 各生成器 C2ST AUC（虚线为理想值 0.5）；
+ %   (b) 真实与生成样本的潜空间 PCA 投影（按风格着色）}
+ % \label{fig:q3_gen_eval}
+%\end{figure}
+
+\subsection{风味指纹生成模块构建}
+
+\subsubsection{感官画像}
+
+对每个风格抽取 1{,}000 个化合物谱，补齐综合指标与内标后送入
+问题一的全数据模型 $f_d$，得到 50 维预测 $\hat z$ 与 0--6 等级，
+汇总为感官画像：各维度的中位数、10\%--90\% 区间与等级分布。
+问题一主模型只用化学特征、不读风格标签，因此画像完全由生成的
+化合物谱决定——这正是后面迁移实验中``感官跟着化学变''的前提。
+
+画像的可信度用留出验证确认：生成器与感官模型在同一训练集上拟合，
+用同一个没见过留出啤酒的模型分别预测生成谱与留出真实啤酒。预运行
+中，22 个风格的生成画像与真实折外预测的 Spearman 平均 0.821；
+题面点名的三个风格为 Tripel 0.963、Lambic 0.893、Kriek 0.736
+（图~\ref{fig:q3_radar}）。
+
+%\begin{figure}[htbp]
+  %\centering
+ % \includegraphics[width=0.95\textwidth]{figures/q3_radar.pdf}
+ % \caption{Tripel、Kriek、Lambic 的感官画像（生成画像中位数与
+  %  10\%--90\% 带，叠加同风格真实啤酒折外预测）}
+ % \label{fig:q3_radar}
+%\end{figure}
+
+\subsubsection{风味指纹}
+
+风格 $s$ 的``风味指纹''由化学与感官两部分组成。化学指纹为标准化
+潜空间偏移
+\begin{equation}
+  \delta_{sj}=\frac{\hat\mu_{sj}-\bar u_j}{\sqrt{\Sigma_{W,jj}}},
+\end{equation}
+即该风格在化合物 $j$ 上偏离全体均值多少个风格内标准差，取
+$|\delta|$ 最大的 10 项（同模块只列最大者），每项附 bootstrap
+90\% 区间与附件~8 的来源、缺陷、老化标签；感官指纹为画像中位数
+偏离全体合并画像最大的维度。化学解释在指纹产生后按偏移方向撰写，
+不预设``某风格该有什么''的预期表，避免循环论证。三个点名风格的
+指纹见图~\ref{fig:q3_fingerprint}。
+
+%\begin{figure}[htbp]
+  %\centering
+  %\includegraphics[width=0.9\textwidth]{figures/q3_fingerprint.pdf}
+ % \caption{风味指纹（左：化学指纹 Top-10 偏移条形图，误差线为
+ %   90\% 区间；右：感官指纹偏移）}
+ % \label{fig:q3_fingerprint}
+%\end{figure}
+
+\subsection{带约束跨风格迁移模块构建}
+
+\subsubsection{缺陷集合与``不恶化''定义}
+
+缺陷约束设两层。\textbf{化学层}为 9 列：附件~8 标注缺陷描述的
+7 个化合物（acetaldehyde、DES、DMS、H$_2$S、MeSH、SO$_2$、
+diacetyl），加题面点名的 4VG 与 trans-2-nonenal。``不恶化''定义
+与题面``超阈值项''的表述对齐：有阈值时迁移后
+$x'_j\le\max(x_j,\theta_j)$——原本超阈的不得再升，原本未超阈的
+不得越线；无阈值时（MeSH、t2n）一律不得增加。\textbf{感官层}为
+附件~3 的 6 个缺陷维度，要求问题一模型的预测等级不升高。两层的
+比较对象都是迁移前的同一款啤酒。数据背景值得注意：H$_2$S 在全部
+Pils/Lager 与 Tripel 中都超阈，DMS 超阈比例达 0.67，缺
+陷约束在几乎所有风格对上都会起作用（462 个风格对中，平移后至少
+违反一项化学约束的啤酒比例中位数为 1.00）。
+
+\subsubsection{迁移映射：潜空间平移}
+
+在共享协方差的高斯假设下，两个风格分布之间使潜空间移动代价最小
+的映射恰是平移：
+\begin{equation}
+  \tilde u=u_b+\Delta_{s\to t},\qquad \Delta_{s\to t}=\hat\mu_t-\hat\mu_s,
+  \qquad \tilde x_j=Q_j(\Phi(\tilde u_j)).
+\end{equation}
+平移的好处直观：每款啤酒保留自己相对本风格的个体偏离
+$u_b-\mu_s$，迁移后成为相对目标风格的同样偏离——``这款 Pils 比
+一般 Pils 更苦''迁移后变成``这款 Tripel 比一般 Tripel 更苦''。
+对照实验说明为何必须在潜空间操作：原尺度均值平移（T3）在
+2{,}475 个单元格中产生 163 个超出观测范围、102 个低于检出下限、
+1 个负浓度的取值。
+
+\subsubsection{化学约束投影}
+
+平移后通常违反化学约束（Pils/Lager$\to$Tripel 中 11/11 款违反）。
+利用 $Q_j\circ\Phi$ 的单调性把上界换到潜空间（$x'_j\le b_j$
+等价于 $u'_j\le\beta_j$），求马氏距离最近的可行点：
+\begin{equation}
+  u^*=\arg\min_{u'}\,(u'-\tilde u)^\top\Sigma_W^{-1}(u'-\tilde u)
+  \quad\text{s.t.}\quad u'_j\le\beta_j,\ j\in\mathcal D_c .
+\end{equation}
+该解有闭式：$u^*$ 等于高斯分布在缺陷坐标压到上界时的
+\textbf{条件均值}——缺陷化合物被压回时，与之共变的化合物按风格
+内协方差一起调整，不会出现``DMS 被压低而它的共变伙伴纹丝不动''
+这种数据中罕见的组合。仅截断缺陷列的做法作为对照（T1/T5）。
+
+\subsubsection{感官约束与迁移强度}
+
+感官层经问题一的树模型计算，不可微，故沿路径
+$u(\alpha)=u_b+\alpha(u^*-u_b)$，$\alpha\in\{0,0.05,\dots,1\}$
+逐点检查 6 个缺陷维度的预测等级，取满足约束的最大 $\alpha^*$
+交付。路径两端均满足化学约束且可行集为凸，整条路径化学层安全；
+$\alpha=0$ 即``保持原谱''，是永远可行的保底输出。交付前在原尺度
+逐列复查两层约束，数值误差导致不可行的点退到下一个可行网格点。
+
+\subsubsection{迁移结果}
+
+Pils/Lager$\to$Tripel 的 11 款逐款报告，预运行汇总见
+表~\ref{tab:q3_transfer} 与图~\ref{fig:q3_transfer}。
+
+\begin{table}[!htbp]
+  \centering\small
+  \caption{Pils/Lager $\to$ Tripel 迁移（预运行，11 款）}
+  \label{tab:q3_transfer}
+  \begin{tabular}{lccl}
+    \toprule
+    方法 & $P(\text{Tripel})$ 中位 & $d^2$ 中位 & 说明 \\
+    \midrule
+    源啤酒 & 0.046 & 283.8 & 迁移前水平 \\
+    T0 平移（无约束） & 0.324 & 162.0 & 11/11 违化学约束，7/11 违感官约束 \\
+    T1 仅截断缺陷列 & 0.292 & 171.9 & 产生罕见化合物组合 \\
+    投影终点 $\alpha=1$ & 0.202 & 166.6 & 有效约束中位 4 个 \\
+    主方法 $\alpha^*$ & 0.130 & 208.3 & $\alpha^*$ 中位 0.70 \\
+    真实 Tripel & 0.269 & 184.0 & 参照（折外判别概率） \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+%\begin{figure}[!htbp]
+ % \centering
+ % \includegraphics[width=0.95\textwidth]{figures/q3_transfer.pdf}
+ % \caption{迁移结果：(a) 潜空间 PCA 上源啤酒 $\to$ 迁移终点的
+  %  轨迹（背景为两风格真实样本）；(b) 逐款 $\alpha^*$ 与目标风格
+  %  概率；(c) 代表性啤酒迁移前后与真实 Tripel 的画像对比}
+  %\label{fig:q3_transfer}
+%\end{figure}
+
+结果读法：无约束平移可把目标风格概率提到 0.324（已达真实 Tripel
+的 0.269），说明平移方向正确；加入缺陷约束后降到 0.130——高于
+源啤酒的 0.046，改善明确，但未达真实 Tripel 水平。起约束作用的
+化学项主要是 H$_2$S、MeSH、t2n（11/11 款）与 DMS（10/11），感官
+项为 metallic、4VG 与 diacetyl。这一``改善但有代价''的结果如实
+报告：它只说明沿本文路径在不恶化缺陷的前提下能走多远，不说明
+化学空间中不存在更好的方案。缺陷表
+（图~\ref{fig:q3_defect}）逐款展示 9 个化学缺陷项迁移前后的取值
+与上界，全部满足``不恶化''。
+
+%\begin{figure}[htbp]
+%  \centering
+ % \includegraphics[width=0.9\textwidth]{figures/q3_defect.pdf}
+ % \caption{缺陷不恶化核查表（行：11 款源啤酒；列：9 个缺陷项；
+ %   色块示迁移前后 OAV 变化，$\checkmark$ 为满足约束）}
+ % \label{fig:q3_defect}
+%\end{figure}
+
+每款啤酒最终归入四类结论（达到参照范围／改善／保持原谱／未改善，
+定义在运行前固定），22$\times$21 个风格对报告各类别比例、
+$\alpha^*$ 分布与目标概率中位数。敏感性运行覆盖协方差结构、
+$(k,\kappa)$ 相邻网格、NA 编码口径、阈值均值/中位口径、化学层
+严格规则（一律不增加）与感官层连续规则等十余项扰动，生成指标与
+迁移结论的变化逐项报告。
+
+问题三最终交付：22 个风格各 1{,}000 个生成化合物谱及感官画像、
+Tripel/Kriek/Lambic 的风味指纹、Pils/Lager$\to$Tripel 的逐款
+迁移报告与全风格对汇总表。
+%================= 问题三 end =================
+%==================== 模型评价（可选） ====================
+\section{模型评价}
+\subsection{模型优点}
+\subsection{模型不足}
+\subsection{灵敏度与鲁棒性分析}
+
+\section{参考文献}
+\begin{thebibliography}{9}
+\bibitem{ref1} 啤酒风味物质代谢相关文献
+\bibitem{ref2} 共表达网络构建相关文献
+\bibitem{ref3} 表格数据条件生成模型相关文献
+\end{thebibliography}
+
+\section{附录}
+附录放置Python核心代码、补充图表、额外实验结果。
+
+\end{document}

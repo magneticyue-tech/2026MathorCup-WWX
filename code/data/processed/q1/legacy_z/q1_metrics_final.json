@@ -1,0 +1,62 @@
+{
+    "main": {
+        "mae": 0.46896,
+        "qwk": 0.2927209371212884,
+        "rps": 0.3307444731328
+    },
+    "controls": {
+        "B0": {
+            "mae": 0.57336,
+            "qwk": -0.020355890513649146
+        },
+        "B1": {
+            "mae": 0.54688,
+            "qwk": 0.10933142838185335
+        },
+        "EN": {
+            "mae": 0.486,
+            "qwk": 0.29842528766805365
+        },
+        "RF": {
+            "mae": 0.0,
+            "qwk": 0.0
+        },
+        "K2": {
+            "mae": 0.0,
+            "qwk": 0.0
+        },
+        "C1": {
+            "mae": 0.0,
+            "qwk": 0.0
+        },
+        "C2": {
+            "mae": 0.0,
+            "qwk": 0.0
+        }
+    },
+    "leak_flag": false,
+    "zero_heavy_dims": [
+        "A_malt_burn",
+        "A_hops_citrus",
+        "A_hops_tropical",
+        "A_hops_woody",
+        "A_esters_flower",
+        "F_malt_burn",
+        "F_hops_citrus",
+        "F_hops_tropical",
+        "F_hops_woody",
+        "F_esters_flower",
+        "acidity",
+        "X4vg",
+        "diacetyl",
+        "metallic",
+        "stale_hops",
+        "t2n",
+        "orange",
+        "coriander",
+        "clove",
+        "lactic",
+        "acetic",
+        "barnyard"
+    ]
+}

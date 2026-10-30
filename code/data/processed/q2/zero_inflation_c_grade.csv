@@ -1,0 +1,2 @@
+dimension,n_all,zero_share,eligible,top1_all,r_all,n_above_zero,top1_above_zero,r_above_zero,r_above_zero_of_top1_all,abs_r_increased,note
+t2n,250,0.212,False,beta.phellandrene,-0.21196086549149362,,,,,,不适用：x̄=0 的啤酒占比 0.212 < 0.3，不满足方法 §6.6 的检查条件

@@ -1,0 +1,2944 @@
+{
+ "metrics": {
+  "real.trtr": {
+   "estimate": 0.5496000000000001,
+   "ci95": {
+    "lo": 0.492,
+    "hi": 0.6056
+   },
+   "repeat_mean": 0.5496000000000001,
+   "repeat_min": 0.528,
+   "repeat_max": 0.564,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "real.real_floor_row": {
+   "estimate": 29.0,
+   "ci95": {
+    "lo": 27.0,
+    "hi": 30.0
+   },
+   "repeat_mean": 29.0,
+   "repeat_min": 29.0,
+   "repeat_max": 29.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "real.real_module_rho": {
+   "estimate": 0.7240746289666014,
+   "ci95": {
+    "lo": 0.70431467565113,
+    "hi": 0.738655494722273
+   },
+   "repeat_mean": 0.7240746289666014,
+   "repeat_min": 0.7240621380203976,
+   "repeat_max": 0.7240798364010095,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "real.rr_auc_marg": {
+   "estimate": 0.49356799999999995,
+   "ci95": {
+    "lo": 0.45983707505617705,
+    "hi": 0.5243729675717381
+   },
+   "repeat_mean": 0.49356799999999995,
+   "repeat_min": 0.45328,
+   "repeat_max": 0.55424,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "real.rr_auc_cond": {
+   "estimate": 0.501024,
+   "ci95": {
+    "lo": 0.4676663720467723,
+    "hi": 0.5298148378694318
+   },
+   "repeat_mean": 0.501024,
+   "repeat_min": 0.4652800000000001,
+   "repeat_max": 0.57376,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.auc_marg": {
+   "estimate": 0.5894000000000001,
+   "ci95": {
+    "lo": 0.5533352800000001,
+    "hi": 0.61827748
+   },
+   "repeat_mean": 0.5894000000000001,
+   "repeat_min": 0.5673600000000001,
+   "repeat_max": 0.62332,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.auc_cond": {
+   "estimate": 0.575776,
+   "ci95": {
+    "lo": 0.54328184,
+    "hi": 0.6086294
+   },
+   "repeat_mean": 0.575776,
+   "repeat_min": 0.5619599999999999,
+   "repeat_max": 0.58788,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.dcr_ratio": {
+   "estimate": 1.1111229713713489,
+   "ci95": {
+    "lo": 1.0929992578069996,
+    "hi": 1.1294527712301101
+   },
+   "repeat_mean": 1.1111229713713489,
+   "repeat_min": 1.105926472125676,
+   "repeat_max": 1.1142856052635968,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.near_copy": {
+   "estimate": 0.0,
+   "ci95": {
+    "lo": 0.0,
+    "hi": 0.0
+   },
+   "repeat_mean": 0.0,
+   "repeat_min": 0.0,
+   "repeat_max": 0.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.trts": {
+   "estimate": 0.6512,
+   "ci95": {
+    "lo": 0.612,
+    "hi": 0.6936
+   },
+   "repeat_mean": 0.6512,
+   "repeat_min": 0.628,
+   "repeat_max": 0.692,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.tstr": {
+   "estimate": 0.4808,
+   "ci95": {
+    "lo": 0.42718,
+    "hi": 0.5344
+   },
+   "repeat_mean": 0.4808,
+   "repeat_min": 0.448,
+   "repeat_max": 0.504,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.floor_err": {
+   "estimate": 0.020986466165413536,
+   "ci95": {
+    "lo": 0.02874778715120052,
+    "hi": 0.036619472641883095
+   },
+   "repeat_mean": 0.020986466165413536,
+   "repeat_min": 0.020691729323308275,
+   "repeat_max": 0.021413533834586464,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.floor_row": {
+   "estimate": 28.6,
+   "ci95": {
+    "lo": 27.7,
+    "hi": 29.3
+   },
+   "repeat_mean": 28.6,
+   "repeat_min": 28.0,
+   "repeat_max": 29.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.corr_err": {
+   "estimate": 0.06694945679222226,
+   "ci95": {
+    "lo": 0.08994953193590428,
+    "hi": 0.10363480993385835
+   },
+   "repeat_mean": 0.06694945679222226,
+   "repeat_min": 0.06507300901287359,
+   "repeat_max": 0.0677906018943241,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.wcorr_err": {
+   "estimate": 0.0666240978962082,
+   "ci95": {
+    "lo": 0.09457648612921825,
+    "hi": 0.1092473968760968
+   },
+   "repeat_mean": 0.0666240978962082,
+   "repeat_min": 0.06356560756546414,
+   "repeat_max": 0.06778168073437855,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "main.module_rho": {
+   "estimate": 0.666872627548005,
+   "ci95": {
+    "lo": 0.6543441926035247,
+    "hi": 0.675474350619611
+   },
+   "repeat_mean": 0.666872627548005,
+   "repeat_min": 0.6545301131215477,
+   "repeat_max": 0.6809772647383419,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.auc_marg": {
+   "estimate": 0.5701920000000001,
+   "ci95": {
+    "lo": 0.53873976,
+    "hi": 0.6027324399999999
+   },
+   "repeat_mean": 0.5701920000000001,
+   "repeat_min": 0.5212,
+   "repeat_max": 0.6022800000000001,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.auc_cond": {
+   "estimate": 0.57492,
+   "ci95": {
+    "lo": 0.5435753200000001,
+    "hi": 0.6069568799999999
+   },
+   "repeat_mean": 0.57492,
+   "repeat_min": 0.5395599999999999,
+   "repeat_max": 0.6115200000000001,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.dcr_ratio": {
+   "estimate": 1.1129993774947988,
+   "ci95": {
+    "lo": 1.0943679605856307,
+    "hi": 1.130942204880303
+   },
+   "repeat_mean": 1.1129993774947988,
+   "repeat_min": 1.1100037332312154,
+   "repeat_max": 1.1159086718850035,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.near_copy": {
+   "estimate": 0.0,
+   "ci95": {
+    "lo": 0.0,
+    "hi": 0.0
+   },
+   "repeat_mean": 0.0,
+   "repeat_min": 0.0,
+   "repeat_max": 0.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.trts": {
+   "estimate": 0.6544000000000001,
+   "ci95": {
+    "lo": 0.6152,
+    "hi": 0.6944000000000001
+   },
+   "repeat_mean": 0.6544000000000001,
+   "repeat_min": 0.616,
+   "repeat_max": 0.7,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.tstr": {
+   "estimate": 0.472,
+   "ci95": {
+    "lo": 0.4192,
+    "hi": 0.52482
+   },
+   "repeat_mean": 0.472,
+   "repeat_min": 0.444,
+   "repeat_max": 0.492,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.floor_err": {
+   "estimate": 0.020577443609022555,
+   "ci95": {
+    "lo": 0.028648392130257803,
+    "hi": 0.03631903980821398
+   },
+   "repeat_mean": 0.020577443609022555,
+   "repeat_min": 0.018255639097744362,
+   "repeat_max": 0.023518796992481203,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.floor_row": {
+   "estimate": 28.5,
+   "ci95": {
+    "lo": 27.3,
+    "hi": 28.9
+   },
+   "repeat_mean": 28.5,
+   "repeat_min": 28.0,
+   "repeat_max": 29.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.corr_err": {
+   "estimate": 0.06593271105767247,
+   "ci95": {
+    "lo": 0.08945344699851229,
+    "hi": 0.10229538617661316
+   },
+   "repeat_mean": 0.06593271105767247,
+   "repeat_min": 0.06372800989224393,
+   "repeat_max": 0.06825846360513796,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.wcorr_err": {
+   "estimate": 0.0661996926472912,
+   "ci95": {
+    "lo": 0.09466218427186221,
+    "hi": 0.10821943515351905
+   },
+   "repeat_mean": 0.0661996926472912,
+   "repeat_min": 0.0634710567423072,
+   "repeat_max": 0.06794000865262009,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "pure_fa.module_rho": {
+   "estimate": 0.6307269997599458,
+   "ci95": {
+    "lo": 0.6170642292830792,
+    "hi": 0.6398576352321154
+   },
+   "repeat_mean": 0.6307269997599458,
+   "repeat_min": 0.620502094443437,
+   "repeat_max": 0.6354340705472735,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.auc_marg": {
+   "estimate": 0.6419600000000001,
+   "ci95": {
+    "lo": 0.6086574799999999,
+    "hi": 0.6689531599999999
+   },
+   "repeat_mean": 0.6419600000000001,
+   "repeat_min": 0.62684,
+   "repeat_max": 0.65896,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.auc_cond": {
+   "estimate": 0.634024,
+   "ci95": {
+    "lo": 0.6034401599999999,
+    "hi": 0.6634969199999999
+   },
+   "repeat_mean": 0.634024,
+   "repeat_min": 0.6156400000000001,
+   "repeat_max": 0.653,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.dcr_ratio": {
+   "estimate": 1.150441909002172,
+   "ci95": {
+    "lo": 1.1298850761648769,
+    "hi": 1.1710381060813293
+   },
+   "repeat_mean": 1.150441909002172,
+   "repeat_min": 1.143807113135251,
+   "repeat_max": 1.157296368088495,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.near_copy": {
+   "estimate": 0.0,
+   "ci95": {
+    "lo": 0.0,
+    "hi": 0.0
+   },
+   "repeat_mean": 0.0,
+   "repeat_min": 0.0,
+   "repeat_max": 0.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.trts": {
+   "estimate": 0.08320000000000001,
+   "ci95": {
+    "lo": 0.0648,
+    "hi": 0.1016
+   },
+   "repeat_mean": 0.08320000000000001,
+   "repeat_min": 0.068,
+   "repeat_max": 0.1,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.tstr": {
+   "estimate": 0.11199999999999999,
+   "ci95": {
+    "lo": 0.08480000000000001,
+    "hi": 0.1400199999999999
+   },
+   "repeat_mean": 0.11199999999999999,
+   "repeat_min": 0.072,
+   "repeat_max": 0.144,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.floor_err": {
+   "estimate": 0.02174436090225564,
+   "ci95": {
+    "lo": 0.02968677237491191,
+    "hi": 0.03747813559322034
+   },
+   "repeat_mean": 0.02174436090225564,
+   "repeat_min": 0.020180451127819545,
+   "repeat_max": 0.023037593984962405,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.floor_row": {
+   "estimate": 28.0,
+   "ci95": {
+    "lo": 27.3,
+    "hi": 28.8
+   },
+   "repeat_mean": 28.0,
+   "repeat_min": 27.0,
+   "repeat_max": 29.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.corr_err": {
+   "estimate": 0.06300844954005158,
+   "ci95": {
+    "lo": 0.08868986204981745,
+    "hi": 0.10027787213057503
+   },
+   "repeat_mean": 0.06300844954005158,
+   "repeat_min": 0.0602520583818887,
+   "repeat_max": 0.06728892004941919,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.wcorr_err": {
+   "estimate": 0.09589761912958512,
+   "ci95": {
+    "lo": 0.11693736036323948,
+    "hi": 0.13028700443691635
+   },
+   "repeat_mean": 0.09589761912958512,
+   "repeat_min": 0.09107413923161836,
+   "repeat_max": 0.10352906537440446,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G0.module_rho": {
+   "estimate": 0.6902585309688326,
+   "ci95": {
+    "lo": 0.6787820236061385,
+    "hi": 0.6971046427733091
+   },
+   "repeat_mean": 0.6902585309688326,
+   "repeat_min": 0.6804113784932112,
+   "repeat_max": 0.6997045426201616,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.auc_marg": {
+   "estimate": 0.26368,
+   "ci95": {
+    "lo": 0.24433307999999998,
+    "hi": 0.28381399999999996
+   },
+   "repeat_mean": 0.26368,
+   "repeat_min": 0.21532,
+   "repeat_max": 0.2904,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.auc_cond": {
+   "estimate": 0.26288,
+   "ci95": {
+    "lo": 0.24364360000000002,
+    "hi": 0.28415572
+   },
+   "repeat_mean": 0.26288,
+   "repeat_min": 0.21183999999999997,
+   "repeat_max": 0.29072000000000003,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.dcr_ratio": {
+   "estimate": 0.0,
+   "ci95": {
+    "lo": 0.0,
+    "hi": 7.526443883838262e-09
+   },
+   "repeat_mean": 0.0,
+   "repeat_min": 0.0,
+   "repeat_max": 0.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.near_copy": {
+   "estimate": 1.0,
+   "ci95": {
+    "lo": 1.0,
+    "hi": 1.0
+   },
+   "repeat_mean": 1.0,
+   "repeat_min": 1.0,
+   "repeat_max": 1.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.trts": {
+   "estimate": 1.0,
+   "ci95": {
+    "lo": 1.0,
+    "hi": 1.0
+   },
+   "repeat_mean": 1.0,
+   "repeat_min": 1.0,
+   "repeat_max": 1.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.tstr": {
+   "estimate": 0.5104,
+   "ci95": {
+    "lo": 0.45680000000000004,
+    "hi": 0.5624
+   },
+   "repeat_mean": 0.5104,
+   "repeat_min": 0.496,
+   "repeat_max": 0.528,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.floor_err": {
+   "estimate": 0.014207518796992483,
+   "ci95": {
+    "lo": 0.023656248708677687,
+    "hi": 0.03192949019607843
+   },
+   "repeat_mean": 0.014207518796992483,
+   "repeat_min": 0.012571428571428572,
+   "repeat_max": 0.015729323308270673,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.floor_row": {
+   "estimate": 28.4,
+   "ci95": {
+    "lo": 27.4,
+    "hi": 29.2
+   },
+   "repeat_mean": 28.4,
+   "repeat_min": 28.0,
+   "repeat_max": 29.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.corr_err": {
+   "estimate": 0.04432925943927197,
+   "ci95": {
+    "lo": 0.07415207662303014,
+    "hi": 0.08799475133981723
+   },
+   "repeat_mean": 0.04432925943927197,
+   "repeat_min": 0.03870169004758726,
+   "repeat_max": 0.047719425863831655,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.wcorr_err": {
+   "estimate": 0.0515348675634255,
+   "ci95": {
+    "lo": 0.08618971668993754,
+    "hi": 0.1017288704067507
+   },
+   "repeat_mean": 0.0515348675634255,
+   "repeat_min": 0.0447033983250582,
+   "repeat_max": 0.05551012326883978,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G1.module_rho": {
+   "estimate": 0.7189712483862143,
+   "ci95": {
+    "lo": 0.7075903712937205,
+    "hi": 0.7260573678185573
+   },
+   "repeat_mean": 0.7189712483862143,
+   "repeat_min": 0.7103193908762435,
+   "repeat_max": 0.7250018380305995,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.auc_marg": {
+   "estimate": 0.667856,
+   "ci95": {
+    "lo": 0.6255476,
+    "hi": 0.71466076
+   },
+   "repeat_mean": 0.667856,
+   "repeat_min": 0.65964,
+   "repeat_max": 0.6865600000000001,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.auc_cond": {
+   "estimate": 0.660224,
+   "ci95": {
+    "lo": 0.6174240399999998,
+    "hi": 0.7091612
+   },
+   "repeat_mean": 0.660224,
+   "repeat_min": 0.6371600000000001,
+   "repeat_max": 0.6753200000000001,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.dcr_ratio": {
+   "estimate": 1.1998322366032703,
+   "ci95": {
+    "lo": 1.1737149778594682,
+    "hi": 1.2232379009299026
+   },
+   "repeat_mean": 1.1998322366032703,
+   "repeat_min": 1.1906072953444151,
+   "repeat_max": 1.2054898757110366,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.near_copy": {
+   "estimate": 0.0024000000000000002,
+   "ci95": {
+    "lo": 0.0,
+    "hi": 0.008
+   },
+   "repeat_mean": 0.0024000000000000002,
+   "repeat_min": 0.0,
+   "repeat_max": 0.008,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.trts": {
+   "estimate": 0.9944,
+   "ci95": {
+    "lo": 0.9896,
+    "hi": 0.9984
+   },
+   "repeat_mean": 0.9944,
+   "repeat_min": 0.992,
+   "repeat_max": 1.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.tstr": {
+   "estimate": 0.5136000000000001,
+   "ci95": {
+    "lo": 0.45997999999999994,
+    "hi": 0.5704
+   },
+   "repeat_mean": 0.5136000000000001,
+   "repeat_min": 0.5,
+   "repeat_max": 0.528,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.floor_err": {
+   "estimate": 0.015362406015037595,
+   "ci95": {
+    "lo": 0.02520242624088858,
+    "hi": 0.032282639802631574
+   },
+   "repeat_mean": 0.015362406015037595,
+   "repeat_min": 0.014315789473684212,
+   "repeat_max": 0.016781954887218044,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.floor_row": {
+   "estimate": 29.6,
+   "ci95": {
+    "lo": 29.1,
+    "hi": 30.2
+   },
+   "repeat_mean": 29.6,
+   "repeat_min": 29.0,
+   "repeat_max": 30.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.corr_err": {
+   "estimate": 0.12079620684438755,
+   "ci95": {
+    "lo": 0.13040098480124837,
+    "hi": 0.15218116096707293
+   },
+   "repeat_mean": 0.12079620684438755,
+   "repeat_min": 0.11964258525411964,
+   "repeat_max": 0.12180461683886033,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.wcorr_err": {
+   "estimate": 0.1537243180993701,
+   "ci95": {
+    "lo": 0.16152732530773894,
+    "hi": 0.1881454648372697
+   },
+   "repeat_mean": 0.1537243180993701,
+   "repeat_min": 0.15225370092818485,
+   "repeat_max": 0.1544613260744634,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G2.module_rho": {
+   "estimate": 0.2562142425934594,
+   "ci95": {
+    "lo": 0.2297037233016151,
+    "hi": 0.28054564363871687
+   },
+   "repeat_mean": 0.2562142425934594,
+   "repeat_min": 0.2435890164669093,
+   "repeat_max": 0.265091492261855,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.auc_marg": {
+   "estimate": 0.35596000000000005,
+   "ci95": {
+    "lo": 0.32792068,
+    "hi": 0.38031576
+   },
+   "repeat_mean": 0.35596000000000005,
+   "repeat_min": 0.3248,
+   "repeat_max": 0.38148,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.auc_cond": {
+   "estimate": 0.35459199999999996,
+   "ci95": {
+    "lo": 0.32688508,
+    "hi": 0.37947904000000005
+   },
+   "repeat_mean": 0.35459199999999996,
+   "repeat_min": 0.32524000000000003,
+   "repeat_max": 0.38316,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.dcr_ratio": {
+   "estimate": 0.298810488296328,
+   "ci95": {
+    "lo": 0.276706947186714,
+    "hi": 0.3264879694945669
+   },
+   "repeat_mean": 0.298810488296328,
+   "repeat_min": 0.2771446606124542,
+   "repeat_max": 0.32442685756330863,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.near_copy": {
+   "estimate": 0.9608000000000001,
+   "ci95": {
+    "lo": 0.9463999999999999,
+    "hi": 0.9768000000000001
+   },
+   "repeat_mean": 0.9608000000000001,
+   "repeat_min": 0.944,
+   "repeat_max": 0.984,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.trts": {
+   "estimate": 0.9888,
+   "ci95": {
+    "lo": 0.9823999999999999,
+    "hi": 0.9944
+   },
+   "repeat_mean": 0.9888,
+   "repeat_min": 0.976,
+   "repeat_max": 1.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.tstr": {
+   "estimate": 0.5328,
+   "ci95": {
+    "lo": 0.47837999999999997,
+    "hi": 0.5856
+   },
+   "repeat_mean": 0.5328,
+   "repeat_min": 0.528,
+   "repeat_max": 0.54,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.floor_err": {
+   "estimate": 0.02591879699248121,
+   "ci95": {
+    "lo": 0.030257547862575403,
+    "hi": 0.041045598907735126
+   },
+   "repeat_mean": 0.02591879699248121,
+   "repeat_min": 0.022646616541353387,
+   "repeat_max": 0.029263157894736845,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.floor_row": {
+   "estimate": 28.0,
+   "ci95": {
+    "lo": 27.1,
+    "hi": 28.6
+   },
+   "repeat_mean": 28.0,
+   "repeat_min": 27.0,
+   "repeat_max": 29.0,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.corr_err": {
+   "estimate": 0.04546342157008758,
+   "ci95": {
+    "lo": 0.07491610853446523,
+    "hi": 0.08856626885435694
+   },
+   "repeat_mean": 0.04546342157008758,
+   "repeat_min": 0.0427083144847006,
+   "repeat_max": 0.047307401800776756,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.wcorr_err": {
+   "estimate": 0.05065141497066013,
+   "ci95": {
+    "lo": 0.08526472955133998,
+    "hi": 0.10106656240679864
+   },
+   "repeat_mean": 0.05065141497066013,
+   "repeat_min": 0.04796608829396003,
+   "repeat_max": 0.05371211901219318,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  },
+  "G3.module_rho": {
+   "estimate": 0.7290869972717214,
+   "ci95": {
+    "lo": 0.7172477066014078,
+    "hi": 0.7356084157506454
+   },
+   "repeat_mean": 0.7290869972717214,
+   "repeat_min": 0.7208128193009551,
+   "repeat_max": 0.739405087510657,
+   "bootstrap_unit": "beer_id",
+   "n_boot": 2000,
+   "interval_scope": "conditional_on_fitted_models_and_splits"
+  }
+ },
+ "permutation": {
+  "main.marg": {
+   "perm_p": 0.01691542288557214,
+   "perm_q95": 0.5617216,
+   "perm_p_rep": [
+    0.03482587064676617,
+    0.029850746268656716,
+    0.009950248756218905,
+    0.004975124378109453,
+    0.004975124378109453
+   ],
+   "detected_frac": 1.0
+  },
+  "main.cond": {
+   "perm_p": 0.031840796019900496,
+   "perm_q95": 0.5609683999999999,
+   "perm_p_rep": [
+    0.04477611940298507,
+    0.01990049751243781,
+    0.01990049751243781,
+    0.06467661691542288,
+    0.009950248756218905
+   ],
+   "detected_frac": 0.8
+  },
+  "pure_fa.marg": {
+   "perm_p": 0.07761194029850746,
+   "perm_q95": 0.5606232,
+   "perm_p_rep": [
+    0.004975124378109453,
+    0.31840796019900497,
+    0.024875621890547265,
+    0.014925373134328358,
+    0.024875621890547265
+   ],
+   "detected_frac": 0.8
+  },
+  "pure_fa.cond": {
+   "perm_p": 0.05273631840796019,
+   "perm_q95": 0.5599304,
+   "perm_p_rep": [
+    0.024875621890547265,
+    0.1691542288557214,
+    0.05970149253731343,
+    0.004975124378109453,
+    0.004975124378109453
+   ],
+   "detected_frac": 0.6
+  },
+  "G0.marg": {
+   "perm_p": 0.004975124378109453,
+   "perm_q95": 0.5583148,
+   "perm_p_rep": [
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453
+   ],
+   "detected_frac": 1.0
+  },
+  "G0.cond": {
+   "perm_p": 0.004975124378109453,
+   "perm_q95": 0.5581303999999998,
+   "perm_p_rep": [
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453
+   ],
+   "detected_frac": 1.0
+  },
+  "G1.marg": {
+   "perm_p": 1.0,
+   "perm_q95": 0.5536407999999999,
+   "perm_p_rep": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "detected_frac": 0.0
+  },
+  "G1.cond": {
+   "perm_p": 1.0,
+   "perm_q95": 0.5532819999999999,
+   "perm_p_rep": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "detected_frac": 0.0
+  },
+  "G2.marg": {
+   "perm_p": 0.004975124378109453,
+   "perm_q95": 0.5580139999999999,
+   "perm_p_rep": [
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453
+   ],
+   "detected_frac": 1.0
+  },
+  "G2.cond": {
+   "perm_p": 0.004975124378109453,
+   "perm_q95": 0.5584247999999999,
+   "perm_p_rep": [
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453,
+    0.004975124378109453
+   ],
+   "detected_frac": 1.0
+  },
+  "G3.marg": {
+   "perm_p": 1.0,
+   "perm_q95": 0.5585643999999998,
+   "perm_p_rep": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "detected_frac": 0.0
+  },
+  "G3.cond": {
+   "perm_p": 1.0,
+   "perm_q95": 0.5575219999999999,
+   "perm_p_rep": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "detected_frac": 0.0
+  }
+ },
+ "acceptance": {
+  "a": false,
+  "b": true,
+  "c": true,
+  "d": true,
+  "e": true
+ },
+ "acceptance_basis": {
+  "main": {
+   "auc_marg": 0.5894000000000001,
+   "auc_cond": 0.575776,
+   "dcr_ratio": 1.1111229713713489,
+   "near_copy": 0.0,
+   "trts": 0.6512,
+   "tstr": 0.4808,
+   "floor_err": 0.020986466165413536,
+   "floor_row": 28.6,
+   "corr_err": 0.06694945679222226,
+   "wcorr_err": 0.0666240978962082,
+   "module_rho": 0.666872627548005
+  },
+  "pure_fa": {
+   "auc_marg": 0.5701920000000001,
+   "auc_cond": 0.57492,
+   "dcr_ratio": 1.1129993774947988,
+   "near_copy": 0.0,
+   "trts": 0.6544000000000001,
+   "tstr": 0.472,
+   "floor_err": 0.020577443609022555,
+   "floor_row": 28.5,
+   "corr_err": 0.06593271105767247,
+   "wcorr_err": 0.0661996926472912,
+   "module_rho": 0.6307269997599458
+  },
+  "G0": {
+   "auc_marg": 0.6419600000000001,
+   "auc_cond": 0.634024,
+   "dcr_ratio": 1.150441909002172,
+   "near_copy": 0.0,
+   "trts": 0.08320000000000001,
+   "tstr": 0.11199999999999999,
+   "floor_err": 0.02174436090225564,
+   "floor_row": 28.0,
+   "corr_err": 0.06300844954005158,
+   "wcorr_err": 0.09589761912958512,
+   "module_rho": 0.6902585309688326
+  },
+  "G1": {
+   "auc_marg": 0.26368,
+   "auc_cond": 0.26288,
+   "dcr_ratio": 0.0,
+   "near_copy": 1.0,
+   "trts": 1.0,
+   "tstr": 0.5104,
+   "floor_err": 0.014207518796992483,
+   "floor_row": 28.4,
+   "corr_err": 0.04432925943927197,
+   "wcorr_err": 0.0515348675634255,
+   "module_rho": 0.7189712483862143
+  },
+  "G2": {
+   "auc_marg": 0.667856,
+   "auc_cond": 0.660224,
+   "dcr_ratio": 1.1998322366032703,
+   "near_copy": 0.0024000000000000002,
+   "trts": 0.9944,
+   "tstr": 0.5136000000000001,
+   "floor_err": 0.015362406015037595,
+   "floor_row": 29.6,
+   "corr_err": 0.12079620684438755,
+   "wcorr_err": 0.1537243180993701,
+   "module_rho": 0.2562142425934594
+  },
+  "G3": {
+   "auc_marg": 0.35596000000000005,
+   "auc_cond": 0.35459199999999996,
+   "dcr_ratio": 0.298810488296328,
+   "near_copy": 0.9608000000000001,
+   "trts": 0.9888,
+   "tstr": 0.5328,
+   "floor_err": 0.02591879699248121,
+   "floor_row": 28.0,
+   "corr_err": 0.04546342157008758,
+   "wcorr_err": 0.05065141497066013,
+   "module_rho": 0.7290869972717214
+  },
+  "trtr": 0.5496000000000001,
+  "real_floor_row": 29.0,
+  "real_module_rho": 0.7240746289666014,
+  "rr_auc_marg": 0.49356799999999995,
+  "rr_auc_cond": 0.501024
+ },
+ "near_duplicate_note": {
+  "G1": "生成池含训练啤酒的近重复样本，AUC 低于 0.5 与 TRTS 不可比",
+  "G3": "生成池含训练啤酒的近重复样本，AUC 低于 0.5 与 TRTS 不可比"
+ },
+ "pure_equals_main": [
+  false,
+  false,
+  false,
+  false,
+  false
+ ],
+ "per_style": {
+  "main": {
+   "Amber": {
+    "auc": 0.29333333333333333,
+    "ci95": [
+     0.1881770833333333,
+     0.4
+    ],
+    "perm_p": 0.9014925373134328,
+    "perm_q95": 0.7839999999999997,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Blond": {
+    "auc": 0.4311904761904762,
+    "ci95": [
+     0.3535874089490115,
+     0.5303850156087409
+    ],
+    "perm_p": 0.6955223880597015,
+    "perm_q95": 0.6713769841269841,
+    "n": 31,
+    "evidence_limited": false
+   },
+   "Brett/cofermented": {
+    "auc": 0.34,
+    "ci95": [
+     0.14444444444444446,
+     0.4111111111111111
+    ],
+    "perm_p": 0.7432835820895523,
+    "perm_q95": 0.9199999999999999,
+    "n": 6,
+    "evidence_limited": false
+   },
+   "Brown": {
+    "auc": 0.15,
+    "ci95": [
+     0.11246527777777776,
+     0.24585069444444435
+    ],
+    "perm_p": 0.9472636815920398,
+    "perm_q95": 0.7771666666666665,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Brut": {
+    "auc": 0.4,
+    "ci95": [
+     0.35,
+     0.7
+    ],
+    "perm_p": 0.6805970149253732,
+    "perm_q95": 1.0,
+    "n": 4,
+    "evidence_limited": true
+   },
+   "Christmas": {
+    "auc": 0.205,
+    "ci95": [
+     0.1,
+     0.35802469135802467
+    ],
+    "perm_p": 0.9044776119402986,
+    "perm_q95": 0.8200000000000001,
+    "n": 9,
+    "evidence_limited": false
+   },
+   "Dubbel": {
+    "auc": 0.275,
+    "ci95": [
+     0.14795,
+     0.392
+    ],
+    "perm_p": 0.7980099502487562,
+    "perm_q95": 0.79,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Faro": {
+    "auc": 0.8666666666666666,
+    "ci95": [
+     0.5777777777777778,
+     1.0
+    ],
+    "perm_p": 0.34328358208955223,
+    "perm_q95": 1.0,
+    "n": 3,
+    "evidence_limited": true
+   },
+   "Flanders old brown": {
+    "auc": 0.38,
+    "ci95": [
+     0.22400000000000003,
+     0.568
+    ],
+    "perm_p": 0.6776119402985075,
+    "perm_q95": 0.9800000000000001,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Fruitbeer": {
+    "auc": 0.6799999999999999,
+    "ci95": [
+     0.31871093749999996,
+     0.8015625
+    ],
+    "perm_p": 0.32238805970149254,
+    "perm_q95": 0.8604999999999998,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Hoppy": {
+    "auc": 0.34111111111111103,
+    "ci95": [
+     0.20829584775086504,
+     0.47304498269896184
+    ],
+    "perm_p": 0.8457711442786071,
+    "perm_q95": 0.7224999999999999,
+    "n": 17,
+    "evidence_limited": false
+   },
+   "Kriek": {
+    "auc": 0.45,
+    "ci95": [
+     0.22197500000000003,
+     0.5940000000000001
+    ],
+    "perm_p": 0.554228855721393,
+    "perm_q95": 0.78025,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Lambic": {
+    "auc": 0.37666666666666665,
+    "ci95": [
+     0.2347107438016529,
+     0.5933884297520661
+    ],
+    "perm_p": 0.7024875621890547,
+    "perm_q95": 0.7839166666666665,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Low/No alcohol": {
+    "auc": 0.62,
+    "ci95": [
+     0.365625,
+     0.825
+    ],
+    "perm_p": 0.4159203980099502,
+    "perm_q95": 0.87525,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Pils/Lager": {
+    "auc": 0.6533333333333333,
+    "ci95": [
+     0.47847107438016523,
+     0.7834710743801653
+    ],
+    "perm_p": 0.27860696517412936,
+    "perm_q95": 0.7935,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Saison": {
+    "auc": 0.305,
+    "ci95": [
+     0.191975,
+     0.3440249999999999
+    ],
+    "perm_p": 0.8507462686567164,
+    "perm_q95": 0.8152499999999998,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Scotch": {
+    "auc": 0.36,
+    "ci95": [
+     0.11200000000000002,
+     0.704
+    ],
+    "perm_p": 0.7114427860696517,
+    "perm_q95": 0.9619999999999994,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Stout/Porter": {
+    "auc": 0.1811111111111111,
+    "ci95": [
+     0.13312130177514792,
+     0.23255917159763306
+    ],
+    "perm_p": 0.9751243781094528,
+    "perm_q95": 0.7806111111111109,
+    "n": 13,
+    "evidence_limited": false
+   },
+   "Strong ale": {
+    "auc": 0.18833333333333332,
+    "ci95": [
+     0.10336419753086419,
+     0.27624228395061723
+    ],
+    "perm_p": 0.9631840796019899,
+    "perm_q95": 0.7235208333333333,
+    "n": 18,
+    "evidence_limited": false
+   },
+   "Tripel": {
+    "auc": 0.4064444444444445,
+    "ci95": [
+     0.3128762755102041,
+     0.49082589285714273
+    ],
+    "perm_p": 0.7293532338308457,
+    "perm_q95": 0.6761777777777778,
+    "n": 28,
+    "evidence_limited": false
+   },
+   "West Flanders ale": {
+    "auc": 0.5599999999999999,
+    "ci95": [
+     0.26112244897959186,
+     0.6979591836734694
+    ],
+    "perm_p": 0.43184079601990044,
+    "perm_q95": 0.8809999999999997,
+    "n": 7,
+    "evidence_limited": false
+   },
+   "Wheat": {
+    "auc": 0.4499999999999999,
+    "ci95": [
+     0.25972222222222224,
+     0.5695138888888884
+    ],
+    "perm_p": 0.6278606965174129,
+    "perm_q95": 0.8001666666666665,
+    "n": 12,
+    "evidence_limited": false
+   }
+  },
+  "pure_fa": {
+   "Amber": {
+    "auc": 0.3366666666666666,
+    "ci95": [
+     0.21526041666666665,
+     0.4382465277777775
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Blond": {
+    "auc": 0.45111111111111113,
+    "ci95": [
+     0.3599089490114464,
+     0.5252887617065557
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 31,
+    "evidence_limited": false
+   },
+   "Brett/cofermented": {
+    "auc": 0.28,
+    "ci95": [
+     0.08888888888888889,
+     0.5361111111111112
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 6,
+    "evidence_limited": false
+   },
+   "Brown": {
+    "auc": 0.15,
+    "ci95": [
+     0.057638888888888906,
+     0.27225694444444426
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Brut": {
+    "auc": 0.425,
+    "ci95": [
+     0.35,
+     0.7
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 4,
+    "evidence_limited": true
+   },
+   "Christmas": {
+    "auc": 0.27999999999999997,
+    "ci95": [
+     0.09629629629629631,
+     0.3802777777777776
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 9,
+    "evidence_limited": false
+   },
+   "Dubbel": {
+    "auc": 0.19,
+    "ci95": [
+     0.08399999999999999,
+     0.372
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Faro": {
+    "auc": 0.3333333333333333,
+    "ci95": [
+     0.2,
+     0.6
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 3,
+    "evidence_limited": true
+   },
+   "Flanders old brown": {
+    "auc": 0.4600000000000001,
+    "ci95": [
+     0.292,
+     0.696
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Fruitbeer": {
+    "auc": 0.47000000000000003,
+    "ci95": [
+     0.1421484375,
+     0.5796875
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Hoppy": {
+    "auc": 0.3377777777777778,
+    "ci95": [
+     0.2186764705882353,
+     0.47475778546712794
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 17,
+    "evidence_limited": false
+   },
+   "Kriek": {
+    "auc": 0.43,
+    "ci95": [
+     0.23399999999999993,
+     0.6480249999999999
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Lambic": {
+    "auc": 0.49000000000000005,
+    "ci95": [
+     0.22144628099173552,
+     0.6909090909090909
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Low/No alcohol": {
+    "auc": 0.6499999999999999,
+    "ci95": [
+     0.30296875,
+     0.75
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Pils/Lager": {
+    "auc": 0.5733333333333333,
+    "ci95": [
+     0.39502066115702483,
+     0.7091322314049586
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Saison": {
+    "auc": 0.255,
+    "ci95": [
+     0.156,
+     0.35004999999999975
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Scotch": {
+    "auc": 0.16,
+    "ci95": [
+     0.015999999999999997,
+     0.28800000000000003
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Stout/Porter": {
+    "auc": 0.17111111111111113,
+    "ci95": [
+     0.09349112426035502,
+     0.2946745562130178
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 13,
+    "evidence_limited": false
+   },
+   "Strong ale": {
+    "auc": 0.32541666666666663,
+    "ci95": [
+     0.2274537037037037,
+     0.3805632716049382
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 18,
+    "evidence_limited": false
+   },
+   "Tripel": {
+    "auc": 0.28455555555555556,
+    "ci95": [
+     0.1807302295918367,
+     0.36390306122448984
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 28,
+    "evidence_limited": false
+   },
+   "West Flanders ale": {
+    "auc": 0.6799999999999999,
+    "ci95": [
+     0.363265306122449,
+     0.7674489795918361
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 7,
+    "evidence_limited": false
+   },
+   "Wheat": {
+    "auc": 0.38,
+    "ci95": [
+     0.1798611111111111,
+     0.49097222222222214
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   }
+  },
+  "G0": {
+   "Amber": {
+    "auc": 0.78,
+    "ci95": [
+     0.6541145833333335,
+     0.8944444444444445
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Blond": {
+    "auc": 0.8292857142857143,
+    "ci95": [
+     0.767528616024974,
+     0.8848074921956295
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 31,
+    "evidence_limited": false
+   },
+   "Brett/cofermented": {
+    "auc": 0.76,
+    "ci95": [
+     0.525,
+     0.9055555555555557
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 6,
+    "evidence_limited": false
+   },
+   "Brown": {
+    "auc": 0.6633333333333333,
+    "ci95": [
+     0.5166666666666667,
+     0.7652951388888888
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Brut": {
+    "auc": 0.95,
+    "ci95": [
+     0.9375,
+     1.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 4,
+    "evidence_limited": true
+   },
+   "Christmas": {
+    "auc": 0.6500000000000001,
+    "ci95": [
+     0.4790123456790124,
+     0.782716049382716
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 9,
+    "evidence_limited": false
+   },
+   "Dubbel": {
+    "auc": 0.7749999999999999,
+    "ci95": [
+     0.6479999999999999,
+     0.8460000000000001
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Faro": {
+    "auc": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 3,
+    "evidence_limited": true
+   },
+   "Flanders old brown": {
+    "auc": 0.96,
+    "ci95": [
+     0.704,
+     0.992
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Fruitbeer": {
+    "auc": 1.0,
+    "ci95": [
+     0.925,
+     1.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Hoppy": {
+    "auc": 0.9033333333333333,
+    "ci95": [
+     0.7750778546712803,
+     0.9508823529411765
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 17,
+    "evidence_limited": false
+   },
+   "Kriek": {
+    "auc": 0.99,
+    "ci95": [
+     0.966,
+     1.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Lambic": {
+    "auc": 0.97,
+    "ci95": [
+     0.9074380165289255,
+     0.9951652892561976
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Low/No alcohol": {
+    "auc": 1.0,
+    "ci95": [
+     0.86875,
+     0.99375
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Pils/Lager": {
+    "auc": 0.9800000000000001,
+    "ci95": [
+     0.9057851239669421,
+     1.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Saison": {
+    "auc": 0.8600000000000001,
+    "ci95": [
+     0.685975,
+     0.97
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Scotch": {
+    "auc": 0.9199999999999999,
+    "ci95": [
+     0.8480000000000001,
+     1.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Stout/Porter": {
+    "auc": 0.9244444444444444,
+    "ci95": [
+     0.8366568047337278,
+     0.957396449704142
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 13,
+    "evidence_limited": false
+   },
+   "Strong ale": {
+    "auc": 0.885,
+    "ci95": [
+     0.7962808641975309,
+     0.949398148148148
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 18,
+    "evidence_limited": false
+   },
+   "Tripel": {
+    "auc": 0.8373333333333333,
+    "ci95": [
+     0.7582876275510203,
+     0.8854751275510202
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 28,
+    "evidence_limited": false
+   },
+   "West Flanders ale": {
+    "auc": 0.9200000000000002,
+    "ci95": [
+     0.8734693877551019,
+     1.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 7,
+    "evidence_limited": false
+   },
+   "Wheat": {
+    "auc": 0.8883333333333333,
+    "ci95": [
+     0.7069444444444445,
+     0.9528124999999998
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   }
+  },
+  "G1": {
+   "Amber": {
+    "auc": 0.18833333333333332,
+    "ci95": [
+     0.12222222222222223,
+     0.2618055555555555
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Blond": {
+    "auc": 0.2307142857142857,
+    "ci95": [
+     0.18574141519250778,
+     0.305624349635796
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 31,
+    "evidence_limited": false
+   },
+   "Brett/cofermented": {
+    "auc": 0.3,
+    "ci95": [
+     0.11111111111111112,
+     0.45
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 6,
+    "evidence_limited": false
+   },
+   "Brown": {
+    "auc": 0.32333333333333336,
+    "ci95": [
+     0.2402777777777778,
+     0.3895833333333333
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Brut": {
+    "auc": 0.425,
+    "ci95": [
+     0.2,
+     0.5375
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 4,
+    "evidence_limited": true
+   },
+   "Christmas": {
+    "auc": 0.225,
+    "ci95": [
+     0.0888888888888889,
+     0.27901234567901234
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 9,
+    "evidence_limited": false
+   },
+   "Dubbel": {
+    "auc": 0.33999999999999997,
+    "ci95": [
+     0.267,
+     0.41000000000000003
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Faro": {
+    "auc": 0.3,
+    "ci95": [
+     0.0,
+     0.6
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 3,
+    "evidence_limited": true
+   },
+   "Flanders old brown": {
+    "auc": 0.3,
+    "ci95": [
+     0.08,
+     0.368
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Fruitbeer": {
+    "auc": 0.08499999999999999,
+    "ci95": [
+     0.0405859375,
+     0.209375
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Hoppy": {
+    "auc": 0.3394444444444444,
+    "ci95": [
+     0.2622750865051903,
+     0.4100346020761245
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 17,
+    "evidence_limited": false
+   },
+   "Kriek": {
+    "auc": 0.4,
+    "ci95": [
+     0.2800000000000001,
+     0.5529999999999999
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Lambic": {
+    "auc": 0.2966666666666667,
+    "ci95": [
+     0.1834710743801653,
+     0.323987603305785
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Low/No alcohol": {
+    "auc": 0.34,
+    "ci95": [
+     0.159375,
+     0.453125
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Pils/Lager": {
+    "auc": 0.15666666666666668,
+    "ci95": [
+     0.13055785123966943,
+     0.2892561983471074
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Saison": {
+    "auc": 0.4149999999999999,
+    "ci95": [
+     0.313,
+     0.461
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Scotch": {
+    "auc": 0.34,
+    "ci95": [
+     0.184,
+     0.5680000000000001
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Stout/Porter": {
+    "auc": 0.2911111111111111,
+    "ci95": [
+     0.1839940828402367,
+     0.4159911242603549
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 13,
+    "evidence_limited": false
+   },
+   "Strong ale": {
+    "auc": 0.25083333333333335,
+    "ci95": [
+     0.21141975308641978,
+     0.33673611111111107
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 18,
+    "evidence_limited": false
+   },
+   "Tripel": {
+    "auc": 0.28300000000000003,
+    "ci95": [
+     0.22168367346938775,
+     0.33942283163265297
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 28,
+    "evidence_limited": false
+   },
+   "West Flanders ale": {
+    "auc": 0.24999999999999994,
+    "ci95": [
+     0.14489795918367349,
+     0.32249999999999973
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 7,
+    "evidence_limited": false
+   },
+   "Wheat": {
+    "auc": 0.21333333333333337,
+    "ci95": [
+     0.14651041666666664,
+     0.25833333333333336
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   }
+  },
+  "G2": {
+   "Amber": {
+    "auc": 0.011666666666666667,
+    "ci95": [
+     0.0,
+     0.0125
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Blond": {
+    "auc": 0.11214285714285713,
+    "ci95": [
+     0.05951873048907388,
+     0.21136056191467215
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 31,
+    "evidence_limited": false
+   },
+   "Brett/cofermented": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.022222222222222223
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 6,
+    "evidence_limited": false
+   },
+   "Brown": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Brut": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 4,
+    "evidence_limited": true
+   },
+   "Christmas": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 9,
+    "evidence_limited": false
+   },
+   "Dubbel": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Faro": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 3,
+    "evidence_limited": true
+   },
+   "Flanders old brown": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Fruitbeer": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Hoppy": {
+    "auc": 0.018333333333333333,
+    "ci95": [
+     0.0013840830449826991,
+     0.03079584775086506
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 17,
+    "evidence_limited": false
+   },
+   "Kriek": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.009999999999999998
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Lambic": {
+    "auc": 0.006666666666666666,
+    "ci95": [
+     0.0,
+     0.006611570247933888
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Low/No alcohol": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0125
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Pils/Lager": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Saison": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Scotch": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Stout/Porter": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.009467455621301777
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 13,
+    "evidence_limited": false
+   },
+   "Strong ale": {
+    "auc": 0.006666666666666668,
+    "ci95": [
+     0.0006172839506172842,
+     0.024074074074074074
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 18,
+    "evidence_limited": false
+   },
+   "Tripel": {
+    "auc": 0.06166666666666666,
+    "ci95": [
+     0.03966836734693877,
+     0.1274298469387755
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 28,
+    "evidence_limited": false
+   },
+   "West Flanders ale": {
+    "auc": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 7,
+    "evidence_limited": false
+   },
+   "Wheat": {
+    "auc": 0.006666666666666666,
+    "ci95": [
+     0.0,
+     0.03125
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   }
+  },
+  "G3": {
+   "Amber": {
+    "auc": 0.2033333333333333,
+    "ci95": [
+     0.12498263888888889,
+     0.33611111111111114
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Blond": {
+    "auc": 0.30095238095238097,
+    "ci95": [
+     0.235582726326743,
+     0.3400624349635796
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 31,
+    "evidence_limited": false
+   },
+   "Brett/cofermented": {
+    "auc": 0.13999999999999999,
+    "ci95": [
+     0.02777777777777778,
+     0.17222222222222222
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 6,
+    "evidence_limited": false
+   },
+   "Brown": {
+    "auc": 0.19333333333333333,
+    "ci95": [
+     0.11663194444444444,
+     0.2680902777777776
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   },
+   "Brut": {
+    "auc": 0.125,
+    "ci95": [
+     0.0125,
+     0.4125
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 4,
+    "evidence_limited": true
+   },
+   "Christmas": {
+    "auc": 0.145,
+    "ci95": [
+     0.07648148148148147,
+     0.250648148148148
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 9,
+    "evidence_limited": false
+   },
+   "Dubbel": {
+    "auc": 0.28,
+    "ci95": [
+     0.176,
+     0.4159999999999999
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Faro": {
+    "auc": 0.13333333333333333,
+    "ci95": [
+     0.0,
+     0.4
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 3,
+    "evidence_limited": true
+   },
+   "Flanders old brown": {
+    "auc": 0.18,
+    "ci95": [
+     0.08399999999999999,
+     0.292
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Fruitbeer": {
+    "auc": 0.14,
+    "ci95": [
+     0.071796875,
+     0.209375
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Hoppy": {
+    "auc": 0.3072222222222222,
+    "ci95": [
+     0.21072664359861593,
+     0.38408304498269896
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 17,
+    "evidence_limited": false
+   },
+   "Kriek": {
+    "auc": 0.175,
+    "ci95": [
+     0.10200000000000001,
+     0.29300000000000004
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Lambic": {
+    "auc": 0.18333333333333332,
+    "ci95": [
+     0.10413223140495868,
+     0.31241735537190074
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Low/No alcohol": {
+    "auc": 0.24500000000000002,
+    "ci95": [
+     0.053125,
+     0.3219140624999998
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 8,
+    "evidence_limited": false
+   },
+   "Pils/Lager": {
+    "auc": 0.2416666666666667,
+    "ci95": [
+     0.16857438016528925,
+     0.343801652892562
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 11,
+    "evidence_limited": false
+   },
+   "Saison": {
+    "auc": 0.17,
+    "ci95": [
+     0.11800000000000002,
+     0.27204999999999974
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 10,
+    "evidence_limited": false
+   },
+   "Scotch": {
+    "auc": 0.18,
+    "ci95": [
+     0.08,
+     0.28
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 5,
+    "evidence_limited": true
+   },
+   "Stout/Porter": {
+    "auc": 0.24333333333333335,
+    "ci95": [
+     0.1804585798816568,
+     0.3065088757396449
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 13,
+    "evidence_limited": false
+   },
+   "Strong ale": {
+    "auc": 0.22625,
+    "ci95": [
+     0.14753086419753086,
+     0.2796296296296296
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 18,
+    "evidence_limited": false
+   },
+   "Tripel": {
+    "auc": 0.3044444444444444,
+    "ci95": [
+     0.23558035714285713,
+     0.35676020408163267
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 28,
+    "evidence_limited": false
+   },
+   "West Flanders ale": {
+    "auc": 0.16999999999999998,
+    "ci95": [
+     0.04892857142857143,
+     0.2857142857142857
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 7,
+    "evidence_limited": false
+   },
+   "Wheat": {
+    "auc": 0.2166666666666667,
+    "ci95": [
+     0.1125,
+     0.2861111111111111
+    ],
+    "perm_p": NaN,
+    "perm_q95": NaN,
+    "n": 12,
+    "evidence_limited": false
+   }
+  }
+ },
+ "per_style_summary": {
+  "main": {
+   "macro": 0.40514502164502164,
+   "macro_ci95": [
+    0.35448571661594097,
+    0.4233695001962263
+   ],
+   "weighted": 0.37898273015873013,
+   "weighted_ci95": [
+    0.33876007839409167,
+    0.39749257188362974
+   ]
+  },
+  "pure_fa": {
+   "macro": 0.3687866161616162,
+   "macro_ci95": [
+    0.31972864361082615,
+    0.3890105585481124
+   ],
+   "weighted": 0.3613713333333333,
+   "weighted_ci95": [
+    0.3127467636711276,
+    0.37488087331285624
+   ]
+  },
+  "G0": {
+   "macro": 0.883911976911977,
+   "macro_ci95": [
+    0.8449059612264992,
+    0.8856908431652387
+   ],
+   "weighted": 0.8687505396825397,
+   "weighted_ci95": [
+    0.8319325202182385,
+    0.872173275116092
+   ]
+  },
+  "G1": {
+   "macro": 0.28606529581529583,
+   "macro_ci95": [
+    0.24887013931704133,
+    0.300727230748849
+   ],
+   "weighted": 0.27663123809523815,
+   "weighted_ci95": [
+    0.25231887317784474,
+    0.291313295864951
+   ]
+  },
+  "G2": {
+   "macro": 0.010173160173160169,
+   "macro_ci95": [
+    0.00768996834575101,
+    0.015997287221439022
+   ],
+   "weighted": 0.02371238095238095,
+   "weighted_ci95": [
+    0.017459499774103195,
+    0.03890381745757931
+   ]
+  },
+  "G3": {
+   "macro": 0.20472132034632032,
+   "macro_ci95": [
+    0.18168424406183725,
+    0.22592010482267744
+   ],
+   "weighted": 0.23085031746031745,
+   "weighted_ci95": [
+    0.20836473608344006,
+    0.24726518093955377
+   ]
+  },
+  "dispersion": {
+   "macro": 1.0446735096595872,
+   "macro_ci95": [
+    0.9911897898631845,
+    1.1186560756383452
+   ],
+   "weighted": 1.039021758430334,
+   "weighted_ci95": [
+    0.9938895701814079,
+    1.0987079769917403
+   ]
+  }
+ },
+ "dispersion": {
+  "Amber": {
+   "ratio": 0.9594248654583317,
+   "ci95": [
+    0.8557404563516687,
+    1.0690445528302703
+   ],
+   "flag": false
+  },
+  "Blond": {
+   "ratio": 1.1414792444426582,
+   "ci95": [
+    0.9535217645249414,
+    1.3909416466604636
+   ],
+   "flag": false
+  },
+  "Brett/cofermented": {
+   "ratio": 1.3149829386139698,
+   "ci95": [
+    0.9820120483335422,
+    1.9184344210282884
+   ],
+   "flag": false
+  },
+  "Brown": {
+   "ratio": 1.0433368174072153,
+   "ci95": [
+    0.8631346497802631,
+    1.2603587453698448
+   ],
+   "flag": false
+  },
+  "Brut": {
+   "ratio": 1.7203740508550542,
+   "ci95": [
+    0.9061708215238933,
+    2.8882443851042225
+   ],
+   "flag": true
+  },
+  "Christmas": {
+   "ratio": 1.2611889720625191,
+   "ci95": [
+    1.010877034968187,
+    1.660842584842407
+   ],
+   "flag": false
+  },
+  "Dubbel": {
+   "ratio": 0.873005553342862,
+   "ci95": [
+    0.7187562155112188,
+    1.040613364731699
+   ],
+   "flag": false
+  },
+  "Faro": {
+   "ratio": 0.9539825017329238,
+   "ci95": [
+    0.6645023282316371,
+    1.1508924221221815
+   ],
+   "flag": false
+  },
+  "Flanders old brown": {
+   "ratio": 0.8705449423694148,
+   "ci95": [
+    0.7286177753065639,
+    1.0303248500450197
+   ],
+   "flag": false
+  },
+  "Fruitbeer": {
+   "ratio": 1.1440527613556637,
+   "ci95": [
+    1.0233204450053204,
+    1.2909308428196646
+   ],
+   "flag": false
+  },
+  "Hoppy": {
+   "ratio": 0.9857494442782537,
+   "ci95": [
+    0.8734427074832068,
+    1.1194907491746477
+   ],
+   "flag": false
+  },
+  "Kriek": {
+   "ratio": 0.9762667245989645,
+   "ci95": [
+    0.8576521532092339,
+    1.0869607406156316
+   ],
+   "flag": false
+  },
+  "Lambic": {
+   "ratio": 0.8420729181614519,
+   "ci95": [
+    0.6980034861981478,
+    1.0023606288600253
+   ],
+   "flag": false
+  },
+  "Low/No alcohol": {
+   "ratio": 1.106121355144862,
+   "ci95": [
+    0.8051782970323228,
+    1.4837176162946393
+   ],
+   "flag": false
+  },
+  "Pils/Lager": {
+   "ratio": 0.7324755797797039,
+   "ci95": [
+    0.6151410717066915,
+    0.8856729735006695
+   ],
+   "flag": false
+  },
+  "Saison": {
+   "ratio": 1.0171066739734451,
+   "ci95": [
+    0.8717036727470139,
+    1.1894687577216545
+   ],
+   "flag": false
+  },
+  "Scotch": {
+   "ratio": 0.841268143580827,
+   "ci95": [
+    0.6116139314606505,
+    1.0757404208709909
+   ],
+   "flag": false
+  },
+  "Stout/Porter": {
+   "ratio": 1.2824861185003864,
+   "ci95": [
+    0.9602640672847245,
+    1.7749701961432778
+   ],
+   "flag": false
+  },
+  "Strong ale": {
+   "ratio": 1.0022924103148925,
+   "ci95": [
+    0.8838539499665996,
+    1.1617536673811177
+   ],
+   "flag": false
+  },
+  "Tripel": {
+   "ratio": 1.047149535540243,
+   "ci95": [
+    0.904035386293807,
+    1.2558997106798369
+   ],
+   "flag": false
+  },
+  "West Flanders ale": {
+   "ratio": 0.8785718035298519,
+   "ci95": [
+    0.7819177348676509,
+    0.9957354972790842
+   ],
+   "flag": false
+  },
+  "Wheat": {
+   "ratio": 0.9888838574674237,
+   "ci95": [
+    0.8660556433393158,
+    1.1257250341748097
+   ],
+   "flag": false
+  }
+ },
+ "dispersion_flagged": [
+  "Brut"
+ ],
+ "named_styles": {
+  "Tripel": {
+   "auc": 0.4064444444444445,
+   "ci95": [
+    0.3128762755102041,
+    0.49082589285714273
+   ],
+   "perm_p": 0.7293532338308457,
+   "perm_q95": 0.6761777777777778,
+   "n": 28,
+   "evidence_limited": false
+  },
+  "Kriek": {
+   "auc": 0.45,
+   "ci95": [
+    0.22197500000000003,
+    0.5940000000000001
+   ],
+   "perm_p": 0.554228855721393,
+   "perm_q95": 0.78025,
+   "n": 10,
+   "evidence_limited": false
+  },
+  "Lambic": {
+   "auc": 0.37666666666666665,
+   "ci95": [
+    0.2347107438016529,
+    0.5933884297520661
+   ],
+   "perm_p": 0.7024875621890547,
+   "perm_q95": 0.7839166666666665,
+   "n": 11,
+   "evidence_limited": false
+  }
+ }
+}

@@ -1,0 +1,339 @@
+{
+ "classes": {
+  "esters": [
+   {
+    "field": "ethyl_2.methyl_butyrate",
+    "threshold": 0.027,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "ethyl_acetate",
+    "threshold": 24.0,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "ethyl_decanoate",
+    "threshold": 1.035,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "ethyl_hexanoate",
+    "threshold": 0.23,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "ethyl_isovalerate",
+    "threshold": 0.1,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "ethyl_octanoate",
+    "threshold": 0.7,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "ethyl_propionate",
+    "threshold": 10.0,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "isobutyl_acetate",
+    "threshold": 1.0,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "isopentyl_acetate",
+    "threshold": 0.603333333,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "octyl_acetate",
+    "threshold": 0.5,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "phenethyl_acetate",
+    "threshold": 1.763333333,
+    "unit": "mg/L",
+    "log10": true
+   },
+   {
+    "field": "ethyl.isobutyrate",
+    "threshold": 2.6,
+    "unit": "mg/L",
+    "log10": false
+   },
+   {
+    "field": "ethyl.butyrate",
+    "threshold": 0.45,
+    "unit": "mg/L",
+    "log10": false
+   }
+  ],
+  "sulfur": [
+   {
+    "field": "DES",
+    "threshold": 1.2,
+    "unit": "ug/L",
+    "log10": true
+   },
+   {
+    "field": "DMS",
+    "threshold": 17.25,
+    "unit": "ug/L",
+    "log10": true
+   },
+   {
+    "field": "H2S",
+    "threshold": 3.5,
+    "unit": "ug/L",
+    "log10": true
+   },
+   {
+    "field": "CS2",
+    "threshold": 50.0,
+    "unit": "ug/L",
+    "log10": true
+   }
+  ]
+ },
+ "pair": {
+  "point": {
+   "mae": 0.0008800000000001029,
+   "exact": -0.0007519999999999749,
+   "within1": -0.00014399999999981095,
+   "qwk": -0.0016956512735144535,
+   "rps": 0.00010926145559358701,
+   "logloss": 0.000290123245193975,
+   "cont_mae": 0.00015518067537928948
+  },
+  "lo": {
+   "mae": 8.258654452523579e-05,
+   "exact": -0.001613231663035497,
+   "within1": -0.0004696594427245321,
+   "qwk": -0.003317710268335862,
+   "rps": -4.362713243864335e-05,
+   "logloss": -8.372082168826794e-05,
+   "cont_mae": -6.578742751604458e-05
+  },
+  "hi": {
+   "mae": 0.001774285426223786,
+   "exact": 3.52621343809838e-05,
+   "within1": 0.0001475561627200194,
+   "qwk": -0.0003417784750159715,
+   "rps": 0.0002815107538963473,
+   "logloss": 0.000683434780351423,
+   "cont_mae": 0.0004002739623521608
+  },
+  "wins_a": 14
+ },
+ "changed_delivered": 0.00704,
+ "changed_median": 0.012784,
+ "zero_heavy_delta_mae": 0.0007272727272727431,
+ "other_delta_mae": 0.0010000000000000009,
+ "inner_valid_dims": [
+  [
+   50,
+   50,
+   50,
+   50,
+   50
+  ],
+  [
+   50,
+   50,
+   50,
+   50,
+   50
+  ],
+  [
+   50,
+   50,
+   50,
+   50,
+   50
+  ],
+  [
+   50,
+   50,
+   50,
+   50,
+   50
+  ],
+  [
+   50,
+   50,
+   50,
+   50,
+   50
+  ]
+ ],
+ "inner_fold_mean_diff": [
+  [
+   0.00012373816048731113,
+   0.0005315850095366103,
+   0.00026770790016396816,
+   0.00033855280454762936,
+   0.0001914714216075586
+  ],
+  [
+   0.00015891208920899792,
+   0.0015862114952268237,
+   0.0006010927582686598,
+   0.0004734383863058289,
+   0.00027751494828684334
+  ],
+  [
+   -4.759720828693359e-05,
+   0.00012986481577042407,
+   7.253634418974086e-05,
+   -3.958874015323355e-05,
+   0.00020361750524679147
+  ],
+  [
+   0.00026222241766677866,
+   0.00040723439361591175,
+   0.0006824344152809481,
+   0.0003808033303424363,
+   0.0005241777322694996
+  ],
+  [
+   0.0008509619757339304,
+   -0.0003251611671978383,
+   -0.0003640388310238518,
+   0.0002361816768211944,
+   0.000613029900534583
+  ]
+ ],
+ "inner_fold_mean_diff_reason": "未运行的外层折或该折无有效维度（目标在该折训练集恒定）",
+ "inner_group_mean_diff": {
+  "Aroma": 0.00015832229935281816,
+  "Flavour": 0.00039444736653116347,
+  "Defect": 0.0006050442092829922,
+  "Spice": -0.00012223356809890764,
+  "Sour": 0.0002497528193409367,
+  "Basic": 0.0004961798839021825
+ },
+ "inner_reduced_folds": 4,
+ "inner_reduced": false,
+ "mae_ci_below_zero": false,
+ "review_candidate": false,
+ "exceed_count": 29,
+ "seed": 0,
+ "meta": {
+  "python": "3.10.22",
+  "numpy": "2.2.6",
+  "pandas": "2.3.3",
+  "scipy": "1.15.3",
+  "sklearn": "1.7.2"
+ },
+ "checks": [
+  {
+   "name": "外层划分与 q1_main_oof.npz 的 fold_id 一致",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "单元个数",
+   "observed": 25,
+   "expected": 25,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "每次重复每款啤酒恰好测试一次",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "inner_mu 的非 NaN 行恰为训练行",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "oof_mu 全部有限",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "p_final 每行和为 1",
+   "observed": 3.3306690738754696e-16,
+   "expected": 0.0,
+   "tol": 1e-12,
+   "passed": true
+  },
+  {
+   "name": "实验臂超参数与主运行 chosen_params 逐字段相同",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "恒等单元的 oof 与 q1_main_oof.npz 的 oof_mu 逐元素相同",
+   "observed": 0.0,
+   "expected": 0.0,
+   "tol": 1e-10,
+   "passed": true
+  },
+  {
+   "name": "阈值化合物个数",
+   "observed": 43,
+   "expected": 43,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "酯类、硫化合物个数",
+   "observed": [
+    13,
+    4
+   ],
+   "expected": [
+    13,
+    4
+   ],
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "在样本内越过阈值的带阈值化合物个数",
+   "observed": 29,
+   "expected": 29,
+   "tol": 2,
+   "passed": true
+  },
+  {
+   "name": "编码后化学表加 OAV 两列的列数",
+   "observed": 233,
+   "expected": 233,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "结果 JSON 中没有字符串形式的数值或状态（除 _reason 字段）",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  }
+ ]
+}

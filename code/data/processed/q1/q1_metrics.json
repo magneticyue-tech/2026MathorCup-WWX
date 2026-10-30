@@ -1,5 +1,3169 @@
 {
-    "main_spearman": 0.38416489233147333,
-    "b1_spearman": 0.2660334758106997,
-    "wins_over_b1": 43
+ "models": {
+  "main.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47262847884924986,
+   "cont_r2": 0.18420448542443676,
+   "cont_spearman": 0.3595337452200413,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8930468622844673,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "b0.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5575269874390567,
+   "cont_r2": -0.03219961015182594,
+   "cont_spearman": -0.2062076742291559,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 1.0158979064494034,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "b1.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5303256650899751,
+   "cont_r2": 0.04174161182600234,
+   "cont_spearman": 0.15495443321646682,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9770916603972126,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "lin10.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.49439367364188413,
+   "cont_r2": 0.1280597336979822,
+   "cont_spearman": 0.3513338089562873,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.925489012116469,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "enet.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4813655484369645,
+   "cont_r2": 0.16466487389883983,
+   "cont_spearman": 0.3259974843179707,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9072787650674674,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "rf.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.46614820954034814,
+   "cont_r2": 0.21536212783346662,
+   "cont_spearman": 0.3742678544473387,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8764350084438198,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "chemstyle.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4725473853230164,
+   "cont_r2": 0.18480773736796077,
+   "cont_spearman": 0.35937413818549035,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8926601878166814,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "c2.const": {
+   "mae": 0.549088,
+   "exact": 0.565888,
+   "within1": 0.914224,
+   "qwk": -0.005669281957878366,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30558709954082064,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47503322775285506,
+   "cont_r2": 0.1781364895984285,
+   "cont_spearman": 0.35292326430824217,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8968257695993366,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4054545454545454,
+    "exact": 0.6894545454545454,
+    "qwk": 0.0,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6619428571428573,
+    "exact": 0.46880000000000005,
+    "qwk": -0.010123717781925654,
+    "qwk_undefined": 0
+   }
+  },
+  "main.round": {
+   "mae": 0.49024,
+   "exact": 0.564704,
+   "within1": 0.9531040000000001,
+   "qwk": 0.2928187607192884,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.354509421236953,
+   "share56": 0.000368,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47262847884924986,
+   "cont_r2": 0.18420448542443676,
+   "cont_spearman": 0.3595337452200413,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8930468622844673,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.37676363636363647,
+    "exact": 0.6610181818181818,
+    "qwk": 0.2771211442318715,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5794,
+    "exact": 0.4890285714285714,
+    "qwk": 0.30515260224511603,
+    "qwk_undefined": 0
+   }
+  },
+  "b0.round": {
+   "mae": 0.57384,
+   "exact": 0.509616,
+   "within1": 0.9325439999999998,
+   "qwk": -0.019829431769050103,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.2976744565427736,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5575269874390567,
+   "cont_r2": -0.03219961015182594,
+   "cont_spearman": -0.2062076742291559,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 1.0158979064494034,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4752727272727273,
+    "exact": 0.5826545454545455,
+    "qwk": -0.028682152370765854,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6512857142857144,
+    "exact": 0.4522285714285715,
+    "qwk": -0.012873722724844865,
+    "qwk_undefined": 0
+   }
+  },
+  "b1.round": {
+   "mae": 0.548032,
+   "exact": 0.5252800000000001,
+   "within1": 0.939072,
+   "qwk": 0.09704344149656231,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3156518160099332,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5303256650899751,
+   "cont_r2": 0.04174161182600234,
+   "cont_spearman": 0.15495443321646682,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9770916603972126,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4310909090909091,
+    "exact": 0.6207636363636363,
+    "qwk": 0.10507252950350673,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6399142857142857,
+    "exact": 0.45025714285714286,
+    "qwk": 0.09073487234824881,
+    "qwk_undefined": 0
+   }
+  },
+  "lin10.round": {
+   "mae": 0.503664,
+   "exact": 0.556448,
+   "within1": 0.9490720000000001,
+   "qwk": 0.27493755000920633,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3499064428216138,
+   "share56": 0.000176,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.49439367364188413,
+   "cont_r2": 0.1280597336979822,
+   "cont_spearman": 0.3513338089562873,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.925489012116469,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.39323636363636366,
+    "exact": 0.6478545454545455,
+    "qwk": 0.2317560644262705,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5904285714285714,
+    "exact": 0.4846285714285713,
+    "qwk": 0.3088658601100845,
+    "qwk_undefined": 0
+   }
+  },
+  "enet.round": {
+   "mae": 0.49364800000000003,
+   "exact": 0.5640640000000001,
+   "within1": 0.9520960000000002,
+   "qwk": 0.2013937395011974,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34242025896194306,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4813655484369645,
+   "cont_r2": 0.16466487389883983,
+   "cont_spearman": 0.3259974843179707,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9072787650674674,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3823636363636363,
+    "exact": 0.6573818181818183,
+    "qwk": 0.18521289687305598,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5810857142857143,
+    "exact": 0.4907428571428571,
+    "qwk": 0.21410725870902284,
+    "qwk_undefined": 0
+   }
+  },
+  "rf.round": {
+   "mae": 0.48231999999999997,
+   "exact": 0.569504,
+   "within1": 0.956384,
+   "qwk": 0.26181547832838065,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.35104085541365426,
+   "share56": 1.6e-05,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.46614820954034814,
+   "cont_r2": 0.21536212783346662,
+   "cont_spearman": 0.3742678544473387,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8764350084438198,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3677454545454545,
+    "exact": 0.6684,
+    "qwk": 0.25379884522979806,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5723428571428573,
+    "exact": 0.4918,
+    "qwk": 0.26811426147726697,
+    "qwk_undefined": 0
+   }
+  },
+  "chemstyle.round": {
+   "mae": 0.48928000000000005,
+   "exact": 0.5653440000000001,
+   "within1": 0.95352,
+   "qwk": 0.2927469921228584,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3549391709101487,
+   "share56": 0.000272,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4725473853230164,
+   "cont_r2": 0.18480773736796077,
+   "cont_spearman": 0.35937413818549035,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8926601878166814,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3765454545454547,
+    "exact": 0.6611636363636363,
+    "qwk": 0.27700523875049293,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5778571428571428,
+    "exact": 0.4900571428571429,
+    "qwk": 0.30511551262971687,
+    "qwk_undefined": 0
+   }
+  },
+  "c2.round": {
+   "mae": 0.490192,
+   "exact": 0.564624,
+   "within1": 0.9532,
+   "qwk": 0.28167074620547966,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3538678487667543,
+   "share56": 0.000192,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47503322775285506,
+   "cont_r2": 0.1781364895984285,
+   "cont_spearman": 0.35292326430824217,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8968257695993366,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.37600000000000006,
+    "exact": 0.6625090909090908,
+    "qwk": 0.2692986417180098,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5799142857142858,
+    "exact": 0.4877142857142857,
+    "qwk": 0.2913916854456345,
+    "qwk_undefined": 0
+   }
+  },
+  "main.median": {
+   "mae": 0.47939199999999993,
+   "exact": 0.5805119999999999,
+   "within1": 0.9496319999999999,
+   "qwk": 0.2895694792540794,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.35158888134495986,
+   "share56": 0.000224,
+   "rps": 0.34130933854604656,
+   "logloss": 0.9800970680902348,
+   "cont_mae": 0.47262847884924986,
+   "cont_r2": 0.18420448542443676,
+   "cont_spearman": 0.3595337452200413,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8930468622844673,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3558909090909092,
+    "exact": 0.6865818181818182,
+    "qwk": 0.2686611703119915,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5764285714285715,
+    "exact": 0.49717142857142854,
+    "qwk": 0.30599743628000564,
+    "qwk_undefined": 0
+   }
+  },
+  "b0.median": {
+   "mae": 0.548096,
+   "exact": 0.555776,
+   "within1": 0.9206400000000001,
+   "qwk": -0.012569600042906906,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30622173575172557,
+   "share56": 0.0,
+   "rps": 0.3940788293831238,
+   "logloss": 1.0670265078651702,
+   "cont_mae": 0.5575269874390567,
+   "cont_r2": -0.03219961015182594,
+   "cont_spearman": -0.2062076742291559,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 1.0158979064494034,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4134181818181818,
+    "exact": 0.68,
+    "qwk": -0.009427469579697853,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6539142857142858,
+    "exact": 0.4581714285714286,
+    "qwk": -0.015038416835428307,
+    "qwk_undefined": 0
+   }
+  },
+  "b1.median": {
+   "mae": 0.526992,
+   "exact": 0.5593440000000001,
+   "within1": 0.931104,
+   "qwk": 0.09505323624748167,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3147378894845521,
+   "share56": 0.0,
+   "rps": 0.37566451064551426,
+   "logloss": 1.0438380044479314,
+   "cont_mae": 0.5303256650899751,
+   "cont_r2": 0.04174161182600234,
+   "cont_spearman": 0.15495443321646682,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9770916603972126,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3861454545454545,
+    "exact": 0.6837090909090909,
+    "qwk": 0.10619215952062727,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6376571428571428,
+    "exact": 0.46162857142857144,
+    "qwk": 0.08630122510429583,
+    "qwk_undefined": 0
+   }
+  },
+  "lin10.median": {
+   "mae": 0.49577599999999994,
+   "exact": 0.567808,
+   "within1": 0.94648,
+   "qwk": 0.27239385508708186,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34685920474332443,
+   "share56": 0.000192,
+   "rps": 0.3521554404827092,
+   "logloss": 1.0025196352603634,
+   "cont_mae": 0.49439367364188413,
+   "cont_r2": 0.1280597336979822,
+   "cont_spearman": 0.3513338089562873,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.925489012116469,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3745454545454545,
+    "exact": 0.6693818181818181,
+    "qwk": 0.23078849240012458,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5910285714285715,
+    "exact": 0.48799999999999993,
+    "qwk": 0.30508378291254834,
+    "qwk_undefined": 0
+   }
+  },
+  "enet.median": {
+   "mae": 0.48099200000000003,
+   "exact": 0.585216,
+   "within1": 0.9458880000000001,
+   "qwk": 0.1985468651948683,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3411362282963298,
+   "share56": 0.0,
+   "rps": 0.3446720153275383,
+   "logloss": 0.9801998627609606,
+   "cont_mae": 0.4813655484369645,
+   "cont_r2": 0.16466487389883983,
+   "cont_spearman": 0.3259974843179707,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9072787650674674,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.36003636363636365,
+    "exact": 0.6920363636363637,
+    "qwk": 0.17591881530710493,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5760285714285714,
+    "exact": 0.5012857142857142,
+    "qwk": 0.21632604724953944,
+    "qwk_undefined": 0
+   }
+  },
+  "rf.median": {
+   "mae": 0.471616,
+   "exact": 0.5893120000000001,
+   "within1": 0.949712,
+   "qwk": 0.2513746237475582,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3448254622053701,
+   "share56": 1.6e-05,
+   "rps": 0.3351871984507926,
+   "logloss": 0.9643032515904449,
+   "cont_mae": 0.46614820954034814,
+   "cont_r2": 0.21536212783346662,
+   "cont_spearman": 0.3742678544473387,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8764350084438198,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3468727272727272,
+    "exact": 0.699309090909091,
+    "qwk": 0.23628683262974076,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5696285714285714,
+    "exact": 0.5028857142857143,
+    "qwk": 0.2632293167687005,
+    "qwk_undefined": 0
+   }
+  },
+  "chemstyle.median": {
+   "mae": 0.47928,
+   "exact": 0.5804000000000001,
+   "within1": 0.949872,
+   "qwk": 0.2886791958089253,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3521133204619867,
+   "share56": 0.000176,
+   "rps": 0.3412171912891298,
+   "logloss": 0.9797477851352882,
+   "cont_mae": 0.4725473853230164,
+   "cont_r2": 0.18480773736796077,
+   "cont_spearman": 0.35937413818549035,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8926601878166814,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3564363636363638,
+    "exact": 0.686109090909091,
+    "qwk": 0.2666380716277654,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5758,
+    "exact": 0.49734285714285714,
+    "qwk": 0.30599722195126516,
+    "qwk_undefined": 0
+   }
+  },
+  "c2.median": {
+   "mae": 0.48175999999999997,
+   "exact": 0.57984,
+   "within1": 0.9484799999999999,
+   "qwk": 0.2720069487388944,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3501246354969303,
+   "share56": 0.000128,
+   "rps": 0.3425722434815287,
+   "logloss": 0.9820209687282266,
+   "cont_mae": 0.47503322775285506,
+   "cont_r2": 0.1781364895984285,
+   "cont_spearman": 0.35292326430824217,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8968257695993366,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.35734545454545447,
+    "exact": 0.6869090909090909,
+    "qwk": 0.25493287086444477,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5795142857142858,
+    "exact": 0.4957142857142858,
+    "qwk": 0.2854222956402477,
+    "qwk_undefined": 0
+   }
+  },
+  "main.quant": {
+   "mae": 0.578144,
+   "exact": 0.530768,
+   "within1": 0.9137919999999999,
+   "qwk": 0.3706325779708959,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3762166076032925,
+   "share56": 0.015712,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47262847884924986,
+   "cont_r2": 0.18420448542443676,
+   "cont_spearman": 0.3595337452200413,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8930468622844673,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4348363636363636,
+    "exact": 0.644581818181818,
+    "qwk": 0.3398666144569324,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6907428571428572,
+    "exact": 0.4413428571428571,
+    "qwk": 0.3948058350175816,
+    "qwk_undefined": 0
+   }
+  },
+  "b0.quant": {
+   "mae": 0.601952,
+   "exact": 0.5191359999999999,
+   "within1": 0.9064159999999999,
+   "qwk": -0.030711063821449395,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.2904707013349689,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5575269874390567,
+   "cont_r2": -0.03219961015182594,
+   "cont_spearman": -0.2062076742291559,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 1.0158979064494034,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.44825454545454546,
+    "exact": 0.6367636363636364,
+    "qwk": -0.028149736256308205,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7227142857142858,
+    "exact": 0.42671428571428566,
+    "qwk": -0.032723535479774614,
+    "qwk_undefined": 0
+   }
+  },
+  "b1.quant": {
+   "mae": 0.740384,
+   "exact": 0.46937599999999996,
+   "within1": 0.852784,
+   "qwk": 0.19243583522222357,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3421960805623995,
+   "share56": 0.027328,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5303256650899751,
+   "cont_r2": 0.04174161182600234,
+   "cont_spearman": 0.15495443321646682,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9770916603972126,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.5504,
+    "exact": 0.6026545454545456,
+    "qwk": 0.1745283222244297,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.8896571428571429,
+    "exact": 0.3646571428571428,
+    "qwk": 0.20650602400620446,
+    "qwk_undefined": 0
+   }
+  },
+  "lin10.quant": {
+   "mae": 0.5675520000000001,
+   "exact": 0.536528,
+   "within1": 0.9157120000000001,
+   "qwk": 0.3444693163554067,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3709454942125668,
+   "share56": 0.012768,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.49439367364188413,
+   "cont_r2": 0.1280597336979822,
+   "cont_spearman": 0.3513338089562873,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.925489012116469,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4216727272727272,
+    "exact": 0.6501818181818182,
+    "qwk": 0.3140981396194246,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6821714285714285,
+    "exact": 0.44722857142857136,
+    "qwk": 0.36833238379082117,
+    "qwk_undefined": 0
+   }
+  },
+  "enet.quant": {
+   "mae": 0.5480479999999999,
+   "exact": 0.543728,
+   "within1": 0.9250879999999999,
+   "qwk": 0.3382610958642691,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3779166862344391,
+   "share56": 0.012016,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4813655484369645,
+   "cont_r2": 0.16466487389883983,
+   "cont_spearman": 0.3259974843179707,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9072787650674674,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.40207272727272725,
+    "exact": 0.660581818181818,
+    "qwk": 0.2845543017144249,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6627428571428571,
+    "exact": 0.4519142857142857,
+    "qwk": 0.3804592912677182,
+    "qwk_undefined": 0
+   }
+  },
+  "rf.quant": {
+   "mae": 0.579216,
+   "exact": 0.5331359999999999,
+   "within1": 0.912096,
+   "qwk": 0.39607705965285017,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.39355562329545,
+   "share56": 0.01992,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.46614820954034814,
+   "cont_r2": 0.21536212783346662,
+   "cont_spearman": 0.3742678544473387,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8764350084438198,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4292,
+    "exact": 0.6489818181818183,
+    "qwk": 0.3651810128597153,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6970857142857143,
+    "exact": 0.4421142857142858,
+    "qwk": 0.4203525249903131,
+    "qwk_undefined": 0
+   }
+  },
+  "chemstyle.quant": {
+   "mae": 0.5773440000000001,
+   "exact": 0.531584,
+   "within1": 0.913776,
+   "qwk": 0.3716732342397762,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3742662963475315,
+   "share56": 0.01552,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4725473853230164,
+   "cont_r2": 0.18480773736796077,
+   "cont_spearman": 0.35937413818549035,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8926601878166814,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4336727272727272,
+    "exact": 0.645490909090909,
+    "qwk": 0.3415692696931969,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6902285714285714,
+    "exact": 0.44208571428571425,
+    "qwk": 0.39532634924065996,
+    "qwk_undefined": 0
+   }
+  },
+  "c2.quant": {
+   "mae": 0.582688,
+   "exact": 0.527904,
+   "within1": 0.912864,
+   "qwk": 0.3617474319932152,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3842768207618464,
+   "share56": 0.01568,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47503322775285506,
+   "cont_r2": 0.1781364895984285,
+   "cont_spearman": 0.35292326430824217,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8968257695993366,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.43836363636363634,
+    "exact": 0.6435272727272726,
+    "qwk": 0.3317763796749431,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6960857142857144,
+    "exact": 0.43705714285714287,
+    "qwk": 0.38529611595757185,
+    "qwk_undefined": 0
+   }
+  },
+  "main.qwk_cut": {
+   "mae": 0.6022240000000001,
+   "exact": 0.5099360000000001,
+   "within1": 0.9058240000000001,
+   "qwk": 0.35348522100988045,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34812571371988277,
+   "share56": 0.011472,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47262847884924986,
+   "cont_r2": 0.18420448542443676,
+   "cont_spearman": 0.3595337452200413,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8930468622844673,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4519636363636364,
+    "exact": 0.6237090909090908,
+    "qwk": 0.32251126354202486,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7202857142857143,
+    "exact": 0.4205428571428571,
+    "qwk": 0.37782190187748116,
+    "qwk_undefined": 0
+   }
+  },
+  "b0.qwk_cut": {
+   "mae": 0.588896,
+   "exact": 0.495408,
+   "within1": 0.9311360000000001,
+   "qwk": -0.01573569467987479,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.2949976083957417,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5575269874390567,
+   "cont_r2": -0.03219961015182594,
+   "cont_spearman": -0.2062076742291559,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 1.0158979064494034,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4909454545454545,
+    "exact": 0.5627272727272727,
+    "qwk": -0.019248673893336433,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6658571428571428,
+    "exact": 0.4425142857142857,
+    "qwk": -0.012975496726440638,
+    "qwk_undefined": 0
+   }
+  },
+  "b1.qwk_cut": {
+   "mae": 0.7252479999999999,
+   "exact": 0.445808,
+   "within1": 0.867488,
+   "qwk": 0.1745954179213917,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3071255193179242,
+   "share56": 0.01744,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5303256650899751,
+   "cont_r2": 0.04174161182600234,
+   "cont_spearman": 0.15495443321646682,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9770916603972126,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.5489454545454546,
+    "exact": 0.5474909090909091,
+    "qwk": 0.16216379843143536,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.8637714285714285,
+    "exact": 0.3659142857142857,
+    "qwk": 0.1843631189492145,
+    "qwk_undefined": 0
+   }
+  },
+  "lin10.qwk_cut": {
+   "mae": 0.602224,
+   "exact": 0.5102720000000001,
+   "within1": 0.9058240000000001,
+   "qwk": 0.32545681715584807,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34460099083080464,
+   "share56": 0.008928,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.49439367364188413,
+   "cont_r2": 0.1280597336979822,
+   "cont_spearman": 0.3513338089562873,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.925489012116469,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.45021818181818174,
+    "exact": 0.6241454545454546,
+    "qwk": 0.29594477885799086,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7216571428571429,
+    "exact": 0.42079999999999995,
+    "qwk": 0.34864484724702155,
+    "qwk_undefined": 0
+   }
+  },
+  "enet.qwk_cut": {
+   "mae": 0.585216,
+   "exact": 0.5122559999999999,
+   "within1": 0.9170560000000001,
+   "qwk": 0.3257920014446101,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3532225479387477,
+   "share56": 0.008784,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4813655484369645,
+   "cont_r2": 0.16466487389883983,
+   "cont_spearman": 0.3259974843179707,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9072787650674674,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4355636363636364,
+    "exact": 0.6234181818181818,
+    "qwk": 0.28201025280692366,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7028000000000001,
+    "exact": 0.42491428571428563,
+    "qwk": 0.3601919468027923,
+    "qwk_undefined": 0
+   }
+  },
+  "rf.qwk_cut": {
+   "mae": 0.595136,
+   "exact": 0.515232,
+   "within1": 0.9100320000000001,
+   "qwk": 0.37554957025830926,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.35430405136767085,
+   "share56": 0.013296,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.46614820954034814,
+   "cont_r2": 0.21536212783346662,
+   "cont_spearman": 0.3742678544473387,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8764350084438198,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.43760000000000004,
+    "exact": 0.6320363636363635,
+    "qwk": 0.3433868318220835,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7189142857142857,
+    "exact": 0.4234571428571428,
+    "qwk": 0.40082029331534363,
+    "qwk_undefined": 0
+   }
+  },
+  "chemstyle.qwk_cut": {
+   "mae": 0.599664,
+   "exact": 0.5112,
+   "within1": 0.906944,
+   "qwk": 0.3552170431061734,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3485559539111685,
+   "share56": 0.011232,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4725473853230164,
+   "cont_r2": 0.18480773736796077,
+   "cont_spearman": 0.35937413818549035,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8926601878166814,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.4486909090909091,
+    "exact": 0.6257818181818183,
+    "qwk": 0.3242052712218632,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7182857142857142,
+    "exact": 0.4211714285714286,
+    "qwk": 0.37958343530098854,
+    "qwk_undefined": 0
+   }
+  },
+  "c2.qwk_cut": {
+   "mae": 0.6003520000000001,
+   "exact": 0.511024,
+   "within1": 0.9061440000000001,
+   "qwk": 0.3509010886892795,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34887745349645755,
+   "share56": 0.010864,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47503322775285506,
+   "cont_r2": 0.1781364895984285,
+   "cont_spearman": 0.35292326430824217,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8968257695993366,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.44436363636363646,
+    "exact": 0.6282909090909089,
+    "qwk": 0.32854272598046863,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7229142857142857,
+    "exact": 0.41888571428571425,
+    "qwk": 0.36846837367477375,
+    "qwk_undefined": 0
+   }
+  },
+  "main.median_knn": {
+   "mae": 0.48206400000000005,
+   "exact": 0.583296,
+   "within1": 0.9461280000000001,
+   "qwk": 0.2468223987268183,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3459164654420398,
+   "share56": 0.000352,
+   "rps": 0.34119398399999995,
+   "logloss": 0.987814290715166,
+   "cont_mae": 0.47262847884924986,
+   "cont_r2": 0.18420448542443676,
+   "cont_spearman": 0.3595337452200413,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8930468622844673,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3544,
+    "exact": 0.6953818181818183,
+    "qwk": 0.21869656058027898,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5823714285714287,
+    "exact": 0.4952285714285714,
+    "qwk": 0.2689212715562421,
+    "qwk_undefined": 0
+   }
+  },
+  "b0.median_knn": {
+   "mae": 0.555536,
+   "exact": 0.550096,
+   "within1": 0.919664,
+   "qwk": -0.012096464949129146,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.30196182730895677,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5575269874390567,
+   "cont_r2": -0.03219961015182594,
+   "cont_spearman": -0.2062076742291559,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 1.0158979064494034,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.41756363636363636,
+    "exact": 0.6698181818181819,
+    "qwk": -0.006388328066861938,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6639428571428572,
+    "exact": 0.4560285714285714,
+    "qwk": -0.016581429642339097,
+    "qwk_undefined": 0
+   }
+  },
+  "b1.median_knn": {
+   "mae": 0.541792,
+   "exact": 0.549776,
+   "within1": 0.927872,
+   "qwk": 0.0732165141425622,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3113313455639765,
+   "share56": 0.000144,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.5303256650899751,
+   "cont_r2": 0.04174161182600234,
+   "cont_spearman": 0.15495443321646682,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9770916603972126,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3958181818181818,
+    "exact": 0.6762181818181819,
+    "qwk": 0.07953959044656982,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.6564857142857145,
+    "exact": 0.45042857142857134,
+    "qwk": 0.06824838276084191,
+    "qwk_undefined": 0
+   }
+  },
+  "lin10.median_knn": {
+   "mae": 0.48593600000000003,
+   "exact": 0.5841600000000001,
+   "within1": 0.9425119999999999,
+   "qwk": 0.2178757978867396,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.342722855368362,
+   "share56": 8e-05,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.49439367364188413,
+   "cont_r2": 0.1280597336979822,
+   "cont_spearman": 0.3513338089562873,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.925489012116469,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3605818181818181,
+    "exact": 0.6943272727272728,
+    "qwk": 0.18424428088403935,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5844285714285714,
+    "exact": 0.49759999999999993,
+    "qwk": 0.24430056124600413,
+    "qwk_undefined": 0
+   }
+  },
+  "enet.median_knn": {
+   "mae": 0.485584,
+   "exact": 0.583488,
+   "within1": 0.9439200000000001,
+   "qwk": 0.20104364865676724,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34059233156482643,
+   "share56": 0.0,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4813655484369645,
+   "cont_r2": 0.16466487389883983,
+   "cont_spearman": 0.3259974843179707,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.9072787650674674,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3620363636363636,
+    "exact": 0.6931272727272727,
+    "qwk": 0.16008828012280163,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5826571428571429,
+    "exact": 0.49734285714285725,
+    "qwk": 0.23322286679059734,
+    "qwk_undefined": 0
+   }
+  },
+  "rf.median_knn": {
+   "mae": 0.476224,
+   "exact": 0.587984,
+   "within1": 0.947408,
+   "qwk": 0.2537004571121151,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3497605412036804,
+   "share56": 0.00016,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.46614820954034814,
+   "cont_r2": 0.21536212783346662,
+   "cont_spearman": 0.3742678544473387,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8764350084438198,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.35287272727272734,
+    "exact": 0.6972363636363638,
+    "qwk": 0.20975823479638642,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5731428571428572,
+    "exact": 0.5021428571428571,
+    "qwk": 0.2882264889316162,
+    "qwk_undefined": 0
+   }
+  },
+  "chemstyle.median_knn": {
+   "mae": 0.481648,
+   "exact": 0.5835520000000001,
+   "within1": 0.9462560000000001,
+   "qwk": 0.24779592296188085,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34695635772707983,
+   "share56": 0.000192,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.4725473853230164,
+   "cont_r2": 0.18480773736796077,
+   "cont_spearman": 0.35937413818549035,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8926601878166814,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.35479999999999995,
+    "exact": 0.6945090909090911,
+    "qwk": 0.21958162744109486,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5813142857142857,
+    "exact": 0.49637142857142863,
+    "qwk": 0.26996429801392696,
+    "qwk_undefined": 0
+   }
+  },
+  "c2.median_knn": {
+   "mae": 0.482608,
+   "exact": 0.583376,
+   "within1": 0.9457920000000001,
+   "qwk": 0.23758302218804733,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.34672179892085925,
+   "share56": 0.000384,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": 0.47503322775285506,
+   "cont_r2": 0.1781364895984285,
+   "cont_spearman": 0.35292326430824217,
+   "cont_spearman_undefined": 0,
+   "cont_rmse_over_sd": 0.8968257695993366,
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3585818181818182,
+    "exact": 0.6923636363636363,
+    "qwk": 0.20650297928191025,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5800571428571429,
+    "exact": 0.4977428571428571,
+    "qwk": 0.26200305590001216,
+    "qwk_undefined": 0
+   }
+  },
+  "k2.median": {
+   "mae": 0.492864,
+   "exact": 0.572048,
+   "within1": 0.947024,
+   "qwk": 0.26344771559713887,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.35003051481242436,
+   "share56": 0.000912,
+   "rps": 0.35487424077783974,
+   "logloss": 1.1035409654349237,
+   "cont_mae": null,
+   "cont_mae_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_r2": null,
+   "cont_r2_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_spearman": null,
+   "cont_spearman_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_rmse_over_sd": null,
+   "cont_rmse_over_sd_reason": "该模型没有 x̄ 尺度的连续预测",
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.3673454545454547,
+    "exact": 0.6810181818181819,
+    "qwk": 0.2247611040458971,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.5914857142857143,
+    "exact": 0.4864285714285714,
+    "qwk": 0.29384433895882883,
+    "qwk_undefined": 0
+   }
+  },
+  "c1.sel": {
+   "mae": 0.7859200000000001,
+   "exact": 0.43321599999999993,
+   "within1": 0.827376,
+   "qwk": 0.3230356024494791,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.32943781389160537,
+   "share56": 0.026304,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": null,
+   "cont_mae_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_r2": null,
+   "cont_r2_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_spearman": null,
+   "cont_spearman_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_rmse_over_sd": null,
+   "cont_rmse_over_sd_reason": "该模型没有 x̄ 尺度的连续预测",
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.6123636363636363,
+    "exact": 0.5585454545454546,
+    "qwk": 0.2957938673473015,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.9222857142857143,
+    "exact": 0.33474285714285706,
+    "qwk": 0.34443982288690433,
+    "qwk_undefined": 0
+   }
+  },
+  "c1.round": {
+   "mae": 0.727376,
+   "exact": 0.40379200000000004,
+   "within1": 0.8797119999999999,
+   "qwk": 0.2883976868520333,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.31815549009106503,
+   "share56": 0.00376,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": null,
+   "cont_mae_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_r2": null,
+   "cont_r2_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_spearman": null,
+   "cont_spearman_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_rmse_over_sd": null,
+   "cont_rmse_over_sd_reason": "该模型没有 x̄ 尺度的连续预测",
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.7033818181818182,
+    "exact": 0.42349090909090914,
+    "qwk": 0.2537744470959984,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.7462285714285715,
+    "exact": 0.3883142857142857,
+    "qwk": 0.31560166094606074,
+    "qwk_undefined": 0
+   }
+  },
+  "c1.qwk": {
+   "mae": 0.7859200000000001,
+   "exact": 0.43321599999999993,
+   "within1": 0.827376,
+   "qwk": 0.3230356024494791,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.32943781389160537,
+   "share56": 0.026304,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": null,
+   "cont_mae_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_r2": null,
+   "cont_r2_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_spearman": null,
+   "cont_spearman_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_rmse_over_sd": null,
+   "cont_rmse_over_sd_reason": "该模型没有 x̄ 尺度的连续预测",
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.6123636363636363,
+    "exact": 0.5585454545454546,
+    "qwk": 0.2957938673473015,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.9222857142857143,
+    "exact": 0.33474285714285706,
+    "qwk": 0.34443982288690433,
+    "qwk_undefined": 0
+   }
+  },
+  "c1.quant": {
+   "mae": 0.7808160000000001,
+   "exact": 0.45815999999999996,
+   "within1": 0.838928,
+   "qwk": 0.33182723248851664,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.36342321783905884,
+   "share56": 0.045424,
+   "rps": null,
+   "logloss": null,
+   "rps_reason": "该模型或规则没有预测分布",
+   "logloss_reason": "该模型或规则没有预测分布",
+   "cont_mae": null,
+   "cont_mae_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_r2": null,
+   "cont_r2_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_spearman": null,
+   "cont_spearman_reason": "该模型没有 x̄ 尺度的连续预测",
+   "cont_rmse_over_sd": null,
+   "cont_rmse_over_sd_reason": "该模型没有 x̄ 尺度的连续预测",
+   "zero_heavy": {
+    "n_dims": 22,
+    "mae": 0.6342909090909091,
+    "exact": 0.5744000000000001,
+    "qwk": 0.2972411840172908,
+    "qwk_undefined": 0
+   },
+   "other": {
+    "n_dims": 28,
+    "mae": 0.8959428571428572,
+    "exact": 0.36682857142857145,
+    "qwk": 0.35900198485876544,
+    "qwk_undefined": 0
+   }
+  }
+ },
+ "climatology": {
+  "rps": 0.39341142532623846,
+  "logloss": 1.0657710551285327
+ },
+ "delivered": {
+  "G_hat": {
+   "mae": 0.46784,
+   "exact": 0.58832,
+   "within1": 0.95256,
+   "qwk": 0.2936454556190473,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3549129409805039,
+   "share56": 8e-05
+  },
+  "G_hat_Q": {
+   "mae": 0.5419200000000001,
+   "exact": 0.5465599999999999,
+   "within1": 0.9276800000000001,
+   "qwk": 0.39090495647715395,
+   "qwk_undefined": 0,
+   "balanced_acc": 0.3870597859416343,
+   "share56": 0.01312
+  },
+  "interval": {
+   "coverage": 0.97208,
+   "width": 1.97432
+  },
+  "p_final": {
+   "rps": 0.3316526925332119,
+   "logloss": 0.9521692854325378
+  }
+ },
+ "confusion": {
+  "main_median": {
+   "matrix": [
+    [
+     3567.4,
+     1042.8,
+     60.6,
+     2.6,
+     0.6,
+     0.0,
+     0.0
+    ],
+    [
+     1086.8,
+     1879.2,
+     576.6,
+     36.2,
+     0.2,
+     0.0,
+     0.0
+    ],
+    [
+     99.0,
+     700.8,
+     910.6,
+     337.0,
+     9.6,
+     0.0,
+     0.0
+    ],
+    [
+     25.2,
+     195.8,
+     444.0,
+     786.2,
+     93.6,
+     0.2,
+     0.0
+    ],
+    [
+     2.2,
+     32.8,
+     88.4,
+     286.6,
+     112.2,
+     1.8,
+     0.0
+    ],
+    [
+     1.6,
+     9.8,
+     15.2,
+     40.6,
+     44.0,
+     0.8,
+     0.0
+    ],
+    [
+     0.0,
+     1.4,
+     2.8,
+     3.4,
+     1.4,
+     0.0,
+     0.0
+    ]
+   ],
+   "recall": [
+    0.7632434745400084,
+    0.5250628667225483,
+    0.44268351968886727,
+    0.5088673139158576,
+    0.21412213740458017,
+    0.0071428571428571435,
+    0.0
+   ]
+  },
+  "k2_median": {
+   "matrix": [
+    [
+     3514.0,
+     1088.8,
+     65.8,
+     4.4,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     1037.0,
+     1882.6,
+     602.4,
+     56.8,
+     0.2,
+     0.0,
+     0.0
+    ],
+    [
+     104.6,
+     699.6,
+     844.0,
+     394.8,
+     13.8,
+     0.2,
+     0.0
+    ],
+    [
+     31.4,
+     182.4,
+     422.4,
+     792.8,
+     114.0,
+     2.0,
+     0.0
+    ],
+    [
+     6.4,
+     37.2,
+     79.2,
+     282.0,
+     113.6,
+     5.6,
+     0.0
+    ],
+    [
+     2.8,
+     11.2,
+     12.2,
+     41.6,
+     40.6,
+     3.6,
+     0.0
+    ],
+    [
+     2.2,
+     0.6,
+     2.6,
+     2.2,
+     1.4,
+     0.0,
+     0.0
+    ]
+   ],
+   "recall": [
+    0.7518185708172871,
+    0.5260128527521654,
+    0.4103062712688381,
+    0.5131391585760517,
+    0.216793893129771,
+    0.03214285714285715,
+    0.0
+   ]
+  },
+  "c1_sel": {
+   "matrix": [
+    [
+     2907.4,
+     1089.6,
+     478.6,
+     157.8,
+     31.0,
+     7.4,
+     2.2
+    ],
+    [
+     967.0,
+     1133.4,
+     875.0,
+     474.6,
+     106.2,
+     16.8,
+     6.0
+    ],
+    [
+     164.2,
+     483.0,
+     609.0,
+     548.2,
+     208.6,
+     36.6,
+     7.4
+    ],
+    [
+     44.8,
+     165.2,
+     309.4,
+     519.8,
+     396.4,
+     95.8,
+     13.6
+    ],
+    [
+     5.6,
+     24.6,
+     56.0,
+     125.2,
+     210.6,
+     87.0,
+     15.0
+    ],
+    [
+     0.6,
+     6.6,
+     7.6,
+     18.2,
+     40.2,
+     34.8,
+     4.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.6,
+     1.4,
+     3.8,
+     2.0,
+     0.2
+    ]
+   ],
+   "recall": [
+    0.6220367993153616,
+    0.3166806370494552,
+    0.29606222654350994,
+    0.3364401294498382,
+    0.4019083969465649,
+    0.31071428571428567,
+    0.022222222222222223
+   ]
+  },
+  "G_hat": {
+   "matrix": [
+    [
+     3581.0,
+     1030.0,
+     60.0,
+     2.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     1056.0,
+     1929.0,
+     567.0,
+     27.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     90.0,
+     690.0,
+     934.0,
+     336.0,
+     7.0,
+     0.0,
+     0.0
+    ],
+    [
+     19.0,
+     196.0,
+     447.0,
+     802.0,
+     81.0,
+     0.0,
+     0.0
+    ],
+    [
+     2.0,
+     31.0,
+     82.0,
+     300.0,
+     108.0,
+     1.0,
+     0.0
+    ],
+    [
+     2.0,
+     8.0,
+     16.0,
+     41.0,
+     45.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     3.0,
+     4.0,
+     1.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "recall": [
+    0.766153187847668,
+    0.5389773679798826,
+    0.45405930967428293,
+    0.5190938511326861,
+    0.20610687022900764,
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "grade_freq": {
+  "truth": [
+   0.37392,
+   0.28632,
+   0.16456,
+   0.1236,
+   0.04192,
+   0.00896,
+   0.00072
+  ],
+  "main.median": [
+   0.382576,
+   0.309008,
+   0.167856,
+   0.119408,
+   0.020928,
+   0.000224,
+   0.0
+  ],
+  "main.quant": [
+   0.38008,
+   0.275824,
+   0.161504,
+   0.12408,
+   0.0428,
+   0.013184,
+   0.002528
+  ],
+  "G_hat": [
+   0.38,
+   0.3108,
+   0.16872,
+   0.12096,
+   0.01944,
+   8e-05,
+   0.0
+  ],
+  "G_hat_Q": [
+   0.37952,
+   0.28304,
+   0.1612,
+   0.12392,
+   0.0392,
+   0.01128,
+   0.00184
+  ]
+ },
+ "reference_error": {
+  "all": {
+   "cells_per_rep": 12500.0,
+   "exact": 0.630896,
+   "within1": 0.952656,
+   "mae": 0.424704,
+   "bias": 0.289216
+  },
+  "A": {
+   "cells_per_rep": 3827.8,
+   "exact": 0.8853649615967396,
+   "within1": 0.9949318146193636,
+   "mae": 0.12048696379121167,
+   "bias": -0.09122733685145515
+  },
+  "L": {
+   "cells_per_rep": 8672.2,
+   "exact": 0.5185766010931482,
+   "within1": 0.9339959871774175,
+   "mae": 0.5589815733031988,
+   "bias": 0.4571389036230714
+  }
+ },
+ "paired": [
+  {
+   "a": "main.median",
+   "b": "b1.median",
+   "point": {
+    "mae": -0.04760000000000009,
+    "exact": 0.021167999999999854,
+    "within1": 0.018527999999999878,
+    "qwk": 0.1945162430065977,
+    "rps": -0.03435517209946759,
+    "logloss": -0.0637409363576964,
+    "cont_mae": -0.05769718624072512
+   },
+   "lo": {
+    "mae": -0.06207759762900977,
+    "exact": 0.009659378358504353,
+    "within1": 0.013671309523809728,
+    "qwk": 0.1631574981637296,
+    "rps": -0.04510337482437926,
+    "logloss": -0.08338717128442358,
+    "cont_mae": -0.0797346119533075
+   },
+   "hi": {
+    "mae": -0.03368517425851629,
+    "exact": 0.03400035714285707,
+    "within1": 0.02387117375027534,
+    "qwk": 0.22217461506904568,
+    "rps": -0.024667293064042542,
+    "logloss": -0.046645554692678365,
+    "cont_mae": -0.039202669890512215
+   },
+   "wins_a": 31,
+   "wins_a_cont": 41
+  },
+  {
+   "a": "b0.median",
+   "b": "main.median",
+   "point": {
+    "mae": 0.0687040000000001,
+    "exact": -0.02473599999999987,
+    "within1": -0.028991999999999796,
+    "qwk": -0.3021390792969863,
+    "rps": 0.052769490837077215,
+    "logloss": 0.0869294397749352,
+    "cont_mae": 0.08489850858980687
+   },
+   "lo": {
+    "mae": 0.04130545758489574,
+    "exact": -0.04148887476160218,
+    "within1": -0.03957828820765273,
+    "qwk": -0.32777388726285184,
+    "rps": 0.03395659503393371,
+    "logloss": 0.05588656519736637,
+    "cont_mae": 0.05761014236694912
+   },
+   "hi": {
+    "mae": 0.09558991745076768,
+    "exact": -0.008340150027317958,
+    "within1": -0.019184173555585687,
+    "qwk": -0.26087684824863855,
+    "rps": 0.07098824397487846,
+    "logloss": 0.11698081443012344,
+    "cont_mae": 0.11117641084558656
+   },
+   "wins_a": 17,
+   "wins_a_cont": 6
+  },
+  {
+   "a": "b1.median",
+   "b": "main.median",
+   "point": {
+    "mae": 0.04760000000000009,
+    "exact": -0.021167999999999854,
+    "within1": -0.018527999999999878,
+    "qwk": -0.1945162430065977,
+    "rps": 0.03435517209946759,
+    "logloss": 0.0637409363576964,
+    "cont_mae": 0.05769718624072512
+   },
+   "lo": {
+    "mae": 0.03368517425851629,
+    "exact": -0.03400035714285707,
+    "within1": -0.023871173750275344,
+    "qwk": -0.2221746150690457,
+    "rps": 0.02466729306404254,
+    "logloss": 0.04664555469267836,
+    "cont_mae": 0.03920266989051221
+   },
+   "hi": {
+    "mae": 0.062077597629009766,
+    "exact": -0.009659378358504367,
+    "within1": -0.013671309523809728,
+    "qwk": -0.16315749816372963,
+    "rps": 0.04510337482437926,
+    "logloss": 0.08338717128442356,
+    "cont_mae": 0.07973461195330749
+   },
+   "wins_a": 19,
+   "wins_a_cont": 9
+  },
+  {
+   "a": "lin10.median",
+   "b": "main.median",
+   "point": {
+    "mae": 0.01638400000000001,
+    "exact": -0.012703999999999938,
+    "within1": -0.0031519999999999326,
+    "qwk": -0.017175624166997527,
+    "rps": 0.010846101936662642,
+    "logloss": 0.022422567170128707,
+    "cont_mae": 0.021765194792634255
+   },
+   "lo": {
+    "mae": 0.007873355213329913,
+    "exact": -0.0199392366412213,
+    "within1": -0.00642313932795974,
+    "qwk": -0.029286306967459423,
+    "rps": 0.005989959354201814,
+    "logloss": 0.011329007657638803,
+    "cont_mae": 0.01539928937465319
+   },
+   "hi": {
+    "mae": 0.02545910205778429,
+    "exact": -0.005739200086012107,
+    "within1": -0.0001393068098609581,
+    "qwk": -0.001486700328603398,
+    "rps": 0.016072357320154954,
+    "logloss": 0.03427724860110318,
+    "cont_mae": 0.028236627971718387
+   },
+   "wins_a": 17,
+   "wins_a_cont": 10
+  },
+  {
+   "a": "enet.median",
+   "b": "main.median",
+   "point": {
+    "mae": 0.0016000000000001013,
+    "exact": 0.0047040000000000415,
+    "within1": -0.0037439999999998586,
+    "qwk": -0.09102261405921108,
+    "rps": 0.003362676781491599,
+    "logloss": 0.00010279467072578336,
+    "cont_mae": 0.00873706958771462
+   },
+   "lo": {
+    "mae": -0.01006259039256196,
+    "exact": -0.0026668141592919663,
+    "within1": -0.007496018040243671,
+    "qwk": -0.10495765155969998,
+    "rps": -0.003117075142300496,
+    "logloss": -0.01323905912627912,
+    "cont_mae": -0.00015484509865527853
+   },
+   "hi": {
+    "mae": 0.012902034140472259,
+    "exact": 0.01307294330362914,
+    "within1": -1.8072590738416198e-05,
+    "qwk": -0.07101606628285817,
+    "rps": 0.010042659043291807,
+    "logloss": 0.013059084400212157,
+    "cont_mae": 0.018532488681366123
+   },
+   "wins_a": 27,
+   "wins_a_cont": 21
+  },
+  {
+   "a": "rf.median",
+   "b": "main.median",
+   "point": {
+    "mae": -0.00777599999999995,
+    "exact": 0.008800000000000141,
+    "within1": 8.000000000008001e-05,
+    "qwk": -0.038194855506521186,
+    "rps": -0.0061221400952539895,
+    "logloss": -0.015793816499790003,
+    "cont_mae": -0.006480269308901748
+   },
+   "lo": {
+    "mae": -0.014590787356321806,
+    "exact": 0.0038408101339864912,
+    "within1": -0.0017143470263642519,
+    "qwk": -0.048899861133084865,
+    "rps": -0.00940201803632999,
+    "logloss": -0.023276588664243317,
+    "cont_mae": -0.010922891011183227
+   },
+   "hi": {
+    "mae": -0.001226603021874703,
+    "exact": 0.014034909059414478,
+    "within1": 0.0019336869357408797,
+    "qwk": -0.025839438770722166,
+    "rps": -0.0026300334349739886,
+    "logloss": -0.008468437655882155,
+    "cont_mae": -0.0014599339897934005
+   },
+   "wins_a": 36,
+   "wins_a_cont": 36
+  },
+  {
+   "a": "chemstyle.median",
+   "b": "main.median",
+   "point": {
+    "mae": -0.00011199999999994548,
+    "exact": -0.00011199999999977894,
+    "within1": 0.000240000000000129,
+    "qwk": -0.000890283445154072,
+    "rps": -9.214725691682883e-05,
+    "logloss": -0.000349282954947013,
+    "cont_mae": -8.109352623350105e-05
+   },
+   "lo": {
+    "mae": -0.0015002118644068334,
+    "exact": -0.0012238076192382236,
+    "within1": -0.00011246113486212683,
+    "qwk": -0.003501129338927743,
+    "rps": -0.0004431620465194792,
+    "logloss": -0.0012337019156572178,
+    "cont_mae": -0.0005454897924525524
+   },
+   "hi": {
+    "mae": 0.0012766966613405228,
+    "exact": 0.0009398125234343878,
+    "within1": 0.0007388047530289067,
+    "qwk": 0.0020577452972012997,
+    "rps": 0.0002393249994237762,
+    "logloss": 0.0004151787268884399,
+    "cont_mae": 0.00030188831508968746
+   },
+   "wins_a": 18,
+   "wins_a_cont": 29
+  },
+  {
+   "a": "k2.median",
+   "b": "main.median",
+   "point": {
+    "mae": 0.013472000000000095,
+    "exact": -0.008463999999999916,
+    "within1": -0.0026079999999999437,
+    "qwk": -0.026121763656940522,
+    "rps": 0.013564902231793123,
+    "logloss": 0.12344389734468889,
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "lo": {
+    "mae": 0.0061602764823450755,
+    "exact": -0.014695761381475839,
+    "within1": -0.005257359855334426,
+    "qwk": -0.040287596213416085,
+    "rps": 0.009699173594939612,
+    "logloss": 0.09938255406914134,
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "hi": {
+    "mae": 0.02105578312407935,
+    "exact": -0.0021213705492933686,
+    "within1": -6.781352212974157e-05,
+    "qwk": -0.011108400698191898,
+    "rps": 0.01809801770597755,
+    "logloss": 0.1508335922365797,
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "wins_a": 13
+  },
+  {
+   "a": "c1.sel",
+   "b": "main.median",
+   "point": {
+    "mae": 0.30652800000000013,
+    "exact": -0.14729599999999998,
+    "within1": -0.12225599999999992,
+    "qwk": 0.03346612319539971,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "lo": {
+    "mae": 0.2713120782229247,
+    "exact": -0.1645302357199611,
+    "within1": -0.13928537522513507,
+    "qwk": 0.013216729753080579,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "hi": {
+    "mae": 0.34070638418079097,
+    "exact": -0.1287588571428572,
+    "within1": -0.1061795840140758,
+    "qwk": 0.05617113483802867,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "wins_a": 0
+  },
+  {
+   "a": "c2.median",
+   "b": "main.median",
+   "point": {
+    "mae": 0.0023680000000000367,
+    "exact": -0.0006719999999998949,
+    "within1": -0.0011520000000000419,
+    "qwk": -0.01756253051518497,
+    "rps": 0.0012629049354821622,
+    "logloss": 0.0019239006379918014,
+    "cont_mae": 0.0024047489036052093
+   },
+   "lo": {
+    "mae": -0.002321574900123109,
+    "exact": -0.004710912267846465,
+    "within1": -0.0028480550607287046,
+    "qwk": -0.024123412388947933,
+    "rps": -0.0007243670489434156,
+    "logloss": -0.002485908932480848,
+    "cont_mae": 0.00033347296847249195
+   },
+   "hi": {
+    "mae": 0.007594556656504067,
+    "exact": 0.003119846989846888,
+    "within1": 0.00025360880140291815,
+    "qwk": -0.010596468719735855,
+    "rps": 0.0036578990965178853,
+    "logloss": 0.007129874608666814,
+    "cont_mae": 0.004725595578672741
+   },
+   "wins_a": 19,
+   "wins_a_cont": 20
+  },
+  {
+   "a": "main.median",
+   "b": "main.round",
+   "point": {
+    "mae": -0.01084800000000008,
+    "exact": 0.015807999999999933,
+    "within1": -0.0034720000000001416,
+    "qwk": -0.0032492814652090307,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "lo": {
+    "mae": -0.019083065587113878,
+    "exact": 0.009704125961710417,
+    "within1": -0.006046777408637821,
+    "qwk": -0.010810395392417748,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "hi": {
+    "mae": -0.0028296078431372224,
+    "exact": 0.022250149999999882,
+    "within1": -0.0012429866739936764,
+    "qwk": 0.003425116807205516,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "wins_a": 38
+  },
+  {
+   "a": "main.quant",
+   "b": "main.round",
+   "point": {
+    "mae": 0.08790399999999998,
+    "exact": -0.033935999999999966,
+    "within1": -0.039312000000000125,
+    "qwk": 0.07781381725160746,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "lo": {
+    "mae": 0.06867397587959741,
+    "exact": -0.04450379714641771,
+    "within1": -0.046448269351793574,
+    "qwk": 0.061231603245368596,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "hi": {
+    "mae": 0.1060920950584684,
+    "exact": -0.022147062978862136,
+    "within1": -0.03258692573342171,
+    "qwk": 0.09160074973252333,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "wins_a": 0
+  },
+  {
+   "a": "main.quant",
+   "b": "main.qwk_cut",
+   "point": {
+    "mae": -0.0240800000000001,
+    "exact": 0.02083199999999996,
+    "within1": 0.007967999999999864,
+    "qwk": 0.017147356961015436,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "lo": {
+    "mae": -0.03108984388114827,
+    "exact": 0.015764320486815524,
+    "within1": 0.00481599215686257,
+    "qwk": 0.009882132136987087,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "hi": {
+    "mae": -0.016804262672811036,
+    "exact": 0.025630449587264136,
+    "within1": 0.011203964194373391,
+    "qwk": 0.02345651619913246,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": 0.0
+   },
+   "wins_a": 35
+  },
+  {
+   "a": "main.median_knn",
+   "b": "main.median",
+   "point": {
+    "mae": 0.0026720000000001187,
+    "exact": 0.0027840000000001197,
+    "within1": -0.0035039999999998406,
+    "qwk": -0.04274708052726109,
+    "rps": -0.00011535454604659402,
+    "logloss": 0.007717222624930901,
+    "cont_mae": 0.0
+   },
+   "lo": {
+    "mae": -0.0019437321840640718,
+    "exact": -0.0011038955417688595,
+    "within1": -0.005192308888313038,
+    "qwk": -0.04938415179092426,
+    "rps": -0.0025388095878548906,
+    "logloss": -0.0020006326685796695,
+    "cont_mae": 0.0
+   },
+   "hi": {
+    "mae": 0.007259403600900221,
+    "exact": 0.006799161623023718,
+    "within1": -0.0019282414459807498,
+    "qwk": -0.035078794698412546,
+    "rps": 0.0024015278483467723,
+    "logloss": 0.01803123998186792,
+    "cont_mae": 0.0
+   },
+   "wins_a": 23
+  },
+  {
+   "a": "main.round",
+   "b": "c1.round",
+   "point": {
+    "mae": -0.237136,
+    "exact": 0.16091199999999994,
+    "within1": 0.07339200000000012,
+    "qwk": 0.004421073867255099,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "lo": {
+    "mae": -0.2686410166914867,
+    "exact": 0.14272817344961233,
+    "within1": 0.06105780748663098,
+    "qwk": -0.009756627348450902,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "hi": {
+    "mae": -0.20712418660287082,
+    "exact": 0.17967664750110568,
+    "within1": 0.08589829815895814,
+    "qwk": 0.01813671715104037,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "wins_a": 47
+  },
+  {
+   "a": "main.quant",
+   "b": "c1.quant",
+   "point": {
+    "mae": -0.20267200000000007,
+    "exact": 0.07260800000000006,
+    "within1": 0.07486399999999993,
+    "qwk": 0.03880534548237924,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "lo": {
+    "mae": -0.2208936854338843,
+    "exact": 0.0647245434004896,
+    "within1": 0.06734468336698876,
+    "qwk": 0.025704011734941273,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "hi": {
+    "mae": -0.18379986166007914,
+    "exact": 0.0807483588282653,
+    "within1": 0.08223467780572528,
+    "qwk": 0.047240079475611034,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "wins_a": 47
+  },
+  {
+   "a": "main.quant",
+   "b": "c1.sel",
+   "point": {
+    "mae": -0.20777600000000007,
+    "exact": 0.09755200000000008,
+    "within1": 0.08641599999999994,
+    "qwk": 0.047596975521416784,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "lo": {
+    "mae": -0.22817747418359527,
+    "exact": 0.0861571194029851,
+    "within1": 0.07737372359154937,
+    "qwk": 0.03485972789325496,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "hi": {
+    "mae": -0.18746424657534247,
+    "exact": 0.10927156137355337,
+    "within1": 0.09600120481927697,
+    "qwk": 0.056642962040663915,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": null,
+    "cont_mae_reason": "至少一方缺少该统计量所需的预测分布或连续预测"
+   },
+   "wins_a": 46
+  },
+  {
+   "a": "main.quant",
+   "b": "c2.quant",
+   "point": {
+    "mae": -0.0045439999999999925,
+    "exact": 0.0028639999999999777,
+    "within1": 0.0009279999999999289,
+    "qwk": 0.008885145977680697,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": -0.0024047489036052093
+   },
+   "lo": {
+    "mae": -0.009575290249249014,
+    "exact": 0.00018512914962361964,
+    "within1": -0.0011304789809371523,
+    "qwk": 0.0028759394453144764,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": -0.0047255955786727425
+   },
+   "hi": {
+    "mae": 8.934225195097487e-05,
+    "exact": 0.005806708649273918,
+    "within1": 0.0030526150981719626,
+    "qwk": 0.01526579251770161,
+    "rps": null,
+    "rps_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "logloss": null,
+    "logloss_reason": "至少一方缺少该统计量所需的预测分布或连续预测",
+    "cont_mae": -0.00033347296847249336
+   },
+   "wins_a": 28,
+   "wins_a_cont": 30
+  }
+ ],
+ "success": true,
+ "success_detail": {
+  "main_mae": 0.47939199999999993,
+  "b1_mae": 0.526992,
+  "diff_mae_hi": -0.03368517425851629,
+  "wins_a": 31
+ },
+ "linear_overturn": false,
+ "control_beats_main": true,
+ "beaters": [
+  "rf"
+ ],
+ "leak_flag": false,
+ "leak_dims": [],
+ "r2_main": [
+  0.2841084275439323,
+  -0.09274107097936266,
+  -0.024017378955279313,
+  0.32859628012278264,
+  0.1686501723114932,
+  0.18477464847534958,
+  0.10713826031206979,
+  -0.009616354056043885,
+  0.14270346809141435,
+  0.027799851375750785,
+  0.13658025508188712,
+  -0.02345686058338241,
+  0.04132106117285202,
+  -0.14219837317518183,
+  0.040491770440830965,
+  0.36082747324087744,
+  -0.09338814363974893,
+  0.14912977873872887,
+  0.2501409125825734,
+  0.271297816447987,
+  0.39788163715768937,
+  0.0487273541591277,
+  0.017119549753220407,
+  0.2503832957806865,
+  0.18137626763177056,
+  0.2303339951707668,
+  0.1513171558154201,
+  0.028968802182980636,
+  -0.06139405580695243,
+  0.13881827615110362,
+  0.7325222524454138,
+  0.6061042116845987,
+  0.37587232585785146,
+  0.3033731899978212,
+  0.06762345544314956,
+  0.11022982726752469,
+  0.03633264520321735,
+  -0.02253562524566761,
+  -0.07379043065802446,
+  0.1480452352880386,
+  0.1469366389074012,
+  0.07185811619503787,
+  0.7288906727243375,
+  0.678084407781234,
+  -0.035377824405037075,
+  0.6291276968178454,
+  0.40846972237754187,
+  0.4481297426829288,
+  0.31013227367026575,
+  0.048521464641015165
+ ],
+ "reliability": [
+  0.7820268723150035,
+  0.1255108228494119,
+  0.42928093671350825,
+  0.701846249795676,
+  0.7130456265184053,
+  0.7432376190117105,
+  0.48469751175973624,
+  0.7193572635811516,
+  0.5382869397063363,
+  0.09372500639168639,
+  0.6827873800322024,
+  0.4604973820754809,
+  0.5122544985655845,
+  0.16699555248805137,
+  0.40506548247237867,
+  0.7963540516773376,
+  0.10885133626877737,
+  0.4396183287896177,
+  0.5732776729926424,
+  0.7710200251191521,
+  0.7749007514790025,
+  0.4159332623707851,
+  0.438986085622228,
+  0.682758754991391,
+  0.22573123070944381,
+  0.5153198465247206,
+  0.28562525587983084,
+  0.46465306578492405,
+  0.21676427563183007,
+  0.3582153558302796,
+  0.8800626115937616,
+  0.7807945922374947,
+  0.792755350444035,
+  0.7837990479361964,
+  0.521348854212244,
+  0.48155926634607427,
+  0.49413167014485254,
+  0.5275322613892839,
+  0.10890109663323626,
+  0.7628499382577387,
+  0.4589353731170136,
+  0.7157897670090222,
+  0.8312628205443688,
+  0.850254519609976,
+  0.5790930658357123,
+  0.8467910809434407,
+  0.4953557621585687,
+  0.6093298806780567,
+  0.6399119685987527,
+  0.5356603389331844
+ ],
+ "seed": 0,
+ "meta": {
+  "python": "3.10.22",
+  "numpy": "2.2.6",
+  "pandas": "2.3.3",
+  "scipy": "1.15.3",
+  "sklearn": "1.7.2"
+ },
+ "checks": [
+  {
+   "name": "所有等级数组形状为 (5, 250, 50)，取值在 0..6",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "所有概率数组每行和为 1",
+   "observed": 3.3306690738754696e-16,
+   "expected": 0.0,
+   "tol": 1e-12,
+   "passed": true
+  },
+  {
+   "name": "每个 (模型, 规则) 的混淆矩阵每次重复总和为 12500",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "混淆矩阵 MAE 与逐单元直接计算一致（main.median）",
+   "observed": 5.551115123125783e-17,
+   "expected": 0.0,
+   "tol": 1e-12,
+   "passed": true
+  },
+  {
+   "name": "逐维 QWK 与 cohen_kappa_score 一致（main.median）",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "pair_stat_fn 全 1 权重点估计与直接计算一致",
+   "observed": 1.6653345369377348e-16,
+   "expected": 0.0,
+   "tol": 1e-12,
+   "passed": true
+  },
+  {
+   "name": "同一种子重复计算 main - b1 的 CI 完全相同",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "b0 与 grade_const 在规则 const 下逐元素相同",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "判定布尔值由 JSON 中的数值重新推出，与记录一致",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "main.median 等级 MAE",
+   "observed": 0.47939199999999993,
+   "expected": 0.484,
+   "tol": 0.015,
+   "passed": true
+  },
+  {
+   "name": "main.median 完全一致率",
+   "observed": 0.5805119999999999,
+   "expected": 0.574,
+   "tol": 0.015,
+   "passed": true
+  },
+  {
+   "name": "main.median QWK",
+   "observed": 0.2895694792540794,
+   "expected": 0.309,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "main.median 平衡准确率",
+   "observed": 0.35158888134495986,
+   "expected": 0.351,
+   "tol": 0.03,
+   "passed": true
+  },
+  {
+   "name": "main.median 5–6 级占比 ≤ 0.001",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "main.median 的 RPS",
+   "observed": 0.34130933854604656,
+   "expected": 0.343,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "main.median 的对数损失",
+   "observed": 0.9800970680902348,
+   "expected": 0.986,
+   "tol": 0.05,
+   "passed": true
+  },
+  {
+   "name": "等级频率气候学基线的对数损失",
+   "observed": 1.0657710551285327,
+   "expected": 1.064,
+   "tol": 0.03,
+   "passed": true
+  },
+  {
+   "name": "主模型对数损失低于气候学基线",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "main.const 等级 MAE",
+   "observed": 0.549088,
+   "expected": 0.55,
+   "tol": 0.015,
+   "passed": true
+  },
+  {
+   "name": "main.round 等级 MAE",
+   "observed": 0.49024,
+   "expected": 0.495,
+   "tol": 0.015,
+   "passed": true
+  },
+  {
+   "name": "main.quant QWK",
+   "observed": 0.3706325779708959,
+   "expected": 0.37,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "main.quant 5–6 级占比",
+   "observed": 0.015712,
+   "expected": 0.0146,
+   "tol": 0.005,
+   "passed": true
+  },
+  {
+   "name": "混淆矩阵 main.median 的 0 级召回率",
+   "observed": 0.7632434745400084,
+   "expected": 0.744,
+   "tol": 0.04,
+   "passed": true
+  },
+  {
+   "name": "混淆矩阵 main.median 的 5 级召回率 ≤ 0.05",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "median - round 的 mae 点估计",
+   "observed": -0.01084800000000008,
+   "expected": -0.011,
+   "tol": 0.01,
+   "passed": true
+  },
+  {
+   "name": "quant - round 的 mae 点估计",
+   "observed": 0.08790399999999998,
+   "expected": 0.076,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "quant - round 的 qwk 点估计",
+   "observed": 0.07781381725160746,
+   "expected": 0.059,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "median_knn - median 的 qwk 点估计为负",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "k2 - main 的 rps 点估计",
+   "observed": 0.013564902231793123,
+   "expected": 0.027,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "k2 - main 的 logloss 点估计为正",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "main 连续 MAE",
+   "observed": 0.47262847884924986,
+   "expected": 0.479,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "main 连续 R²",
+   "observed": 0.18420448542443676,
+   "expected": 0.167,
+   "tol": 0.04,
+   "passed": true
+  },
+  {
+   "name": "main 连续 Spearman",
+   "observed": 0.3595337452200413,
+   "expected": 0.368,
+   "tol": 0.04,
+   "passed": true
+  },
+  {
+   "name": "b1 连续 MAE",
+   "observed": 0.5303256650899751,
+   "expected": 0.527,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "main - b1 的 cont_mae 点估计",
+   "observed": -0.05769718624072512,
+   "expected": -0.047,
+   "tol": 0.02,
+   "passed": true
+  },
+  {
+   "name": "main 对 b1 的连续 MAE 逐维胜出维度数",
+   "observed": 41,
+   "expected": 38,
+   "tol": 6,
+   "passed": true
+  },
+  {
+   "name": "22 个零分为主维度上 main.const 完全一致率高于 main.round",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "90% 区间覆盖率",
+   "observed": 0.97208,
+   "expected": 0.969,
+   "tol": 0.03,
+   "passed": true
+  },
+  {
+   "name": "90% 区间平均宽度",
+   "observed": 1.97432,
+   "expected": 1.95,
+   "tol": 0.1,
+   "passed": true
+  },
+  {
+   "name": "leak_flag",
+   "observed": false,
+   "expected": false,
+   "tol": null,
+   "passed": true
+  },
+  {
+   "name": "JSON 中除 _reason 字段外没有字符串形式的数值或状态",
+   "observed": true,
+   "expected": true,
+   "tol": null,
+   "passed": true
+  }
+ ],
+ "wall_time_s": 6.986886739730835
 }

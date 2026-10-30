@@ -1,5 +1,5 @@
 # code/src/q2/association.py
-"""Q2 关联层：图约束前向选择。"""
+"""Q2.2 图约束前向选择：49 维 × Top-3（barnyard 不单独建模）。"""
 from __future__ import annotations
 
 import sys
@@ -13,73 +13,44 @@ import numpy as np
 import pandas as pd
 
 import config as C
+import core
 from data import load_q2_dataset
+from labels import candidate_type
 
-def compute_top3():
-    print("="*50)
-    print("计算 Top-3 关键化合物（前向选择）")
-    print("="*50)
 
+def main():
     ds = load_q2_dataset()
-    df_nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
-    node_to_module = dict(zip(df_nodes["node"], df_nodes["module_id"]))
+    nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
+    a = core.prepare_arm(ds, core.ArmSpec("main"))
+    file_mod = nodes.set_index("node").loc[a.cand, "module_id"].astype(int).values
+    if not (file_mod == a.mod).all():
+        raise AssertionError("graph_nodes.csv 的模块与当前计算不一致，请先运行 graph.py")
+    sel, score, _, _ = core.select_full(a)
 
-    X_mat = ds.X_rank.values
-    Y_mat = ds.Y_rank.values
-    cand_cols = ds.candidate_cols
-    dim_cols = ds.Y_rank.columns
-    n = len(ds.sample_ids)
+    rows = []
+    for d, dim in enumerate(a.dims):
+        for k in range(3):
+            j = sel[d, k]
+            mates = [c for c, m in zip(a.cand, a.mod) if m == a.mod[j] and c != a.cand[j]]
+            rows.append({
+                "dimension": dim,
+                "rank": k + 1,
+                "compound": a.cand[j],
+                "compound_type": candidate_type(a.cand[j]),
+                "module_id": int(a.mod[j]),
+                "same_module_compounds": "|".join(mates),
+                "score_type": "spearman" if k == 0 else "partial_spearman",
+                "score": float(score[d, k]),
+            })
+    df = pd.DataFrame(rows)
+    core.check_147(df, "top3_results")
+    df.to_csv(C.Q2_DIR / "top3_results.csv", index=False)
+    np.savez_compressed(C.Q2_DIR / "q2_selection.npz", sel=sel, score=score, mod=a.mod,
+                        cand=np.array(a.cand), dims=np.array(a.dims))
+    top1 = np.abs(score[:, 0])
+    print(f"Top-3 完成：{df['dimension'].nunique()} 维 {len(df)} 行；Top-1 |r| 中位 {np.median(top1):.2f}"
+          f"（四分位 {np.quantile(top1, .25):.2f}–{np.quantile(top1, .75):.2f}）")
 
-    results = []
-    for d_idx, d_name in enumerate(dim_cols):
-        y = Y_mat[:, d_idx]
-        r_1_all = (X_mat.T @ y) / n
-        best_1_idx = np.argmax(np.abs(r_1_all))
-        best_1_node = cand_cols[best_1_idx]
-        
-        selected = [best_1_node]
-        results.append({
-            "dimension": d_name, "rank": 1, "compound": best_1_node,
-            "module_id": node_to_module.get(best_1_node, -1),
-            "score_type": "spearman", "score": r_1_all[best_1_idx]
-        })
-
-        for rank in [2, 3]:
-            S_indices = [cand_cols.index(s) for s in selected]
-            X_S = np.column_stack([np.ones(n), X_mat[:, S_indices]])
-            
-            beta_y, _, _, _ = np.linalg.lstsq(X_S, y, rcond=None)
-            e_y = y - X_S @ beta_y
-            
-            best_score, best_idx, best_r = -1.0, -1, 0.0
-            selected_modules = {node_to_module[s] for s in selected}
-            
-            for j_idx, j_node in enumerate(cand_cols):
-                if node_to_module.get(j_node) in selected_modules:
-                    continue
-                x_j = X_mat[:, j_idx]
-                beta_j, _, _, _ = np.linalg.lstsq(X_S, x_j, rcond=None)
-                e_j = x_j - X_S @ beta_j
-                
-                denom = np.linalg.norm(e_j) * np.linalg.norm(e_y)
-                r_j = np.dot(e_j, e_y) / denom if denom > 0 else 0.0
-                
-                if abs(r_j) > best_score:
-                    best_score, best_idx, best_r = abs(r_j), j_idx, r_j
-            
-            if best_idx != -1:
-                best_node = cand_cols[best_idx]
-                selected.append(best_node)
-                results.append({
-                    "dimension": d_name, "rank": rank, "compound": best_node,
-                    "module_id": node_to_module.get(best_node, -1),
-                    "score_type": "partial_spearman", "score": best_r
-                })
-
-    df_results = pd.DataFrame(results)
-    df_results["display_dimension"] = df_results["dimension"].apply(lambda x: "stale_hops (同 barnyard)" if x == "barnyard" else x)
-    df_results.to_csv(C.Q2_DIR / "top3_results.csv", index=False)
-    print("✅ Top-3 提取完成！已保存 top3_results.csv")
 
 if __name__ == "__main__":
-    compute_top3()
+    main()

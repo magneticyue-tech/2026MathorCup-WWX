@@ -1,0 +1,54 @@
+{
+ "arm": "T-S7b",
+ "kind": "transfer",
+ "change": "G-S7 生成器（附件 8）重跑迁移，11 款",
+ "compare": "迁移指标",
+ "results": {
+  "T-S7b": {
+   "pils_tripel": {
+    "n": 11,
+    "alpha_median_base": 1.0,
+    "alpha_median_arm": 1.0,
+    "alpha_median_diff": 0.0,
+    "active_frac_base": 1.0,
+    "active_frac_arm": 1.0,
+    "active_frac_diff": 0.0,
+    "p_median_base": 0.164,
+    "p_median_arm": 0.17,
+    "p_median_diff": 0.006000000000000005,
+    "n_alpha_changed": 0
+   },
+   "pils_alpha_base": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ],
+   "pils_alpha_arm": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.85,
+    0.6,
+    0.65,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "inputs_sha12": {
+  "q3_transfer.npz": "f7eb935e0632",
+  "q3_transfer_att8.npz": "4ee1ce5c09c9"
+ },
+ "wall_time_s": 13.365384340286255
+}

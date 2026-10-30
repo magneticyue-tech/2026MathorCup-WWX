@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "arm": "sensory_z",
+  "description": "感官目标改用附件 4 的 z 的秩（49 维，按行号与 x̄ 对齐）",
+  "n_permutation": 1000,
+  "n_bootstrap": 1000,
+  "seed": 0,
+  "tau": 0.6,
+  "na_scheme": "mean",
+  "n_candidates": 225,
+  "graph_source": "attachment2",
+  "rebuild_graph": true,
+  "boot_unit": "date_group",
+  "q_reused_from_baseline": false,
+  "n_distinct_groups_min": 11,
+  "n_distinct_groups_max": 21,
+  "seconds": 39.3
+}

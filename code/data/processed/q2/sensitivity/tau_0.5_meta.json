@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "arm": "tau_0.5",
+  "description": "模块阈值 τ=0.5",
+  "n_permutation": 1000,
+  "n_bootstrap": 1000,
+  "seed": 0,
+  "tau": 0.5,
+  "na_scheme": "mean",
+  "n_candidates": 225,
+  "graph_source": "attachment2",
+  "rebuild_graph": true,
+  "boot_unit": "date_group",
+  "q_reused_from_baseline": false,
+  "n_distinct_groups_min": 11,
+  "n_distinct_groups_max": 21,
+  "seconds": 37.3
+}

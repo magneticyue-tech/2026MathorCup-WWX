@@ -1,57 +1,54 @@
+"""对照 C1 的品评团与零点诊断：精确并列连边、品评团、组维零点与地板堆积 -> q1_panels.npz。"""
+
 import sys
-import json
-import numpy as np
-import pandas as pd
 from pathlib import Path
-from sklearn.utils import Bunch # 用来存 meta 方便点
-import sklearn
 
-# 把 src 加入路径
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-from src.q1.paths import PROCESSED_DIR, SEED
-from src.q1.data import load_q1
-from src.q1.panels import infer_panels, panel_zeros, at_zero_mask
+import numpy as np
 
-print("正在加载数据并推断品评团 (T1)...")
-data = load_q1()
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.q1.data import DIMS, load_q1  # noqa: E402
+from src.q1.meta import run_meta  # noqa: E402
+from src.q1.panels import infer_panels, tie_pair_counts  # noqa: E402
+from src.q1.paths import PROCESSED_DIR, SEED, ensure_dirs  # noqa: E402
+from src.q1.twostage import group_zeros  # noqa: E402
 
-# 1. 推断品评团 (k=2 到 k=5 的敏感性测试)
-panels_k = {}
-for k in range(2, 6):
-    panels_k[k] = infer_panels(data.Z, k=k, decimals=9)
+K_TIES = 3
 
-panels_main = panels_k[3] # 主设定 k=3
 
-# 2. 计算品评团零点
-zeros = panel_zeros(data.Z, panels_main)
-zero_panel_ids = zeros.index.values
+def main():
+    ensure_dirs()
+    data = load_q1()
+    Z = data.Z.to_numpy(float)
+    n, D = Z.shape
+    cnt = tie_pair_counts(data.Z)
+    edges = np.array(sorted((i, j, c) for (i, j), c in cnt.items() if c >= K_TIES), dtype=int)
+    panels = infer_panels(data.Z, k=K_TIES)
+    zeros = group_zeros(Z, panels, np.arange(n), DIMS)
+    at_zero = ~np.isnan(zeros) & np.isclose(np.round(Z, 9), zeros)
+    date_group = np.load(PROCESSED_DIR / "q1_data.npz", allow_pickle=False)["date_group"]
 
-# 3. 计算是否处于零点
-at_zero = at_zero_mask(data.Z, panels_main, zeros)
+    out = PROCESSED_DIR / "q1_panels.npz"
+    np.savez_compressed(
+        out,
+        dims=np.array(DIMS),
+        z=Z,
+        edges=edges,
+        panels=panels,
+        zeros=zeros,
+        at_zero=at_zero,
+        coverage=(~np.isnan(zeros)).mean(axis=0),
+        date_group=date_group,
+        k_ties=K_TIES,
+        seed=SEED,
+        meta=run_meta(),
+    )
+    sizes = np.bincount(panels)
+    print(
+        f"并列连边 {len(edges)} 条；多啤酒品评团 {(sizes > 1).sum()} 个，覆盖 "
+        f"{sizes[sizes > 1].sum()} 款；有零点的单元占比 {np.mean(~np.isnan(zeros)):.3f}"
+    )
+    print(f"写出 {out}")
 
-# 4. 打包并保存为 npz
-meta_info = {
-    "python": sys.version,
-    "numpy": np.__version__,
-    "pandas": pd.__version__,
-    "scikit-learn": sklearn.__version__
-}
 
-save_path = PROCESSED_DIR / "q1_panels.npz"
-np.savez_compressed(
-    save_path,
-    panels=panels_main,
-    panels_k2=panels_k[2],
-    panels_k3=panels_k[3],
-    panels_k4=panels_k[4],
-    panels_k5=panels_k[5],
-    zeros=zeros.values,
-    zero_panel_ids=zero_panel_ids,
-    at_zero=at_zero,
-    dims=np.array(data.dims),
-    seed=SEED,
-    meta=json.dumps(meta_info)
-)
-
-print(f"✅ T1 运行完毕！结果已保存至: {save_path}")
-print(f"共找到 {len(np.unique(panels_main))} 个品评团（包括单款）。")
+if __name__ == "__main__":
+    main()
