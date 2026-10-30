@@ -21,6 +21,9 @@ __pycache__/
 *.bbl
 *.blg
 
+# 编译出的论文 PDF（构建产物，每次编译字节都不同）
+paper/*.pdf
+
 # Models
 *.pkl
 *.joblib
