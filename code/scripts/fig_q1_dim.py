@@ -1,15 +1,3 @@
-"""图：逐维增益与可预测性（fig:q1-dim）。
-
-左栏：主模型减风格收缩基线 B1 的逐维等级 MAE 差（负值 = 主模型更优），
-     零线区分胜负，并标注各组胜出维度数。
-右栏：逐维连续 R2（点），配同维度半组信度（竖线）作噪声参照。
-50 个维度按六个维度组（DIM_GROUPS）排列，组间画分隔线。
-
-输入：code/data/processed/q1/q1_metrics.npz
-输出：figures/q1/q1_dim.pdf（并复制一份到 paper/figures/ 供 LaTeX 引用）
-运行：python code/scripts/fig_q1_dim.py
-"""
-import shutil
 import sys
 from pathlib import Path
 
@@ -18,102 +6,100 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+from matplotlib.lines import Line2D  # noqa: E402
+from matplotlib.patches import Patch  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.q1 import plotstyle  # noqa: E402
 from src.q1.data import DIM_GROUPS  # noqa: E402
-from src.q1.paths import FIG_DIR, PROCESSED_DIR, ROOT  # noqa: E402
+from src.q1.paths import PROCESSED_DIR  # noqa: E402
 
-NPZ = PROCESSED_DIR / "q1_metrics.npz"
-PAPER_FIG_DIR = ROOT / "paper" / "figures"
+from src import paperfig as pf  # noqa: E402
 
 
-def main() -> None:
-    args = plotstyle.script_args(FIG_DIR)
-    plotstyle.apply()
-    p = plotstyle.PALETTE
+def main():
+    pf.apply()
+    m = plotstyle.load_npz(PROCESSED_DIR / "q1_metrics.npz")
+    d = plotstyle.load_npz(PROCESSED_DIR / "q1_data.npz")
+    r2 = np.asarray(plotstyle.load_json(PROCESSED_DIR / "q1_metrics.json")["r2_main"], float)
+    dims = [str(x) for x in d["dims"]]
+    diff = m["main__median__mae_dim"] - m["b1__median__mae_dim"]
+    rel = d["reliability"]
 
-    z = np.load(NPZ, allow_pickle=True)
-    dims_all = [str(d) for d in z["dims"]]
-    idx = {d: i for i, d in enumerate(dims_all)}
-    mae_main = z["main__median__mae_dim"]
-    mae_b1 = z["b1__median__mae_dim"]
-    r2 = z["r2_dim"]
-    rel = z["reliability"]
-
-    # 按维度组排列：Aroma, Flavour, Defect, Spice, Sour, Basic
-    order, groups = [], []
-    for g, ds in DIM_GROUPS.items():
+    order, bounds = [], []
+    for g, members in DIM_GROUPS.items():
         start = len(order)
-        order += [d for d in dims_all if d in set(ds)]
-        groups.append((g, start, len(order)))
-    assert len(order) == 50, len(order)
-    sel = [idx[d] for d in order]
+        order += [dims.index(c) for c in members]
+        bounds.append((g, start, len(order)))
+    y = np.arange(len(order))
 
-    diff = (mae_main - mae_b1)[sel]  # <0 = 主模型 MAE 更低 = 胜出
-    r2s, rels = r2[sel], rel[sel]
-    wins = diff < 0
-    n_win = int(wins.sum())
-    print(f"主模型胜出 {n_win}/50 维；MAE main={mae_main.mean():.3f} B1={mae_b1.mean():.3f}")
-
-    n = len(order)
-    y = np.arange(n)
-    short = [d.replace("A_", "").replace("F_", "") for d in order]
-
-    fig, (axl, axr) = plt.subplots(
-        1, 2, figsize=(13, 8.8), sharey=True, gridspec_kw={"width_ratios": [1.25, 1]}
+    fig, axes = plt.subplots(
+        1, 2, figsize=(pf.TEXTWIDTH, 8.4), sharey=True, gridspec_kw={"width_ratios": [1, 1]}
+    )
+    ax = axes[0]
+    dv = diff[order]
+    ax.barh(y, dv, height=0.7, color=[pf.BLUE if v < 0 else pf.ORANGE for v in dv])
+    ax.axvline(0, color=pf.INK, lw=0.7)
+    ax.set_xlabel("逐维等级 MAE 差：主模型减风格收缩基线")
+    pf.panel_label(ax, f"a  主模型胜出 {int((diff < 0).sum())} / {len(dims)} 维")
+    ax.legend(
+        handles=[
+            Patch(color=pf.BLUE, label="主模型更低"),
+            Patch(color=pf.ORANGE, label="风格收缩基线更低"),
+        ],
+        loc="lower left",
+        bbox_to_anchor=(0.0, -0.11),
+        ncol=2,
+        handlelength=1.0,
+        columnspacing=1.0,
     )
 
-    # ---- 左栏：逐维 MAE 差 ----
-    colors = [p["main"] if w else p["ctrl"] for w in wins]
-    axl.hlines(y, 0, diff, color=colors, lw=1.6)
-    axl.scatter(diff, y, s=22, facecolor="white", edgecolor=colors, linewidths=1.2, zorder=3)
-    axl.axvline(0, ls="--", color="#444444", lw=0.9)
-    axl.invert_yaxis()
-    axl.set_yticks(y)
-    axl.set_yticklabels(short, fontsize=6.5)
-    axl.set_xlabel("等级 MAE 差（主模型 − 风格收缩基线 B1）")
-    axl.grid(axis="y", visible=False)
-    axl.set_title(f"逐维等级 MAE 差（主模型胜出 {n_win}/50 维）", fontsize=10)
+    ax = axes[1]
+    rv, lv = r2[order], rel[order]
+    ax.barh(y, rv, height=0.7, color=[pf.SKY if v >= 0 else pf.LIGHT for v in rv])
+    ax.scatter(lv, y, marker="|", s=55, color=pf.INK, linewidths=1.2, zorder=3)
+    ax.axvline(0, color=pf.INK, lw=0.7)
+    ax.set_xlabel("逐维连续 $R^2$ 与半组信度")
+    pf.panel_label(
+        ax,
+        f"b  $R^2$ 均值 {r2.mean():.3f}，信度中位数 {np.median(rel):.2f}",
+    )
+    ax.legend(
+        handles=[
+            Patch(color=pf.SKY, label="连续 $R^2$"),
+            Patch(color=pf.LIGHT, label=f"$R^2<0$，共 {int((r2 < 0).sum())} 维"),
+            Line2D([], [], marker="|", ls="", color=pf.INK, ms=8, mew=1.2, label="半组信度"),
+        ],
+        loc="lower left",
+        bbox_to_anchor=(0.0, -0.11),
+        ncol=3,
+        handlelength=1.0,
+        columnspacing=1.0,
+    )
 
-    # 各组胜出数标注（右缘）
-    for g, s, e in groups:
-        w = int(wins[s:e].sum())
-        yc = (s + e - 1) / 2
-        axl.text(
-            0.985,
-            yc,
-            f"{g}  {w}/{e - s}",
-            transform=axl.get_yaxis_transform(),
-            ha="right",
+    for ax in axes:
+        ax.set_ylim(len(order) - 0.5, -0.5)
+        ax.grid(axis="x", visible=True)
+        ax.set_axisbelow(True)
+        for _, _, end in bounds[:-1]:
+            ax.axhline(end - 0.5, color=pf.GRID, lw=0.8)
+        ax.tick_params(axis="y", length=0)
+    axes[0].set_yticks(y)
+    axes[0].set_yticklabels([dims[i] for i in order], fontsize=6.5)
+    for g, start, end in bounds:
+        wins = int((diff[order[start:end]] < 0).sum())
+        axes[0].text(
+            -0.62,
+            (start + end - 1) / 2,
+            f"{pf.GROUP_LABELS[g]}\n{wins}/{end - start}",
+            transform=axes[0].get_yaxis_transform(),
+            ha="center",
             va="center",
             fontsize=7.5,
-            fontweight="bold",
-            color="#333333",
-            bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.85, "pad": 1.2},
+            color=pf.INK,
         )
-
-    # ---- 右栏：逐维 R2 与半组信度 ----
-    axr.plot(r2s, y, "o", color=p["main"], ms=3.6, label="连续 $R^2$")
-    for yi, xr in zip(y, rels):  # 半组信度：短竖线
-        axr.plot([xr, xr], [yi - 0.32, yi + 0.32], color=p["ctrl"], lw=1.3)
-    axr.axvline(0, ls="--", color="#444444", lw=0.9)
-    axr.set_xlabel("连续 $R^2$  与  半组信度（竖线）")
-    axr.grid(axis="y", visible=False)
-    axr.set_title("逐维连续 $R^2$ 与半组信度", fontsize=10)
-    axr.legend(loc="lower right", fontsize=8, frameon=False)
-
-    # 组间分隔线（两栏同步）
-    for _, s, _e in groups[1:]:
-        for ax in (axl, axr):
-            ax.axhline(s - 0.5, color="#CCCCCC", lw=0.7)
-
-    fig.tight_layout(w_pad=1.0)
-    out = plotstyle.save(fig, args.out, "q1_dim.pdf")
-    print("已保存", out)
-    PAPER_FIG_DIR.mkdir(parents=True, exist_ok=True)
-    shutil.copy(out, PAPER_FIG_DIR / "q1_dim.pdf")
-    print("已复制到", PAPER_FIG_DIR / "q1_dim.pdf")
+    fig.subplots_adjust(left=0.2, right=0.98, top=0.96, bottom=0.08, wspace=0.08)
+    print(pf.save(fig, "q1", "fig_q1_dim.pdf"))
 
 
 if __name__ == "__main__":

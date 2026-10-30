@@ -7,104 +7,220 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
-from scipy.spatial import ConvexHull  # noqa: E402
+from matplotlib.lines import Line2D  # noqa: E402
+from matplotlib.patches import FancyBboxPatch  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.q1 import plotstyle  # noqa: E402
 from src.q2 import config as C  # noqa: E402
 
-ORIGIN_LABELS = {
-    "Yeast": "酵母",
-    "Hops": "酒花",
-    "Malt": "麦芽",
-    "Spices": "香料",
-    "Others": "其他",
-    "Wild flora": "野生菌群",
-    "Internal standard solution": "内标",
-    "NA": "未标注",
+from src import paperfig as pf  # noqa: E402
+
+ORIGINS = {
+    "Yeast": ("酵母", pf.BLUE),
+    "Hops": ("酒花", pf.GREEN),
+    "Malt": ("麦芽", pf.YELLOW),
+    "Spices": ("香料", pf.PINK),
+    "Wild flora": ("野生菌群", pf.SKY),
+    "Others": ("其他", "#8c6bb1"),
+    "Internal standard solution": ("内标", pf.INK),
+    "NA": ("无来源标签", "#8a8a8a"),
 }
-ORIGIN_COLORS = dict(
-    zip(
-        ORIGIN_LABELS,
-        ("#0072B2", "#009E73", "#E69F00", "#CC79A7", "#7d6aa8", "#56B4E9", "#222222", "#bbbbbb"),
-    )
-)
+NAMED_MODULES = {"ethanol..v.v.": "发酵强度模块", "ethyl_octanoate": "中链脂肪酸乙酯模块"}
+
+
+def clean(name):
+    try:
+        return name.encode("cp1252").decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return name
+
+
+def size_of(k):
+    return 12 + 14 * k
 
 
 def main():
-    plotstyle.apply()
-    lay = plotstyle.load_npz(C.Q2_DIR / "q2_layout.npz")
-    nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
+    pf.apply()
+    lay = np.load(C.Q2_DIR / "q2_netlayout.npz", allow_pickle=False)
+    nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv").set_index("node")
     edges = pd.read_csv(C.Q2_DIR / "graph_edges.csv")
     mods = pd.read_csv(C.Q2_DIR / "graph_modules.csv")
-    pos = dict(zip(lay["node"], lay["xy"]))
+    final = pd.read_csv(C.Q2_DIR / "final_top3_with_rationality.csv")
+    n_dims = final[final["method"] == "main"].groupby("compound")["dimension"].nunique()
+    names = [str(n) for n in lay["node"]]
+    pos = dict(zip(names, lay["xy"]))
+    block = dict(zip(names, lay["module"]))
     tau = float(lay["tau"])
 
-    fig, ax = plt.subplots(figsize=(11, 9.5))
-    for e in edges.itertuples():
+    fig, ax = plt.subplots(figsize=(pf.TEXTWIDTH, 8.0))
+    for b in sorted(set(lay["module"])):
+        if b == -1:
+            continue
+        pts = np.array([pos[n] for n in names if block[n] == b])
+        lo, hi = pts.min(0) - 0.17, pts.max(0) + 0.17
+        ax.add_patch(
+            FancyBboxPatch(
+                lo,
+                *(hi - lo),
+                boxstyle="round,pad=0,rounding_size=0.08",
+                fc="#f3f3f3",
+                ec="none",
+                zorder=0,
+            )
+        )
+    drawn = {n for n in names if block[n] != -1}
+    sub = edges[edges["source"].isin(drawn) & edges["target"].isin(drawn)]
+    for e in sub.itertuples():
         (x1, y1), (x2, y2) = pos[e.source], pos[e.target]
+        inside = block[e.source] == block[e.target]
         ax.plot(
             [x1, x2],
             [y1, y2],
-            color="#888888",
-            alpha=0.45,
-            zorder=1,
-            lw=0.3 + 2.0 * (e.weight_abs - tau),
-            ls="-" if e.rho >= 0 else "--",
+            color="#7f7f7f" if inside else "#d0d0d0",
+            lw=(0.4 + 2.2 * (e.weight_abs - tau)) if inside else 0.35,
+            ls="-" if e.rho >= 0 else (0, (2, 1.5)),
+            alpha=0.9 if inside else 0.5,
+            zorder=1 if inside else 0.5,
         )
-    cand = nodes[nodes["is_candidate"]]
-    for _, g in cand.groupby("module_id"):
-        pts = np.array([pos[n] for n in g["node"]])
-        if len(g) >= 3:
-            poly = pts[ConvexHull(pts).vertices]
-            ax.fill(poly[:, 0], poly[:, 1], color="#bbbbbb", alpha=0.22, zorder=0)
-            ax.plot(*np.vstack([poly, poly[:1]]).T, color="#999999", lw=0.6, zorder=0)
-        elif len(g) == 2:
-            ax.plot(pts[:, 0], pts[:, 1], color="#bbbbbb", lw=5, alpha=0.5, zorder=0)
-    origin = nodes["origin_paper"].fillna("NA")
-    size = 12 + 18 * nodes["k_in"].fillna(0).to_numpy()
-    for o, lab in ORIGIN_LABELS.items():
-        m = (origin == o).to_numpy()
-        ann = nodes["is_annotation"].to_numpy()
-        pts = np.array([pos[n] for n in nodes["node"][m & ~ann]]).reshape(-1, 2)
-        if len(pts):
+
+    for n in names:
+        row = nodes.loc[n]
+        origin = row["origin_paper"] if isinstance(row["origin_paper"], str) else "NA"
+        col = ORIGINS[origin][1]
+        k = int(n_dims.get(n, 0))
+        marker = "s" if row["is_annotation"] else "o"
+        if k > 0:
             ax.scatter(
-                *pts.T,
-                s=size[m & ~ann],
-                color=ORIGIN_COLORS[o],
-                label=lab,
-                zorder=2,
-                edgecolor="white",
-                linewidth=0.4,
+                *pos[n], s=size_of(k), color=col, marker=marker, ec="white", lw=0.5, zorder=3
             )
-        pts = np.array([pos[n] for n in nodes["node"][m & ann]]).reshape(-1, 2)
-        if len(pts):
+        else:
             ax.scatter(
-                *pts.T, s=40, facecolor="white", edgecolor=ORIGIN_COLORS[o], marker="s", zorder=3
+                *pos[n],
+                s=size_of(0) + 6,
+                facecolor="white",
+                ec=col,
+                marker=marker,
+                lw=0.9,
+                zorder=3,
             )
-    for h in mods.loc[mods["size"] >= 3, "hub"]:
-        ax.text(*pos[h], h, fontsize=6.5, ha="left", va="bottom", zorder=4)
-    ax.scatter(
-        [],
-        [],
-        s=40,
-        facecolor="white",
-        edgecolor="#555555",
-        marker="s",
-        label="注释节点（综合指标）",
+
+    hubs = set(mods.loc[mods["size"] >= 3, "hub"])
+    labelled = [n for n in names if n in hubs or n in n_dims.index or nodes.loc[n, "is_annotation"]]
+    close = {
+        n: [m for m in labelled if m != n and np.all(np.abs(pos[m] - pos[n]) < (0.6, 0.4))]
+        for n in labelled
+    }
+    placed = {}
+    for n in labelled:
+        row = nodes.loc[n]
+        name = clean(row["chemical_name"]) if isinstance(row["chemical_name"], str) else n
+        if row["is_annotation"]:
+            near = row["nearest_candidate"]
+            name = (
+                f"{name}\n最近成分 {clean(nodes.loc[near, 'chemical_name'])}"
+                f"，$|\\rho|$={abs(row['nearest_candidate_rho']):.2f}"
+            )
+        ha, dx, va, dy = "center", 0, "bottom", 4.0
+        if not row["is_annotation"]:
+            mates = [m for m in names if block[m] == block[n]]
+            cx = np.mean([pos[m][0] for m in mates])
+            cy = np.mean([pos[m][1] for m in mates])
+            if pos[n][0] < cx - 0.05:
+                ha, dx = "right", 2
+            elif pos[n][0] > cx + 0.05:
+                ha, dx = "left", -2
+            if pos[n][1] < cy - 0.05 or (len(mates) == 2 and pos[n][0] > cx):
+                va, dy = "top", -4.0
+            if close[n]:
+                m0 = min(close[n], key=lambda m: np.linalg.norm(pos[m] - pos[n]))
+                ha, dx = ("left", -2) if pos[n][0] > pos[m0][0] else ("right", 2)
+            for m in close[n]:
+                if placed.get(m) == va:
+                    va, dy = ("bottom", 4.0) if va == "top" else ("top", -4.0)
+            placed[n] = va
+        ax.annotate(
+            name,
+            pos[n],
+            xytext=(dx, dy),
+            textcoords="offset points",
+            ha=ha,
+            va=va,
+            fontsize=4.6,
+            color=pf.INK,
+            zorder=4,
+            linespacing=1.1,
+            fontweight="bold" if n in hubs else "normal",
+        )
+    for n, title in NAMED_MODULES.items():
+        b = block[n]
+        pts = np.array([pos[m] for m in names if block[m] == b])
+        ax.text(
+            pts[:, 0].mean(),
+            pts[:, 1].min() - 0.36,
+            title,
+            ha="center",
+            va="top",
+            fontsize=6.2,
+            color=pf.ORANGE,
+            fontweight="bold",
+            zorder=4,
+        )
+    apts = np.array([pos[n] for n in names if block[n] == -1])
+    ax.text(
+        apts[:, 0].min() - 1.0,
+        apts[:, 1].mean(),
+        "注释节点\n不作候选",
+        ha="right",
+        va="center",
+        fontsize=6.2,
+        color=pf.MUTED,
     )
-    for k in (0, 2, 5):
-        ax.scatter([], [], s=12 + 18 * k, color="#aaaaaa", label=f"加权模块内连接度 {k}")
-    ax.legend(loc="upper right", fontsize=7.5, frameon=False, ncol=2)
-    n_multi = int((mods["size"] > 1).sum())
+    ax.plot(
+        [apts[:, 0].min() - 1.6, apts[:, 0].max() + 1.6],
+        [apts[:, 1].max() + 0.75] * 2,
+        color=pf.GRID,
+        lw=0.6,
+    )
+
+    handles = [
+        Line2D([], [], marker="o", ls="", color=ORIGINS[o][1], ms=5, label=ORIGINS[o][0])
+        for o in ("Yeast", "Hops", "Malt", "Spices", "Wild flora", "Others", "NA")
+    ]
+    handles += [
+        Line2D([], [], marker="s", ls="", color=pf.INK, ms=4.5, label="内标"),
+        Line2D([], [], marker="o", ls="", mfc="white", mec=pf.MUTED, ms=5, label="未进入 Top-3"),
+        Line2D(
+            [], [], marker="o", ls="", color=pf.MUTED, ms=np.sqrt(size_of(1)), label="进入 1 个维度"
+        ),
+        Line2D(
+            [], [], marker="o", ls="", color=pf.MUTED, ms=np.sqrt(size_of(4)), label="进入 4 个维度"
+        ),
+        Line2D([], [], color="#7f7f7f", lw=1.3, label="模块内边，宽度随 $|\\rho|$ 增大"),
+        Line2D([], [], color="#7f7f7f", lw=1.0, ls=(0, (2, 1.5)), label="负相关边"),
+        Line2D([], [], color="#d0d0d0", lw=1.0, label="模块间边"),
+    ]
+    ax.legend(
+        handles=handles,
+        loc="upper center",
+        bbox_to_anchor=(0.5, 0.0),
+        ncol=5,
+        columnspacing=0.9,
+        handletextpad=0.3,
+        fontsize=6.5,
+    )
+    n_multi = len(set(lay["module"])) - 1
     ax.set_title(
-        f"化合物共表达图（τ={tau:g}：{len(edges)} 条 |ρ|≥{tau:g} 的边，虚线为负相关；"
-        f"{len(mods)} 个模块，其中多成员 {n_multi} 个以灰色圈示；MDS 距离 1−|ρ|）",
-        fontsize=8.5,
+        f"$|\\rho|\\geq{tau:g}$ 连边，{n_multi} 个多成员模块共 "
+        f"{int((lay['module'] != -1).sum())} 个化合物，灰底为模块；"
+        f"另有 {int(lay['n_single'])} 个单成员节点未画",
+        fontsize=7.5,
+        color=pf.MUTED,
+        loc="left",
     )
+    ax.set_aspect("equal")
     ax.set_axis_off()
     fig.tight_layout()
-    print(plotstyle.save(fig, C.FIGURES, "fig_q2_network.pdf"))
+    print(pf.save(fig, "q2", "fig_q2_network.pdf"))
 
 
 if __name__ == "__main__":
