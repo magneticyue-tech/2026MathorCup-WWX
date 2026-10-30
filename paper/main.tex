@@ -475,32 +475,17 @@ B3——用 Zenodo 新公开的真实原始评分（2{,}197 行，按啤酒$\tim
 \subsubsection{等级映射与交付}
 
 两种映射的 QWK 分别为 [值] 与 [值]，选定 [胜出者]。预测等级对
-参照的混淆集中在对角线附近（图~\ref{fig:q1_confusion}），$\pm1$
-准确率 [值]，没有跨档大错；有锚单元的误差明显小于无锚单元，
-印证``零点找得回的维度还原可靠''。交付的 250$\times$50 评分见
-图~\ref{fig:q1_scores}，代表性啤酒的感官画像见
-图~\ref{fig:q1_radar}。
+参照的混淆集中在对角线附近，$\pm1$ 准确率 [值]，没有跨档大错；
+有锚单元的误差明显小于无锚单元，印证``零点找得回的维度还原可靠''。
+交付结果见图~\ref{fig:q1_delivery}：(a) 混淆热力图显示对角线集中，
+(b) 250 款 $\times$ 50 维交付评分热力图按风格聚类，(c) 代表性啤酒的
+感官画像叠加了同款啤酒的参照等级。
 
 %\begin{figure}[htbp]
- % \centering
-  %\includegraphics[width=0.88\textwidth]{figures/q1_confusion.pdf}
-  %\caption{预测等级混淆热力图（左：有锚单元；右：无锚单元）}
-  %\label{fig:q1_confusion}
-%\end{figure}
-
-%\begin{figure}[htbp]
- % \centering
- % \includegraphics[width=0.9\textwidth]{figures/q1_scores.pdf}
-  %\caption{250 款 $\times$ 50 维交付评分热力图（行按风格聚类）}
- % \label{fig:q1_scores}
-%\end{figure}
-
-%\begin{figure}[htbp]
-  %\centering
-  %\includegraphics[width=0.85\textwidth]{figures/q1_radar.pdf}
-  %\caption{代表性啤酒感官画像（预测等级与参照等级叠加，
-  %  含外部检查用的啤酒 64 与 223）}
- % \label{fig:q1_radar}
+%  \centering
+%  \includegraphics[width=0.98\textwidth]{figures/q1_delivery.pdf}
+%  \caption{问题一交付结果：(a) 预测等级混淆热力图（左：有锚单元，右：无锚单元）；(b) 250 款 $\times$ 50 维交付评分热力图（行按风格聚类）；(c) 代表性啤酒感官画像（预测等级与参照等级叠加，含外部检查用的啤酒 64 与 223）}
+%  \label{fig:q1_delivery}
 %\end{figure}
 
 \subsubsection{外部检查}
