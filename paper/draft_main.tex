@@ -34,9 +34,12 @@
 
 \graphicspath{{../figures/}}
 \setlength{\parskip}{0.45em}
-\renewcommand{\arraystretch}{1.25}
+\renewcommand{\arraystretch}{1.15}
 
 \newcommand{\code}[1]{\texttt{#1}}
+
+% 占位样式与版面参数（浮动参数、题注、\phfig 与 \ph），独立文件便于维护
+\input{phstyle.tex}
 
 % 首页版式依据赛题论文模板：队伍编号/赛道表、分隔线、论文题目、摘要与关键词
 \newcommand{\teaminfo}[2]{%
