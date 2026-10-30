@@ -69,7 +69,7 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 \centering\small
 \caption{问题三实验设置与对照}
 \label{tab:q3-setup}
-\begin{tabular}{p{3.0cm}p{5.4cm}p{4.2cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{4.2cm}}
 \toprule
 环节 & 正文报告的设置 & 控制或检验什么 \\
 \midrule
@@ -107,7 +107,7 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 \centering\small
 \caption{问题三生成器验证（占位，正式产物验收后填写）}
 \label{tab:q3-gen}
-\begin{tabular}{lcccccc}
+\resizebox{\textwidth}{!}{\begin{tabular}{lcccccc}
 \toprule
 指标 & 主模型 & 纯因子 & 无风格 & 逐列独立 & 真实留出参照 & 验收阈值 \\
 \midrule
@@ -120,7 +120,7 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 新颖性：判别器距离比 & \ph & \ph & \ph & \ph & \ph & \ph \\
 新颖性：近复制率 & \ph & \ph & \ph & \ph & \ph & \ph \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \subsection{基于评分预测分布的感官画像与风味指纹}
@@ -137,7 +137,7 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 问题一未胜过风格基线的维度用灰色标签。
 
 \begin{figure}[htbp]\centering
-\phfig{0.62\textwidth}{三栏感官画像，行为 50 个维度，点为生成画像中位数与区间，叠加真实啤酒的预测与观测。}
+\phfig{0.50\textwidth}{三栏感官画像，行为 50 个维度，点为生成画像中位数与区间，叠加真实啤酒的预测与观测。}
 \caption{感官画像。三栏为三个风格，点与横线为生成画像的中位数与区间，叠加真实啤酒的预测与观测中位数。}
 \label{fig:q3-portrait}
 \end{figure}
@@ -154,7 +154,7 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 每行一个化合物，箱线表示 1,000 个生成样本，散点表示该风格的真实啤酒，菱形与横线为化学指纹及其 bootstrap 区间。
 
 \begin{figure}[htbp]\centering
-\phfig{0.46\textwidth}{三栏化学指纹，每栏取偏移最大的 10 个化合物，箱线为生成样本，散点为真实啤酒。}
+\phfig{0.37\textwidth}{三栏化学指纹，每栏取偏移最大的 10 个化合物，箱线为生成样本，散点为真实啤酒。}
 \caption{化学指纹与生成谱。行名为化合物，箱线表示生成样本，散点表示真实啤酒，菱形为化学指纹及其区间。}
 \label{fig:q3-fingerprint}
 \end{figure}
@@ -211,17 +211,17 @@ u^*=\arg\min_{u'}\ (u'-\tilde u)^\top\Sigma_W^{-1}(u'-\tilde u)\quad\text{满足
 \centering\small
 \caption{Pils/Lager 到 Tripel 逐款迁移（占位，正式产物验收后填写）}
 \label{tab:q3-transfer}
-\begin{tabular}{lccccccc}
+\resizebox{\textwidth}{!}{\begin{tabular}{lccccccc}
 \toprule
 啤酒 & $\alpha^*$ & 源谱 $P$(Tripel) & 交付谱 $P$(Tripel) & 结论类别 & 化学约束数 & 违反维度 & 保留度 \\
 \midrule
 占位 & \ph & \ph & \ph & \ph & \ph & \ph & \ph \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \begin{figure}[htbp]\centering
-\phfig{0.50\textwidth}{左栏为各方法的目标风格概率，右栏为 11 乘 15 约束矩阵。}
+\phfig{0.40\textwidth}{左栏为各方法的目标风格概率，右栏为 11 乘 15 约束矩阵。}
 \caption{迁移的代价与收益。左栏为各方法的 Tripel 概率，右栏为化学与感官约束矩阵，直接证明缺陷不恶化。}
 \label{fig:q3-transfer-fig}
 \end{figure}
@@ -229,7 +229,7 @@ u^*=\arg\min_{u'}\ (u'-\tilde u)^\top\Sigma_W^{-1}(u'-\tilde u)\quad\text{满足
 图~\ref{fig:q3-pairs} 为 22 乘 22 热图，格内颜色为源风格啤酒达到参照范围的比例，对角留空，行列按风格潜空间均值的层次聚类排序，行尾附平均迁移强度的条形边栏。
 
 \begin{figure}[htbp]\centering
-\phfig{0.55\textwidth}{22 乘 22 风格对热图，格内为源风格啤酒达到参照范围的比例，行尾为平均迁移强度。}
+\phfig{0.44\textwidth}{22 乘 22 风格对热图，格内为源风格啤酒达到参照范围的比例，行尾为平均迁移强度。}
 \caption{风格对热图。行列按风格潜空间均值的层次聚类排序，图注写明风格对之间不独立。}
 \label{fig:q3-pairs}
 \end{figure}

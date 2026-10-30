@@ -67,7 +67,7 @@ def main() -> None:
     # ---- 左栏：逐维 MAE 差 ----
     colors = [p["main"] if w else p["ctrl"] for w in wins]
     axl.hlines(y, 0, diff, color=colors, lw=1.6)
-    axl.plot(diff, y, "o", color="white", mec=colors, ms=4.2, mew=1.2, zorder=3)
+    axl.scatter(diff, y, s=22, facecolor="white", edgecolor=colors, linewidths=1.2, zorder=3)
     axl.axvline(0, ls="--", color="#444444", lw=0.9)
     axl.invert_yaxis()
     axl.set_yticks(y)

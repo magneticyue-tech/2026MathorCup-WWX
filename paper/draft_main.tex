@@ -23,6 +23,7 @@
 \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
+\usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{array}
@@ -33,66 +34,77 @@
 
 \graphicspath{{../figures/}}
 \setlength{\parskip}{0.45em}
-\renewcommand{\arraystretch}{1.25}
-% 放宽浮动参数：占位图/图尽量就地排版，正文回填空隙，避免页面大片留白
-\renewcommand{\topfraction}{0.9}
-\renewcommand{\bottomfraction}{0.8}
-\renewcommand{\textfraction}{0.07}
-\renewcommand{\floatpagefraction}{0.75}
+\renewcommand{\arraystretch}{1.15}
 
 \newcommand{\code}[1]{\texttt{#1}}
 
-% ---------- 题注排版：与 12pt 正文协调（小一号、标签加粗、间距收紧） ----------
-\captionsetup{font=small,labelfont=bf,skip=7pt,justification=centering,singlelinecheck=true}
+% 占位样式与版面参数（浮动参数、题注、\phfig 与 \ph），独立文件便于维护
+\input{phstyle.tex}
 
-% ---------- 图表占位样式（出图后整块替换，不影响正式内容） ----------
-\usepackage{xcolor}
-\definecolor{phframe}{RGB}{168,168,168}
-\definecolor{phbg}{RGB}{248,248,248}
-\definecolor{phtext}{RGB}{105,105,105}
-% 图占位框：\phfig{高度}{内容说明}，出图后整块替换为 \includegraphics
-% 高度分档参考：宽扁两栏对比 0.40 / 网格与散点 0.46--0.50 / 方形网络与热图 0.55 / 50 行长图 0.62
-\newcommand{\phfig}[2]{%
-  \fcolorbox{phframe}{phbg}{%
-    \begin{minipage}[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
-      \centering\color{phtext}%
-      {\small\bfseries 【占位图】由代码从数据结果导出}\\[0.35em]
-      \parbox[c]{0.92\linewidth}{\centering\small #2}\par
-      \vspace{0.35em}
-      {\footnotesize 出图后整块替换为 \code{\textbackslash includegraphics}}
-    \end{minipage}}}
-% 表格占位单元格：灰色短横，正式数值由代码导出后填写
-\newcommand{\ph}{\textcolor{phtext}{$-$}}
+% 首页版式依据赛题论文模板：队伍编号/赛道表、分隔线、论文题目、摘要与关键词
+\newcommand{\teaminfo}[2]{%
+  \par\begingroup\centering
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{|c|c|}
+    \hline
+    \makebox[3.9cm][c]{队伍编号} & \makebox[3.9cm][c]{#1} \\
+    \hline
+    \makebox[3.9cm][c]{赛道} & \makebox[3.9cm][c]{#2} \\
+    \hline
+  \end{tabular}
+  \par\endgroup
+}
 
-\title{\bfseries 啤酒化学数据与感官评分}
-\author{}
-\date{}
+% 摘要与正文同宽（默认 abstract 环境由 quotation 包裹，左右各缩进约 2.5em）
+\makeatletter
+\renewenvironment{abstract}{%
+  \small
+  \begin{center}{\bfseries 摘\quad 要}\end{center}%
+  \par\vspace{0.5em}%
+  \noindent\ignorespaces
+}{\par}
+\makeatother
+
+\newcommand{\papertitle}{啤酒化学数据与感官评分}
 
 \begin{document}
-\maketitle
+
+\vspace*{-0.5cm}
+\teaminfo{MCB2607307}{（A）}
+
+\vspace{0.15cm}
+\noindent\textcolor{gray}{\rule{14.5cm}{1pt}}
+\vspace{0.15cm}
+
+{\centering\bfseries\large\papertitle\par}
 
 \begin{abstract}
+啤酒的风味品质由化学成分与感官品评共同刻画，但两者之间难以建立直接的定量关系。
 本文基于一份含 250 款商用啤酒的化学与感官数据集，完成三项任务：由化学特征预测 50 个感官维度的 0 到 6 等级，找出每个感官维度的关键化合物，以及生成指定风格的化合物谱并完成跨风格迁移。
 
-针对问题一，本文以作者公布的逐品评员原始评分的啤酒均分为训练目标、以均分取整为 0 到 6 级真值，不依赖附件四的标准化换算。
-用浅层梯度提升树逐维拟合化学特征到均分的映射，按 25 个日期组分组的嵌套交叉验证评估，再由内层折外残差构造等级预测分布，以分布中位数为主要输出、分位数切点为第二输出。
-主模型等级平均绝对误差为 0.479，显著低于只知风格的基线 0.527（配对差 $-0.048$，95\% 置信区间 $[-0.062,-0.034]$），二次加权 Kappa 为 0.290，90\% 等级区间覆盖 97.2\%。
-只用附件还原等级的对照端到端平均绝对误差为 0.786，说明标准化换算本身是主要误差来源。
+针对问题一，本文以作者公布的啤酒感官维度原始评分均分为训练目标，用浅层梯度提升树逐维拟合化学特征到该均分的映射。
+按 25 个日期组分组的嵌套交叉验证评估对新啤酒的泛化能力，同日品评、共享品评员与品评情境的啤酒整体进入同一折以避免泄漏。
+再由内层折外残差构造等级预测分布，分别以分布中位数、分位数切点等级为主要、第二输出。
+主模型等级平均绝对误差为 0.479，显著低于只用风格预测的基线 0.527（配对差 $-0.048$，95\% 置信区间 $[-0.062,-0.034]$），二次加权 Kappa 为 0.290，90\% 等级区间覆盖 97.2\%。
+使用附件四还原等级评分的对照端到端平均绝对误差为 0.786，说明标准化换算本身是主要误差来源。
 
 针对问题二，本文以附件二构建化合物共表达图，在阈值 0.6 下用平均连接层次聚类划分模块，再用图约束前向选择逐个取出控制已选化合物后的秩偏相关最强、且分属不同模块的 3 个化合物。
 显著性由置换检验把关，稳定性由 25 个日期组重抽 1,000 次量化。
-49 个维度中 A 级 26 个、B 级 22 个、C 级 1 个，多数维度可靠支持的关键化合物为 1 到 2 个。
-加标实验一致支持酯类作为酯类维度的关键因素，酒花与苦味对照不变，构成独立的因果证据。
+维度按首位化合物的显著性与入选频率分档，A 级为首位显著且入选频率不低于 0.6，B 级为首位显著但不满足该条件，C 级为首位不显著；49 个维度中 A 级 26 个、B 级 22 个、C 级 1 个。
+数据集作者的加标实验向基础啤酒加入 6 到 7 种已知化合物的混合物，由同一批品评员对加标杯与对照杯配对评分。
+三个加标组的酯类相关维度都有提高，支持酯类作为酯类维度的关键因素的结果。
 
 针对问题三，本文对化学数据做秩变换，用风格条件潜在高斯模型刻画化合物谱，以因子载荷与共表达模块块描述风格内共变，再经问题一模型给出感官画像。
-跨风格迁移采用潜空间平移，配合化学层缺陷约束的投影与感官层的路径搜索，并做原尺度复查，保证缺陷化合物不恶化。
-问题三的正式结果尚未交付，正文结果以占位方式呈现。
+跨风格迁移采用潜空间平移，配合化学层缺陷约束的投影与感官层的路径搜索，保证缺陷化合物不恶化。
+原尺度复查指把迁移结果映回附件一原尺度、逐列核对缺陷化合物不超过上界且预测等级不升高，不通过者退回下一个可行网格点。
+区分真实与生成化合物谱的两样本分类检验的合并与条件曲线下面积（AUC）为 0.589 与 0.576，超出 $|\mathrm{AUC}-0.5|\le 0.05$ 的预设标准，即生成谱与真实谱仍可被区分，但均低于去掉风格条件的对照；新颖性、分类可用性、下限比例误差与模块内相关等其余检验通过。
 
-三个问题共享同一批啤酒与化学特征，问题一的折外预测与问题二的共表达模块分别作为问题三感官画像与生成模型的输入，形成完整的方法链条。
+总体而言，化学谱对感官等级具有超出风格基线的预测能力，关键化合物识别具备可量化的稳定性与独立加标支持，生成与迁移在缺陷约束下提供了可用的分析框架。
 \end{abstract}
 
 \noindent\textbf{关键词：}啤酒风味；感官评分预测；梯度提升树；化合物共表达网络；秩变换；条件生成模型；跨风格迁移
 
+\clearpage
 \tableofcontents
 \newpage
 

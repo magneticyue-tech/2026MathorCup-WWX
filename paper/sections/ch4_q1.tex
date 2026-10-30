@@ -87,7 +87,7 @@ F_{bdk}&=\sum_{j\le k}p_{bdj},\qquad k=0,\dots,6 .
 \centering\small
 \caption{问题一实验设置与对照}
 \label{tab:q1-setup}
-\begin{tabular}{p{3.0cm}p{5.4cm}p{4.2cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{4.2cm}}
 \toprule
 环节 & 正文报告的设置 & 控制或检验什么 \\
 \midrule
@@ -123,7 +123,7 @@ F_{bdk}&=\sum_{j\le k}p_{bdj},\qquad k=0,\dots,6 .
 \centering\small
 \caption{问题一主结果与关键对照}
 \label{tab:q1-main}
-\resizebox{\textwidth}{!}{\begin{tabular}{lccccc}
+\resizebox{0.9\textwidth}{!}{\begin{tabular}{lccccc}
 \toprule
 模型 & 等级 MAE & 相对主模型的 MAE 差 [95\% CI] & QWK & 完全一致率 & $\pm1$ 内比例 \\
 \midrule
@@ -154,7 +154,7 @@ ElasticNet & 0.481 & $+0.002$ [$-0.010$, $0.013$] & 0.199 & 0.585 & 0.946 \\
 图注写明信度是测量噪声参照，不是严格上限，并注明 $R^2$ 为负的维度。
 
 \begin{figure}[htbp]\centering
-\phfig{0.40\textwidth}{左栏为逐维等级 MAE 差（主模型减风格收缩基线），右栏为逐维连续 $R^2$ 与半组信度。}
+\includegraphics[width=0.88\textwidth]{q1/q1_dim.pdf}
 \caption{逐维增益与可预测性。左栏零线区分主模型与风格收缩基线的逐维胜负，右栏显示逐维连续 $R^2$ 与半组信度。}
 \label{fig:q1-dim}
 \end{figure}
@@ -174,7 +174,7 @@ ElasticNet & 0.481 & $+0.002$ [$-0.010$, $0.013$] & 0.199 & 0.585 & 0.946 \\
 \centering\small
 \caption{问题一等级规则比较}
 \label{tab:q1-rules}
-\resizebox{\textwidth}{!}{\begin{tabular}{lcccc}
+\resizebox{0.9\textwidth}{!}{\begin{tabular}{lcccc}
 \toprule
 规则 & 等级 MAE & QWK & 完全一致率 & 预测 5--6 级占比 \\
 \midrule
@@ -197,7 +197,7 @@ $\pm1$ 内比例约 95\% 会掩盖高等级漏判，本图回答这一疑虑。
 第二输出给出 1.57\% 的 5 到 6 级，更接近真值。
 
 \begin{figure}[htbp]\centering
-\phfig{0.40\textwidth}{左栏为真值、主输出、第二输出的 0--6 级频率，右栏为按真实等级分层的主输出召回率。}
+\phfig{0.32\textwidth}{左栏为真值、主输出、第二输出的 0--6 级频率，右栏为按真实等级分层的主输出召回率。}
 \caption{误差集中的等级。左栏显示三种等级频率，右栏显示主输出按真实等级分层的召回率，图注注明每栏分母。}
 \label{fig:q1-grade}
 \end{figure}
@@ -216,7 +216,7 @@ $\pm1$ 内比例约 95\% 会掩盖高等级漏判，本图回答这一疑虑。
 \centering\small
 \caption{交付评分示例：三款啤酒的 15 个属性}
 \label{tab:q1-delivery}
-\resizebox{\textwidth}{!}{\begin{tabular}{lcccccc}
+\resizebox{0.9\textwidth}{!}{\begin{tabular}{lcccccc}
 \toprule
 属性 & \multicolumn{2}{c}{Pils/Lager} & \multicolumn{2}{c}{Tripel} & \multicolumn{2}{c}{Kriek} \\
  & Aroma & Flavour & Aroma & Flavour & Aroma & Flavour \\

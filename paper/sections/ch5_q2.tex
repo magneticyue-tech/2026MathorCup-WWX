@@ -72,7 +72,7 @@ t_{dk}=\arg\max_{j\in\mathcal C,\ M(j)\notin M(S)}\,\lvert r_{jd\mid S}\rvert .
 前向选择在中等与较大效应量下找回率更高，在小效应量下与边际选择相当，两种规则的实际差异按本图呈现。
 
 \begin{figure}[htbp]\centering
-\phfig{0.48\textwidth}{2 乘 3 找回率小多图，行为两种权重，列为植入名次 1 到 3，横轴为第 1 个植入化合物的 $r$，纵轴为化合物层找回率。}
+\phfig{0.38\textwidth}{2 乘 3 找回率小多图，行为两种权重，列为植入名次 1 到 3，横轴为第 1 个植入化合物的 $r$，纵轴为化合物层找回率。}
 \caption{规则依据实验的找回率。两条线为前向选择与图约束边际选择，竖向阴影带为观测 Top-1 相关的四分位范围。}
 \label{fig:q2-recovery}
 \end{figure}
@@ -94,7 +94,7 @@ t_{dk}=\arg\max_{j\in\mathcal C,\ M(j)\notin M(S)}\,\lvert r_{jd\mid S}\rvert .
 \centering\small
 \caption{问题二实验设置与对照}
 \label{tab:q2-setup}
-\begin{tabular}{p{3.0cm}p{5.4cm}p{4.2cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{4.2cm}}
 \toprule
 环节 & 正文报告的设置 & 控制或检验什么 \\
 \midrule
@@ -177,7 +177,7 @@ t2n（C） & 1 & $\beta$-水芹烯 & $-$ & 0.23 & 无阈值 \\
 标注至少 3 个成员模块的枢纽、全部入选化合物，以及发酵强度、中链脂肪酸乙酯等代表模块。
 
 \begin{figure}[htbp]\centering
-\phfig{0.50\textwidth}{共表达网络，节点按附件八来源着色、按入选维度数定大小，模块内力导向排布，边宽与相关绝对值成正比。}
+\phfig{0.40\textwidth}{共表达网络，节点按附件八来源着色、按入选维度数定大小，模块内力导向排布，边宽与相关绝对值成正比。}
 \caption{化合物共表达网络。只画多成员模块与注释节点，图注计数单成员节点并说明综合指标的排除理由。}
 \label{fig:q2-network}
 \end{figure}
@@ -188,7 +188,7 @@ t2n（C） & 1 & $\beta$-水芹烯 & $-$ & 0.23 & 无阈值 \\
 此图支持多数维度可靠支持的关键化合物为 1 到 2 个这一结论。
 
 \begin{figure}[htbp]\centering
-\phfig{0.55\textwidth}{左栏为 49 行乘 3 名次的入选频率热图，行按六个维度组分块；右栏为三个名次各一根堆叠柱。}
+\phfig{0.44\textwidth}{左栏为 49 行乘 3 名次的入选频率热图，行按六个维度组分块；右栏为三个名次各一根堆叠柱。}
 \caption{关键化合物的稳定性。左栏为逐维入选频率热图，右栏为三个名次按稳定程度堆叠的维度数。}
 \label{fig:q2-stability}
 \end{figure}
@@ -203,7 +203,7 @@ Jaccard 系数为两个集合交集与并集大小之比，衡量两个方法选
 梯度提升树的 Top-1 一致比例只有 0.45，解释为估计对象不同，相关特征下置换重要度被稀释，不同的维度在附录并列给出。
 
 \begin{figure}[htbp]\centering
-\phfig{0.36\textwidth}{方法间 Jaccard 柱状图，横轴为五个方法，纵轴为 49 维平均 Jaccard，每个方法画化合物层、模块层两根柱。}
+\phfig{0.29\textwidth}{方法间 Jaccard 柱状图，横轴为五个方法，纵轴为 49 维平均 Jaccard，每个方法画化合物层、模块层两根柱。}
 \caption{方法间 Jaccard。细虚线为随机 3 元集合基线，柱顶标注 Top-1 一致比例。}
 \label{fig:q2-jaccard}
 \end{figure}
@@ -229,7 +229,7 @@ C 级维度 t2n 的零膨胀检查未发现关联随零膨胀而增强的证据�
 有 18 项的风格内 $\lvert r^{(s)}\rvert<0.1$，即其关联几乎完全来自风格之间，包括乳酸到乳酸感、pH 到酸感、乙醇到麦芽风味。
 
 \begin{figure}[htbp]\centering
-\phfig{0.48\textwidth}{合并边际相关对风格内相关的散点，147 个点，标出乳酸到乳酸感、pH 到酸感、乙醇到麦芽风味。}
+\phfig{0.38\textwidth}{合并边际相关对风格内相关的散点，147 个点，标出乳酸到乳酸感、pH 到酸感、乙醇到麦芽风味。}
 \caption{合并与风格内关联。参考线为 $y=x$ 与 $y=0$，颜色表示风格内置信区间是否含 0。}
 \label{fig:q2-scatter}
 \end{figure}
@@ -246,7 +246,7 @@ Fullness 在三组中都提高，与 body 的 Top-1 乙醇及其同模块的甘�
 \centering\small
 \caption{加标实验的同人配对差与对应维度}
 \label{tab:q2-spike}
-\resizebox{\textwidth}{!}{\begin{tabular}{lcccl}
+\resizebox{0.9\textwidth}{!}{\begin{tabular}{lcccl}
 \toprule
 属性 & Blond 含乙醇 $n{=}20$ & Blond 无乙醇 $n{=}13$ & NABLAB 无乙醇 $n{=}13$ & 对应维度（Top-1） \\
 \midrule
