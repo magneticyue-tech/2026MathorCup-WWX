@@ -1,0 +1,29 @@
+{
+ "checks": [
+  {
+   "name": "真实潜变量与化学层产物一致",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "重抽潜变量反变换与 q3_synthetic_profiles 一致",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  },
+  {
+   "name": "路径 α* 与 q3_transfer 一致",
+   "expected": true,
+   "observed": true,
+   "tol": null,
+   "pass": true
+  }
+ ],
+ "evr": [
+  0.15657918676159951,
+  0.10039682948809885
+ ]
+}
