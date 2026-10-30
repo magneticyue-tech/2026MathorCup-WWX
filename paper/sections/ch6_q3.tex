@@ -68,22 +68,23 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 
 \begin{table}[H]
 \centering\small
-\caption{问题三生成器验证（占位，正式产物验收后填写）}
+\caption{问题三生成器验证}
 \label{tab:q3-gen}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccc}
 \toprule
 指标 & 主模型 & 纯因子 & 无风格 & 逐列独立 & 真实留出参照 & 验收阈值 \\
 \midrule
-取值层：下限比例误差 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
-取值层：每款下限列数 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
-分布层：合并 C2ST AUC & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
-分布层：条件 C2ST AUC & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
-分布层：风格内相关误差 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
-分布层：模块内相关 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
-新颖性：判别器距离比 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
-新颖性：近复制率 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
+取值层：下限比例误差 & 0.021 & 0.021 & 0.022 & 0.015 & 复制 0.014 & $\le 2\times$复制 \\
+取值层：每款下限列数 & 28.6 & 28.5 & 28.0 & 29.6 & 真实 29.0 & — \\
+分布层：合并 C2ST AUC & 0.589 & 0.570 & 0.642 & 0.668 & 真实对真实 0.494 & $\le 0.55$ \\
+分布层：条件 C2ST AUC & 0.576 & 0.575 & 0.634 & 0.660 & 真实对真实 0.501 & $\le 0.55$ \\
+分布层：风格内相关误差 & 0.067 & 0.066 & 0.096 & 0.154 & 复制 0.052 & $\le 2\times$复制 \\
+分布层：模块内相关 & 0.667 & 0.631 & 0.690 & 0.256 & 真实留出 0.724 & 与真实差 $\le 0.10$ \\
+新颖性：判别器距离比 & 1.111 & 1.113 & 1.150 & 1.200 & — & $\ge 0.9$ \\
+新颖性：近复制率 & 0.000 & 0.000 & 0.000 & 0.002 & — & $\le 0.10$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \subsection{基于评分预测分布的感官画像与风味指纹}
@@ -100,10 +101,7 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 问题一未胜过风格基线的维度用灰色标签。
 
 \begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：三栏感官画像，行为 50 个维度，点为生成画像中位数与区间，叠加真实啤酒的预测与观测。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\includegraphics[width=\textwidth]{q3/fig_q3_portrait.pdf}
 \caption{感官画像。三栏为三个风格，点与横线为生成画像的中位数与区间，叠加真实啤酒的预测与观测中位数。}
 \label{fig:q3-portrait}
 \end{figure}
@@ -125,10 +123,7 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 每行一个化合物，箱线表示 1,000 个生成样本，散点表示该风格的真实啤酒，菱形与横线为化学指纹及其 bootstrap 区间。
 
 \begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：三栏化学指纹，每栏取偏移最大的 10 个化合物，箱线为生成样本，散点为真实啤酒。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\includegraphics[width=\textwidth]{q3/fig_q3_fingerprint.pdf}
 \caption{化学指纹与生成谱。行名为化合物，箱线表示生成样本，散点表示真实啤酒，菱形为化学指纹及其区间。}
 \label{fig:q3-fingerprint}
 \end{figure}
@@ -183,22 +178,30 @@ u^*=\arg\min_{u'}\ (u'-\tilde u)^\top\Sigma_W^{-1}(u'-\tilde u)\quad\text{满足
 
 \begin{table}[H]
 \centering\small
-\caption{Pils/Lager 到 Tripel 逐款迁移（占位，正式产物验收后填写）}
+\caption{Pils/Lager 到 Tripel 逐款迁移}
 \label{tab:q3-transfer}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccccc}
 \toprule
 啤酒 & $\alpha^*$ & 源谱 $P$(Tripel) & 交付谱 $P$(Tripel) & 结论类别 & 化学约束数 & 违反维度 & 保留度 \\
 \midrule
-占位 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 & 占位 \\
+124 & 1.00 & 0.034 & 0.096 & 改善 & 4 & — & 0.963 \\
+81 & 1.00 & 0.090 & 0.232 & 达到参照范围 & 4 & t2n & 0.964 \\
+218 & 1.00 & 0.056 & 0.206 & 达到参照范围 & 4 & — & 0.954 \\
+96 & 1.00 & 0.050 & 0.164 & 达到参照范围 & 4 & — & 0.953 \\
+230 & 1.00 & 0.036 & 0.162 & 达到参照范围 & 4 & dms & 0.957 \\
+185 & 1.00 & 0.034 & 0.118 & 改善 & 3 & — & 0.952 \\
+139 & 0.85 & 0.026 & 0.166 & 达到参照范围 & 4 & diacetyl & 0.944 \\
+209 & 0.60 & 0.028 & 0.048 & 未改善 & 4 & X4vg & 0.916 \\
+119 & 0.65 & 0.074 & 0.120 & 未改善 & 4 & X4vg & 0.897 \\
+90 & 1.00 & 0.046 & 0.300 & 达到参照范围 & 3 & — & 0.972 \\
+28 & 1.00 & 0.114 & 0.294 & 达到参照范围 & 4 & — & 0.954 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：左栏为各方法的目标风格概率，右栏为 11 乘 15 约束矩阵。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\includegraphics[width=\textwidth]{q3/fig_q3_transfer.pdf}
 \caption{迁移的代价与收益。左栏为各方法的 Tripel 概率，右栏为化学与感官约束矩阵，直接证明缺陷不恶化。}
 \label{fig:q3-transfer-fig}
 \end{figure}
@@ -206,10 +209,7 @@ u^*=\arg\min_{u'}\ (u'-\tilde u)^\top\Sigma_W^{-1}(u'-\tilde u)\quad\text{满足
 图~\ref{fig:q3-pairs} 为 22 乘 22 热图，格内颜色为源风格啤酒达到参照范围的比例，对角留空，行列按风格潜空间均值的层次聚类排序，行尾附平均迁移强度的条形边栏。
 
 \begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：22 乘 22 风格对热图，格内为源风格啤酒达到参照范围的比例，行尾为平均迁移强度。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\includegraphics[width=\textwidth]{q3/fig_q3_pairs.pdf}
 \caption{风格对热图。行列按风格潜空间均值的层次聚类排序，图注写明风格对之间不独立。}
 \label{fig:q3-pairs}
 \end{figure}
