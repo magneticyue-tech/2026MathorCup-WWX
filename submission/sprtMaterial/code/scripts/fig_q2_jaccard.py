@@ -10,15 +10,16 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.q1 import plotstyle  # noqa: E402
 from src.q2 import config as C  # noqa: E402
 
+from src import paperfig as pf  # noqa: E402
+
 METHODS = (
-    ("M0", "M0 无图约束边际"),
-    ("M1", "M1 图约束边际"),
-    ("M2", "M2 ElasticNet"),
-    ("M3", "M3 GBM 置换重要度"),
-    ("Within", "风格内选择"),
+    ("M0", "无图约束\n边际选择"),
+    ("M1", "图约束\n边际选择"),
+    ("M2", "ElasticNet"),
+    ("M3", "梯度提升树"),
+    ("Within", "风格内分析"),
 )
 TOP_K = 3
 
@@ -29,47 +30,50 @@ def random_jaccard(n, k=TOP_K):
 
 
 def main():
-    plotstyle.apply()
+    pf.apply()
     full = pd.read_csv(C.Q2_DIR / "full_controls_results.csv")
-    nodes = pd.read_csv(C.Q2_DIR / "graph_nodes.csv")
-    base = random_jaccard(int(nodes["is_candidate"].sum()))
-    p = plotstyle.PALETTE
+    n_cand = int(pd.read_csv(C.Q2_DIR / "graph_nodes.csv")["is_candidate"].sum())
+    base = random_jaccard(n_cand)
+    comp = [full[f"jaccard_{k}"].astype(float).mean() for k, _ in METHODS]
+    mod = [full[f"jaccard_mod_{k}"].astype(float).mean() for k, _ in METHODS]
+    top1 = [full[f"{k}_top1_match"].astype(float).mean() for k, _ in METHODS]
 
-    y = np.arange(len(METHODS))
-    specs = (
-        ("jaccard_{}", "化合物层 Jaccard", p["main"], -0.27),
-        ("jaccard_mod_{}", "模块层 Jaccard", "#56B4E9", 0.0),
-        ("{}_top1_match", "Top-1 相同比例", p["warn"], 0.27),
-    )
-    fig, ax = plt.subplots(figsize=(8.2, 4.4))
-    for col, label, color, off in specs:
-        vals = [full[col.format(k)].astype(float).mean() for k, _ in METHODS]
-        ax.barh(y + off, vals, height=0.26, color=color, label=label)
-        for yi, v in zip(y, vals):
-            ax.text(v + 0.01, yi + off, f"{v:.3f}", va="center", fontsize=7)
-    rng = np.random.default_rng(C.SEED)
-    for yi, (k, _) in zip(y, METHODS):
-        v = full[f"jaccard_{k}"].astype(float).to_numpy()
-        ax.scatter(
-            v,
-            yi - 0.27 + rng.uniform(-0.09, 0.09, len(v)),
-            s=5,
-            color="#222222",
-            alpha=0.35,
-            zorder=3,
+    fig, ax = plt.subplots(figsize=(pf.TEXTWIDTH, 3.0))
+    x = np.arange(len(METHODS))
+    w = 0.36
+    ax.bar(x - w / 2, comp, w - 0.04, color=pf.BLUE, label="化合物层")
+    ax.bar(x + w / 2, mod, w - 0.04, color=pf.SKY, label="模块层")
+    for xi, a, b, t in zip(x, comp, mod, top1):
+        ax.text(xi - w / 2, a + 0.01, f"{a:.3f}", ha="center", va="bottom", fontsize=6.5)
+        ax.text(xi + w / 2, b + 0.01, f"{b:.3f}", ha="center", va="bottom", fontsize=6.5)
+        ax.text(
+            xi,
+            max(a, b) + 0.09,
+            f"Top-1 一致 {t:.2f}",
+            ha="center",
+            va="bottom",
+            fontsize=7,
+            color=pf.ORANGE,
         )
-    ax.axvline(base, ls="--", color="#444444", lw=0.9)
-    ax.text(base + 0.01, len(METHODS) - 0.45, f"随机 3 元集合基线 {base:.3f}", fontsize=7)
-    ax.set_yticks(y)
-    ax.set_yticklabels([lab for _, lab in METHODS])
-    ax.invert_yaxis()
-    ax.set_xlim(0, 1.08)
-    ax.set_xlabel(f"与主方法 Top-3 的一致性（{len(full)} 维平均；黑点为逐维化合物层 Jaccard）")
-    ax.set_title("方法间 Jaccard 对比（虚线为随机基线）", fontsize=9)
-    ax.legend(frameon=False, fontsize=7.5, loc="lower right")
-    ax.grid(axis="y", visible=False)
+    ax.axhline(base, color=pf.INK, lw=0.7, ls=(0, (3, 2)))
+    ax.text(
+        len(METHODS) - 0.45,
+        base + 0.012,
+        f"随机 3 元集合基线 {base:.3f}",
+        ha="right",
+        va="bottom",
+        fontsize=7,
+        color=pf.MUTED,
+        bbox={"facecolor": "white", "edgecolor": "none", "pad": 0.8},
+    )
+    ax.set_xticks(x, [lab for _, lab in METHODS])
+    ax.set_ylabel(f"与主方法的 Jaccard，{len(full)} 维平均")
+    ax.set_ylim(0, 0.8)
+    ax.grid(axis="y", visible=True)
+    ax.set_axisbelow(True)
+    ax.legend(loc="upper right", ncol=2, handlelength=1.0)
     fig.tight_layout()
-    print(plotstyle.save(fig, C.FIGURES, "fig_q2_jaccard.pdf"))
+    print(pf.save(fig, "q2", "fig_q2_jaccard.pdf"))
 
 
 if __name__ == "__main__":

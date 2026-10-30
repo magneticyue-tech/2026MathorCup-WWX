@@ -18,7 +18,7 @@ def main():
     for k, name in METHODS:
         rows.append(
             {
-                "对照": name,
+                "对照": name.replace("\n", ""),
                 "化合物层": full[f"jaccard_{k}"].astype(float).mean(),
                 "模块层": full[f"jaccard_mod_{k}"].astype(float).mean(),
                 "Top-1 相同比例": full[f"{k}_top1_match"].astype(float).mean(),
