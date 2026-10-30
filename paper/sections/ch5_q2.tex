@@ -20,7 +20,7 @@
 图~\ref{fig:q2-flow} 给出问题二的完整流程。
 化合物与感官秩经共表达图、模拟还原支持的图约束前向选择与置换检验，再经日期组重抽和替代方法，得到化学证据与前三项关联候选。
 
-\begin{figure}[H]\centering
+\begin{figure}[htbp]\centering
 \includegraphics[width=\textwidth]{../figures/q2_methodology_flowchart.pdf}
 \caption{问题二方法流程：化合物与感官秩经共表达图、图约束前向选择与置换检验得到关键化合物，稳定性由日期组重抽量化。}
 \label{fig:q2-flow}
@@ -48,8 +48,11 @@ t_{d1}=\arg\max_{j\in\mathcal C}\,\lvert r_{jd}\rvert .
 第 $k$ 位（$k=2,3$）在控制已选集合 $S$ 后取秩偏相关最强者。
 令 $H_S$ 为向 $\{\mathbf 1,\tilde x_s:s\in S\}$ 张成空间的投影，
 \begin{equation}\label{eq:q2-partial}
-e_y=(I-H_S)\tilde y_d,\qquad e_j=(I-H_S)\tilde x_j,\qquad r_{jd\mid S}=\frac{e_j^\top e_y}{\lVert e_j\rVert\,\lVert e_y\rVert},\qquad
+\begin{aligned}
+e_y&=(I-H_S)\tilde y_d,\qquad e_j=(I-H_S)\tilde x_j,\\
+r_{jd\mid S}&=\frac{e_j^\top e_y}{\lVert e_j\rVert\,\lVert e_y\rVert},\qquad
 t_{dk}=\arg\max_{j\in\mathcal C,\ M(j)\notin M(S)}\,\lvert r_{jd\mid S}\rvert .
+\end{aligned}
 \end{equation}
 式~\eqref{eq:q2-partial} 中 $r_{jd\mid S}$ 是秩上的偏相关，衡量化合物 $j$ 在已选化合物之外还能解释多少维度排序。
 图在第一处排除与已选者属于同一模块的化合物，在第二处把同模块化合物与入选者一起报告。
@@ -68,11 +71,8 @@ t_{dk}=\arg\max_{j\in\mathcal C,\ M(j)\notin M(S)}\,\lvert r_{jd\mid S}\rvert .
 图注写明每格 1,000 次，二项 95\% 区间约正负 0.03，不画误差线。
 前向选择在中等与较大效应量下找回率更高，在小效应量下与边际选择相当，两种规则的实际差异按本图呈现。
 
-\begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：2 乘 3 找回率小多图，行为两种权重，列为植入名次 1 到 3，横轴为第 1 个植入化合物的 $r$，纵轴为化合物层找回率。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\begin{figure}[htbp]\centering
+\phfig{0.48\textwidth}{2 乘 3 找回率小多图，行为两种权重，列为植入名次 1 到 3，横轴为第 1 个植入化合物的 $r$，纵轴为化合物层找回率。}
 \caption{规则依据实验的找回率。两条线为前向选择与图约束边际选择，竖向阴影带为观测 Top-1 相关的四分位范围。}
 \label{fig:q2-recovery}
 \end{figure}
@@ -90,7 +90,7 @@ t_{dk}=\arg\max_{j\in\mathcal C,\ M(j)\notin M(S)}\,\lvert r_{jd\mid S}\rvert .
 
 表~\ref{tab:q2-setup} 按输入与目标、缺失与秩、图与模块、选择规则、显著性、稳定性、规则依据实验、对照方法八个环节列出正文报告的设置。
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering\small
 \caption{问题二实验设置与对照}
 \label{tab:q2-setup}
@@ -130,7 +130,7 @@ Top-3 是关联而非因果。
 化学解释写在正文，不入表。
 选择得分、95\% 置信区间与风格内系数从最终合理性表导出，完整 147 项按六个维度组放附录。
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering\small
 \caption{代表维度的 Top-3 证据}
 \label{tab:q2-rep}
@@ -176,11 +176,8 @@ t2n（C） & 1 & $\beta$-水芹烯 & $-$ & 0.23 & 无阈值 \\
 边宽与 $\lvert\rho\rvert$ 成正比，负相关边虚线。
 标注至少 3 个成员模块的枢纽、全部入选化合物，以及发酵强度、中链脂肪酸乙酯等代表模块。
 
-\begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：共表达网络，节点按附件八来源着色、按入选维度数定大小，模块内力导向排布，边宽与相关绝对值成正比。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\begin{figure}[htbp]\centering
+\phfig{0.50\textwidth}{共表达网络，节点按附件八来源着色、按入选维度数定大小，模块内力导向排布，边宽与相关绝对值成正比。}
 \caption{化合物共表达网络。只画多成员模块与注释节点，图注计数单成员节点并说明综合指标的排除理由。}
 \label{fig:q2-network}
 \end{figure}
@@ -190,11 +187,8 @@ t2n（C） & 1 & $\beta$-水芹烯 & $-$ & 0.23 & 无阈值 \\
 入选频率按名次为 0.60、0.36、0.22，稳定、中等、不稳定项分别为 33、41、73。
 此图支持多数维度可靠支持的关键化合物为 1 到 2 个这一结论。
 
-\begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：左栏为 49 行乘 3 名次的入选频率热图，行按六个维度组分块；右栏为三个名次各一根堆叠柱。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\begin{figure}[htbp]\centering
+\phfig{0.55\textwidth}{左栏为 49 行乘 3 名次的入选频率热图，行按六个维度组分块；右栏为三个名次各一根堆叠柱。}
 \caption{关键化合物的稳定性。左栏为逐维入选频率热图，右栏为三个名次按稳定程度堆叠的维度数。}
 \label{fig:q2-stability}
 \end{figure}
@@ -208,11 +202,8 @@ Jaccard 系数为两个集合交集与并集大小之比，衡量两个方法选
 与 ElasticNet 为 0.573，与梯度提升树为 0.267，与风格内分析为 0.259。
 梯度提升树的 Top-1 一致比例只有 0.45，解释为估计对象不同，相关特征下置换重要度被稀释，不同的维度在附录并列给出。
 
-\begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：方法间 Jaccard 柱状图，横轴为五个方法，纵轴为 49 维平均 Jaccard，每个方法画化合物层、模块层两根柱。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\begin{figure}[htbp]\centering
+\phfig{0.36\textwidth}{方法间 Jaccard 柱状图，横轴为五个方法，纵轴为 49 维平均 Jaccard，每个方法画化合物层、模块层两根柱。}
 \caption{方法间 Jaccard。细虚线为随机 3 元集合基线，柱顶标注 Top-1 一致比例。}
 \label{fig:q2-jaccard}
 \end{figure}
@@ -237,11 +228,8 @@ C 级维度 t2n 的零膨胀检查未发现关联随零膨胀而增强的证据�
 主 Top-3 的 147 项中 98\% 在风格内保持同号，风格内与合并系数之比的中位数为 0.66。
 有 18 项的风格内 $\lvert r^{(s)}\rvert<0.1$，即其关联几乎完全来自风格之间，包括乳酸到乳酸感、pH 到酸感、乙醇到麦芽风味。
 
-\begin{figure}[H]\centering
-\fbox{\begin{minipage}[c][0.55\textwidth][c]{0.92\linewidth}
-\centering\small 占位图：合并边际相关对风格内相关的散点，147 个点，标出乳酸到乳酸感、pH 到酸感、乙醇到麦芽风味。
-出图后替换为 \texttt{\textbackslash includegraphics}。
-\end{minipage}}
+\begin{figure}[htbp]\centering
+\phfig{0.48\textwidth}{合并边际相关对风格内相关的散点，147 个点，标出乳酸到乳酸感、pH 到酸感、乙醇到麦芽风味。}
 \caption{合并与风格内关联。参考线为 $y=x$ 与 $y=0$，颜色表示风格内置信区间是否含 0。}
 \label{fig:q2-scatter}
 \end{figure}
@@ -254,11 +242,11 @@ C 级维度 t2n 的零膨胀检查未发现关联随零膨胀而增强的证据�
 未加入任何酒花化合物，Hops 与 Bitterness 不变，是一组阴性对照。
 Fullness 在三组中都提高，与 body 的 Top-1 乙醇及其同模块的甘油方向一致，但无乙醇组同样提高，说明甘油或其他成分足以产生该效应。
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering\small
 \caption{加标实验的同人配对差与对应维度}
 \label{tab:q2-spike}
-\begin{tabular}{lcccl}
+\resizebox{\textwidth}{!}{\begin{tabular}{lcccl}
 \toprule
 属性 & Blond 含乙醇 $n{=}20$ & Blond 无乙醇 $n{=}13$ & NABLAB 无乙醇 $n{=}13$ & 对应维度（Top-1） \\
 \midrule
@@ -271,7 +259,7 @@ Bitterness & 0.05（0.2） & $-0.15$（$-0.6$） & $-0.31$（$-0.9$） & bittern
 Malt & 0.45（2.0） & $-0.23$（$-1.0$） & 0.00（0.0） & 麦芽（色度 / pH） \\
 Overall & 1.05（2.8） & 1.15（3.6） & 1.08（3.5） & overall（乙酸乙酯） \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \subsection{模块阈值、候选集合与感官目标的敏感性分析}

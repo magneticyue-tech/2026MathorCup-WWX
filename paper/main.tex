@@ -5,6 +5,9 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{tabularx}    % 表格统一拉伸至整版宽，避免长短不一
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \usepackage{float}       % 提供 [H]：表格钉在原位，不再浮动
 \emergencystretch=3em    % 允许断行时临时拉伸词距，消除长英文词导致的 overfull
 \usepackage{caption}
@@ -47,7 +50,7 @@
 
 啤酒的香气、口感与发酵表现在很大程度上由各类酿造化合物和酵母代谢产物决定。本文以商用啤酒风味代谢数据集为研究对象，围绕化学组成与感官风味评分之间的关系，先完成缺失与异常数据的清洗校准，再依次开展感官评分预测、关键化合物识别、风格条件下的化合物谱生成与跨风格迁移三项工作，形成一套从数据处理到风味调控的完整分析框架。
 
-针对问题一，公开评分已标准化，原始 0--6 整数分缺失，``0 分在哪里''与``一分有多大''两条尺度信息随之丢失，化学数据另存在缺失。本文按同源文献口径补齐缺失值，由评分中的精确并列关系反推出 63 个品评团及其评分零点，完成跨场次零点校准；再用浅层梯度提升树对 50 个感官维度逐一建模，经尺度还原与等级映射得到 0--6 分制的分级评分、各分值概率与预测区间。交叉验证按品评团分组、按风格分层，杜绝信息泄漏。结果表明化学数据能够有效预测感官排序，主模型显著优于仅凭风格猜测均分的基线。
+针对问题一，附件~4 的标准化评分无法唯一复原原始 0--6 分，本文采用 Schreurs 等（2024）新公布的 2{,}197 条原始评分记录，逐款逐维求品评小组均分并四舍五入为实测等级；231 维化学特征按训练折列均值填补缺失，逐维拟合浅层梯度提升树，六个感官维度组共享超参数；在按日期组隔离、风格分层的嵌套交叉验证（外层 5 折$\times$5 次重复、内层 4 折）中，为折外预测叠加训练折残差构成等级分布，以分布中位数等级为主输出、分位数切点等级为补充，并给出 90\% 等级区间。主模型等级平均绝对误差 0.479，显著优于风格基线的 0.527（配对差 $-0.048$），90\% 区间覆盖率达 97.2\%。
 
 针对问题二，为找出每个感官维度的关键化合物，本文以化合物间相关系数构建共表达图，用层次聚类划分共表达模块以控制冗余，再在图约束下采用基于偏秩相关的前向选择逐位取出 Top-3——每选出一个即剔除其影响，且不重复选取同模块化合物，从源头避免同一信息以多个高度相关化合物的形式重复入选。显著性由置换检验把关，稳定性由以品评团为单位的一千次 bootstrap 入选频率与多方法 Jaccard 系数共同量化，并结合气味阈值、来源标签与外部加标实验完成化学合理性论证。
 
@@ -55,7 +58,7 @@
 
 综上，本文框架在数据层面处理了缺失值填充与评分尺度不统一两个问题，在模型层面实现了感官评分预测、关键化合物识别与风格条件生成三项任务的衔接与逐层复用，可为啤酒风味的定量调控与配方设计提供数据支撑。
 
-关键词：浅层梯度提升树；共表达图；零点校准；缺失值填充；条件生成模型；风味预测
+关键词：浅层梯度提升树；共表达图；嵌套交叉验证；缺失值填充；条件生成模型；风味预测
 \tableofcontents
 \newpage
 %==================== 问题背景和问题重述 ====================
@@ -97,7 +100,7 @@
 \section{符号说明}
 \begin{table}[H]
     \centering
-    \begin{tabular}{c p{7cm}}
+    \begin{tabularx}{\textwidth}{c L}
         \toprule
         符号 & 含义 \\
         \midrule
@@ -109,7 +112,7 @@
         $C_s$ & 风格$s$对应的条件生成模型 \\
         $D$ & 缺陷化合物集合（DMS、Diacetyl等） \\
         \bottomrule
-    \end{tabular}
+    \end{tabularx}
     \caption{符号说明}
 \end{table}
 
@@ -133,7 +136,7 @@
 \centering
 \caption{附件数据总体概况}
 \label{tab:data_overview}
-\begin{tabular}{cp{2.4cm}p{5.0cm}p{3.4cm}}
+\begin{tabularx}{\textwidth}{cYLL}
 \hline
 附件 & 规模 & 内容 & 本文角色 \\
 \hline
@@ -146,7 +149,7 @@
 7 & $250\times 187$ & 标准化感官属性评分（含 NA） & 辅助信息 \\
 8 & 多 sheet & 气味阈值、化合物来源与缺陷标记 & OAV 特征构造 \\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 由表~\ref{tab:data_overview} 可见，本题的数据缺陷集中体现在两处：其一，
@@ -292,9 +295,9 @@ $m=2.5$ 与 $m=\min(4,\mathrm{cap}_d)$ 进行敏感性分析，以检验还原�
 区别。校准后的评分经四舍五入取整，得到 0--6 分制的分级结果
 $\hat G_{bd}$，并同时报告各分值的预测概率 $p_{bdk}$ 与 90\% 预测区间。
 
-\subsection{预处理小结}
+\subsection*{预处理小结}
 
-本节建立了一套适配啤酒风味数据特性的预处理体系，依次完成化学缺失值的列均值填充、主观尺度异常识别与品评团零点校准，解决了数据缺失、品评场次打分偏差与评分尺度不统一三个问题。完整流程框架如图~\ref{fig:flowchart} 所示。
+本节完成化学缺失值的列均值填充、主观尺度异常识别与品评团零点校准，形成``先补全、再校准''的预处理框架，完整流程见图~\ref{fig:flowchart}。
 
 经过上述清洗与校准，最终输出标准化、无偏差、可建模的特征矩阵 $X_b$
 与统一基准下的感官评分标签 $z^{\mathrm{cal}}_{bd}$，为后续高维感官回归
@@ -313,16 +316,15 @@ $\hat G_{bd}$，并同时报告各分值的预测概率 $p_{bdk}$ 与 90\% 预�
 \subsection{问题分析}
 
 问题一要求用附件~1 的化学数据，给出 250 款啤酒在 50 个感官维度上
-的 0--6 分。难点是两处缺失：一是化学数据里有 73 个 NA；二是
-附件~4 只给了标准化后的品评小组均值 $z$（范围 $-2.15$ 到 6.17，
-全是小数），原始的 0--6 分没有公开——标准化把``0 分在哪里''和
-``一分有多大''都抹掉了。
+的 0--6 分。难点有二：一是化学数据里有 73 个 NA；二是附件~4 只
+提供按品评员和维度标准化后的评分，标准化抹掉了``0 分在哪里''和
+``一分有多大''，无法唯一复原原始 0--6 分。
 
-于是整个问题变成两步：先学会``化学成分 $\to z$''（回归问题），
-再把 $z$ 换算回 0--6 分（尺度还原问题）。换算的钥匙藏在数据里：
-当一场品评会的全体成员都给某款啤酒打 0 分时，$z$ 会落在一个只由
-``当天出席了哪些人''决定的最低值上。抓住这些并列的最低值，就能
-反推出品评团和评分零点，把丢失的尺子找回来。全流程见
+好在同源文献 Schreurs et al.\ (2024) 新版公布了同一批啤酒的
+2{,}197 条原始 0--6 评分记录，缺失的尺度信息由此恢复：逐款、
+逐维求品评小组均分并四舍五入，即得实测等级。于是问题归结为
+一件事——学会``化学成分 $\to$ 品评小组均分''的回归映射，再把
+连续预测连同其不确定性换算成 0--6 等级分布。全流程见
 图~\ref{fig:q1_flow}。
 
 \begin{figure}[H]
@@ -477,9 +479,9 @@ Step 5（结果应用）250 款评分用 5 次折外预测取平均后经
   \centering\small
   \caption{交付评分居前的 12 款啤酒的感官等级汇总（0--6 分制）}
   \label{tab:q1_top12}
-  \begin{tabular}{clcccccc}
+  \begin{tabularx}{\textwidth}{clYYYYYY}
     \toprule
-    排名 & 啤酒（风格） & Aroma & Taste & Body & Bitterness & Sweetness & Overall \\
+    排名 & 啤酒（风格） & Aroma & Taste & Body & Bitter\-ness & Sweet\-ness & Overall \\
     \midrule
     1 & [啤酒]（[风格]） & [值] & [值] & [值] & [值] & [值] & [值] \\
     2 & [啤酒]（[风格]） & [值] & [值] & [值] & [值] & [值] & [值] \\
@@ -494,7 +496,7 @@ Step 5（结果应用）250 款评分用 5 次折外预测取平均后经
     11 & [啤酒]（[风格]） & [值] & [值] & [值] & [值] & [值] & [值] \\
     12 & [啤酒]（[风格]） & [值] & [值] & [值] & [值] & [值] & [值] \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsubsection{外部检查}
@@ -522,7 +524,7 @@ Step 5（结果应用）250 款评分用 5 次折外预测取平均后经
   \centering\small
   \caption{问题一核心指标汇总}
   \label{tab:q1_summary}
-  \begin{tabular}{lccccc}
+  \begin{tabularx}{\textwidth}{lYYYYY}
     \toprule
     对象 & Spearman & $R^2$ & QWK & MAE & $\pm1$ 准确率 \\
     \midrule
@@ -532,18 +534,12 @@ Step 5（结果应用）250 款评分用 5 次折外预测取平均后经
     基线 B1（风格均值） & [--] & 0.115 & --- & --- & --- \\
     B3（真实评分直训） & [--] & [--] & --- & [--] & --- \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
-\subsubsection{小结}
+\subsubsection*{小结}
 
-问题一的结论归为三点。第一，化学数据确实能预测感官排序，主模型
-显著优于``只看风格猜均分''的基线，预测瓶颈在化学信息的解释限度
-而非品评噪声。第二，从并列地板值反推品评团和零点的方法行得通：
-零点找得回的维度（约三成单元）还原可靠，找不回的维度只保留排序
-信息并如实标注。第三，外部真实评分验证了整条链路方向正确。最终
-交付 250 款 $\times$ 50 维的 0--6 等级、各档概率与 90\% 区间；
-品评团与零点表供问题二使用，全数据重拟合的模型供问题三调用。
+化学数据可预测感官排序，主模型显著优于风格基线，瓶颈在化学信息的解释限度；由并列地板值反推品评团与零点可行，找得回零点的维度还原可靠、其余仅作排序解读；外部评分验证链路方向正确。交付 250 款 $\times$ 50 维的 0--6 等级、概率与 90\% 区间，供问题二、三调用。
 %================= 问题一 end =================
 
 
@@ -669,7 +665,7 @@ $r\ge0.3$ 时全面占优；观测数据 49 维 Top-1 的 $|r|$ 中位数 0.36�
   \centering\small
   \caption{植入--还原实验找回率（按植入顺序）}
   \label{tab:recovery}
-  \begin{tabular}{cccc}
+  \begin{tabularx}{\textwidth}{YYYY}
   \toprule
    植入权重 & 首位化合物 $r$ & 边际选择 & 前向选择 \\
    \midrule
@@ -678,7 +674,7 @@ $r\ge0.3$ 时全面占优；观测数据 49 维 Top-1 的 $|r|$ 中位数 0.36�
     1,1,1 & 0.30 & 0.46, 0.61, 0.54 & 0.72, 0.67, 0.69 \\
     1,1,1 & 0.45 & 0.70, 0.71, 0.78 & 0.94, 0.96, 0.94 \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 Step 3 主运行：对 49 个维度执行前向选择与置换检验，产出
@@ -765,7 +761,7 @@ M3 Top-1 为 iron），此类维度并列报告两法结果并各附化学解释
   \centering\small
   \caption{主方法与对照方法的 Jaccard 系数（49 维平均）}
   \label{tab:jaccard}
-  \begin{tabular}{lccc}
+  \begin{tabularx}{\textwidth}{lYYY}
     \toprule
     对照 & 化合物层 & 模块层 & Top-1 相同比例 \\
     \midrule
@@ -776,7 +772,7 @@ M3 Top-1 为 iron），此类维度并列报告两法结果并各附化学解释
     风格内 & 0.290 & 0.316 & 0.35 \\
     随机基线 & 0.008 & --- & --- \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsubsection{化学合理性结果}
@@ -809,7 +805,7 @@ $t\ge2.9$），支持酯类作为 esters\_all 关键因素；未加入酒花化�
   \centering\small
   \caption{加标杯$-$对照杯配对差（括号内为 $t$ 值）}
   \label{tab:spike}
-  \begin{tabular}{lccc}
+  \begin{tabularx}{\textwidth}{lYYY}
     \toprule
     属性 & Blond 含乙醇 $n{=}20$ & Blond 无乙醇 $n{=}13$ & NABLAB $n{=}13$ \\
     \midrule
@@ -822,7 +818,7 @@ $t\ge2.9$），支持酯类作为 esters\_all 关键因素；未加入酒花化�
     Malt & 0.45 (2.0) & $-0.23$ ($-1.0$) & 0.00 (0.0) \\
     Overall & 1.05 (2.8) & 1.15 (3.6) & 1.08 (3.5) \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsubsection{敏感性结果}
@@ -903,7 +899,7 @@ NA 口径与 bootstrap 单位的扰动均未改变 A 级维度的 Top-1。
   \centering\small
   \caption{协方差结构与超参数的留出评分（nat/款，节选）}
   \label{tab:q3_score}
-  \begin{tabular}{lcccc}
+  \begin{tabularx}{\textwidth}{lYYYY}
     \toprule
     协方差结构 & $\kappa=1$ & $\kappa=2$ & $\kappa=5$ & $\kappa=10$ \\
     \midrule
@@ -912,7 +908,7 @@ NA 口径与 bootstrap 单位的扰动均未改变 A 级维度的 Top-1。
     纯因子 $k=15$ & $-246.0$ & $-244.9$ & $-245.3$ & $-248.5$ \\
     因子$+$模块块 $k=15$ & $-241.9$ & $\mathbf{-240.7}$ & $-240.8$ & --- \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsubsection{生成质量验证}
@@ -927,7 +923,7 @@ G1（原样复制训练啤酒）、G2（逐列独立抽取，破坏共变）、G
   \centering\small
   \caption{生成器评价（预运行；括号内数值因样本依赖不可比）}
   \label{tab:q3_gen}
-  \begin{tabular}{lcccccc}
+  \begin{tabularx}{\textwidth}{lYYYYYY}
     \toprule
     生成器 & C2ST AUC & DCR 比 & TRTS & TSTR & 下限误差 & 模块内 $\rho$ \\
     \midrule
@@ -939,7 +935,7 @@ G1（原样复制训练啤酒）、G2（逐列独立抽取，破坏共变）、G
     G3 插值 & (0.332) & 0.32 & (0.994) & 0.544 & 0.026 & 0.731 \\
     真实留出 & --- & 1 & 0.540 & --- & --- & 0.724 \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 读法一目了然：主模型的 C2ST AUC 为 0.510，判别器几乎分不出生成
@@ -1067,7 +1063,7 @@ Pils/Lager$\to$Tripel 的 11 款逐款报告，预运行汇总见
   \centering\small
   \caption{Pils/Lager $\to$ Tripel 迁移（预运行，11 款）}
   \label{tab:q3_transfer}
-  \begin{tabular}{lccl}
+  \begin{tabularx}{\textwidth}{lccL}
     \toprule
     方法 & $P(\text{Tripel})$ 中位 & $d^2$ 中位 & 说明 \\
     \midrule
@@ -1078,7 +1074,7 @@ Pils/Lager$\to$Tripel 的 11 款逐款报告，预运行汇总见
     主方法 $\alpha^*$ & 0.130 & 208.3 & $\alpha^*$ 中位 0.70 \\
     真实 Tripel & 0.269 & 184.0 & 参照（折外判别概率） \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 %\begin{figure}[H]

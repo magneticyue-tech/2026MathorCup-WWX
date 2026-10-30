@@ -7,7 +7,7 @@
 附件1含250款啤酒、231个化学及理化特征；赛题描述中的226个参数是化学参数数量，不是样本量，样本量以附件实测行数为准。附件2为这些特征的相关矩阵，附件3定义感官记分卡，附件4给出250款啤酒的50维标准化品评小组均值。附件8提供部分化合物的校准浓度、气味阈值及来源标签。附件5、6只作相关结构核对，附件7为另一套描述符，不与附件3的50维评分合并。
 
 表~\ref{tab:prep-audit}汇总数据核验结果，逐项列出核验方法、结果与处理。
-\begin{table}[H]\centering\small
+\begin{table}[htbp]\centering\small
 \caption{数据核验}\label{tab:prep-audit}
 \begin{tabular}{p{2.6cm}p{4.0cm}p{4.2cm}p{2.6cm}}
 \toprule
@@ -71,7 +71,7 @@ G_{bd}=\left\lfloor\min\{6,\max\{0,\bar x_{bd}\}\}+0.5\right\rfloor .
 零点还原分局部零点与线性参照两行。
 局部零点在品评团内以出现至少两次的最小标准化值为零点，线性参照用训练折标准化值的最小与最大端点线性映射到0--6。
 合计行把有有效零点的单元格用局部零点、其余用线性参照。
-\begin{table}[H]\centering\small
+\begin{table}[htbp]\centering\small
 \caption{感官目标与只用附件的零点还原}\label{tab:prep-reference}
 \begin{tabular}{lccccc}
 \toprule

@@ -34,8 +34,35 @@
 \graphicspath{{../figures/}}
 \setlength{\parskip}{0.45em}
 \renewcommand{\arraystretch}{1.25}
+% 放宽浮动参数：占位图/图尽量就地排版，正文回填空隙，避免页面大片留白
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.75}
 
 \newcommand{\code}[1]{\texttt{#1}}
+
+% ---------- 题注排版：与 12pt 正文协调（小一号、标签加粗、间距收紧） ----------
+\captionsetup{font=small,labelfont=bf,skip=7pt,justification=centering,singlelinecheck=true}
+
+% ---------- 图表占位样式（出图后整块替换，不影响正式内容） ----------
+\usepackage{xcolor}
+\definecolor{phframe}{RGB}{168,168,168}
+\definecolor{phbg}{RGB}{248,248,248}
+\definecolor{phtext}{RGB}{105,105,105}
+% 图占位框：\phfig{高度}{内容说明}，出图后整块替换为 \includegraphics
+% 高度分档参考：宽扁两栏对比 0.40 / 网格与散点 0.46--0.50 / 方形网络与热图 0.55 / 50 行长图 0.62
+\newcommand{\phfig}[2]{%
+  \fcolorbox{phframe}{phbg}{%
+    \begin{minipage}[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+      \centering\color{phtext}%
+      {\small\bfseries 【占位图】由代码从数据结果导出}\\[0.35em]
+      \parbox[c]{0.92\linewidth}{\centering\small #2}\par
+      \vspace{0.35em}
+      {\footnotesize 出图后整块替换为 \code{\textbackslash includegraphics}}
+    \end{minipage}}}
+% 表格占位单元格：灰色短横，正式数值由代码导出后填写
+\newcommand{\ph}{\textcolor{phtext}{$-$}}
 
 \title{\bfseries 啤酒化学数据与感官评分}
 \author{}

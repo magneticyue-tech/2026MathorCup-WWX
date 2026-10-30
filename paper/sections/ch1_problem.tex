@@ -50,11 +50,11 @@
 问题二的共表达模块交给问题三，作为生成模型中化合物共变的结构先验，其缺陷维度的关键化合物用于解释迁移结果。
 问题一与问题二都按 25 个日期组划分交叉验证，保证同一天品评的啤酒不横跨训练集与测试集。
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering\small
 \caption{三个问题的接口}
 \label{tab:interface}
-\begin{tabular}{p{1.6cm}p{3.4cm}p{3.4cm}p{3.0cm}p{3.0cm}}
+\resizebox{\textwidth}{!}{\begin{tabular}{p{1.6cm}p{3.4cm}p{3.4cm}p{3.0cm}p{3.0cm}}
 \toprule
 问题 & 估计目标 & 使用数据 & 交付物 & 验证单位与判据 \\
 \midrule
@@ -64,7 +64,7 @@
 \addlinespace
 三 & 风格条件分布、感官画像、满足两层缺陷约束的迁移映射 & 附件一的 225 个生成列；细分风格标签；问题一模型与问题二模块 & 22 个风格各 1,000 个化合物谱及画像；Pils/Lager 到 Tripel 的逐款迁移 & 生成保真、新颖性与迁移约束违约率 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 表~\ref{tab:interface} 中 MAE 为平均绝对误差，QWK 为二次加权 Kappa，Jaccard 为两个集合交集与并集大小之比。
