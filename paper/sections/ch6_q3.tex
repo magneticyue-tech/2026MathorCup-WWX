@@ -132,13 +132,12 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 问题一主模型只用化学特征、不用风格，画像因此完全由生成的化合物谱决定。
 问题一中化学模型未胜过风格基线的维度单独标注，这些维度上风格之间的画像差异不可靠。
 
-图~\ref{fig:q3-portrait} 为三栏风格，行为 50 个维度，按六个维度组分块。
-点与横线为生成画像的中位数及 10\% 到 90\% 区间，叠加同风格留出真实啤酒的折外预测中位数与观测均分中位数。
-问题一未胜过风格基线的维度用灰色标签。
+图~\ref{fig:q3-portrait} 为三个风格的面板，横轴为 50 个维度，按六个维度组排列。
+折线与阴影带为生成画像的中位数及 10\% 到 90\% 区间，方块为同风格留出真实啤酒的折外预测中位数，$\triangledown$ 标记未通过风格收敛检验的维度。
 
 \begin{figure}[htbp]\centering
-\phfig{0.50\textwidth}{三栏感官画像，行为 50 个维度，点为生成画像中位数与区间，叠加真实啤酒的预测与观测。}
-\caption{感官画像。三栏为三个风格，点与横线为生成画像的中位数与区间，叠加真实啤酒的预测与观测中位数。}
+\includegraphics[width=\textwidth]{q3/fig_q3_portrait.pdf}
+\caption{感官画像。三栏为 Tripel、Kriek、Lambic，折线与阴影带为生成画像的中位数与 10\%--90\% 区间，方块为真实啤酒的树模型折外预测中位数，$\triangledown$ 标记未通过风格收敛检验的维度。}
 \label{fig:q3-portrait}
 \end{figure}
 
@@ -150,12 +149,12 @@ u_b\mid s(b)=s\ \sim\ \mathcal N(\mu_s,\ \Sigma_W),\qquad \Sigma_W=\Lambda\Lambd
 化学解释在指纹产生后撰写，不改变指纹或模型。
 
 图~\ref{fig:q3-fingerprint} 为三栏，分别为 Tripel、Kriek、Lambic。
-每栏取化学指纹绝对偏移最大的 10 个化合物，同一模块只取一个。
-每行一个化合物，箱线表示 1,000 个生成样本，散点表示该风格的真实啤酒，菱形与横线为化学指纹及其 bootstrap 区间。
+每栏取化学指纹绝对偏移最大的 10 个化合物。
+条形为标准化潜空间偏移 $\delta$（正为高于全体风格均值），横线为 bootstrap 90\% 区间；灰色横线表示区间含 0。
 
 \begin{figure}[htbp]\centering
-\phfig{0.37\textwidth}{三栏化学指纹，每栏取偏移最大的 10 个化合物，箱线为生成样本，散点为真实啤酒。}
-\caption{化学指纹与生成谱。行名为化合物，箱线表示生成样本，散点表示真实啤酒，菱形为化学指纹及其区间。}
+\includegraphics[width=\textwidth]{q3/fig_q3_fingerprint.pdf}
+\caption{化学指纹与生成谱。三栏为三个目标风格，各栏条形为偏移最大的 10 个化合物的标准化潜空间偏移 $\delta$（正为高于全体风格均值），横线为 bootstrap 90\% 区间。}
 \label{fig:q3-fingerprint}
 \end{figure}
 
@@ -205,7 +204,7 @@ u^*=\arg\min_{u'}\ (u'-\tilde u)^\top\Sigma_W^{-1}(u'-\tilde u)\quad\text{满足
 \subsection{Pils/Lager 向 Tripel 迁移结果与跨风格汇总}
 
 表~\ref{tab:q3-transfer} 为 Pils/Lager 到 Tripel 的 11 款逐款结果，列为啤酒、迁移强度、源谱与交付谱的目标风格概率、结论类别、起作用的化学约束数、首个不可行点违反的感官维度、原尺度改变列数与保留度。
-图~\ref{fig:q3-transfer-fig} 两栏对应此表，左栏为各方法的 Tripel 概率，右栏为 11 乘 15 的约束矩阵，直接证明缺陷不恶化。
+图~\ref{fig:q3-transfer-fig} 为 11 乘 15 的约束核查矩阵，两栏分别为化学层与感官层的缺陷槽，直接证明缺陷不恶化；逐款各方法的 Tripel 概率见表~\ref{tab:q3-transfer}。
 
 \begin{table}[htbp]
 \centering\small
@@ -221,16 +220,16 @@ u^*=\arg\min_{u'}\ (u'-\tilde u)^\top\Sigma_W^{-1}(u'-\tilde u)\quad\text{满足
 \end{table}
 
 \begin{figure}[htbp]\centering
-\phfig{0.40\textwidth}{左栏为各方法的目标风格概率，右栏为 11 乘 15 约束矩阵。}
-\caption{迁移的代价与收益。左栏为各方法的 Tripel 概率，右栏为化学与感官约束矩阵，直接证明缺陷不恶化。}
+\includegraphics[width=\textwidth]{q3/fig_q3_defect.pdf}
+\caption{迁移的缺陷约束核查。左栏为化学层 9 个缺陷槽、右栏为感官层 6 个缺陷槽，行为 11 款源啤酒，直接证明缺陷不恶化。}
 \label{fig:q3-transfer-fig}
 \end{figure}
 
-图~\ref{fig:q3-pairs} 为 22 乘 22 热图，格内颜色为源风格啤酒达到参照范围的比例，对角留空，行列按风格潜空间均值的层次聚类排序，行尾附平均迁移强度的条形边栏。
+图~\ref{fig:q3-pairs} 为 22 乘 22 热图：(a) 格内为源风格到目标风格的最大可行迁移强度 $\alpha^{*}$ 中位数，(b) 为迁移后判别器给出目标风格概率的中位数，对角为同风格，行列按风格名排序。
 
 \begin{figure}[htbp]\centering
-\phfig{0.44\textwidth}{22 乘 22 风格对热图，格内为源风格啤酒达到参照范围的比例，行尾为平均迁移强度。}
-\caption{风格对热图。行列按风格潜空间均值的层次聚类排序，图注写明风格对之间不独立。}
+\includegraphics[width=\textwidth]{q3/fig_q3_pairs.pdf}
+\caption{风格对热图。(a) 为最大可行迁移强度 $\alpha^{*}$ 的中位数，(b) 为迁移后判别器给出目标风格概率的中位数；对角为同风格，行列按风格名排序。}
 \label{fig:q3-pairs}
 \end{figure}
 
